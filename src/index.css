@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* custome scroll bar design */
+
+/* Firefox */
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background:  white;
+    border-radius: 5px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color:  rgb(50 34 198);
+    border-radius: 14px;
+    border: none;
+  }
+
+
+
+/* antd custom css */
+
+
+/* news postPostPopup override */
+
+.ant-modal .ant-modal-content .ant-modal-close {
+    background-color: rgb(215 26 98);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ant-modal .ant-modal-content .ant-modal-close .ant-modal-close-x .anticon.anticon-close.ant-modal-close-icon svg {
+    color: white;
+}
+
+
+/* custom css for image preview modal */
+.ant-modal .ant-modal-content .ant-modal-footer .ant-btn{
+    background-color:rgb(50 34 198);
+    color: white;
+}
+
+
