@@ -9,6 +9,8 @@ import DropMenu from './DropMenu/dropMenu'
 import { useMediaQuery } from 'react-responsive';
 import Avatar from '../../Fields/Avatar/avatar'
 import Search from '../../Fields/Search/search'
+import {Link} from 'react-router-dom'
+import { Badge } from 'antd'
 
 export default function Topbar() {
   const [dropDown , setDropDown] = useState(false)
@@ -42,12 +44,16 @@ export default function Topbar() {
             <div className='flex gap-[1rem] items-center '>
                 <div className='flex gap-[1rem] items-center'>
                     {/* search bar */}
-                    <FontAwesomeIcon icon={faSearch} className='text-smallT  ' />
+                    <FontAwesomeIcon icon={faSearch} className='text-largeT  ' />
                     {/* <Search  /> */}
                     {/* message  */}
-                    <FontAwesomeIcon icon={faBell}  className='text-smallT'/>
+                    <Link to={'/notifications'} >
+                        <Badge count={5}>
+                            <FontAwesomeIcon icon={faBell}  className='text-largeT'/>
+                        </Badge>
+                    </Link>
                     {/* notification */}
-                    <FontAwesomeIcon icon={faMessage}  className='text-smallT'/>
+                    <FontAwesomeIcon icon={faMessage}  className='text-largeT'/>
                     
                 </div>
                 <FontAwesomeIcon icon={!menuOpen ?  faBars : faSquareXmark}   

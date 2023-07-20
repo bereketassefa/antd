@@ -20,10 +20,10 @@ export default function NewsCard({companyName, timestamp, newContent, images}) {
      setShowComments(!showComments)
   }
   return (
-     <>
-        <div className='w-full bg-cards  drop-shadow-xl '>
-            <div className='flex items-center justify-between p-4'  >
-                <div className='flex items-center gap-2 ' >
+    
+        <div className='w-full bg-cards  drop-shadow-xl'  >
+            <div className='flex items-center justify-between p-4'>
+                <div className='flex items-center gap-2'>
                     <Avatar img={newCompanyPlaceHolder} />
                     <div className='flex flex-col gap-1'>
                         <h1 className='font-bold flex items-center gap-2 text-smallP md:text-midP lg:text-largeP  '>Company Name  <img src={verified} alt="" />  </h1>
@@ -33,8 +33,8 @@ export default function NewsCard({companyName, timestamp, newContent, images}) {
                 <FontAwesomeIcon icon={faEllipsisVertical} />
             </div>
 
-            <div className='w-full flex flex-col'>
-                <div className='p-4 w-full '>
+            <div className='w-full flex flex-col '>
+                <div className='p-4 w-full'>
                     <p className='text-smallP md:text-midP lg:text-largeP'>
                     Lorem ipsum dolor sit amet consectetur. Solliciea 
                     null libero faucibus hendrerit consequat. Consect
@@ -42,6 +42,7 @@ export default function NewsCard({companyName, timestamp, newContent, images}) {
                 </div>
                 <div >
                     <Carousel autoplay className='h-[300px] overflow-hidden ' >
+                        {/* <img src={newCardImg1} alt="" className='w-full'/>               */}
                         <img src={newCardImg2} alt="" className='w-full'/> 
                         <img src={newCardImg3} alt="" className='w-full'/>
                         <img src={newCardImg4} alt="" className='w-full'/>     
@@ -49,12 +50,12 @@ export default function NewsCard({companyName, timestamp, newContent, images}) {
                 </div>
             </div>
 
-            <div className='w-full cursor-pointer'>
-                <ul className='flex items-center w-full gap-8 p-4 '>
+            <div className='w-full' onClick={onCommentShow} >
+                <ul className='flex items-center w-full gap-8 p-4'>
                     <li className='flex items-center gap-2'>
                         <FontAwesomeIcon className='text-largeP md:text-smallT text-secondary' icon={faThumbsUp} /> <p className='text-smallP md:text-midP lg:text-largeP'>144k</p>
                     </li>
-                    <li className='flex items-center gap-2 cursor-pointer'  onClick={onCommentShow} >
+                    <li className='flex items-center gap-2 cursor-pointer' >
                         <FontAwesomeIcon className='text-largeP md:text-smallT text-gray-400' icon={faMessage}  /> <p className='text-smallP md:text-midP lg:text-largeP'>114k</p>
                     </li>
                     <li className='flex items-center gap-2'>
@@ -69,6 +70,6 @@ export default function NewsCard({companyName, timestamp, newContent, images}) {
                 />
         </div>
         
-     </>
+ 
   )
 }

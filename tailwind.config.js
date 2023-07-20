@@ -13,9 +13,8 @@ export default {
          lightBg: 'rgb(241, 241, 241)',
          cards: 'white',
          topbarBg: '#FFF',
-
-         lightPrimaryHover: 'rgba(50, 34, 198, 0.10)'
-
+         lightPrimaryHover: 'rgba(50, 34, 198, 0.10)',
+         notificationCardBg: 'rgba(50, 34, 198, 0.10)'
          
        },
        fontFamily: {

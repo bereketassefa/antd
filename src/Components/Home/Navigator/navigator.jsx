@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 export default function Navigator() {
   
   return (
-    <div className='hidden md:flex items-start justify-center mt-4 w-[300px] mx-w-[300px] p-4 bg-white sticky top-[65px] drop-shadow-xl '>
+    <div className='hidden md:flex items-start justify-center mt-4 w-[300px] mx-w-[300px] p-4 bg-white sticky top-[65px] drop-shadow-xl'>
         <div className='w-full'>
             <div className='w-full'>
                 <ul className='w-full flex flex-col gap-3'>
