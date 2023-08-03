@@ -7,6 +7,7 @@ export default function Home() {
     <div className='w-full md:flex items-start justify-center mt-4 gap-2'>
         {/* feeder  // alwasy visible to see */}
         <Feed />
+        
         {/* other components // is hidden in small devices */}
         <CardHolder />
     </div>
