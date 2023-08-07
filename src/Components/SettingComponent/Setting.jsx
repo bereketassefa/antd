@@ -3,7 +3,7 @@ import { AiFillSetting } from "react-icons/ai";
 import { BsFillXDiamondFill, BsFillPersonFill } from "react-icons/bs";
 import { RiContactsBook2Line } from "react-icons/ri";
 import { IoMdHelpCircle } from "react-icons/io";
-import { TbShieldLockFilled } from "react-icons/tb";
+import { MdPrivacyTip } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../theme/ThemeContext";
 
@@ -23,15 +23,18 @@ const Setting = () => {
   return (
     <div className="flex sticky top-[50px] drop-shadow-xl">
       <nav className="bg-[#F9F7F7] hidden lg:block text-[#000000]  mt-5 w-[325px]  h-[452px]">
-        <ul className=" space-y-4 p-4">
-          <li className="py-2 px-6 flex items-center hover:bg-slate-300 gap-2">
+        <ul className=" space-y-4 gap-4 mt-4">
+          <li className="py-2 px-6 mb-3 flex items-center hover:bg-slate-300 gap-2">
             <Link to="setings">
               <AiFillSetting
                 style={{ fontSize: 16 + myFontSize }}
-                className="text-[#555555] h-6 w-6"
+                className="text-[#000000] h-6 w-6"
               />
             </Link>
-            <p style={{ fontSize: 16 + myFontSize }}> Setting</p>
+            <p className="text-[#000000]" style={{ fontSize: 16 + myFontSize }}>
+              {" "}
+              Setting
+            </p>
           </li>
           <Link
             to="/settings/general"
@@ -130,7 +133,7 @@ const Setting = () => {
             onClick={() => handleLinkClick("Privacy Policy")}
           >
             <li className="py-2 px-6 flex items-center hover:bg-slate-300 gap-2">
-              <TbShieldLockFilled
+              <MdPrivacyTip 
                 className={`${
                   activeLink === "Privacy Policy"
                     ? "text-blue-500"

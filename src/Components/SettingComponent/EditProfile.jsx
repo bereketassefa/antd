@@ -68,12 +68,12 @@ const EditProfile = () => {
     }
 
     if (formData.foundedYear.trim() === "") {
-      newErrors.foundedYear = "Founded Year is required";
+      newErrors.foundedYear = " Year is required";
       isValid = false;
     }
 
     if (formData.foundedMonth.trim() === "") {
-      newErrors.foundedMonth = "Founded Month is required";
+      newErrors.foundedMonth = " Month is required";
       isValid = false;
     }
 
@@ -92,7 +92,7 @@ const EditProfile = () => {
           Edit Profile
         </h1>
         <div className="max-w-[472] p-6 mx-6">
-          <div className="  mb-4 ">
+          <div className="mb-4 ">
             <label
               htmlFor="overview"
               className="block mb-2 text-lg font-medium text-gray-700"
@@ -107,7 +107,7 @@ const EditProfile = () => {
               placeholder="Eg: Lorem ipsum dolor sit amet consectetur."
               value={formData.overview}
               onChange={handleChange}
-              className={`w-full px-3 py-2 border ${
+              className={`bg-[#FFF]  outline-none bg-transparent w-full px-3 py-2 border ${
                 errors.overview ? "border-red-500" : "border-2 border-[#3222C6]"
               } `}
             />
@@ -123,7 +123,7 @@ const EditProfile = () => {
               <p style={{ fontSize: 16 + myFontSize }}> Company Phone Number</p>
             </label>
             <div
-              className={` flex px-3 py-2 border items-center ${
+              className={` bg-[#FFF] flex px-3 py-2 border items-center ${
                 errors.companyPhone
                   ? "border-red-500"
                   : "border-2 border-[#3222C6]"
@@ -141,7 +141,7 @@ const EditProfile = () => {
                 name="companyPhone"
                 value={formData.companyPhone}
                 onChange={handleChange}
-                className={`w-full outline-none `}
+                className={` bg-transparent w-full outline-none `}
               />
             </div>
 
@@ -157,7 +157,7 @@ const EditProfile = () => {
               <p style={{ fontSize: 16 + myFontSize }}> Sales Phone Number</p>
             </label>
             <div
-              className={` flex px-3 py-2 border items-center ${
+              className={`bg-[#FFF]  flex px-3 py-2 border items-center ${
                 errors.companyPhone
                   ? "border-red-500"
                   : "border-2 border-[#3222C6]"
@@ -175,7 +175,7 @@ const EditProfile = () => {
                 name="salesPhone"
                 value={formData.salesPhone}
                 onChange={handleChange}
-                className="w-full  outline-none "
+                className="  bg-transparent  w-full  outline-none "
               />
             </div>
 
@@ -198,7 +198,7 @@ const EditProfile = () => {
               placeholder="Eg: www.helloWorld.com"
               value={formData.website}
               onChange={handleChange}
-              className={`w-full px-3 py-2 border ${
+              className={` bg-[#FFF]  outline-none w-full px-3 py-2 border ${
                 errors.website ? "border-red-500" : "border-2 border-[#3222C6]"
               }`}
             />
@@ -221,7 +221,7 @@ const EditProfile = () => {
                 value={formData.country}
                 placeholder="Country"
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border ${
+                className={` outline-none w-full px-3 py-2 border ${
                   errors.country
                     ? "border-red-500"
                     : "border-2 border-[#3222C6]"
@@ -243,6 +243,9 @@ const EditProfile = () => {
                   USA
                 </option>
               </select>
+              {errors.country && (
+                <p className="text-red-500 text-sm">{errors.country}</p>
+              )}
             </div>
             <div className="mt-9 w-56 ml-6">
               <div className="">
@@ -272,6 +275,9 @@ const EditProfile = () => {
                     Adama
                   </option>
                 </select>
+                {errors.city && (
+                  <p className="text-red-500 text-sm">{errors.city}</p>
+                )}
               </div>
             </div>
           </div>
@@ -286,10 +292,10 @@ const EditProfile = () => {
               <select
                 type="text"
                 id="foundedMonth"
-                name="foundedYear"
+                name="foundedMonth"
                 value={formData.foundedMonth}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border ${
+                className={`  foundedMonth w-full px-3 py-2 border ${
                   errors.foundedMonth
                     ? "border-red-500"
                     : "border-2 border-[#3222C6]"

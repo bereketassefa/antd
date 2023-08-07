@@ -79,20 +79,27 @@ export default function Navigator() {
               </p>
             </li>
             <Divider className="bg-gray-300" />
-
-            <li className="cursor-pointer w-full flex items-center gap-2">
-              <FontAwesomeIcon
-                className="text-largeP md:text-smallT text-gray-600"
-                icon={faBell}
-              />{" "}
-              <p
-                className={` ${
-                  activeLink === "Relation" ? "text-blue-500" : "text-gray-600"
-                } text-smallP md:text-midP lg:text-largeP `}
-              >
-                Relation
-              </p>
-            </li>
+            <Link to={"/Relations/relation"}>
+              <li className="cursor-pointer w-full flex items-center gap-2">
+                <FontAwesomeIcon
+                  className={` ${
+                    activeLink === "Relation"
+                      ? "text-blue-500"
+                      : "text-gray-600"
+                  } text-largeP md:text-smallT `}
+                  icon={faBell}
+                />{" "}
+                <p
+                  className={`${
+                    activeLink === "Relation"
+                      ? "text-blue-500"
+                      : "text-gray-600"
+                  } text-smallP md:text-midP lg:text-largeP `}
+                >
+                  Relations
+                </p>
+              </li>
+            </Link>
             <li className="cursor-pointer w-full flex items-center gap-2">
               <FontAwesomeIcon
                 className="text-largeP md:text-smallT text-gray-600"
