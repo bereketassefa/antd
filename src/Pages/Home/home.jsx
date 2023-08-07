@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Feed from '../../Components/Home/Feed/feed'
 import CardHolder from '../../Components/Home/CardHolder/cardHolder'
 

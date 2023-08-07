@@ -11,12 +11,14 @@ import Avatar from '../../Fields/Avatar/avatar'
 import Search from '../../Fields/Search/search'
 import {Link} from 'react-router-dom'
 import { Badge } from 'antd'
+import { useCookies } from 'react-cookie'
 
 export default function Topbar() {
   const [dropDown , setDropDown] = useState(false)
   const [menuOpen ,setMenuOpen ]= useState(false)
   const isScreenMdOrLarger = useMediaQuery({ minWidth: 768 });
-
+  const [cookies, setCookie, removeCookie] = useCookies(['User']);
+//   console.log(cookies?.user.party)
   const handleHover = ()=>{
      setDropDown(!dropDown)
   }
@@ -27,7 +29,7 @@ export default function Topbar() {
     setMenuOpen(false)
   }
  
-
+  
 
   return (
     
@@ -45,7 +47,7 @@ export default function Topbar() {
                 <div className='flex gap-[1rem] items-center'>
                     {/* search bar */}
                     <FontAwesomeIcon icon={faSearch} className='text-largeT  ' />
-                    {/* <Search  /> */}
+                    <Search  />
                     {/* message  */}
                     <Link to={'/notifications'} >
                         <Badge count={5}>
@@ -66,7 +68,7 @@ export default function Topbar() {
                     <div className='flex items-center gap-2'>
                         <Avatar img={profilePlaceHolder} />
                         <div className='flex items-center gap-2'>
-                            <h1 className=' text-smallP md:text-midP lg:text-largeP'>Company Name</h1>
+                            <h1 className=' text-smallP md:text-midP lg:text-largeP'>{cookies?.user.party}</h1>
                             <FontAwesomeIcon icon={faCaretDown} />
                         </div>
                     </div>

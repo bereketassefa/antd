@@ -38,6 +38,10 @@ function App() {
             <Route index element={<Home />} />
             <Route path='/notifications' element={<Notification />}  />            
         </Route>
+        <Route path='/' element={<Primary />}  >
+            <Route index element={<Home />} />
+            <Route path='/notifications' element={<Notification />}  />            
+        </Route>
       </Routes>
     </>
   )
