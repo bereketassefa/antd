@@ -149,7 +149,12 @@ const fetchRecomendation = () => {
     }
   ]
   return (
+<<<<<<< HEAD
     <div className='hidden lg:flex items-start justify-center w-[300px] flex-col gap-2 '>
+=======
+    //  sticky top-[65px]
+    <div className='hidden lg:flex items-start justify-center w-[300px] flex-col gap-2'>
+>>>>>>> 7de18ee890e9148f25fcc48cd1b5d7344b93e6ba
         {
           cards.map(items=>{
             return (

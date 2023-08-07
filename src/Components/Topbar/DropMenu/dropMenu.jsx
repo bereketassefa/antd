@@ -58,7 +58,7 @@ export default function DropMenu({isOpen,onClose}) {
                             className='text-smallT text-gray-600'
                             icon={faClapperboard} /> <p>Live</p>
                      </li>
-                     <Link to={'/settings'} onClick={onClose} >
+                     <Link to={'/settings'} onClick={onClose}  >
                         <li className='w-full flex p-2 items-center gap-2  text-smallP md:text-midP lg:text-largeP'>
                             <FontAwesomeIcon 
                                 className='text-smallT text-gray-600'
