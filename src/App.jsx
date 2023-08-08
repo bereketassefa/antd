@@ -1,8 +1,7 @@
-
-import { Route, Routes } from 'react-router-dom'
-import './App.css'
-import Primary from './Layouts/Primary/primary'
-import Home from './Pages/Home/home'
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Primary from "./Layouts/Primary/primary";
+import Home from "./Pages/Home/home";
 // import Message from './Pages/Message/message'
 import Notification from './Pages/Notification/notification'
 import PageLayout from './Layouts/Pages/page'
@@ -12,10 +11,11 @@ import Post from './Pages/Profile/Post/post'
 import DemandProducts from './Pages/Profile/DemandProducts/demandProducts'
 import Relations from './Pages/Profile/Relations/relations'
 import Bids from './Pages/Profile/Bids/bids'
+import RelationRoute from "./Layouts/Relation Route/RelationRoute";
+import RecomendedRelation from "./Components/RelationsComponents/RecomendedRelation";
+import RequestedRelation from "./Components/RelationsComponents/RequestedRelation";
 
 function App() {
-  
-
   return (
     <>
       <Routes>
@@ -37,11 +37,21 @@ function App() {
           </Route>
             
 
-            
+          <Route path="/Relations" element={<RelationRoute />}>
+            <Route path="/Relations/relation" element={<Relations />} />
+            <Route
+              path="/Relations/Recommended"
+              element={<RecomendedRelation />}
+            />
+            <Route
+              path="/Relations/Requested"
+              element={<RequestedRelation />}
+            />
+          </Route>
         </Route>
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
