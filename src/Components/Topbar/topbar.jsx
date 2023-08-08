@@ -11,6 +11,7 @@ import Avatar from '../../Fields/Avatar/avatar'
 import Search from '../../Fields/Search/search'
 import {Link} from 'react-router-dom'
 import { Badge } from 'antd'
+import SearchField from './SearchField'
 
 export default function Topbar() {
   const [dropDown , setDropDown] = useState(false)
@@ -37,14 +38,17 @@ export default function Topbar() {
             <div className='w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center'>
                 {
                     isScreenMdOrLarger?
-                    <img src={logo} alt="" className='w-full' />: <img src={logos} alt="" className='w-full' />
+                    <Link to={'/'}> <img src={logo} alt="" className='w-full' /></Link>
+                    : 
+                    <Link to={'/'}><img src={logos} alt="" className='w-full' /></Link>
                 }
             </div>
 
             <div className='flex gap-[1rem] items-center '>
                 <div className='flex gap-[1rem] items-center'>
                     {/* search bar */}
-                    <FontAwesomeIcon icon={faSearch} className='text-largeT  ' />
+                   
+                    <SearchField />
                     {/* <Search  /> */}
                     {/* message  */}
                     <Link to={'/notifications'} >
@@ -72,9 +76,12 @@ export default function Topbar() {
                     </div>
                         <div className={dropDown? 'absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150' : 'h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150'  }>
                         <ul className='flex flex-col w-full h-full items-center justify-center'>
-                            <li className='w-full p-3 items-center justify-start hover:bg-lightPrimaryHover'>
-                                <p className='text-smallP md:text-midP lg:text-largeP'> View Profile</p>
-                            </li>
+                            <Link to={'/profile'} className='w-full'  >
+                                <li className='w-full p-3 items-center justify-start hover:bg-lightPrimaryHover'>
+                                    <p className='text-smallP md:text-midP lg:text-largeP'> View Profile</p>
+                                </li>
+                            </Link>
+                            
                             <li  className='w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover'  >
                                 <p className=' text-smallP md:text-midP lg:text-largeP'>Sign Out</p>
                             </li>

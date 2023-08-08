@@ -4,7 +4,7 @@ import CardHolder from '../../Components/Home/CardHolder/cardHolder'
 
 export default function Home() {
   return (
-    <div className='w-full md:flex items-start justify-center mt-4 gap-2'>
+    <div className='w-full md:flex items-start justify-center'>
         {/* feeder  // alwasy visible to see */}
         <Feed />
         {/* other components // is hidden in small devices */}

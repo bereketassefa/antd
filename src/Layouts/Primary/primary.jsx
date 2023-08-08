@@ -10,11 +10,8 @@ export default function Primary() {
           <Topbar />
         </div>
 
-        <div className='mt-[65px] w-full flex items-start justify-center md:max-w-[1120px] gap-2 px-2 md:px-0  '>
-          <Navigator />
-          <div className='w-full h-full   '>
-            <Outlet />
-          </div>
+        <div className='mt-[65px] w-full flex items-start justify-center md:max-w-[1120px]  px-2 md:px-0 gap-2 '>
+           <Outlet />
         </div>
     </div>
   )
