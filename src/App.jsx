@@ -24,8 +24,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" >
-          <Route index element={<LoginPage />}/>
+        <Route path="/">
+          <Route index element={<LoginPage />} />
           <Route path="/createPass" element={<CreatePssPage />} />
           <Route path="/ResetPss" element={<ResetPssPage />} />
           <Route path="/ForgotPass" element={<ForgotPassPage />} />
@@ -39,7 +39,7 @@ function App() {
             <Route path="/settings/general" element={<General />} />
             <Route path="/settings/edit" element={<EditProfile />} />
             <Route
-              path="/settings/NotificationSetting"
+              path="/settings/notification"
               element={<NotificationSetting />}
             />
             <Route path="/settings/Help" element={<Help />} />

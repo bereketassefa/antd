@@ -10,14 +10,17 @@ export const ThemeProvider = ({ children }) => {
     setMyFontSize(myFontSize + 5);
   };
 
-  
   const decreaseFontSize = () => {
     setMyFontSize(myFontSize - 5);
   };
 
+  const updateFontSize = (num) => {
+    setMyFontSize(num / 10);
+  };
+
   return (
     <ThemeContext.Provider
-      value={{ myFontSize, increaseFontSize, decreaseFontSize }}
+      value={{ myFontSize, increaseFontSize, decreaseFontSize, updateFontSize }}
     >
       {children}
     </ThemeContext.Provider>

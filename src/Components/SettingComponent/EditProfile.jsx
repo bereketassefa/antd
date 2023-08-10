@@ -254,7 +254,7 @@ const EditProfile = () => {
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border ${
+                  className={`  outline-none w-full px-3 py-2 border ${
                     errors.city ? "border-red-500" : "border-2 border-[#3222C6]"
                   }
                    `}
@@ -295,7 +295,7 @@ const EditProfile = () => {
                 name="foundedMonth"
                 value={formData.foundedMonth}
                 onChange={handleChange}
-                className={`  foundedMonth w-full px-3 py-2 border ${
+                className={`  outline-none foundedMonth w-full px-3 py-2 border ${
                   errors.foundedMonth
                     ? "border-red-500"
                     : "border-2 border-[#3222C6]"
@@ -329,7 +329,7 @@ const EditProfile = () => {
                 name="foundedYear"
                 value={formData.foundedYear}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border ${
+                className={`  outline-none w-full px-3 py-2 border ${
                   errors.foundedYear
                     ? "border-red-500"
                     : "border-2 border-[#3222C6]"

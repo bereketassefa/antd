@@ -94,7 +94,7 @@ function Login() {
             <p className="text-red-500">{passwordError}</p>
           )}
 
-          <a className="text-red-500 flex justify-end " href="forget-password">
+          <a className="text-red-500 flex justify-end " href="ForgotPass">
             Forget Password?
           </a>
 
