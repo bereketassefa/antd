@@ -28,7 +28,7 @@ export default function Navigator() {
         <div className="w-full">
           <ul className="w-full flex flex-col gap-3">
             <Link
-              to={"/"}
+              to={"/home"}
               className={`${
                 activeLink === "Home" ? "text-[#3222C6] " : "text-gray-700"
               } `}

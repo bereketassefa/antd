@@ -15,13 +15,13 @@ function CreatePass() {
   const [showPass2, setShowPass2] = useState(false);
 
   return (
-    <div>
+    <div className=" z-50 w-full">
       <Heading
         Title={"Hey There!"}
         text={"Please create Password for your Account."}
       />
       <form action="">
-        <div className=" grid  gap-3 max-w-[480px] ">
+        <div className=" grid  gap-3 max-w-[480px]">
           <div className=" border-[2px]  rounded-[3px] flex items-center gap-[10px] px-[10px] py-[10px] border-[#3222c6]">
             <MdLockOutline
               className={`text-[24px] ${

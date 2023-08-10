@@ -44,13 +44,13 @@ function Login() {
     }
   };
   return (
-    <div>
+    <div className=" z-50 w-full">
       <Heading Title={"Welcome Back!!"} text={"Please Login to your Account"} />
 
       <form onSubmit={handleLogin}>
-        <div className=" grid  gap-3 max-w-[480]">
+        <div className=" w-full max-w-[480px] grid gap-2 ">
           <div
-            className={`border-[2px] rounded-[3px] flex items-center gap-[10px] px-[10px] py-[10px] ${
+            className={` w-full border-[2px] rounded-[3px] flex items-center gap-[10px] px-[10px] py-[10px] ${
               emailError ? "border-red-500" : "border-[#3222c6]"
             }`}
           >
