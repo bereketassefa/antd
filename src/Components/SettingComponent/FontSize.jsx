@@ -4,11 +4,9 @@ import { ThemeContext } from "../../theme/ThemeContext";
 import { Slider, Switch } from "antd";
 
 function FontSize() {
-  const { myFontSize, increaseFontSize, decreaseFontSize, updateFontSize } =
+  const { myFontSize, updateFontSize, inputValue, setInputValue } =
     useContext(ThemeContext);
-  const [fontSize, setFontSize] = useState(16); // Initial font size of 16px
   console.log("myFontSize:", myFontSize);
-  const [inputValue, setInputValue] = useState(1);
 
   const onChange = (newValue) => {
     setInputValue(newValue);

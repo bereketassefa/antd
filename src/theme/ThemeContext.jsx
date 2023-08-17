@@ -4,15 +4,7 @@ export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [myFontSize, setMyFontSize] = useState(2);
-  // const [darkMode, setDarkMode] = useState(false)
-
-  const increaseFontSize = () => {
-    setMyFontSize(myFontSize + 5);
-  };
-
-  const decreaseFontSize = () => {
-    setMyFontSize(myFontSize - 5);
-  };
+  const [inputValue, setInputValue] = useState(1);
 
   const updateFontSize = (num) => {
     setMyFontSize(num / 10);
@@ -20,7 +12,7 @@ export const ThemeProvider = ({ children }) => {
 
   return (
     <ThemeContext.Provider
-      value={{ myFontSize, increaseFontSize, decreaseFontSize, updateFontSize }}
+      value={{ myFontSize, updateFontSize, inputValue, setInputValue }}
     >
       {children}
     </ThemeContext.Provider>

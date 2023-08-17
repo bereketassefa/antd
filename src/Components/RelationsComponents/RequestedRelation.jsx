@@ -3,8 +3,12 @@ import image1 from "../../assets/image/BRUHWAY-HOTEL.png";
 import image2 from "../../assets/image/bbm-.png";
 import image3 from "../../assets/image/BT.png";
 import image4 from "../../assets/image/STARTIMES.png";
+
+
 function RequestedRelation() {
   return (
+  
+
     <div className="flex flex-col  gap-4 mx-auto pb-4">
       <div className="flex flex-col md:flex-row justify-between md:items-center border-[1px] border-[#3222C6]   px-4  ">
         <div className=" justify-start flex items-center lg:justify-center gap-2 ">

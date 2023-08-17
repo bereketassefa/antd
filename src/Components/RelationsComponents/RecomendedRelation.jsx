@@ -4,6 +4,7 @@ import image1 from "../../assets/image/BRUHWAY-HOTEL.png";
 import image2 from "../../assets/image/bbm-.png";
 import image3 from "../../assets/image/BT.png";
 import image4 from "../../assets/image/STARTIMES.png";
+
 function RecomendedRelation() {
   return (
     <div className="mx-auto grid  grid-cols-2 justify-items-center gap-5 px-2 sm:grid-cols-3 sm:px-0  pb-4 lg:grid-cols-4">
@@ -154,7 +155,6 @@ function RecomendedRelation() {
         </div>
       </div>
     </div>
-    // </div>
   );
 }
 

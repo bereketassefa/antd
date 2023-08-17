@@ -6,7 +6,7 @@ import { Divider } from 'antd'
 import { Link } from 'react-router-dom'
 export default function DropMenu({isOpen,onClose}) {
   return (
-    <div className={isOpen ? 'z-20 w-screen h-[calc(100vh-65px)] bg-gray-50 p-4 fixed mt-[65px] md:hidden flex flex-col gap-2 z-3 overflow-y-scroll ' : 'w-screen h-[calc(100vh-65px)] bg-gray-50 p-4  absolute mt-[65px] md:hidden flex flex-col gap-2 hidden md:hidden'}>
+    <div className={isOpen ? 'z-20 w-screen h-[calc(100vh-65px)] bg-gray-50 p-4 fixed mt-[65px] md:hidden flex flex-col gap-2 z-3 overflow-y-scroll ' : 'w-screen h-[calc(100vh-65px)] bg-gray-50 p-4  absolute mt-[65px] flex flex-col gap-2 md:hidden'}>
         <div className='w-full flex items-center gap-2'>
             <div className='flex items-center justify-center h-[47px] aspect-square overflow-hidden'>
                 <img src={profilePlaceHolder} alt="" className='w-full'/>

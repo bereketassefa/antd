@@ -1,13 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 
 export default {
-mode:"jit",
-darkMode:'class',
+  mode:"jit",
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
  
   theme: {
     extend: {
-      
       colors: {
         primary: "rgb(50 34 198)",
         secondary: "rgb(215 26 98)",

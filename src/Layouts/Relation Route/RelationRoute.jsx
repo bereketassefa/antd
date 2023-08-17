@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import RelationPage from "../../Components/RelationsComponents/RelationPage";
+import RelationPage from "../../Pages/RelationPage";
 
 const RelationRoute = () => {
   return (
