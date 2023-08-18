@@ -84,7 +84,7 @@ const EditProfile = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="max-w-[550px] mx-auto bg-[#F9F7F7] p-4 mt-5 ">
+      <div className=" mx-auto bg-[#F9F7F7] p-4 mt-5 ">
         <h1
           style={{ fontSize: 16 + myFontSize }}
           className="ml-8 text-[18p] font-bold"

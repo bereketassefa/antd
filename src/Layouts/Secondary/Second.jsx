@@ -7,8 +7,8 @@ const  Second = () => {
   return (
     <div className="w-full p-0 m-0 flex  max-w-full items-center">
       <div className=" w-full flex items-start justify-center md:max-w-[1120px] gap-2 px-2 md:px-0  ">
-        <Setting />
-        <div className="w-full h-full   ">
+        <Setting  />
+        <div className="w-[795px] h-full   ">
           <Outlet />
         </div>
       </div>

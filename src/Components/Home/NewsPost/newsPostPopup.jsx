@@ -1,20 +1,31 @@
-import React, { useState } from 'react';
-import { Button, Divider, Modal } from 'antd';
-import profilePlaceHolder from '../../../assets/logo/profilePlaceHolder.png';
-import Avatar from '../../../Fields/Avatar/avatar';
-import { faFile, faImage } from '@fortawesome/free-regular-svg-icons';
-import { faVideo } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCookies } from 'react-cookie';
-import { Upload } from 'antd';
-import ImgCrop from 'antd-img-crop';
-import axios from 'axios'; // Import axios for making API requests
+import React, { useState } from "react";
+import { Button, Divider, Modal, message } from "antd";
+import profilePlaceHolder from "../../../assets/logo/profilePlaceHolder.png";
+import Avatar from "../../../Fields/Avatar/avatar";
+import { faFile, faImage } from "@fortawesome/free-regular-svg-icons";
+import { faVideo } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useCookies } from "react-cookie";
+import { Upload } from "antd";
+import ImgCrop from "antd-img-crop";
+import axios from "axios"; // Import axios for making API requests
 
 export default function NewsPostPopup({ isOpen, handleClose }) {
   const [fileList, setFileList] = useState([]);
-  const [description, setDescription] = useState(''); // State to store the user's input description
-  const [cookies, setCookie, removeCookie] = useCookies(['User']); // If you are using cookies for authentication
-  const [imagesSelected, setImagesSelected] = useState(false); 
+  const [description, setDescription] = useState(""); // State to store the user's input description
+  const [cookies, setCookie, removeCookie] = useCookies(["User"]); // If you are using cookies for authentication
+  const [imagesSelected, setImagesSelected] = useState(false);
+  const [warningVisible, setWarningVisible] = useState(false);
+  const [onFinish, setOnFinish] = useState(false);
+
+  const showWarningModal = () => {
+    setWarningVisible(true);
+  };
+
+  const closeWarningModal = () => {
+    setWarningVisible(false);
+  };
+
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
     setImagesSelected(newFileList.length > 0);
@@ -35,38 +46,51 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     imgWindow?.document.write(image.outerHTML);
   };
 
-  const handlePublish = () => {
+  const handlePublish = async () => {
     if (!imagesSelected) {
       // If no images are selected, show a popup message
-      console.log('Please select at least one image before publishing.');
+      // console.log('Please select at least one image before publishing.');
+      showWarningModal();
+
       return;
     }
-  
+
     // Prepare the form data to be sent to the backend API
     const formData = new FormData();
-    formData.append('Uid', cookies?.user.Uid); // Assuming you have stored the user's ID in cookies
-    formData.append('description', description);
+    formData.append("Uid", cookies?.user.Uid); // Assuming you have stored the user's ID in cookies
+    formData.append("description", description);
     fileList.forEach((file) => {
-      formData.append('image', file.originFileObj);
+      formData.append("image", file.originFileObj);
     });
-  
-    // Make a POST request to the backend API
-    axios
-      .post('http://localhost:8072/time-line', formData) // Replace '/api/timeline' with the appropriate backend API endpoint URL
-      .then((response) => {
-        // Handle the response from the backend if needed
-        console.log('Data inserted successfully');
-        handleClose();
-  
-        // Redirect to the desired URL on successful submission
-        window.location.href = '/';
-      })
-      .catch((error) => {
-        // Handle error if the API request fails
-        console.error('Error inserting data:', error); 
-      });
+
+    try {
+      if(message =="Network Error"){
+        console.log('network error')
+      }
+      // Make a POST request to the backend API
+      await axios
+        .post(import.meta.env.VITE_POST_NEWS, formData) // Replace '/api/timeline' with the appropriate backend API endpoint URL
+        .then((response) => {
+          if (response) {
+            // Handle the response from the backend if needed
+            console.log("Data inserted successfully");
+            handleClose();
+          }
+       
+        })
+        .catch((error) => {
+          if (error.message === "Network Error") {
+            message.error("Network Error: Failed to post.");
+          } else {
+            console.error("Error inserting data:", error);
+          }
+        });
+    } catch (error) {
+      message.error("Faild to post");
+      handleClose();
+    }
   };
-  
+
   return (
     <Modal
       open={isOpen}
@@ -78,10 +102,22 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
       }}
       width={800}
     >
+      <Modal
+        title="Warning"
+        visible={warningVisible}
+        onOk={closeWarningModal}
+        onCancel={closeWarningModal}
+        okText="Ok"
+        cancelText="Cancel"
+      >
+        <p>Please select at least one image before publishing.</p>
+      </Modal>
       <div className="w-full md:p-4 flex flex-col gap-4">
         <div className="flex gap-2 items-center">
           <Avatar img={profilePlaceHolder} />
-          <h1 className="text-smallP md:text-midP lg:text-largeP font-bold">{cookies?.user.party}</h1>
+          <h1 className="text-smallP md:text-midP lg:text-largeP font-bold">
+            {cookies?.user.party}
+          </h1>
         </div>
         <div className="w-full">
           <textarea
@@ -104,7 +140,10 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
               >
                 {fileList.length < 5 && (
                   <p>
-                    <FontAwesomeIcon className="text-secondary text-smallT" icon={faImage} />{' '}
+                    <FontAwesomeIcon
+                      className="text-secondary text-smallT"
+                      icon={faImage}
+                    />{" "}
                     <p className="text-smallP">Image</p>
                   </p>
                 )}

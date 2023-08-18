@@ -13,6 +13,7 @@ function getFirstWord(str) {
 }
 
 export default function Card({ id, type, title, data }) {
+console.log(data)
     return (
         <div className='w-[300px] p-4 flex flex-col gap-4 bg-cards drop-shadow-xl' key={id}>
             <div className='w-full flex items-center justify-between'>
@@ -24,6 +25,7 @@ export default function Card({ id, type, title, data }) {
             <div className='w-full flex flex-col gap-2'>
                 {
                     data.map((items) => {
+                       
                         return (
                             <>
                                 {
@@ -37,21 +39,25 @@ export default function Card({ id, type, title, data }) {
                                         :
                                         type === 'relationReq' ?
                                             <RequestCard
-                                                id={items.connection?.id}
+                                                Uid={items?.account?.Uid}
+                                                id={items.account?._id}
+                                                connections={items?.connections[0]}
                                                 img={items.img}
-                                                companyName={items?.party?.branch[0]?.branchName}
+                                                companyName={items?.account?.party}
                                             /> :
                                             type === 'relationRecom' ?
                                                 <RecommendedRelationCard
+                                                    Uid={items?.account?._id}
                                                     id={items.Uid}
                                                     img={items.img || getFirstWord(items.companyName)}
-                                                    companyName={items?.branchName}
+                                                    companyName={items?.account?.party}
                                                 /> :
                                                 type === 'relations' ?
                                                     <RelationCard
-                                                        id={items.Uid}
+                                                       id={items?.account?._id}
+                                                        Uid={items.Uid}
                                                         img={items.img }
-                                                        companyName={items?.party?.branch[0]?.branchName}
+                                                        companyName={items?.party?.party.businessname}
                                                     /> :
                                                     null
                                 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Heading from "../SignUp/Heading";
 import Button from "../SignUp/Login/Button";
 import { MdLockOutline } from "react-icons/md";
@@ -6,13 +7,55 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { BiCheck } from "react-icons/bi";
 import Helppra from "../SignUp/Helppra";
-
+import { useParams} from 'react-router-dom';
 function CreatePass() {
+  const {id} = useParams();
+  const modifiedToken = id?.replace(/\$/g, ".").replace(/\?/g, "/");
+  console.log(modifiedToken)
   const [pass1, setPass1] = useState("");
   const [pass2, setPass2] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [showPass1, setShowPass1] = useState(false);
   const [showPass2, setShowPass2] = useState(false);
+
+  const handleSubmit = async (e) => {
+
+    e.preventDefault();
+    if (pass1 !== pass2) {
+      // You can display an error message here.
+      alert("Passwords do not match!");
+      return;
+    }
+    if (!isChecked) {
+      // Ensure the terms checkbox is checked before submitting.
+      alert("Please agree to the terms before proceeding.");
+      return;
+    }
+    
+  // Replace with the token you have.
+    try {
+      const response = await axios.post(
+        `http://localhost:8010/account/create-password/${modifiedToken}/${pass1}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+           
+          },
+        }
+      );
+      if (response.status === 200) {
+        alert('Password Successfully Created!');
+        // Redirect the user to the homepage.
+        window.location.href = '/';
+      } else {
+        alert("Error creating password. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error creating password:", error);
+      alert("There was an error. Please try again.");
+    }
+  };
 
   return (
     <div>
@@ -20,7 +63,7 @@ function CreatePass() {
         Title={"Hey There!"}
         text={"Please create Password for your Account."}
       />
-      <form action="">
+      <form onSubmit={handleSubmit} action="">
         <div className=" grid  gap-3 max-w-[480px] ">
           <div className=" border-[2px]  rounded-[3px] flex items-center gap-[10px] px-[10px] py-[10px] border-[#3222c6]">
             <MdLockOutline
@@ -152,19 +195,17 @@ function CreatePass() {
               , and <span className="text-[#D71A62]">Privacy Policy</span> .
             </p>
           </div>
-
-          <Button
-            type="submit"
-            text={"submit"}
-            bgColor={`bg-[#d71a62] ${
-              !pass1 ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={!pass1 ? true : false}
-          />
-
-          <div className="ml-5">
+          <Button 
+          type="submit"
+          text={"submit"}
+          bgColor={`bg-[#d71a62] ${
+            !pass1 || !isChecked ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+          disabled={!pass1 || !isChecked}
+        />
+        <div className="ml-5">
             <Helppra />
-          </div>
+        </div>
         </div>
       </form>
     </div>

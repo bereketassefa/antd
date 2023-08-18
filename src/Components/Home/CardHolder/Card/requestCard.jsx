@@ -3,45 +3,34 @@ import Avatar from '../../../../Fields/Avatar/avatar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faClose } from '@fortawesome/free-solid-svg-icons'
 import './scss/avatar.scss'
+import { useCookies } from 'react-cookie'
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+export default function RequestCard({id , img, companyName,Uid,connections}) {
+  const navigate= useNavigate()
+// console.log(connections)
 
-
-export default function RequestCard({id , img, companyName}) {
+function truncateCompanyName(name) {
+  return name && name.length > 8 ? name.substring(0, 8) + '...' : name;
+}
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
+  const [dataConnection, setConnectionData] = useState(null);
+  const [AllData, setAllData] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies(['user']);
   function getFirstLetter(str) {
     if (!str) return "";
-    return str.charAt(0).toUpperCase();
+    return str.charAt(0).toLowerCase();
 }
-   useEffect(() => {
-
-    // Fetch data and handle loading and error states here
-    async function fetchData() {
-      try {
-        const response = await fetch(`http://localhost:8013/connection/${id}`);
-        if (!response.ok) {
-          throw new Error("Request failed");
-        }
-
-        const data = await response.json();
-        console.log(data); // Process the response data if needed
-        setLoading(false); // Set loading to false once data is fetched
-      } catch (error) {
-        console.error(error);
-        setError("Failed to fetch data");
-        setLoading(false); // Set loading to false on error
-      }
-    }
-
-     
-    const intervalId= setInterval(()=>{
-     fetchData();
-    },100)
-    return () => clearInterval(intervalId);
-  }, [id]); // Run the effect whenever 'id' changes
+  
 
   const handleAcceptClick = async () => {
     try {
-      const response = await fetch(`http://localhost:8013/connection/accept/${id}`, {
+      const url= `${import.meta.env.VITE_ACCEPT_THE_RELATION}/${id}`
+      const response = await fetch(
+        url
+        , {
         method: "POST", // Or the appropriate HTTP method for your API
       });
 
@@ -59,7 +48,10 @@ export default function RequestCard({id , img, companyName}) {
 
   const handleCancelClick = async () => {
     try { 
-      const response = await fetch(`http://localhost:8013/connection/cancel/${id}`, {
+      const url= `${import.meta.env.VITE_CANCEL_THE_RELATION}/${id}`
+      const response = await fetch(
+        url
+        , {
         method: "DELETE", // Or the appropriate HTTP method for your API
       });
 
@@ -75,15 +67,23 @@ export default function RequestCard({id , img, companyName}) {
     // Handle cancel click logic here
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
  
 
+  const hadleNavigateProfile = async(e)=>{
+    e.preventDefault();
+    navigate(`/feed/profile/${id}`)
+
+    // try {
+    //     const response = await axios.get(`http://localhost:8013/find-my-data/${Uid}`);
+
+    //       console.log(response.data)
+    //     // console.log(cookies.user._id)
+    //     window.location.href = `/feed/profile/${Uid}`;
+         
+    // } catch (error) {
+    //     console.log(error);
+    // }
+}
 
   return (
     <div className="flex items-center justify-between" key={id}>
@@ -91,9 +91,9 @@ export default function RequestCard({id , img, companyName}) {
       {
                     img 
                     ? <Avatar img={img} />
-                    : <div className="avatar-placeholder">{getFirstLetter(companyName)}</div>
+                    : <div  onClick={hadleNavigateProfile} className="avatar-placeholder">{getFirstLetter(companyName)}</div>
                 }
-        <h1 className="text-smallP md:text-midP lg:text-largeP">{companyName}</h1>
+        <h1 className="text-smallP md:text-midP lg:text-largeP">{truncateCompanyName(companyName)}</h1>
       </div>
 
       <div className="flex gap-2">

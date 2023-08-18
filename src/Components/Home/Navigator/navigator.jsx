@@ -23,7 +23,7 @@ export default function Navigator() {
       <div className="w-full">
         <div className="w-full">
           <ul className="w-full flex flex-col gap-3">
-            <Link to={"/"}>
+            <Link to={"/feed"}>
               <li
                 className="cursor-pointer w-full flex items-center gap-2"
                 onClick={() => setActiveLink("Home")}
@@ -148,7 +148,7 @@ export default function Navigator() {
                 Demand Products
               </p>
             </li>
-            <Link to={"/settings/general"}>
+            <Link to={"/feed/settings"}>
               <li
                 className="cursor-pointer w-full flex items-center gap-2"
                 onClick={() => setActiveLink("Setting")}

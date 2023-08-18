@@ -4,7 +4,7 @@ import Card from './Card/card'
 import comment1 from '../../../assets/logo/comment1.png'
 import comment2 from '../../../assets/logo/comment2.png'
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState ,useRef} from 'react';
 import { useCookies } from 'react-cookie'
 
 
@@ -12,47 +12,66 @@ export default function CardHolder() {
   const [dataSource, setDataSource] = useState([]);
     const [dataSourceRelation, setDataRelation] = useState([]);
     const [DataRecommendation, setRecommendation] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const elementRef = useRef(null);
+    const [error, setError] = useState(null);
  const [cookies] = useCookies(['User']);
 // console.log(dataSource)
 
-  useEffect(() => {
-   
-    const intervalId= setInterval(()=>{
-       fetchRecordsOfRelation();
 
-         fetchRecomendation();
-    fetchRelationRequest();
-  
-    },10000);
-    return () => clearInterval(intervalId);
- 
-  }, []);
+const fetchAllData = async () => {
+  try {
+    await fetchRecordsOfRelation();
+    await fetchRecomendation();
+    await fetchRelationRequest();
+    setError(null); // Reset the error if data fetch is successful
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    setError(error.message);
+  } finally {
+    if (loading) {
+      setLoading(false); // Set loading to false only after the initial data fetch
+    }
+  }
+};
 
 const fetchRecordsOfRelation = () => {
-
+  try {
+    setLoading(true);
+     const url= `${import.meta.env.VITE_FETCH_ACCEPTED_RELATION}/${cookies?.user.Uid}`
   axios
-    .get(`http://localhost:8013/connection/${cookies?.user.Uid}`)
+    .get(url
+      ,
+      )
     .then((res) => {
       setDataSource(res.data);
-    
-       console.log(res.data);
+      setLoading(false);
+      //  console.log(res.data);
     });
+  } catch (error) {
+    console.error(error);
+  }
+  finally {
+    setLoading(false);
+  }
+ 
 };
 
 const fetchRelationRequest = () => {
-
+  const url= `${import.meta.env.VITE_FETCH_RELATION_REQUEST}/${cookies?.user.Uid}`
   axios
-    .get(`http://localhost:8013/connection/merged/${cookies?.user.Uid}`)
+    .get(url
+      )
     .then((res) => {
       setDataRelation(res.data);
-    
-      // console.log(res.data);
+      console.log(res.data);
+       
     });
 };
 
 const fetchRecomendation = () => {
   axios
-    .post(`http://localhost:8013/recommendation`, { Uid: cookies?.user.Uid })
+    .post(import.meta.env.VITE_GET_RECOMMENDATION,{ Uid: cookies?.user.Uid })
     .then((res) => {
       console.log("Recommendation response:", res.data); // Log the response
       // Check if the data is an array, if not, set it to an empty array
@@ -60,6 +79,32 @@ const fetchRecomendation = () => {
       setRecommendation(recommendationData);
     });
 };
+
+useEffect(() => {
+  fetchAllData(); // Fetch all data on component mount
+  const dataInterval = setInterval(fetchAllData, 10000); // Refresh data every 10 seconds
+  return () => {
+    clearInterval(dataInterval);
+  };
+}, []);
+
+if (loading) {
+  return (
+    <div className="flex h-screen justify-center items-center">
+      <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
+    </div>
+  );
+}
+
+if (error) {
+  return (
+    <div className="flex h-screen justify-center items-center">
+      <p>{error}</p>
+      {error === "Network Error" && <p>Please check your network connection and try again.</p>}
+    </div>
+  );
+}
+
 
   const productData = [
     {
@@ -149,25 +194,28 @@ const fetchRecomendation = () => {
     }
   ]
   return (
-<<<<<<< HEAD
-    <div className='hidden lg:flex items-start justify-center w-[300px] flex-col gap-2 '>
-=======
-    //  sticky top-[65px]
+   
+   
     <div className='hidden lg:flex items-start justify-center w-[300px] flex-col gap-2'>
->>>>>>> 7de18ee890e9148f25fcc48cd1b5d7344b93e6ba
         {
-          cards.map(items=>{
+        cards.map(items => {
+          // Check if items.data has data
+          if (items.data.length > 0) {
             return (
               <Card 
-                  key={items.id}
-                  id={items.id}
-                  type={items.type}
-                  title={items.title}
-                  data={items.data}
+                key={items.id}
+                id={items.id}
+                type={items.type}
+                title={items.title}
+                data={items.data}
               />
-            )
-          })
-        }
+            );
+          } else {
+            // If no data, return null (nothing will be rendered for this card)
+            return null;
+          }
+  })
+}       
     </div>
   )
 }

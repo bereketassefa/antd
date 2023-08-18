@@ -37,7 +37,7 @@ const Setting = () => {
             </p>
           </li>
           <Link
-            to="/settings/general"
+            to="/feed/settings"
             className={`${
               activeLink === "General" ? "text-blue-500" : "text-gray-700"
             }`}
@@ -54,7 +54,7 @@ const Setting = () => {
           </Link>
 
           <Link
-            to="/settings/edit"
+            to="/feed/settings/edit"
             className={`${
               activeLink === "Edit Profile" ? "text-blue-500" : "text-gray-700"
             }`}
@@ -72,7 +72,7 @@ const Setting = () => {
             </li>
           </Link>
           <Link
-            to="/settings/Notification"
+            to="/feed/settings/NotificationSetting"
             className={`${
               activeLink === "Notification Setting"
                 ? "text-blue-500"
@@ -92,7 +92,7 @@ const Setting = () => {
             </li>
           </Link>
           <Link
-            to="/settings/Help"
+            to="/feed/settings/Help"
             className={`${
               activeLink === "Help" ? "text-blue-500" : "text-gray-700"
             }`}
@@ -108,7 +108,7 @@ const Setting = () => {
             </li>
           </Link>
           <Link
-            to="/settings/contact"
+            to="/feed/settings/contact"
             className={`${
               activeLink === "Contact" ? "text-blue-500" : "text-gray-700"
             }`}
@@ -124,7 +124,7 @@ const Setting = () => {
             </li>
           </Link>
           <Link
-            to="/settings/Privacy"
+            to="/feed/settings/Privacy"
             className={`${
               activeLink === "Privacy Policy"
                 ? "text-blue-500"

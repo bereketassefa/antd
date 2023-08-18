@@ -7,6 +7,7 @@ import Helppra from "./Helppra";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from 'react-cookie'
+
 function Login() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -28,8 +29,12 @@ function Login() {
         setErrMsg("Please enter your credentials");
       } else {
         setLoading(true);
+        
+        const apiUrl = `${import.meta.env.VITE_LOGIN_USER_API}/${email}/${pass}`;
+        console.log(apiUrl);
         const response = await axios.post(
-          `http://localhost:8010/account/sign-in/${email}/${pass}`,
+          apiUrl,
+          {},
           {
             headers: {
               // Add your headers here if needed
@@ -52,7 +57,7 @@ function Login() {
           console.log(response.data)
           // setCookie("user", response.data, { path: "/", expires });
           // Commenting out the setCookie function since it's not defined in the code provided
-          navigate("/");
+          navigate("/feed");
         }
       }
     } catch (err) {

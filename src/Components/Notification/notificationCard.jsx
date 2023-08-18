@@ -3,7 +3,7 @@ import Notice from './cards/notice'
 import Like from './cards/like'
 import Comment from './cards/comment'
 import Request from './cards/request'
-
+import { format, render, cancel, register } from 'timeago.js';
 export default function NotificationCard({type,message,companyName,img,timeStamp,id}) {
   return (
     <div className='w-full flex items-center justify-between bg-notificationCardBg p-4 gap-2' key={id}  >
@@ -20,7 +20,7 @@ export default function NotificationCard({type,message,companyName,img,timeStamp
         </div>
 
         <div className='w-fit '>
-            <span className='text-smallP md:text-midP lg:text-largeP'>{timeStamp}</span>
+            <span className='text-smallP md:text-midP lg:text-largeP'>{format(timeStamp)}</span>
         </div>
     </div>
   )

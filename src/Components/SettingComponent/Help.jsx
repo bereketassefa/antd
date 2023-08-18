@@ -2,7 +2,7 @@ import React from "react";
 
 function Help() {
   return (
-    <div className="max-w-[500px] h-[450px] mx-auto bg-[#F9F7F7] mt-5 p-8">
+    <div className=" h-[450px] mx-auto bg-[#F9F7F7] mt-5 p-8">
       <h1 className="text-[18px] font-bold text-black ">Help</h1>
       <a href="#" className="font-semibold text-[#3222C6] text-[18px]">
         Change or add an email address
