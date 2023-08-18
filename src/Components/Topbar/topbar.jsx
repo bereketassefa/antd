@@ -14,14 +14,18 @@ import profilePlaceHolder from "../../assets/logo/profilePlaceHolder.png";
 import DropMenu from "./DropMenu/dropMenu";
 import { useMediaQuery } from "react-responsive";
 import Avatar from "../../Fields/Avatar/avatar";
-import Search from "../../Fields/Search/search";
+// import Search from "../../Fields/Search/search";
 import { Link } from "react-router-dom";
 import { Badge } from "antd";
 import bt from "../../assets/image/BT.png";
-
+import SearchCard from "./SearchAllCompo/SearchCard";
+import { Search } from "../../data";
+import { DiffFilled } from "@ant-design/icons";
+import { Divider } from "antd";
 export default function Topbar() {
   const [dropDown, setDropDown] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchString, setSearchString] = useState("");
   const isScreenMdOrLarger = useMediaQuery({ minWidth: 768 });
 
   const handleHover = () => {
@@ -61,20 +65,34 @@ export default function Topbar() {
                     className=" outline-none text-[17px] "
                     type="text"
                     placeholder="Search"
+                    value={searchString}
+                    onChange={(e) => setSearchString(e.target.value)}
                   />
                 </div>
-                {/* <div className=" absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
-                  <div className=" flex justify-start items-center border-2 border-blue-800  my-2">
-                    <img className="w-[50px] h-[50px]" src={bt} alt="" />
-                    <p>Company Name</p>
-                  </div>
+                {searchString.length > 0 && (
+                  <div className=" absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px] gap-4 ">
+                    <div className="  gap-3 ">
+                      {Search.filter((item) =>
+                        item.title
+                          .toLowerCase()
+                          .includes(searchString.toLowerCase())
+                      ).map((Search) => (
+                        <SearchCard
+                          key={Search.key}
+                          title={Search.title}
+                          image={Search.image}
+                        />
+                      ))}
+                    </div>
+                    <hr class="border border-[#3222C6] border-solid border-t-1" />
 
-                  <div>
-                    <p className="flex justify-center border-2 border-blue-800">
-                      See All results
-                    </p>
+                    <a href="SearchNav">
+                      <p className="flex justify-center  text-[#3222C6] ">
+                        See All results
+                      </p>
+                    </a>
                   </div>
-                </div> */}
+                )}
               </div>
 
               {/* <Search  /> */}

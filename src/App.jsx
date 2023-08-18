@@ -19,6 +19,10 @@ import LoginPage from "./Pages/Signupage/LoginPage";
 import CreatePssPage from "./Pages/Signupage/CreatePssPage";
 import ResetPssPage from "./Pages/Signupage/ResetPssPage";
 import ForgotPassPage from "./Pages/Signupage/ForgotPassPage";
+import SearchRoute from "./Layouts/Search/SearchRoute";
+import SearchCompany from "./Components/Topbar/SearchAllCompo/SearchCompany";
+import SearchProduct from "./Components/Topbar/SearchAllCompo/SearchProduct";
+import SearchAll from "./Components/Topbar/SearchAllCompo/SearchAll";
 
 function App() {
   return (
@@ -29,6 +33,12 @@ function App() {
           <Route path="/createPass" element={<CreatePssPage />} />
           <Route path="/ResetPss" element={<ResetPssPage />} />
           <Route path="/ForgotPass" element={<ForgotPassPage />} />
+        </Route>
+
+        <Route path="/SearchNav" element={<SearchRoute />}>
+          <Route path="/SearchNav/Company" element={<SearchCompany />} />
+          {/* <Route path="/SearchNav/All" element={<SearchAll />} /> */}
+          <Route path="/SearchNav/SearchProduct" element={<SearchProduct />} />
         </Route>
 
         <Route path="/" element={<Primary />}>
