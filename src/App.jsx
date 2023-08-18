@@ -3,17 +3,15 @@ import "./App.css";
 import Primary from "./Layouts/Primary/primary";
 import Home from "./Pages/Home/home";
 // import Message from './Pages/Message/message'
-import NotificationSetting from "./Components/SettingComponent/NotificationSetting";
-import Second from "./Layouts/Secondary/Second";
-import General from "./Components/SettingComponent/General";
-import EditProfile from "./Components/SettingComponent/EditProfile";
-import Help from "./Components/SettingComponent/Help";
-import Contact from "./Components/SettingComponent/Contact";
-import PrivacyPolicy from "./Components/SettingComponent/PrivacyPolicy";
 import Notification from "./Pages/Notification/notification";
+import PageLayout from "./Layouts/Pages/page";
+import Profile from "./Pages/Profile/profile";
+import About from "./Pages/Profile/About/about";
+import Post from "./Pages/Profile/Post/post";
+import DemandProducts from "./Pages/Profile/DemandProducts/demandProducts";
+import Relations from "./Pages/Profile/Relations/relations";
+import Bids from "./Pages/Profile/Bids/bids";
 import RelationRoute from "./Layouts/Relation Route/RelationRoute";
-import Relations from "./Components/RelationsComponents/Relations";
-import RequestedRelation from "./Components/RelationsComponents/RequestedRelation";
 import RecomendedRelation from "./Components/RelationsComponents/RecomendedRelation";
 import LoginPage from "./Pages/Signupage/LoginPage";
 import CreatePssPage from "./Pages/Signupage/CreatePssPage";
@@ -23,6 +21,7 @@ import SearchRoute from "./Layouts/Search/SearchRoute";
 import SearchCompany from "./Components/Topbar/SearchAllCompo/SearchCompany";
 import SearchProduct from "./Components/Topbar/SearchAllCompo/SearchProduct";
 import SearchAll from "./Components/Topbar/SearchAllCompo/SearchAll";
+import RequestedRelation from "./Components/RelationsComponents/RequestedRelation";
 
 function App() {
   return (
@@ -55,6 +54,17 @@ function App() {
             <Route path="/settings/Help" element={<Help />} />
             <Route path="/settings/contact" element={<Contact />} />
             <Route path="/settings/Privacy" element={<PrivacyPolicy />} />
+          </Route>
+
+          <Route path="/profile" element={<Profile />}>
+            <Route index element={<About />} />
+            <Route path="/profile/post" element={<Post />} />
+            <Route
+              path="/profile/demand-products"
+              element={<DemandProducts />}
+            />
+            <Route path="/profile/relations" element={<Relations />} />
+            <Route path="/profile/bids" element={<Bids />} />
           </Route>
 
           <Route path="/Relations" element={<RelationRoute />}>

@@ -87,9 +87,9 @@ export default function CardHolder() {
       data: relations
     }
   ]
+  // sticky top-[65px]
   return (
-    //  sticky top-[65px]
-    <div className='hidden lg:flex items-start justify-center w-[300px] flex-col gap-2'>
+    <div className='hidden lg:flex items-start justify-center w-[300px] flex-col gap-2 '>
         {
           cards.map(items=>{
             return (

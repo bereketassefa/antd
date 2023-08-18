@@ -1,10 +1,11 @@
 import React from "react";
 import RelationCard from "./RelationCard";
 import { Relation } from "../../data";
-function Relations() {
+export default function Relations() {
   return (
+    <div>
     <div className="flex flex-col  md:flex-row items-center mb-8 ">
-      <div className="mx-auto grid grid-cols-2 justify-items-center gap-5 px-2 sm:grid-cols-2 sm:px-0  md:grid-cols-3 lg:grid-cols-4">
+      <div className="  lg:mt-3 sm:mt-2  grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 sm:gap-2 md:gap-1 justify-items-center lg:gap-4">
         {Relation.map((Relation) => (
           <RelationCard
             key={Relation.key}
@@ -14,7 +15,6 @@ function Relations() {
         ))}
       </div>
     </div>
-  );
+  </div>
+  )
 }
-
-export default Relations;

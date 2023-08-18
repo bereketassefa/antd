@@ -21,7 +21,8 @@ import bt from "../../assets/image/BT.png";
 import SearchCard from "./SearchAllCompo/SearchCard";
 import { Search } from "../../data";
 import { DiffFilled } from "@ant-design/icons";
-import { Divider } from "antd";
+import { Divider } from "antd";import SearchField from './SearchField'
+
 export default function Topbar() {
   const [dropDown, setDropDown] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -40,118 +41,57 @@ export default function Topbar() {
 
   return (
     <>
-      <div className=" z-20 w-full drop-shadow-lg h-topbarH bg-topbarBg border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center fixed md:sticky ">
-        <div className="flex  w-full md:max-w-[1120px] items-center justify-between">
-          <div className="w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center">
-            {isScreenMdOrLarger ? (
-              <img src={logo} alt="" className="w-full" />
-            ) : (
-              <img src={logos} alt="" className="w-full" />
-            )}
-          </div>
-
-          <div className="flex gap-[1rem] items-center ">
-            <div className="flex gap-[1rem] items-center">
-              {/* search bar */}
-              <div className=" relative">
-                <div className=" flex gap-2 border-[2px] border-blue-800 py-[10px] px-4 items-center min-w-[300px] ">
-                  <div>
-                    <FontAwesomeIcon
-                      icon={faSearch}
-                      className="text-xl text-gray-500 "
-                    />
-                  </div>
-                  <input
-                    className=" outline-none text-[17px] "
-                    type="text"
-                    placeholder="Search"
-                    value={searchString}
-                    onChange={(e) => setSearchString(e.target.value)}
-                  />
-                </div>
-                {searchString.length > 0 && (
-                  <div className=" absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px] gap-4 ">
-                    <div className="  gap-3 ">
-                      {Search.filter((item) =>
-                        item.title
-                          .toLowerCase()
-                          .includes(searchString.toLowerCase())
-                      ).map((Search) => (
-                        <SearchCard
-                          key={Search.key}
-                          title={Search.title}
-                          image={Search.image}
-                        />
-                      ))}
-                    </div>
-                    <hr class="border border-[#3222C6] border-solid border-t-1" />
-
-                    <a href="SearchNav">
-                      <p className="flex justify-center  text-[#3222C6] ">
-                        See All results
-                      </p>
-                    </a>
-                  </div>
-                )}
-              </div>
-
-              {/* <Search  /> */}
-              {/* message  */}
-              <Link to={"/notifications"}>
-                <Badge count={5}>
-                  <FontAwesomeIcon icon={faBell} className="text-largeT" />
-                </Badge>
-              </Link>
-              {/* notification */}
-              <FontAwesomeIcon icon={faMessage} className="text-largeT" />
-            </div>
-
-            <FontAwesomeIcon
-              icon={!menuOpen ? faBars : faSquareXmark}
-              className={
-                !menuOpen
-                  ? "text-smallT text-primary md:hidden cursor-pointer "
-                  : "text-smallT text-secondary md:hidden cursor-pointer "
-              }
-              onClick={handleMenu}
-            />
-            <div
-              className="hidden md:flex items-center jutify-center flex-col "
-              onClick={handleHover}
-              // onMouseLeave={handleLeaveHover}
-            >
-              <div className="flex items-center gap-2">
-                <Avatar img={profilePlaceHolder} />
-                <div className="flex items-center gap-2">
-                  <h1 className=" text-smallP md:text-midP lg:text-largeP">
-                    Company Name
-                  </h1>
-                  <FontAwesomeIcon icon={faCaretDown} />
-                </div>
-              </div>
-              <div
-                className={
-                  dropDown
-                    ? "absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
-                    : "h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
+     <div className=' z-20 w-full drop-shadow-lg h-topbarH bg-topbarBg border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center fixed md:sticky '>
+        <div className='flex  w-full md:max-w-[1120px] items-center justify-between'>
+            <div className='w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center'>
+                {
+                    isScreenMdOrLarger?
+                    <img src={logo} alt="" className='w-full' />: <img src={logos} alt="" className='w-full' />
                 }
-              >
-                <ul className="flex flex-col w-full h-full items-center justify-center">
-                  <li className="w-full p-3 items-center justify-start hover:bg-lightPrimaryHover">
-                    <p className="text-smallP md:text-midP lg:text-largeP">
-                      {" "}
-                      View Profile
-                    </p>
-                  </li>
-                  <li className="w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover">
-                    <p className=" text-smallP md:text-midP lg:text-largeP">
-                      Sign Out
-                    </p>
-                  </li>
-                </ul>
-              </div>
             </div>
-          </div>
+
+            <div className='flex gap-[1rem] items-center '>
+                <div className='flex gap-[1rem] items-center'>
+                    {/* search bar */}
+                    <FontAwesomeIcon icon={faSearch} className='text-largeT  ' />
+                    {/* <Search  /> */}
+                    {/* message  */}
+                    <Link to={'/notifications'} >
+                        <Badge count={5}>
+                            <FontAwesomeIcon icon={faBell}  className='text-largeT'/>
+                        </Badge>
+                    </Link>
+                    {/* notification */}
+                    <FontAwesomeIcon icon={faMessage}  className='text-largeT'/>
+                    
+                </div>
+                <FontAwesomeIcon icon={!menuOpen ?  faBars : faSquareXmark}   
+                                    className={!menuOpen ? 'text-smallT text-primary md:hidden cursor-pointer ': 'text-smallT text-secondary md:hidden cursor-pointer '} 
+                                    onClick={handleMenu} />
+                <div className='hidden md:flex items-center jutify-center flex-col '
+                    onClick={handleHover}
+                    // onMouseLeave={handleLeaveHover}
+                >
+                    <div className='flex items-center gap-2'>
+                        <Avatar img={profilePlaceHolder} />
+                        <div className='flex items-center gap-2'>
+                            <h1 className=' text-smallP md:text-midP lg:text-largeP'>Company Name</h1>
+                            <FontAwesomeIcon icon={faCaretDown} />
+                        </div>
+                    </div>
+                        <div className={dropDown? 'absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150' : 'h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150'  }>
+                        <ul className='flex flex-col w-full h-full items-center justify-center'>
+                            <li className='w-full p-3 items-center justify-start hover:bg-lightPrimaryHover'>
+                                <p className='text-smallP md:text-midP lg:text-largeP'> View Profile</p>
+                            </li>
+                            <li  className='w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover'  >
+                                <p className=' text-smallP md:text-midP lg:text-largeP'>Sign Out</p>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
       </div>
       <DropMenu isOpen={menuOpen} onClose={closeMenu} />

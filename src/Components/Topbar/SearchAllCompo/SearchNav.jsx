@@ -1,5 +1,6 @@
 import React from "react";
-import {BsWalletFill} from 'react-icons/bs'
+import { Link } from "react-router-dom";
+import { BsWalletFill } from "react-icons/bs";
 import { AiFillHome, AiFillCloud } from "react-icons/ai";
 function SearchNav() {
   return (
