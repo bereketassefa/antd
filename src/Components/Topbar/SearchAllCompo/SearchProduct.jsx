@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import image1 from "../../assets/image/BRUHWAY-HOTEL.png";
-import image2 from "../../assets/image/bbm-.png";
-import image3 from "../../assets/image/BT.png";
-import image4 from "../../assets/image/STARTIMES.png";
+// import image1 from "../../assets/image/BRUHWAY-HOTEL.png";
+// import image2 from "../../assets/image/bbm-.png";
+// import image3 from "../../assets/image/BT.png";
+// import image4 from "../../assets/image/STARTIMES.png";
 import { RiArrowDropDownLine } from "react-icons/ri";
 function SearchProduct() {
-   const [selectDroped, setSelectDroped] = useState(false);
+  const [selectDroped, setSelectDroped] = useState(false);
   return (
     <div className="">
       <div className="flex justify-between items-center   px-4 ">
