@@ -58,13 +58,18 @@ function CreatePass() {
   };
 
   return (
-    <div>
+    <div className=" z-50 w-full">
       <Heading
         Title={"Hey There!"}
         text={"Please create Password for your Account."}
       />
+<<<<<<< HEAD
       <form onSubmit={handleSubmit} action="">
         <div className=" grid  gap-3 max-w-[480px] ">
+=======
+      <form action="">
+        <div className=" grid  gap-3 max-w-[480px]">
+>>>>>>> origin/Hawi
           <div className=" border-[2px]  rounded-[3px] flex items-center gap-[10px] px-[10px] py-[10px] border-[#3222c6]">
             <MdLockOutline
               className={`text-[24px] ${

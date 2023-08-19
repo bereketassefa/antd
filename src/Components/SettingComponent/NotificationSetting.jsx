@@ -7,10 +7,19 @@ function NotificationSetting() {
     setIsDarkMode(!isDarkMode);
   };
 
+  
+
   return (
+<<<<<<< HEAD
     <div className="bg-[#F9F7F7]  mt-5 mx-auto p-8">
       <div className=" flex  justify-between pl-6 mb-3">
         <h1 style={{ fontSize: 16  }}>Disable Notifications </h1>
+=======
+    <div className="bg-[#F9F7F7] max-w-[505px] mt-5 mx-auto p-8">
+      <p className="text-[18px]  font-bold mb-4">Notification Setting</p>
+      <div className=" flex  justify-between ">
+        <h1 className="text-[16px] font-bold">Disable Notifications </h1>
+>>>>>>> origin/Hawi
         <button
           onClick={toggleMode}
           className={`flex items-center justify-center w-[60px] h-[36px] rounded-full ${

@@ -12,7 +12,7 @@ function CreatePssPage() {
       <div>
         <div className=" flex max-w-screen-2xl mx-auto  justify-evenly h-screen  ">
           {/* Login Box  */}
-          <div className="  w-full md:w-1/2  flex-col justify-between ">
+          <div className=" z-0  w-full md:w-1/2  flex-col justify-between ">
             <div className=" flex justify-between">
               <div className="w-[215px] mt-4 ml-40 mb">
                 <img className="hidden lg:block w-full" src={logo} alt="" />
@@ -33,11 +33,11 @@ function CreatePssPage() {
               </div>
             </div>
 
-            <div className="lg:max-w-[550px] md:max-w-[550px] mx-auto flex justify-center px-5 sm:px-0  ">
+            <div className="z-50  lg:max-w-[550px] md:max-w-[550px] mx-auto flex justify-center px-5 sm:px-0  ">
               <CreatePass />
             </div>
 
-            <div className="">
+            <div className=" -z-50">
               <img
                 className="hidden lg:block -mt-10 w-[150px] object-cover"
                 src={dotBottomBackground}

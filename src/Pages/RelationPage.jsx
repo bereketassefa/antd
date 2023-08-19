@@ -11,7 +11,7 @@ function RelationPage() {
 
   return (
     <div className="bg-[#FFF] text-[#000000] ">
-      <ul className=" flex  justi lg:justify-between items-center  lg:px-16 py-4  ">
+      <ul className=" flex mx-auto sm:px-0  md:justify-between  gap-6 lg:justify-between md:px-10 items-center  lg:px-16 py-4  ">
         <Link
           to="/Relations/relation"
           className={` ${isClicked ? "underline" : ""}  

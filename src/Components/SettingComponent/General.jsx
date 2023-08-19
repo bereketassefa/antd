@@ -29,8 +29,12 @@ function General() {
   const [newPassError, setNewPassError] = useState("");
   const [confirmPassError, setConfirmPassError] = useState("");
   const [invalid, setInvalidPassword] = useState("");
+<<<<<<< HEAD
   const [isModalVisible, setModalVisible] = useState(false);
 
+=======
+  const [activesession, setActiveSession ]=useState("")
+>>>>>>> origin/Hawi
 
   // console.log("myNewFontSize:", myNewFontSize);
   console.log("myFontSize:", myFontSize);
@@ -173,11 +177,19 @@ function General() {
   );
   
   return (
+<<<<<<< HEAD
     <div className="bg-[#F9F7F7]  mt-5 mx-auto p-4">
       <a href="Settings" className="flex justify-start items-center gap-2 pl-2 mt-2">
+=======
+    <div className="bg-[#F9F7F7] max-w-[505px] mt-5 mx-auto p-4">
+      <a
+        href="settings"
+        className="flex justify-start items-center gap-2 pl-2 mt-2"
+      >
+>>>>>>> origin/Hawi
         <BsArrowLeft
           style={{ fontSize: 16 + myFontSize }}
-          className="  md:hidden lg:hidden text-[#555555] h-[27px] w-[27px]"
+          className="md:hidden lg:hidden text-[#555555] h-[27px] w-[27px]"
         />
         <h1 style={{ fontSize: 16 + myFontSize }} className={` font-bold `}>
           Select Theme
@@ -192,7 +204,7 @@ function General() {
       <Britness />
       <FontSize />
 
-      <hr className="max-w-[480px] mx-auto h-0 border-2 border-gray-400 "></hr>
+      <hr className="max-w-[480px] mt-16 mx-auto h-0 border-2 border-gray-400 "></hr>
       <p
         style={{ fontSize: 16 + myFontSize }}
         className="flex justify-start pl-2 mb-3"
@@ -332,9 +344,39 @@ function General() {
         </form>
       )}
 
-      <h1 style={{ fontSize: 16 + myFontSize }} className="my-6 pl-2">
-        Active Session
-      </h1>
+      <div
+        className="relative bg-white  z-20 mb-8"
+        onClick={() => setActiveSession(!activesession)}
+      >
+        <div className="flex justify-between  mx-8 items-center  bg-transparent ">
+          <p style={{ fontSize: 16 + myFontSize }}>Active Session</p>
+          <RiArrowDropDownLine className="text-4xl mt-2  md:hidden" />
+        </div>
+        {activesession && (
+          <div className="absolute right-0 mt-2 w-full bg-white border border-gray-300 divide-y divide-gray-200 rounded-md shadow-lg">
+            <ul className="py-2">
+              <li
+                style={{ fontSize: 16 + myFontSize }}
+                className="px-4 py-2 hover:bg-gray-100"
+              >
+                1
+              </li>
+              <li
+                style={{ fontSize: 16 + myFontSize }}
+                className="px-4 py-2 hover:bg-gray-100"
+              >
+                2
+              </li>
+              <li
+                style={{ fontSize: 16 + myFontSize }}
+                className="px-4 py-2 hover:bg-gray-100"
+              >
+                3
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
       <hr className="max-w-[480px] mx-auto h-0 border-2 border-gray-400 "></hr>
       <h1
         style={{ fontSize: 16 + myFontSize }}
@@ -344,10 +386,10 @@ function General() {
       </h1>
 
       <div
-        className="relative "
+        className="relative bg-white "
         onClick={() => setLanguageDroped(!languageDroped)}
       >
-        <div className="flex justify-between  mx-8 items-center bg-slate-100  ">
+        <div className="flex justify-between  mx-8 items-center   ">
           <p style={{ fontSize: 16 + myFontSize }}>Select language</p>
           <RiArrowDropDownLine className="text-4xl mt-2" />
         </div>

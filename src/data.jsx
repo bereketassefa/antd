@@ -69,3 +69,26 @@ export const Relation = [
     title: "Company Name ",
   },
 ];
+
+export const Search = [
+  {
+    key: 1,
+    image: BRhotel,
+    title: "Company Name ",
+  },
+  {
+    key: 2,
+    image: bt,
+    title: "Company Name ",
+  },
+  {
+    key: 3,
+    image: bbm,
+    title: " Banana Name ",
+  },
+  {
+    key: 3,
+    image: star,
+    title: " Appl Name ",
+  },
+];
