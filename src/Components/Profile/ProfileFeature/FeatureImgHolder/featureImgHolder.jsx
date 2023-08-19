@@ -8,7 +8,7 @@ export default function FeatureImgHolder({ data }) {
     const [cookies] = useCookies(['user']);
 
     const uploadProfileImage = ()=>{
-        
+        window.open
     }
 
     return (
