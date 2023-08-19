@@ -29,12 +29,8 @@ function General() {
   const [newPassError, setNewPassError] = useState("");
   const [confirmPassError, setConfirmPassError] = useState("");
   const [invalid, setInvalidPassword] = useState("");
-<<<<<<< HEAD
   const [isModalVisible, setModalVisible] = useState(false);
-
-=======
-  const [activesession, setActiveSession ]=useState("")
->>>>>>> origin/Hawi
+  const [activesession , setActiveSession] = useState(false);
 
   // console.log("myNewFontSize:", myNewFontSize);
   console.log("myFontSize:", myFontSize);
@@ -177,16 +173,8 @@ function General() {
   );
   
   return (
-<<<<<<< HEAD
     <div className="bg-[#F9F7F7]  mt-5 mx-auto p-4">
       <a href="Settings" className="flex justify-start items-center gap-2 pl-2 mt-2">
-=======
-    <div className="bg-[#F9F7F7] max-w-[505px] mt-5 mx-auto p-4">
-      <a
-        href="settings"
-        className="flex justify-start items-center gap-2 pl-2 mt-2"
-      >
->>>>>>> origin/Hawi
         <BsArrowLeft
           style={{ fontSize: 16 + myFontSize }}
           className="md:hidden lg:hidden text-[#555555] h-[27px] w-[27px]"

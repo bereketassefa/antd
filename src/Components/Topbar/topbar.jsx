@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect,useContext, useState } from 'react'
 import logos from '../../assets/logo/addisLogoS.png'
 import logo from '../../assets/logo/addisLogo.png'
@@ -55,48 +54,6 @@ const hadleNavigateProfile = async(e)=>{
     }
 }
 
-=======
-import React, { useEffect, useState } from "react";
-import logos from "../../assets/logo/addisLogoS.png";
-import logo from "../../assets/logo/addisLogo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowDown,
-  faBars,
-  faCaretDown,
-  faSearch,
-  faSquareXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { faBell, faMessage } from "@fortawesome/free-regular-svg-icons";
-import profilePlaceHolder from "../../assets/logo/profilePlaceHolder.png";
-import DropMenu from "./DropMenu/dropMenu";
-import { useMediaQuery } from "react-responsive";
-import Avatar from "../../Fields/Avatar/avatar";
-// import Search from "../../Fields/Search/search";
-import { Link } from "react-router-dom";
-import { Badge } from "antd";
-import bt from "../../assets/image/BT.png";
-import SearchCard from "./SearchAllCompo/SearchCard";
-import { Search } from "../../data";
-import { DiffFilled } from "@ant-design/icons";
-import { Divider } from "antd";import SearchField from './SearchField'
-
-export default function Topbar() {
-  const [dropDown, setDropDown] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [searchString, setSearchString] = useState("");
-  const isScreenMdOrLarger = useMediaQuery({ minWidth: 768 });
-
-  const handleHover = () => {
-    setDropDown(!dropDown);
-  };
-  const handleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
->>>>>>> origin/Hawi
 
   return (
     <>
@@ -106,13 +63,9 @@ export default function Topbar() {
             <div className='w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center'>
                 {
                     isScreenMdOrLarger?
-<<<<<<< HEAD
                     <Link to={'/feed'}> <img src={logo} alt="" className='w-full' /></Link>
                     : 
                     <Link to={'/feed'}><img src={logos} alt="" className='w-full' /></Link>
-=======
-                    <img src={logo} alt="" className='w-full' />: <img src={logos} alt="" className='w-full' />
->>>>>>> origin/Hawi
                 }
             </div>
 
@@ -147,7 +100,6 @@ export default function Topbar() {
                     </div>
                         <div className={dropDown? 'absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150' : 'h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150'  }>
                         <ul className='flex flex-col w-full h-full items-center justify-center'>
-<<<<<<< HEAD
                             <Link onClick={hadleNavigateProfile} className='w-full'  >
                                 <li className='w-full p-3 items-center justify-start hover:bg-lightPrimaryHover'>
                                     <p className='text-smallP md:text-midP lg:text-largeP'> View Profile</p>
@@ -155,12 +107,6 @@ export default function Topbar() {
                             </Link>
                             
                             <li  className='w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover' onClick={handleLogOut}  >
-=======
-                            <li className='w-full p-3 items-center justify-start hover:bg-lightPrimaryHover'>
-                                <p className='text-smallP md:text-midP lg:text-largeP'> View Profile</p>
-                            </li>
-                            <li  className='w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover'  >
->>>>>>> origin/Hawi
                                 <p className=' text-smallP md:text-midP lg:text-largeP'>Sign Out</p>
                             </li>
                         </ul>
@@ -169,7 +115,6 @@ export default function Topbar() {
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
         
 
 
@@ -178,10 +123,6 @@ export default function Topbar() {
     </div>
     <DropMenu  isOpen={menuOpen} onClose={closeMenu}   />
    
-=======
-      </div>
-      <DropMenu isOpen={menuOpen} onClose={closeMenu} />
->>>>>>> origin/Hawi
     </>
   );
 }

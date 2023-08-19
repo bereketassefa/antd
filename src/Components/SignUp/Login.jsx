@@ -78,11 +78,7 @@ function Login() {
       <Heading Title={"Welcome Back!!"} text={"Please Login to your Account"} />
 
       <form onSubmit={handleLogin}>
-<<<<<<< HEAD
         <div className="grid gap-3 max-w-[480]">
-=======
-        <div className=" w-full max-w-[480px] grid gap-2 ">
->>>>>>> origin/Hawi
           <div
             className={` w-full border-[2px] rounded-[3px] flex items-center gap-[10px] px-[10px] py-[10px] ${
               emailError ? "border-red-500" : "border-[#3222c6]"
@@ -128,11 +124,7 @@ function Login() {
             <p className="text-red-500">{passwordError}</p>
           )}
 
-<<<<<<< HEAD
           <a className="text-red-500 flex justify-end" href="forget-password">
-=======
-          <a className="text-red-500 flex justify-end " href="ForgotPass">
->>>>>>> origin/Hawi
             Forget Password?
           </a>
 

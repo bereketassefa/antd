@@ -27,23 +27,12 @@ export default function Navigator({handleAddProduct}) {
     setActiveLink(link);
   };
 
-  console.log("myFontSize:", myFontSize);
   return (
     <div className="hidden md:flex dark:bg-gray-950 bg-slate-50  items-start justify-center mt-4 w-[300px] mx-w-[300px] p-4  sticky top-[65px] drop-shadow-xl">
       <div className="w-full">
         <div className="w-full">
           <ul className="w-full flex flex-col gap-3">
-<<<<<<< HEAD
             <Link to={"/feed"}>
-=======
-            <Link
-              to={"/home"}
-              className={`${
-                activeLink === "Home" ? "text-[#3222C6] " : "text-gray-700"
-              } `}
-              onClick={() => handleLinkClick("Home")}
-            >
->>>>>>> origin/Hawi
               <li
                 className={` ${
                   activeLink === "Home" ? "bg-slate-300" : " "
@@ -252,22 +241,11 @@ export default function Navigator({handleAddProduct}) {
                 Demand Products
               </p>
             </li>
-<<<<<<< HEAD
             <Link to={"/feed/settings"}>
               <li
                 className="cursor-pointer w-full flex items-center gap-2"
                 onClick={() => setActiveLink("Setting")}
               >
-=======
-            <Link
-              to="/settings/general"
-              className={`${
-                activeLink === "Setting" ? "text-[#3222C6] " : "text-gray-700"
-              } `}
-              onClick={() => handleLinkClick("Setting")}
-            >
-              <li className="cursor-pointer w-full flex items-center gap-2">
->>>>>>> origin/Hawi
                 <FontAwesomeIcon
                   style={{ fontSize: 16 + myFontSize }}
                   className={` ${

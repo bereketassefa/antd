@@ -59,17 +59,9 @@ const Setting = () => {
           </Link>
 
           <Link
-<<<<<<< HEAD
             to="/feed/settings/edit"
             className={`${
               activeLink === "Edit Profile" ? "text-blue-500" : "text-gray-700"
-=======
-            to="/settings/edit"
-            className={` ${
-              activeLink === "Edit Profile"
-                ? "text-[#3222C6] "
-                : "text-gray-700 "
->>>>>>> origin/Hawi
             }`}
             onClick={() => handleLinkClick("Edit Profile")}
           >
@@ -89,13 +81,8 @@ const Setting = () => {
             </li>
           </Link>
           <Link
-<<<<<<< HEAD
             to="/feed/settings/NotificationSetting"
             className={`${
-=======
-            to="/settings/notification"
-            className={` ${
->>>>>>> origin/Hawi
               activeLink === "Notification Setting"
                 ? "text-[#3222C6] "
                 : "text-gray-700"
@@ -138,15 +125,9 @@ const Setting = () => {
             </li>
           </Link>
           <Link
-<<<<<<< HEAD
             to="/feed/settings/contact"
             className={`${
               activeLink === "Contact" ? "text-blue-500" : "text-gray-700"
-=======
-            to="/settings/contact"
-            className={` ${
-              activeLink === "Contact" ? "text-[#3222C6] " : "text-gray-700"
->>>>>>> origin/Hawi
             }`}
             onClick={() => handleLinkClick("Contact")}
           >
