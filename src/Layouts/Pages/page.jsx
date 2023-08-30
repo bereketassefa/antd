@@ -9,7 +9,8 @@ export default function PageLayout() {
     const [showAddProductModal, setShowAddProductModal] = useState(false)
 
     function handleShowModal() {
-      setShowAddProductModal(true)
+        console.log('kkkkkkk')
+      setShowAddProductModal(!showAddProductModal)
     }
     return (
         <div className='w-full p-0 m-0 flex flex-col max-w-full items-center'>      
@@ -20,7 +21,7 @@ export default function PageLayout() {
                     <div className="flex justify-end right-0" onClick={() => setShowAddProductModal(false)}>
                         <FontAwesomeIcon icon={faClose} className="text-white bg-[#B71A62] text-2xl" />
                     </div>
-                    <AddItemsPage />
+                    <AddItemsPage handleModal={handleShowModal} />
                     </div>
                 </div>
                 </div>

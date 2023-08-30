@@ -17,10 +17,10 @@ export default function RecommendedRelationCard({id , img, companyName,Uid}) {
         const node2Value = cookies?.user.Uid
     
         // Specify your node1 value (assuming it's a variable in this scope)
-        const node1Value = '';
-    
+      
+        const url = `${import.meta.env.VITE_SEND_CONNECTION}`
         // Make the POST request
-        const response = await fetch(`http://localhost:8013/connection`, {
+        const response = await fetch(url, {
           method: "POST",
           headers: {
             'Content-Type': 'application/json'

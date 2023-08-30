@@ -13,7 +13,7 @@ function RelationPage() {
     <div className="bg-[#FFF] text-[#000000] ">
       <ul className=" flex mx-auto sm:px-0  md:justify-between  gap-6 lg:justify-between md:px-10 items-center  lg:px-16 py-4  ">
         <Link
-          to="/Relations/relation"
+          to="/feed/Relations/relation"
           className={` ${isClicked ? "underline" : ""}  
           }  ${
             activeLink === "Relations" ? "text-[#3222C6]" : "text-gray-700"
@@ -24,7 +24,7 @@ function RelationPage() {
             <p
               className={`  ${
                 activeLink === "Relations" ? "text-[#3222C6]" : "text-gray-600"
-              }  text-smallP md:text-midP lg:text-xl font-bold `}
+              }  text-smallP md:text-midP lg:text-xl  `}
             >
               Relations
             </p>
@@ -37,7 +37,7 @@ function RelationPage() {
         </Link>
 
         <Link
-          to="/Relations/Requested"
+          to="/feed/Relations/Requested"
           className={`${
             activeLink === "Requested Relation"
               ? "text-[#3222C6]"
@@ -51,7 +51,7 @@ function RelationPage() {
                 activeLink === "Requested Relation"
                   ? "text-[#3222C6]"
                   : "text-gray-600"
-              }  text-smallP md:text-midP lg:text-xl font-bold  `}
+              }  text-smallP md:text-midP lg:text-xl   `}
             >
               Requested Relation
             </p>
@@ -63,7 +63,7 @@ function RelationPage() {
           ></div>
         </Link>
         <Link
-          to="/Relations/Recommended"
+          to="/feed/Relations/Recommended"
           className={`${
             activeLink === "Recommended relations"
               ? "text-[#3222C6]"
@@ -77,7 +77,7 @@ function RelationPage() {
                 activeLink === "Recommended relations"
                   ? "text-[#3222C6]"
                   : "text-gray-600"
-              }  text-smallP md:text-midP lg:text-xl font-bold `}
+              }  text-smallP md:text-midP lg:text-xl  `}
             >
               Recommended relations
             </p>

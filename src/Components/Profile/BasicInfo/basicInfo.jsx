@@ -25,13 +25,13 @@ export default function BasicInfo({data}) {
                         </div>
                         <FontAwesomeIcon icon={faBuilding} className='text-primary text-smallT'  />
                     </li>
-                    <li className='flex items-center justify-between w-full'>
+                    {/* <li className='flex items-center justify-between w-full'>
                         <div>
                             <h1 className='font-bold text-smallP '>CEP</h1>
                             <p>Dano</p>
                         </div>
                         <FontAwesomeIcon icon={faUser} className='text-primary text-smallT' />
-                    </li>
+                    </li> */}
                     <li className='flex items-center justify-between w-full'>
                         <div>
                             <h1 className='font-bold text-smallP '>LoggedIn User</h1>
@@ -42,29 +42,29 @@ export default function BasicInfo({data}) {
                     <li className='flex items-center justify-between w-full'>
                         <div>
                             <h1 className='font-bold text-smallP '>Website</h1>
-                            <p className='text-primary text-smallP md:text-midP'>www.helloworld.com</p>
+                            <p className='text-primary text-smallP md:text-midP'>{}</p>
                         </div>
                         <FontAwesomeIcon icon={faGlobe}   className='text-primary text-smallT'  />
                     </li>
                     <li className='flex items-center justify-between w-full'>
                         <div>
                             <h1 className='font-bold text-smallP '>Company Phone Number</h1>
-                            <p className='text-primary text-smallP md:text-midP'>0987776767</p>
+                            <p className='text-primary text-smallP md:text-midP'>{}</p>
                         </div>
                         <FontAwesomeIcon icon={faPhone} className='text-primary text-smallT' />
                     </li>
                     <li className='flex items-center justify-between w-full'>
                         <div>
                             <h1 className='font-bold text-smallP '>Sales Phone Number</h1>
-                            <p className='text-primary text-smallP md:text-midP'>0932343454</p>
-                            <p className='text-primary text-smallP md:text-midP'>0986575645</p>
+                            <p className='text-primary text-smallP md:text-midP'>{}</p>
+                            <p className='text-primary text-smallP md:text-midP'>{}</p>
                         </div>
                         <FontAwesomeIcon icon={faPhone} className='text-primary text-smallT' />
                     </li>
                     <li className='flex items-center justify-between w-full'>
                         <div>
                             <h1 className='font-bold text-smallP '>Location</h1>
-                            <p>{data?.party?.branch[0]?.address?.city},Ethiopia</p>
+                            <p>{data?.party?.branch[0]?.address?.city}</p>
                         </div>
                     </li>
                     <li className='flex items-center justify-between w-full'>
@@ -77,7 +77,7 @@ export default function BasicInfo({data}) {
                     <li className='flex items-center justify-between w-full'>
                          <div>
                              <h1 className='font-bold text-smallP '>Relations</h1>
-                             <p>501</p>
+                             <p>{}</p>
                          </div>
                          <FontAwesomeIcon icon={faArrowsLeftRight}  className='text-primary text-smallT' />
                     </li>

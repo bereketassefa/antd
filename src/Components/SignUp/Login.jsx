@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import Button from "./Login/Button";
 import { MdLockOutline } from "react-icons/md";
@@ -21,6 +21,16 @@ function Login() {
     return emailRegex.test(email);
   };
 
+  useEffect(() => {
+    if (errMsg) {
+      const timer = setTimeout(() => {
+        setErrMsg("");
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [errMsg]);
+
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -31,7 +41,7 @@ function Login() {
         setLoading(true);
         
         const apiUrl = `${import.meta.env.VITE_LOGIN_USER_API}/${email}/${pass}`;
-        console.log(apiUrl);
+        // console.log(apiUrl);
         const response = await axios.post(
           apiUrl,
           {},
@@ -41,12 +51,12 @@ function Login() {
             },
           }
         );
-        console.log(response);
+        // console.log(response);
         if (response.status === 400) {
           setErrMsg("Server not responding!");
           setLoading(false);
-        } else if (response.status === 200) {
-          setErrMsg("Username and password are incorrect!");
+        } else if (response.status === 200 && response.data.error === "Invalid password") {
+          setErrMsg("Please enter the correct credentials!");
           setLoading(false);
         } else if (response.status === 201) {
           setLoading(false);
@@ -54,7 +64,7 @@ function Login() {
           expires.setTime(expires.getTime() + 2 * 60 * 60 * 1000);
 
           setCookie('user', response.data);
-          console.log(response.data)
+          // console.log(response.data)
           // setCookie("user", response.data, { path: "/", expires });
           // Commenting out the setCookie function since it's not defined in the code provided
           navigate("/feed");
@@ -76,7 +86,14 @@ function Login() {
   return (
     <div className=" z-50 w-full">
       <Heading Title={"Welcome Back!!"} text={"Please Login to your Account"} />
-
+      {errMsg && (
+        <div className="bg-[#d71a62] text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out transform animate-slideIn flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          <span>{errMsg}</span>
+        </div>
+      )}
       <form onSubmit={handleLogin}>
         <div className="grid gap-3 max-w-[480]">
           <div

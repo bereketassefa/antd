@@ -3,15 +3,19 @@ import { IoClose } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { BiSolidImageAlt } from "react-icons/bi";
-function AddItemsPage() {
+import { message } from 'antd';
+import axios from "axios";
+import { useCookies } from "react-cookie";
+function AddItemsPage({handleModal}) {
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productFeatures, setProductFeatures] = useState([]);
   const [feature, setFeature] = useState("");
   const [productPrice, setProductPrice] = useState("");
-  const [availability, setAvailability] = useState("");
+  const [availability, setAvailability] = useState("In Stock");
   const [errors, setErrors] = useState({});
   const [productImage, setProductImage] = useState(null);
+  const [cookies] = useCookies(["user"]);
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = {};
@@ -28,22 +32,54 @@ function AddItemsPage() {
     if (productPrice.trim() === "") {
       validationErrors.productPrice = "Product Price is required.";
     }
-    if (availability === "") {
-      validationErrors.availability = "Availability is required.";
-    }
-
+    // if (availability === "") {
+    //   validationErrors.availability = "Availability is required.";
+    // }
     if (Object.keys(validationErrors).length === 0) {
-      // Submit form data if there are no errors
-      // ...
+      handleSubmitProdcts();
     } else {
       setErrors(validationErrors);
     }
+    
   };
-
+  const handleSubmitProdcts = async () => {
+    try {
+      console.log('helloo')
+      const Uid = cookies?.user.Uid
+      const formData = new FormData();
+      formData.append("productName", productName);
+      formData.append("productDescription", productDescription);
+      formData.append("ProductFeature", feature); // Convert array to comma-separated string
+      formData.append("ProductPrice", productPrice);
+      // formData.append("Availablity", availability);
+      formData.append("image", productImage);
+      formData.append("Uid", Uid);
+      // Add any other fields if necessary
+  const url= `${import.meta.env.VITE_ADD_PRODUCTS}`
+     const response = await axios.post(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      if (response.status === 200) { // Check if the response status is 200 OK
+        console.log("Data inserted successfully");
+        message.success('Product added successfully!');
+           // window.location.href = '/feed'; // Redirect to the dashboard or any other URL
+           handleModal()
+      }
+  
+    } catch (error) {
+      console.log(error);
+      message.error('Failed to add product. Please try again.'); // Show error message using antd's message component
+    }
+  };
+  
   const handleAddFeature = () => {
-    feature.length > 2 &&
+    if (feature.length > 2) {
       setProductFeatures([...productFeatures, feature.trim()]);
-    setFeature("");
+      setFeature("");
+    }
   };
 
   const handleRemoveFeature = (name) => {
@@ -51,11 +87,6 @@ function AddItemsPage() {
     setProductFeatures(updatedFeatures);
   };
 
-  const handleFeatureChange = (index, value) => {
-    const updatedFeatures = [...productFeatures];
-    updatedFeatures[index] = value;
-    setProductFeatures(updatedFeatures);
-  };
   const handleImageUpload = (file) => {
     setProductImage(file);
   };
@@ -168,28 +199,8 @@ function AddItemsPage() {
             )}
           </div>
           <div className="w-56">
-            <label
-              htmlFor="availability"
-              className="text-xl font-semibold text-black"
-            >
-              Availability
-            </label>
-            <select
-              id="availability"
-              name="availability"
-              placeholder="In Stock/Out of Stock"
-              className="bg-[#FFF] outline-none bg-transparent w-full px-3 py-2 border-2 border-[#3222C6]"
-              value={availability}
-              onChange={(e) => setAvailability(e.target.value)}
-              required
-            >
-              <p>Select Availability</p>
-              <option value="In Stock">In Stock</option>
-              <option value="Out of Stock">Out of Stock</option>
-            </select>
-            {errors.availability && (
-              <p className="text-red-500">{errors.availability}</p>
-            )}
+          
+           
           </div>
         </div>
 

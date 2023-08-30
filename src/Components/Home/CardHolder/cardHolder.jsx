@@ -6,12 +6,14 @@ import comment2 from '../../../assets/logo/comment2.png'
 import axios from 'axios';
 import { useEffect, useState ,useRef} from 'react';
 import { useCookies } from 'react-cookie'
+import { message } from 'antd';
 
 
 export default function CardHolder() {
   const [dataSource, setDataSource] = useState([]);
     const [dataSourceRelation, setDataRelation] = useState([]);
     const [DataRecommendation, setRecommendation] = useState([]);
+    const [Product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
     const elementRef = useRef(null);
     const [error, setError] = useState(null);
@@ -22,6 +24,7 @@ export default function CardHolder() {
 const fetchAllData = async () => {
   try {
     await fetchRecordsOfRelation();
+    await fetchRecordsOfProduct();
     await fetchRecomendation();
     await fetchRelationRequest();
     setError(null); // Reset the error if data fetch is successful
@@ -34,19 +37,19 @@ const fetchAllData = async () => {
     }
   }
 };
-
-const fetchRecordsOfRelation = () => {
+const fetchRecordsOfProduct = async() => {
   try {
     setLoading(true);
-     const url= `${import.meta.env.VITE_FETCH_ACCEPTED_RELATION}/${cookies?.user.Uid}`
+    
   axios
-    .get(url
+    .get(`https://product.qa.addispay.et/product/${cookies?.user.Uid}`
       ,
       )
     .then((res) => {
-      setDataSource(res.data);
+      setProduct(res.data);
+      // console.log(res.data);
       setLoading(false);
-      //  console.log(res.data);
+       
     });
   } catch (error) {
     console.error(error);
@@ -56,20 +59,35 @@ const fetchRecordsOfRelation = () => {
   }
  
 };
+const fetchRecordsOfRelation = async () => {
+  try {
+    setLoading(true);
+    const url = `${import.meta.env.VITE_FETCH_ACCEPTED_RELATION}/${cookies?.user.Uid}`;
+    const res = await axios.get(url);
+    setDataSource(res.data);
+    console.log(res.data[0])
+  } catch (error) {
+    // If you'd like to show the user a notification, you could use Ant Design's message component like so:
+    // message.error('An error occurred while fetching data. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
 
-const fetchRelationRequest = () => {
+
+const fetchRelationRequest = async() => {
   const url= `${import.meta.env.VITE_FETCH_RELATION_REQUEST}/${cookies?.user.Uid}`
   axios
     .get(url
       )
     .then((res) => {
       setDataRelation(res.data);
-      console.log(res.data);
+      // console.log(res.data);
        
     });
 };
 
-const fetchRecomendation = () => {
+const fetchRecomendation =async () => {
   axios
     .post(import.meta.env.VITE_GET_RECOMMENDATION,{ Uid: cookies?.user.Uid })
     .then((res) => {
@@ -88,91 +106,15 @@ useEffect(() => {
   };
 }, []);
 
-if (loading) {
-  return (
-    <div className="flex h-screen justify-center items-center">
-      <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
-    </div>
-  );
-}
 
-if (error) {
-  return (
-    <div className="flex h-screen justify-center items-center">
-      <p>{error}</p>
-      {error === "Network Error" && <p>Please check your network connection and try again.</p>}
-    </div>
-  );
-}
-
-
-  const productData = [
-    {
-        key: '1',
-        img: comment1,
-        productName: 'Product A',
-        sales: 40000,
-
-    },
-    {
-        key: '2',
-        img: comment2,
-        productName: 'Product B',
-        sales: 35000,
-
-    },
-    {
-        key: '1',
-        img: comment1,
-        productName: 'Product A',
-        sales: 40000,
-
-    },
-  ]
-
-  const relations = [
-    {
-        id: '1',
-        img: comment1,
-        companyName: 'Company A',
-    },
-    {
-        id: '2',
-        img: comment2,
-        companyName: 'AddisPay'
-    },
-    {
-        id: '3',
-        img: comment1,
-        companyName: 'DAF Tech',
-    },
-    
-    {
-        id: '4',
-        img: comment1,
-        companyName: 'DAF Tech',
-    },
-  ]
-
-  const recommendationData = [
-    {
-      id: '1',
-      img: comment1,
-      companyName: 'BridgeTech',
-    },
-    {
-      id: '2',
-      img: comment2,
-      companyName: 'Zmart',
-    },
-  ]
+ 
 
   const cards = [
     {
       id: 1,
       type: 'product',
-      title: 'Demand Products',
-      data: productData
+      title: 'Products',
+      data: Product
     },
     {
       id: 2,
@@ -194,6 +136,7 @@ if (error) {
     }
   ]
   // sticky top-[65px]
+  
   return (
    
    
@@ -204,11 +147,11 @@ if (error) {
           if (items.data.length > 0) {
             return (
               <Card 
-                key={items.id}
-                id={items.id}
-                type={items.type}
-                title={items.title}
-                data={items.data}
+                key={items?.id}
+                id={items?.id}
+                type={items?.type}
+                title={items?.title}
+                data={items?.data}
               />
             );
           } else {

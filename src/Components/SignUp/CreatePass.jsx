@@ -8,10 +8,11 @@ import { IoMdClose } from "react-icons/io";
 import { BiCheck } from "react-icons/bi";
 import Helppra from "../SignUp/Helppra";
 import { useParams} from 'react-router-dom';
+import { message } from "antd";
 function CreatePass() {
   const {id} = useParams();
   const modifiedToken = id?.replace(/\$/g, ".").replace(/\?/g, "/");
-  console.log(modifiedToken)
+  // console.log(modifiedToken)
   const [pass1, setPass1] = useState("");
   const [pass2, setPass2] = useState("");
   const [isChecked, setIsChecked] = useState(false);
@@ -34,8 +35,9 @@ function CreatePass() {
     
   // Replace with the token you have.
     try {
+      const url= `${import.meta.env.VITE_CREATE_PASSWORD}/${modifiedToken}/${pass1}`
       const response = await axios.post(
-        `http://localhost:8010/account/create-password/${modifiedToken}/${pass1}`,
+        url,
         {},
         {
           headers: {
@@ -45,15 +47,15 @@ function CreatePass() {
         }
       );
       if (response.status === 200) {
-        alert('Password Successfully Created!');
+        message.success('Password Successfully Created!');
         // Redirect the user to the homepage.
         window.location.href = '/';
       } else {
-        alert("Error creating password. Please try again.");
+        message.error("Error creating password. Please try again.");
       }
     } catch (error) {
-      console.error("Error creating password:", error);
-      alert("There was an error. Please try again.");
+      // console.error("Error creating password:", error);
+      message.error("There was an error. Please try again.");
     }
   };
 

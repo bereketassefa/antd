@@ -13,12 +13,7 @@ export default function RequestCard({id , img, companyName,Uid,connections}) {
 function truncateCompanyName(name) {
   return name && name.length > 8 ? name.substring(0, 8) + '...' : name;
 }
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
-  const [dataConnection, setConnectionData] = useState(null);
-  const [AllData, setAllData] = useState(null);
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  
   function getFirstLetter(str) {
     if (!str) return "";
     return str.charAt(0).toLowerCase();
@@ -39,7 +34,7 @@ function truncateCompanyName(name) {
       }
 
       const data = await response.json();
-      console.log(data); // Process the response data if needed
+      // console.log(data); // Process the response data if needed
     } catch (error) {
       console.error(error); // Handle the error, e.g., show an error message
     }
@@ -60,7 +55,7 @@ function truncateCompanyName(name) {
       }
 
       const data = await response.json();
-      console.log(data); // Process the response data if needed
+      // console.log(data); // Process the response data if needed
     } catch (error) {
       console.error(error); // Handle the error, e.g., show an error message
     }

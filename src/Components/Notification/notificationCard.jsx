@@ -4,11 +4,25 @@ import Like from './cards/like'
 import Comment from './cards/comment'
 import Request from './cards/request'
 import { format, render, cancel, register } from 'timeago.js';
-export default function NotificationCard({type,message,companyName,img,timeStamp,id}) {
+import axios from 'axios'
+export default function NotificationCard({type,message,companyName,img,timeStamp,id,seen}) {
+  const seeNotification=  async(id)=>{
+   
+    try {
+      const url =`${import.meta.env.VITE_SEE_NOTIFICATION}/${id}`
+     const res= await axios.post(url)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+ 
+
   return (
-    <div className='w-full flex items-center justify-between bg-notificationCardBg p-4 gap-2' key={id}  >
+    <div className='w-full flex items-center justify-between bg-notificationCardBg p-4 gap-2' key={id} onClick={()=>seeNotification(id)} >
         <div className='flex gap-2 items-center'>
-            <div className='p-[0.3rem] bg-primary rounded-full'></div>
+            <div className={`p-[0.3rem] bg-primary rounded-full ${seen? 'hidden': ''}`}></div>
             <div className='w-full' >
               {
                   type === 'notice'? <Notice  message={message}       />:

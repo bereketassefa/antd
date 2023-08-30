@@ -1,18 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Avatar from '../../../../Fields/Avatar/avatar'
 import { useNavigate } from "react-router-dom";
-export default function RelationCard({id , img, companyName}) {
+import axios from 'axios';
+import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
 
+export default function RelationCard({id , img, companyName}) {
+    const [profilePic, setProfilePic]= useState(null) 
     const navigate= useNavigate()
     function truncateCompanyName(name) {
-        return name && name.length > 8 ? name.substring(0, 8) + '...' : name;
+        return name && name.length > 10 ? name.substring(0, 10) + '...' : name;
       }
-    function getFirstLetter(str) {
-        if (!str) return "";
-        return str.charAt(0).toUpperCase();
-    }
+    // function getFirstLetter(str) {
+    //     if (!str) return "";
+    //     return str.charAt(0).toUpperCase();
+    // }
 
-
+console.log(id)
     const hadleNavigateProfile = async(e)=>{
         e.preventDefault();
         navigate(`/feed/profile/${id}`)
@@ -28,16 +31,40 @@ export default function RelationCard({id , img, companyName}) {
         //     console.log(error);
         // }
     }
+    useEffect(() => {
+        const fetchAccountDataForProfile = async () => {
+            try {
+                // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+                await axios.get(`https://account.addispay.et/account/${id}`)
+                .then((res)=>{
+                    // console.log(res)
+                    if(res?.data){
+                        setProfilePic(res?.data[0]?.profilePicture);
+                       
+                    }
+                   
+                })
+                .catch((error)=>{
+                    // message.error('Cant find user account')
+                })
+                
+            } catch (error) {
+                console.error("Error fetching profile picture:", error);
+            }
+        };
     
+        fetchAccountDataForProfile();
+       
+    }, []);
     return (
         <div className='flex items-center justify-between' key={id}>
             <div className='flex gap-2 items-center'>
-            {
-                    img 
-                    ? <Avatar onClick={hadleNavigateProfile} img={img} />
-                    : <div onClick={hadleNavigateProfile} className="avatar-placeholder">{getFirstLetter(companyName)}</div>
-                }
-                <h1 className='text-smallP md:text-midP lg:text-largeP' >{truncateCompanyName(companyName)}</h1>
+            
+                    
+                    <Avatar onClick={hadleNavigateProfile} img={profilePic?profilePic:alternativeProfile} />
+    
+                
+                <h1 onClick={hadleNavigateProfile} className='text-smallP md:text-midP lg:text-largeP' >{truncateCompanyName(companyName)}</h1>
             </div>
         </div>
     )

@@ -6,26 +6,27 @@ import profilePlaceHolder from '../../../../assets/logo/newCompanyPlaceHolder.pn
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faSmile } from '@fortawesome/free-regular-svg-icons';
 import CommentCard from './commentCard';
-
+import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
 export default function CommentContainer({ id, isOpen }) {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
   const [visibleComments, setVisibleComments] = useState(2);
   const [showSeeMore, setShowSeeMore] = useState(true);
   const [cookies] = useCookies(['User']);
-
+  const [profilePic, setProfilePic]= useState(null) 
   const handleCommentSubmit = async () => {
     if (!commentText.trim()) return;  // Ensure comment is not just whitespace
 
     try {
-        const response = await axios.post('http://localhost:8072/Time-Line/comment', {
+      const url = `${import.meta.env.VITE_COMMENT}`
+        const response = await axios.post(url, {
             post_id: id,
             parent_comment_id: null, // or whatever the value should be
             user_id:cookies?.user.Uid.toString(), // replace with the user ID
             text: commentText
         });
       
-    console.log(response)
+    // console.log(response)
         if (!response.ok) {
             // console.error('Server response:', response.status, response.statusText);
             // console.error('Server response headers:', response.headers);
@@ -46,7 +47,7 @@ export default function CommentContainer({ id, isOpen }) {
         try {
             const data = JSON.parse(responseBody);
             if (data.comment_id) {
-                console.log(data)
+                // console.log(data)
                 // ... rest of the code ...
             }
         } catch (jsonError) {
@@ -57,13 +58,16 @@ export default function CommentContainer({ id, isOpen }) {
         console.error('Failed to post comment:', error);
     }
 } 
-
+// console.log(id)
   useEffect(() => {
+    // console.log('helloo')
     async function fetchComments() {
       try {
-        const response = await fetch(`http://localhost:8072/comments/${id}`);
+        const url =`${import.meta.env.VITE_GET_COMMENT}/${id}`
+        const response = await fetch(url);
         const data = await response.json();
         setComments(data);
+        // console.log(data)
         if (data.length <= 2) {
           setShowSeeMore(false);
         }
@@ -79,25 +83,36 @@ export default function CommentContainer({ id, isOpen }) {
       handleCommentSubmit();
     }
   };
-  function Avatar({ img, fallbackInitial }) {
-    return (
-      <div className='w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center'>
-        {img ? (
-          <img src={img} alt="Profile" className="w-full h-full rounded-full" />
-        ) : fallbackInitial ? (
-          <span className="text-xl">{fallbackInitial}</span>
-        ) : (
-          <img src={profilePlaceHolder} alt="Default" className="w-full h-full rounded-full" />
-        )}
-      </div>
-    );
-}
+  useEffect(() => {
+    const fetchAccountDataForProfile = async () => {
+        try {
+            // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+            await axios.get(`https://account.addispay.et/account/${cookies?.user._id}`)
+            .then((res)=>{
+             //   console.log(res)
+                if(res?.data){
+                    setProfilePic(res?.data[0]?.profilePicture);
+                   
+                }
+               
+            })
+            .catch((error)=>{
+                // message.error('Cant find user account')
+            })
+            
+        } catch (error) {
+            console.error("Error fetching profile picture:", error);
+        }
+    };
 
+    fetchAccountDataForProfile();
+   
+}, []);
   return (
     <div className={isOpen ? 'w-full flex flex-col gap-4 p-2' : 'w-full flex flex-col gap-4 p-2 hidden'}>
       <div className='flex gap-2 items-center'>
         <div className='flex items-center justify-center w-fit'>
-        <Avatar img={comments[0]?.img} fallbackInitial={comments[0]?.party?.party?.businessname?.charAt(0) || ''} />
+        <Avatar img={profilePic ? profilePic : alternativeProfile} />
 
 
         </div>
@@ -127,20 +142,21 @@ export default function CommentContainer({ id, isOpen }) {
       </div>
 
       <div className='w-full flex flex-col gap-4'>
-        {comments.slice(0, visibleComments).map((items) => {
+      {Array.isArray(comments) ? comments.slice(0, visibleComments).map((items) => {
   return (
     <CommentCard 
       key={items.id || items._id}  // Assuming `items` has a unique ID field
       img={items.img}
-      companyName={items?.party?.party?.businessname}
-      id={items?.account?._id}
+      companyName={items?.party?.party[0]?.party?.businessname}
+      id={items?.account[0]?._id}
       time={items.time}
       comment={items.text}
       likes={items.likes}
       replays={items.repays}
     />
   );
-  })}
+}) : null}
+
         {showSeeMore && (
           <div className='w-full flex items-center justify-center'>
             <p

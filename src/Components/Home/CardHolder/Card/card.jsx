@@ -13,7 +13,7 @@ function getFirstWord(str) {
 }
 
 export default function Card({ id, type, title, data }) {
-console.log(data)
+//  console.log(data)
     return (
         <div className='w-[300px] p-4 flex flex-col gap-4 bg-cards drop-shadow-xl' key={id}>
             <div className='w-full flex items-center justify-between'>
@@ -24,7 +24,7 @@ console.log(data)
             </div>
             <div className='w-full flex flex-col gap-2'>
                 {
-                    data.map((items) => {
+                    data?.map((items) => {
                        
                         return (
                             <>
@@ -32,32 +32,32 @@ console.log(data)
                                     type === 'product' ?
                                         <ProductCard
                                             key={items.key}
-                                            img={items.img}
-                                            productName={items.productName}
-                                            sales={items.sales.toLocaleString()}
+                                            img={items?.imageUrl}
+                                            productName={items?.productName}
+                                            // sales={items.sales.toLocaleString()}
                                         />
                                         :
                                         type === 'relationReq' ?
                                             <RequestCard
-                                                Uid={items?.account?.Uid}
-                                                id={items.account?._id}
+                                                Uid={items?.account[0]?.Uid}
+                                                id={items.account[0]?._id}
                                                 connections={items?.connections[0]}
                                                 img={items.img}
-                                                companyName={items?.account?.party}
+                                                companyName={items?.account[0]?.party}
                                             /> :
                                             type === 'relationRecom' ?
                                                 <RecommendedRelationCard
-                                                    Uid={items?.account?._id}
+                                                    Uid={items?.account[0]?._id}
                                                     id={items.Uid}
                                                     img={items.img || getFirstWord(items.companyName)}
-                                                    companyName={items?.account?.party}
+                                                    companyName={items?.account[0]?.party}
                                                 /> :
                                                 type === 'relations' ?
                                                     <RelationCard
-                                                       id={items?.account?._id}
+                                                       id={items?.account[0]?._id}
                                                         Uid={items.Uid}
                                                         img={items.img }
-                                                        companyName={items?.party?.party.businessname}
+                                                        companyName={items?.account[0]?.party}
                                                     /> :
                                                     null
                                 }

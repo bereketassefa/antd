@@ -28,7 +28,7 @@ export default function Navigator({handleAddProduct}) {
   };
 
   return (
-    <div className="hidden md:flex dark:bg-gray-950 bg-slate-50  items-start justify-center mt-4 w-[300px] mx-w-[300px] p-4  sticky top-[65px] drop-shadow-xl">
+    <div className="hidden md:flex bg-white  items-start justify-center mt-4 w-[300px] mx-w-[300px] p-4  sticky top-[65px] drop-shadow-xl">
       <div className="w-full">
         <div className="w-full">
           <ul className="w-full flex flex-col gap-3">
@@ -53,7 +53,7 @@ export default function Navigator({handleAddProduct}) {
                 </p>
               </li>
             </Link>
-
+{/* 
             <li
               className="cursor-pointer w-full flex items-center gap-2"
               onClick={() => handleLinkClick("Dashboard")}
@@ -80,7 +80,7 @@ export default function Navigator({handleAddProduct}) {
             </li>
 
             <Link
-              to="///"
+              to="#"
               className={`${
                 activeLink === "Servicesl" ? "text-[#3222C6] " : "text-gray-700"
               } `}
@@ -107,10 +107,10 @@ export default function Navigator({handleAddProduct}) {
                   Services
                 </p>
               </li>
-            </Link>
+            </Link> */}
 
-            <Link
-              to="///"
+            {/* <Link
+              to="#"
               className={`${
                 activeLink === "Invoice Finance"
                   ? "text-[#3222C6] "
@@ -136,11 +136,11 @@ export default function Navigator({handleAddProduct}) {
                   Invoice Finance
                 </p>
               </li>
-            </Link>
+            </Link> */}
             <Divider className="bg-gray-300" />
 
             <Link
-              to="/Relations/relation"
+              to="Relations/relation"
               className={`${
                 activeLink === "Relations" ? "text-[#3222C6] " : "text-gray-700"
               } `}
@@ -169,7 +169,7 @@ export default function Navigator({handleAddProduct}) {
               </li>
             </Link>
             <Link
-              to="///"
+              to="#"
               className={`${
                 activeLink === "General" ? "text-[#3222C6] " : "text-gray-600"
               } `}
@@ -194,7 +194,7 @@ export default function Navigator({handleAddProduct}) {
                 </p>
               </li>
             </Link>
-            <Link
+            {/* <Link
               to="///"
               className={`${
                 activeLink === "Live" ? "text-[#3222C6] " : "text-gray-700"
@@ -218,8 +218,8 @@ export default function Navigator({handleAddProduct}) {
                   Live
                 </p>
               </li>
-            </Link>
-            <li className="cursor-pointer w-full flex items-center gap-2  md:flex lg:hidden">
+            </Link> */}
+            {/* <li className="cursor-pointer w-full flex items-center gap-2  md:flex lg:hidden">
               <FontAwesomeIcon
                 style={{ fontSize: 16 + myFontSize }}
                 className={`   ${
@@ -240,7 +240,7 @@ export default function Navigator({handleAddProduct}) {
               >
                 Demand Products
               </p>
-            </li>
+            </li> */}
             <Link to={"/feed/settings"}>
               <li
                 className="cursor-pointer w-full flex items-center gap-2"

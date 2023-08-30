@@ -5,21 +5,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDown, faBars, faCaretDown, faSearch, faSquareXmark } from '@fortawesome/free-solid-svg-icons'
 import { faBell, faMessage } from '@fortawesome/free-regular-svg-icons'
 import profilePlaceHolder from '../../assets/logo/profilePlaceHolder.png'
+import alternativeProfile from "../../assets/image/alternativeProfile.png";
 import DropMenu from './DropMenu/dropMenu'
 import { useMediaQuery } from 'react-responsive';
 import Avatar from '../../Fields/Avatar/avatar'
 import {Link, useNavigate} from 'react-router-dom'
-import { Badge } from 'antd'
+import { Badge, message } from 'antd'   
 import SearchField from './SearchField'
 import { useCookies } from 'react-cookie'
 import axios from "axios";
 import { ErrorContext } from '../Error/ErrorContext';
+import { Search } from '../../data'
+import SearchRoute from '../../Layouts/Search/SearchRoute'
+import SearchProduct from './SearchAllCompo/SearchProduct'
+import SearchCard from "./SearchAllCompo/SearchCard";
+
 export default function Topbar() {
     function truncateCompanyName(name) {
         return name && name.length > 8 ? name.substring(0, 8) + '...' : name;
       }
+  const [profilePic, setProfilePic]= useState(null)    
   const [dropDown , setDropDown] = useState(false)
+  const [searchResults, setSearchResults] = useState([]); 
   const [menuOpen ,setMenuOpen ]= useState(false)
+  const [notificationCount , setNotificationsCount]= useState()
+  const [searchInput, setSearchInput] = useState("");
   const isScreenMdOrLarger = useMediaQuery({ minWidth: 768 });
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const navigate = useNavigate()
@@ -40,12 +50,83 @@ const handleLogOut=()=>{
 
 
 }
+const handleSearch = async () => {
+  if (searchInput.trim() === "") {
+    setSearchResults([]);
+    return;
+  }
+  try {
+    const response = await axios.post('https://search.addispay.et/partially', {
+      query: searchInput
+    });
+    if (response.data.length > 0) {
+      const formattedResults = response.data.map(item => {
+        let result = { type: item.type };
+        if (item.type === "business") {
+          result.name = item.businessName;
+          result.profilePicture = item.profilePicture; // Add profile picture
+        } else if (item.type === "product") {
+          result.name = item.productName;
+          result.imageUrl = item.imageUrl; // Add image URL for product
+        }
+        return result;
+      });
+  
+      setSearchResults(formattedResults);
+    }
+  } catch (error) {
+    console.error('Error performing search', error);
+  }
+};
 
+
+useEffect(() => {
+  handleSearch();
+}, [searchInput]);
+useEffect(() => {
+    const fetchAccountDataForProfile = async () => {
+        try {
+            // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+            await axios.get(`https://account.addispay.et/account/${cookies?.user._id}`)
+            .then((res)=>{
+                // console.log(res)
+                if(res?.data){
+                    setProfilePic(res?.data[0]?.profilePicture);
+                    // console.log(res?.data[0]?.profilePicture)
+                }
+                // message.error('Cant find the image url')
+            })
+            .catch((error)=>{
+                // message.error('Cant find user account')
+            })
+            // let response = await fetch(url);
+            // let data = await response.json();
+            // console.log("Data received from server: ", data);  // Debugging line
+            // console.log("Profile Picture URL from server:", data?.[0].profilePicture);
+            // setProfilePic(data?.[0].profilePicture);
+        } catch (error) {
+            console.error("Error fetching profile picture:", error);
+        }
+    };
+
+    fetchAccountDataForProfile();
+   
+}, []);
+
+
+
+
+
+// console.log("Current Profile Picture URL:", profilePic);
+// console.log(profilePic)
 const hadleNavigateProfile = async(e)=>{
     e.preventDefault();
     try {
-        const response = await axios.get(`http://localhost:8013/find-my-data/${cookies.user._id}`);
-        //  console.log(response)
+        const url =`${import.meta.env.VITE_FIND_MY_DATA}/${cookies.user._id}`
+        const response = await axios.get(url);
+        //  console.log(response?.data)
+        //   setProfilePic(response?.data?.account[0]?.profilePicture)
+
         // console.log(cookies.user._id)
         window.location.href = `/feed/profile/${cookies.user._id}`;
         
@@ -53,6 +134,26 @@ const hadleNavigateProfile = async(e)=>{
         console.log(error);
     }
 }
+
+useEffect(() => {
+    const fetchNotifications = async () => {
+        try {
+            const url= `${import.meta.env.VITE_UNSEEN_NOTIFICATION}/${cookies?.user._id}`
+            let response = await fetch(url);
+            let data = await response.json();
+            // console.log(data);
+            setNotificationsCount(data);
+        } catch (error) {
+            console.error("Error fetching notifications:", error);
+        }
+    };
+
+    // fetchNotifications();
+    const Interval= setInterval(() => {
+        fetchNotifications()
+    },1000)
+    
+}, []);
 
 
   return (
@@ -69,14 +170,59 @@ const hadleNavigateProfile = async(e)=>{
                 }
             </div>
 
-            <div className='flex gap-[1rem] items-center '>
-                <div className='flex gap-[1rem] items-center'>
-                    {/* search bar */}
-                    <FontAwesomeIcon icon={faSearch} className='text-largeT  ' />
-                    {/* <Search  /> */}
+            <div className="flex gap-[1rem] items-center ">
+            <div className="flex gap-[1rem] items-center">
+              {/* search bar */}
+              <div className=" relative">
+                <div className=" flex gap-2 border-[2px] border-blue-800 py-[10px] px-4 items-center min-w-[450px] ">
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faSearch}
+                      className="text-xl text-gray-500 "
+                    />
+                  </div>
+                  <input
+                    className="outline-none text-[17px] w-1/4"
+                    type="text"
+                    value={searchInput}
+                    placeholder="Search"
+                    onChange={(e) => {
+                      setSearchInput(e.target.value);
+                    }}
+                  />
+                </div>
+                {searchInput && (
+          <div className="absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
+            <div className="flex flex-col">
+            {
+  searchResults.map((result, index) => (
+    <SearchCard 
+      key={index} 
+      name={result.name} 
+      type={result.type}  // This will be either "business" or "product"
+      image={result.type === 'business' ? result.profilePicture : result.imageUrl}  // Pass the appropriate image based on the type
+    />
+  ))
+}
+
+                    </div> 
+                    <hr className="border-[1px] border-blue-800" />
+                    <Link
+                      to="/feed/SearchNav/All"
+                      onClick={() => setSearchInput("")}
+                    >
+                      {/* <p className="flex justify-center text-primary ">
+                        See All results
+                      </p> */}
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+                    {/* <SearchRoute  /> */}
                     {/* message  */}
                     <Link to={'/feed/notifications'} >
-                        <Badge count={5}>
+                        <Badge count={notificationCount}>
                             <FontAwesomeIcon icon={faBell}  className='text-largeT'/>
                         </Badge>
                     </Link>
@@ -92,7 +238,8 @@ const hadleNavigateProfile = async(e)=>{
                     // onMouseLeave={handleLeaveHover}
                 >
                     <div className='flex items-center gap-2'>
-                        <Avatar img={profilePlaceHolder} />
+                    <Avatar img={profilePic? profilePic : alternativeProfile }alt='image' />
+
                         <div className='flex items-center gap-2'>
                             <h1 className=' text-smallP md:text-midP lg:text-largeP'>{truncateCompanyName(cookies?.user.party)}</h1>
                             <FontAwesomeIcon icon={faCaretDown} />
@@ -121,7 +268,7 @@ const hadleNavigateProfile = async(e)=>{
        
        
     </div>
-    <DropMenu  isOpen={menuOpen} onClose={closeMenu}   />
+    <DropMenu image={profilePic}   isOpen={menuOpen} onClose={closeMenu}   />
    
     </>
   );

@@ -11,7 +11,7 @@ export default function Profile({dataConnection}) {
   const [data, setData] = useState(null);
   const [cookies] = useCookies(['user']);
   const  {id}  = useParams();
-  console.log(id)
+  // console.log(id)
   useEffect(() => {
     const fetchData = async () => {
       // const userId = id ? id : cookies.user._id;
@@ -21,7 +21,7 @@ export default function Profile({dataConnection}) {
           url
         );
         setData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error("Error fetching profile data:", error);
       }

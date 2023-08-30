@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Avatar from '../../../../Fields/Avatar/avatar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import profilePlaceHolder from '../../../../assets/logo/newCompanyPlaceHolder.png';
+import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
+
+import axios from 'axios'
 
 export default function CommentCard({id,img,companyName, time , comment , likes , replays}) {
+    
+    
     const [showReplys , setShowReplays] = useState(false)
+    const [profilePic, setProfilePic]= useState(null) 
+
     const navigate= useNavigate()
     const onShowReplay = ()=>{
          setShowReplays(!showReplys)
@@ -28,19 +35,31 @@ export default function CommentCard({id,img,companyName, time , comment , likes 
         }
     }
 
-    function Avatar({ img, fallbackInitial, onClick }) {
-    return (
-        <div onClick={onClick} className='w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center'>
-            {img ? (
-                <img src={img} alt="Profile" className="w-full h-full rounded-full" />
-            ) : fallbackInitial ? (
-                <span className="text-xl">{fallbackInitial.charAt(0)}</span>
-            ) : (
-                <img src={profilePlaceHolder} alt="Placeholder" className="w-full h-full rounded-full" />
-            )}
-        </div>
-    );
-}
+    useEffect(() => {
+        const fetchAccountDataForProfile = async () => {
+            try {
+                // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+                await axios.get(`https://account.addispay.et/account/${id}`)
+                .then((res)=>{
+                    // console.log(res)
+                    if(res?.data){
+                        setProfilePic(res?.data[0]?.profilePicture);
+                       
+                    }
+                   
+                })
+                .catch((error)=>{
+                    // message.error('Cant find user account')
+                })
+                
+            } catch (error) {
+                console.error("Error fetching profile picture:", error);
+            }
+        };
+    
+        fetchAccountDataForProfile();
+       
+    }, []);
 
   return (
      <>
@@ -48,8 +67,8 @@ export default function CommentCard({id,img,companyName, time , comment , likes 
         <div className='flex'>
         <Avatar 
     onClick={hadleNavigateProfile}
-    img={img}
-    fallbackInitial={companyName || ''}
+    img={profilePic? profilePic: alternativeProfile}
+   
 />
 
         </div>
@@ -67,7 +86,7 @@ export default function CommentCard({id,img,companyName, time , comment , likes 
                 </p>
              </div>
              <div className='flex w-full items-center justify-start gap-4'>
-                 <p className=' text-smallP md:text-midP lg:text-largeP text-secondary cursor-pointer '>Likes <span>({likes})</span></p>
+                 <p className=' text-smallP md:text-midP lg:text-largeP text-secondary cursor-pointer '>Likes <span>{likes ===0?'':likes }</span></p>
                  <p  className=' text-smallP md:text-midP lg:text-largeP cursor-pointer flex gap-1 ' 
                     onClick={onShowReplay}
                  > 

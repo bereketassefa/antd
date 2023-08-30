@@ -25,18 +25,18 @@ export default function Details() {
       label: (<Link to={`/feed/profile/${id}/post`} ><p>Post</p></Link>),
       key: 'post',
     },
-    {
-      label: (
-        <Link to={`/feed/profile/${id}/demand-products`} ><p>Demand Products</p></Link>
-      ),
-      key: 'demProducts',
-    },
-    {
-        label: (
-          <Link to={`/feed/profile/${id}/relations`} > <p>Relations</p></Link>
-        ),
-        key: 'relations',
-    },
+    // {
+    //   label: (
+    //     <Link to={`/feed/profile/${id}/demand-products`} ><p>Demand Products</p></Link>
+    //   ),
+    //   key: 'demProducts',
+    // },
+    // {
+    //     label: (
+    //       <Link to={`/feed/profile/${id}/relations`} > <p>Relations</p></Link>
+    //     ),
+    //     key: 'relations',
+    // },
     // {
     //     label: (
     //       <Link to={`/feed/profile/${cookies.user._id}/bids`}> <p>Bids</p></Link>

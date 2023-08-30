@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Divider, Modal, message } from "antd";
 import profilePlaceHolder from "../../../assets/logo/profilePlaceHolder.png";
 import Avatar from "../../../Fields/Avatar/avatar";
@@ -9,14 +9,15 @@ import { useCookies } from "react-cookie";
 import { Upload } from "antd";
 import ImgCrop from "antd-img-crop";
 import axios from "axios"; // Import axios for making API requests
+import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 
 export default function NewsPostPopup({ isOpen, handleClose }) {
   const [fileList, setFileList] = useState([]);
   const [description, setDescription] = useState(""); // State to store the user's input description
-  const [cookies, setCookie, removeCookie] = useCookies(["User"]); // If you are using cookies for authentication
+  const [cookies] = useCookies(["User"]); // If you are using cookies for authentication
   const [imagesSelected, setImagesSelected] = useState(false);
   const [warningVisible, setWarningVisible] = useState(false);
-  const [onFinish, setOnFinish] = useState(false);
+  const [profile,setProfilePic]=useState(null);
 
   const showWarningModal = () => {
     setWarningVisible(true);
@@ -48,8 +49,6 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
 
   const handlePublish = async () => {
     if (!imagesSelected) {
-      // If no images are selected, show a popup message
-      // console.log('Please select at least one image before publishing.');
       showWarningModal();
 
       return;
@@ -64,14 +63,13 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     });
 
     try {
-      if(message =="Network Error"){
-        console.log('network error')
-      }
+    
       // Make a POST request to the backend API
       await axios
         .post(import.meta.env.VITE_POST_NEWS, formData) // Replace '/api/timeline' with the appropriate backend API endpoint URL
         .then((response) => {
           if (response) {
+            message.success('Upload sucess')
             // Handle the response from the backend if needed
             console.log("Data inserted successfully");
             handleClose();
@@ -81,6 +79,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
         .catch((error) => {
           if (error.message === "Network Error") {
             message.error("Network Error: Failed to post.");
+          
           } else {
             console.error("Error inserting data:", error);
           }
@@ -90,7 +89,31 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
       handleClose();
     }
   };
+  useEffect(() => {
+    const fetchAccountDataForProfile = async () => {
+        try {
+            // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+            await axios.get(`https://account.addispay.et/account/${cookies?.user._id}`)
+            .then((res)=>{
+                // console.log(res)
+                if(res?.data){
+                    setProfilePic(res?.data[0]?.profilePicture);
+                   
+                }
+               
+            })
+            .catch((error)=>{
+                message.error('Error occurred'+ error)
+            })
+   
+        } catch (error) {
+            console.error("Error fetching profile picture:", error);
+        }
+    };
 
+    fetchAccountDataForProfile();
+   
+}, []);
   return (
     <Modal
       open={isOpen}
@@ -114,7 +137,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
       </Modal>
       <div className="w-full md:p-4 flex flex-col gap-4">
         <div className="flex gap-2 items-center">
-          <Avatar img={profilePlaceHolder} />
+          <Avatar img={profile?profile: alternativeProfile } />
           <h1 className="text-smallP md:text-midP lg:text-largeP font-bold">
             {cookies?.user.party}
           </h1>
