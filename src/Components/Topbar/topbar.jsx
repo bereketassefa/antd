@@ -56,7 +56,8 @@ const handleSearch = async () => {
     return;
   }
   try {
-    const response = await axios.post('https://search.addispay.et/partially', {
+    const url = `${import.meta.env.VITE_SEARCH_PARTIALLY}`
+    const response = await axios.post(url, {
       query: searchInput
     });
     if (response.data.length > 0) {
@@ -86,8 +87,9 @@ useEffect(() => {
 useEffect(() => {
     const fetchAccountDataForProfile = async () => {
         try {
+          const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${cookies?.user._id}`
             // const url= `http://localhost:8010/account/${cookies?.user._id}`;
-            await axios.get(`https://account.addispay.et/account/${cookies?.user._id}`)
+            await axios.get(url)
             .then((res)=>{
                 // console.log(res)
                 if(res?.data){
@@ -227,7 +229,10 @@ useEffect(() => {
                         </Badge>
                     </Link>
                     {/* notification */}
+                    <Link to={'/feed/messages'}>
                     <FontAwesomeIcon icon={faMessage}  className='text-largeT'/>
+                    </Link>
+                    
                     
                 </div>
                 <FontAwesomeIcon icon={!menuOpen ?  faBars : faSquareXmark}   

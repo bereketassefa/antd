@@ -26,7 +26,7 @@ export default function NewsCard({
   like,
 }) {
  
-
+// console.log(like)
   NewsCard.propTypes = {
     myKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     profilePic: PropTypes.string,
@@ -127,8 +127,9 @@ const handleLike = async () => {
   // Make an API call to fetch comments for the given post ID
   async function fetchComments() {
     try {
+      const url = `${import.meta.env.VITE_COUNT_COMMENTS}/${id}`
       const response = await axios.post(
-        `https://timeline.addispay.et/count/comment/${id}`
+       url
       );
       setCommentsCounts(response.data); // use response.data instead of response.json()
     } catch (error) {
@@ -220,7 +221,7 @@ const handleLike = async () => {
               icon={faThumbsUp}
             />{" "}
             <p className="text-smallP md:text-midP lg:text-largeP">
-              {like }
+              {like ==='0'? '' : like }
             </p>
           </li>
           <li className="flex items-center gap-2 cursor-pointer hovor:bg-red-300">

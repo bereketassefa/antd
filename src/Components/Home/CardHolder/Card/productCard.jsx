@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export default function ProductCard({key , img, productName }) {
- console.log(img)
+//  console.log(img)
   return (
     <div key={key} className='w-full flex  items-center justify-between'  >
         <div className='flex items-center gap-2'>

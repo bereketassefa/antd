@@ -99,13 +99,13 @@ export default function NewsHolder() {
       console.log("Parsed event data:", eventData);
       
       // Iterate through the array and log the 'id' of each object
-      eventData.forEach((item) => {
-        if ('id' in item) {
-          console.log("ID exists:", item.id);
-        } else {
-          console.log("ID does not exist in item");
-        }
-      });
+      // eventData.forEach((item) => {
+      //   if ('id' in item) {
+      //     console.log("ID exists:", item.id);
+      //   } else {
+      //     console.log("ID does not exist in item");
+      //   }
+      // });
       
       setTimeline(eventData);
     };
@@ -181,14 +181,14 @@ return (
       timeline.map((item, index) => (
         <NewsCard
           key={index}
-          image={item.image}
-          newContent={item.description}
+          image={item?.image}
+          newContent={item?.description}
           profilePic={item?.account[0]?.profilePicture}
-          timestamp={item.time}
-          id={item.id}
-          like={item.like}
+          timestamp={item?.time}
+          id={item?.id}
+          like={item?.like}
           companyName={item?.party?.party[0]?.party?.businessname}
-          account_id={item.account[0]?._id}
+          account_id={item?.account[0]?._id}
         />
       ))
     )}

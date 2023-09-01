@@ -40,9 +40,9 @@ const fetchAllData = async () => {
 const fetchRecordsOfProduct = async() => {
   try {
     setLoading(true);
-    
+    const url= `${import.meta.env.VITE_GET_PRODUCT_BY_UID}/${cookies?.user.Uid}`
   axios
-    .get(`https://product.qa.addispay.et/product/${cookies?.user.Uid}`
+    .get(url
       ,
       )
     .then((res) => {

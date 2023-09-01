@@ -13,7 +13,7 @@ function getFirstWord(str) {
 }
 
 export default function Card({ id, type, title, data }) {
-//  console.log(data)
+//  console.log(data.account.party)
     return (
         <div className='w-[300px] p-4 flex flex-col gap-4 bg-cards drop-shadow-xl' key={id}>
             <div className='w-full flex items-center justify-between'>
@@ -39,24 +39,24 @@ export default function Card({ id, type, title, data }) {
                                         :
                                         type === 'relationReq' ?
                                             <RequestCard
-                                                Uid={items?.account[0]?.Uid}
-                                                id={items.account[0]?._id}
+                                                Uid={items?.account?.Uid}
+                                                id={items.account?._id}
                                                 connections={items?.connections[0]}
                                                 img={items.img}
-                                                companyName={items?.account[0]?.party}
+                                                companyName={items?.account?.party}
                                             /> :
                                             type === 'relationRecom' ?
                                                 <RecommendedRelationCard
                                                     Uid={items?.account[0]?._id}
                                                     id={items.Uid}
                                                     img={items.img || getFirstWord(items.companyName)}
-                                                    companyName={items?.account[0]?.party}
+                                                    companyName={items?.account?.party}
                                                 /> :
                                                 type === 'relations' ?
                                                     <RelationCard
-                                                       id={items?.account[0]?._id}
-                                                        Uid={items.Uid}
-                                                        img={items.img }
+                                                       id={items?.account?._id}
+                                                        Uid={items?.Uid}
+                                                        img={items?.img }
                                                         companyName={items?.account[0]?.party}
                                                     /> :
                                                     null

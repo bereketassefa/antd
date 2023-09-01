@@ -31,6 +31,7 @@ import Contact from "./Components/SettingComponent/Contact";
 import PrivacyPolicy from "./Components/SettingComponent/PrivacyPolicy"
 import { useCookies } from "react-cookie";
 import SearchAll from "./Components/Topbar/SearchAllCompo/SearchAll";
+// import Message from "./Pages/Message/Message";
 
 function App() {
   const [cookies] = useCookies(['user']);
@@ -56,7 +57,7 @@ function App() {
           </Route>
             <Route index element={<Home />} />
             <Route path="/feed/notifications" element={<Notification />} />
-           
+            {/* <Route path='/feed/messages' element={<Message/>} /> */}
             
           </Route>
           <Route path="/feed/SearchNav" element={<SearchRoute />}>

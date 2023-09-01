@@ -92,8 +92,10 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
   useEffect(() => {
     const fetchAccountDataForProfile = async () => {
         try {
+          // console.log(cookies?.user._id)
+          const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${cookies?.user._id}`
             // const url= `http://localhost:8010/account/${cookies?.user._id}`;
-            await axios.get(`https://account.addispay.et/account/${cookies?.user._id}`)
+            await axios.get(url)
             .then((res)=>{
                 // console.log(res)
                 if(res?.data){
@@ -103,7 +105,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
                
             })
             .catch((error)=>{
-                message.error('Error occurred'+ error)
+                message.error('Error occurred '+ error)
             })
    
         } catch (error) {

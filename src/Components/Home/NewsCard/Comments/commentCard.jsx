@@ -38,8 +38,9 @@ export default function CommentCard({id,img,companyName, time , comment , likes 
     useEffect(() => {
         const fetchAccountDataForProfile = async () => {
             try {
+                const url= `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${id}`
                 // const url= `http://localhost:8010/account/${cookies?.user._id}`;
-                await axios.get(`https://account.addispay.et/account/${id}`)
+                await axios.get(url)
                 .then((res)=>{
                     // console.log(res)
                     if(res?.data){
@@ -99,13 +100,13 @@ export default function CommentCard({id,img,companyName, time , comment , likes 
                 {
                     replays?.map((item) => (
                         <CommentCard
-                            key={item.id || item._id}
-                            img={item.img}
-                            companyName={item.companyName}
-                            time={item.time}
-                            comment={item.comment}
-                            likes={item.likes}
-                            replays={item.repays}
+                            key={item?.id || item?._id}
+                            img={item?.img}
+                            companyName={item?.companyName}
+                            time={item?.time}
+                            comment={item?.comment}
+                            likes={item?.likes}
+                            replays={item?.repays}
                         />
                     ))
                 }

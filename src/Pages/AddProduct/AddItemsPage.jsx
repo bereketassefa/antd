@@ -3,10 +3,10 @@ import { IoClose } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { BiSolidImageAlt } from "react-icons/bi";
-import { message } from 'antd';
+import { message } from "antd";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-function AddItemsPage({handleModal}) {
+function AddItemsPage({ handleModal }) {
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productFeatures, setProductFeatures] = useState([]);
@@ -15,6 +15,8 @@ function AddItemsPage({handleModal}) {
   const [availability, setAvailability] = useState("In Stock");
   const [errors, setErrors] = useState({});
   const [productImage, setProductImage] = useState(null);
+  const [productPriceError, setProductPriceError] = useState("");
+  const [hsnNo, setHsnNo] = useState("");
   const [cookies] = useCookies(["user"]);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,41 +42,40 @@ function AddItemsPage({handleModal}) {
     } else {
       setErrors(validationErrors);
     }
-    
   };
   const handleSubmitProdcts = async () => {
     try {
-      console.log('helloo')
-      const Uid = cookies?.user.Uid
+      const Uid = cookies?.user.Uid;
       const formData = new FormData();
       formData.append("productName", productName);
       formData.append("productDescription", productDescription);
       formData.append("ProductFeature", feature); // Convert array to comma-separated string
       formData.append("ProductPrice", productPrice);
+      formData.append("HsnNo", hsnNo);
       // formData.append("Availablity", availability);
       formData.append("image", productImage);
       formData.append("Uid", Uid);
       // Add any other fields if necessary
-  const url= `${import.meta.env.VITE_ADD_PRODUCTS}`
-     const response = await axios.post(url, formData, {
+      const url = `${import.meta.env.VITE_ADD_PRODUCTS}`;
+      const response = await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-  
-      if (response.status === 200) { // Check if the response status is 200 OK
+
+      if (response.status === 200) {
+        // Check if the response status is 200 OK
         console.log("Data inserted successfully");
-        message.success('Product added successfully!');
-           // window.location.href = '/feed'; // Redirect to the dashboard or any other URL
-           handleModal()
+        message.success("Product added successfully!");
+        // window.location.href = '/feed'; // Redirect to the dashboard or any other URL
+        handleModal();
       }
-  
     } catch (error) {
       console.log(error);
-      message.error('Failed to add product. Please try again.'); // Show error message using antd's message component
+      message.error("Failed to add product. Please try again."); // Show error message using antd's message component
     }
   };
-  
+
   const handleAddFeature = () => {
     if (feature.length > 2) {
       setProductFeatures([...productFeatures, feature.trim()]);
@@ -198,16 +199,27 @@ function AddItemsPage({handleModal}) {
               <p className="text-red-500">{errors.productPrice}</p>
             )}
           </div>
+          <div className="w-56"></div>
+
           <div className="w-56">
-          
-           
+            <label htmlFor="HsnNo" className="text-xl text-black">
+              <p>HSN no</p>
+            </label>
+            <input
+              type="number"
+              id="HsnNo"
+              name="HsnNo"
+              placeholder="123456"
+              className="bg-[#FFF] outline-none bg-transparent w-full px-3 py-2 border-2 border-[#3222C6]"
+              value={hsnNo}
+              onChange={(e) => setHsnNo(e.target.value)}
+              required
+            />
+            {errors.hsnNo && <p className="text-red-500">{errors.hsnNo}</p>}
           </div>
         </div>
-
         <div className="">
-          <p className="text-xl font-semibold text-black">
-            Upload Product Image
-          </p>
+          <p className="text-xl text-black">Upload Product Image</p>
           <div className="w-[135px] h-[88px] border-2 border-[#3222C6] flex flex-col">
             {productImage ? (
               <img

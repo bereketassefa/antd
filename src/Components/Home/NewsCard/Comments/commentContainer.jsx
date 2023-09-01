@@ -86,8 +86,9 @@ export default function CommentContainer({ id, isOpen }) {
   useEffect(() => {
     const fetchAccountDataForProfile = async () => {
         try {
+          const url= `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${cookies?.user._id}`
             // const url= `http://localhost:8010/account/${cookies?.user._id}`;
-            await axios.get(`https://account.addispay.et/account/${cookies?.user._id}`)
+            await axios.get(url)
             .then((res)=>{
              //   console.log(res)
                 if(res?.data){
@@ -145,14 +146,14 @@ export default function CommentContainer({ id, isOpen }) {
       {Array.isArray(comments) ? comments.slice(0, visibleComments).map((items) => {
   return (
     <CommentCard 
-      key={items.id || items._id}  // Assuming `items` has a unique ID field
-      img={items.img}
+      key={items?.id || items._id}  // Assuming `items` has a unique ID field
+      img={items?.img}
       companyName={items?.party?.party[0]?.party?.businessname}
       id={items?.account[0]?._id}
-      time={items.time}
-      comment={items.text}
-      likes={items.likes}
-      replays={items.repays}
+      time={items?.time}
+      comment={items?.text}
+      likes={items?.likes}
+      replays={items?.repays}
     />
   );
 }) : null}
