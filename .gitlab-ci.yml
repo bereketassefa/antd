@@ -32,7 +32,7 @@ deploy:
     - echo "${SSH_HOST_KEY1}" > ~/.ssh/known_hosts
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     
-    - rsync -vv -rz --checksum --delete . root@196.188.237.74:/var/www/html/langingpage/
+    - rsync -vv -rz --checksum --delete . root@196.188.237.74:/var/www/html/landingpage/
 
   only:
   - master
