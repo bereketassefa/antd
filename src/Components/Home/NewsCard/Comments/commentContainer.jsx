@@ -14,6 +14,8 @@ export default function CommentContainer({ id, isOpen }) {
   const [showSeeMore, setShowSeeMore] = useState(true);
   const [cookies] = useCookies(['User']);
   const [profilePic, setProfilePic]= useState(null) 
+
+  
   const handleCommentSubmit = async () => {
     if (!commentText.trim()) return;  // Ensure comment is not just whitespace
 

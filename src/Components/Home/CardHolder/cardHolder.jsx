@@ -82,7 +82,7 @@ const fetchRelationRequest = async() => {
       )
     .then((res) => {
       setDataRelation(res.data);
-      // console.log(res.data);
+       console.log(res.data);
        
     });
 };

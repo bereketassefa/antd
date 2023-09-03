@@ -125,7 +125,7 @@ const hadleNavigateProfile = async(e)=>{
     e.preventDefault();
     try {
         const url =`${import.meta.env.VITE_FIND_MY_DATA}/${cookies.user._id}`
-        const response = await axios.get(url);
+        await axios.get(url);
         //  console.log(response?.data)
         //   setProfilePic(response?.data?.account[0]?.profilePicture)
 
@@ -200,6 +200,7 @@ useEffect(() => {
   searchResults.map((result, index) => (
     <SearchCard 
       key={index} 
+      id={result.id}
       name={result.name} 
       type={result.type}  // This will be either "business" or "product"
       image={result.type === 'business' ? result.profilePicture : result.imageUrl}  // Pass the appropriate image based on the type

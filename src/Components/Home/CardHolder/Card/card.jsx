@@ -39,22 +39,22 @@ export default function Card({ id, type, title, data }) {
                                         :
                                         type === 'relationReq' ?
                                             <RequestCard
-                                                Uid={items?.account?.Uid}
-                                                id={items.account?._id}
+                                                Uid={items?.account[0]?.Uid}
+                                                id={items.account[0]?._id}
                                                 connections={items?.connections[0]}
                                                 img={items.img}
-                                                companyName={items?.account?.party}
+                                                companyName={items?.account[0]?.party}
                                             /> :
                                             type === 'relationRecom' ?
                                                 <RecommendedRelationCard
                                                     Uid={items?.account[0]?._id}
                                                     id={items.Uid}
                                                     img={items.img || getFirstWord(items.companyName)}
-                                                    companyName={items?.account?.party}
+                                                    companyName={items?.account[0]?.party}
                                                 /> :
                                                 type === 'relations' ?
                                                     <RelationCard
-                                                       id={items?.account?._id}
+                                                       id={items?.account[0]?._id}
                                                         Uid={items?.Uid}
                                                         img={items?.img }
                                                         companyName={items?.account[0]?.party}

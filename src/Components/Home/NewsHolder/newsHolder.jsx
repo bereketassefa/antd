@@ -99,13 +99,13 @@ export default function NewsHolder() {
       console.log("Parsed event data:", eventData);
       
       // Iterate through the array and log the 'id' of each object
-      // eventData.forEach((item) => {
-      //   if ('id' in item) {
-      //     console.log("ID exists:", item.id);
-      //   } else {
-      //     console.log("ID does not exist in item");
-      //   }
-      // });
+      eventData.forEach((item) => {
+        if ('id' in item) {
+          console.log("ID exists:", item.id);
+        } else {
+          console.log("ID does not exist in item");
+        }
+      });
       
       setTimeline(eventData);
     };

@@ -46,9 +46,21 @@ export default function NewsCard({
   const [cookies] = useCookies(["user"]);
   const [Liked, setLiked] = useState(false);
   const [comments, setCommentsCounts] = useState("");
+  const [data , setTimeline] =useState('')
+  const socket = io('https://timeline.qa.addissystems.et', {
+    withCredentials: true,
+  
+  });
   const onCommentShow = () => {
     setShowComments(!showComments);
   };
+  // const [showLikeInfo, setShowLikeInfo] = useState(false);
+
+  const [likeInfo, setLikeInfo] = useState([
+    { name: 'John', image: 'john_image_url' },
+    { name: 'Jane', image: 'jane_image_url' },
+    // more users
+  ]);
 //   useEffect(() => {
 //     // Subscribe to the post
 //     socket.on(`post-${id}`, (data) => {
@@ -62,36 +74,30 @@ export default function NewsCard({
 //   }, [id]);
 
 const handleLike = async () => {
-    try {
-      // Validate data
-      // if (!id || !cookies?.user.Uid) {
-      //   throw new Error("Invalid data: missing post ID or user ID");
-      // }
-      // Make the request
-      const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user.Uid}/${id}`;
-      const response = await fetch(url, { method: "POST" });
-      const responseData = await response.json(); // Assuming server returns JSON
-      console.log(responseData)
-      // Check if the request was successful
-      if (!response.ok) {
-        throw new Error(responseData.message || "Failed to like or unlike the post");
-      }
-  
-      // Uncomment the following line if you want to use Socket.io for real-time updates
-      // socket.emit("likePost", id, cookies?.user.Uid);
-      
-      // Update the UI
-      setLiked((prevLiked) => !prevLiked);
-      if (responseData.newLikeCount) {
-        setAllLiked(responseData.newLikeCount);
-      } else {
-        // Fallback to optimistic updates
-        !Liked ? setAllLiked(allLikes + 1) : setAllLiked(allLikes - 1);
-      }
-    } catch (error) {
-      message.error(`An error occurred: ${error.message}`);
+  try {
+    const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user.Uid}/${id}`;
+    const response = await fetch(url, { method: "POST" });
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.message || "Failed to like or unlike the post");
     }
-  };
+
+    setLiked((prevLiked) => !prevLiked);
+
+    // Emit a 'likePost' event to the server
+    socket.emit('likePost', { postId: id, userId: cookies?.user.Uid });
+
+    if (responseData.newLikeCount) {
+      setAllLiked(responseData.newLikeCount);
+    } else {
+      !Liked ? setAllLiked(allLikes + 1) : setAllLiked(allLikes - 1);
+    }
+  } catch (error) {
+    message.error(`An error occurred: ${error.message}`);
+  }
+};
+
   
 
   const checkIfLiked = async () => {
@@ -122,6 +128,7 @@ const handleLike = async () => {
     // Fetch comments when component mounts
     fetchComments();
     checkIfLiked();
+    fetchMoreTimelines()
   }, [id]);
 
   // Make an API call to fetch comments for the given post ID
@@ -159,23 +166,44 @@ const handleLike = async () => {
       console.log(error);
     }
   };
+
+    async function fetchMoreTimelines() {
+  
+      const Url = `https://timeline.qa.addissystems.et/time-line/${id}`;
+
+      try {
+       const response=  await axios.get(Url)
+       if(response.status === 200){
+        console.log(response.data)
+         setTimeline(response.data)
+       }   
+      } catch (error) {
+        message.error('faild to fetch ')
+      }
+      // const response = await fetch(Url);
+  }
+
+  useEffect(() => {
+    // Listen for like updates
+    socket.on('likeCountUpdated', (data) => {
+      if (data.postId === id) { // Only update if this is the post that got liked/unliked
+        setAllLiked(data.newLikeCount);
+      }
+    });
+    return () => {
+      socket.off('likeCountUpdated');
+    };
+  }, [id]);
+
   return (
-    <div className="w-full bg-cards  drop-shadow-xl" key={myKey}>
+    <div className="w-full bg-cards drop-shadow-xl">
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-2">
-          <Avatar
-            onClick={hadleNavigateProfile}
-            img={profilePic ? profilePic : alternativeProfile}
-          />
-
+          <Avatar onClick={hadleNavigateProfile} img={profilePic ? profilePic : alternativeProfile} />
           <div className="flex flex-col gap-1">
-            <h1
-              onClick={hadleNavigateProfile}
-              className="font-bold flex items-center gap-2 text-smallP md:text-midP lg:text-largeP  "
-            >
-              {companyName}{" "}
+            <h1 onClick={hadleNavigateProfile} className="font-bold flex items-center gap-2 text-smallP md:text-midP lg:text-largeP">
+              {companyName}
             </h1>
-            {/* <img src={verified} alt="" /> */}
             <span className="text-smallP md:text-midP text-gray-400">
               {format(timestamp)}
             </span>
@@ -183,30 +211,41 @@ const handleLike = async () => {
         </div>
         <FontAwesomeIcon icon={faEllipsisVertical} />
       </div>
-
-      <div className="w-full flex flex-col ">
+      {/* {showLikeInfo && 
+              <div className="absolute bg-gray border p-4 w-1/2">
+                {likeInfo.map((user, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <img src={user.image} alt={user.name} width="50" height="50" />
+                    <span>{user.name}</span>
+                  </div>
+                ))}
+              </div>
+            } */}
+      <div className="w-full flex flex-col">
         <div className="p-4 w-full">
           <p className="text-smallP md:text-midP lg:text-largeP">
             {newContent}
           </p>
         </div>
-        <div className=" overflow-hidden flex z-0 items-center justify-center  w-full ">
-          {/* <Carousel  className='w-full flex items-center justify-center  '  > */}
-
-          <img
-            src={image}
-            alt="Image"
-            className="h-[300px] flex object-contain"
-          />
-
-          {/* <img src={image} alt="Image" className='h-[300px] flex object-contain'/>  */}
-
-          {/* </Carousel> */}
+        <div className="overflow-hidden flex z-0 items-center justify-center w-full">
+          <img src={image} alt="Image" className="h-[300px] flex object-contain" />
         </div>
       </div>
+      <div className="w-full flex flex-col z-10">
+        <div className="flex justify-between items-center p-4 border-b">
+          <span 
+            className="text-smallP md:text-midP lg:text-largeP cursor-pointer"
+            // onClick={() => setShowLikeInfo(!showLikeInfo)}
+          >
+            {allLikes === '0' ? '' : allLikes}
+        
+          </span>
+          <span className="text-smallP md:text-midP lg:text-largeP">
+  {comments.postCount === undefined ? '' : comments.postCount === '0' ? '' : `${comments.postCount} comments`}
+</span>
 
-      <div className="w-full flex z-10">
-        <ul className="flex items-center w-full gap-2 p-4">
+        </div>
+        <ul className="flex items-center p-4 gap-4">
           <li className="flex items-center gap-2">
             <FontAwesomeIcon
               onClick={() => {
@@ -216,31 +255,28 @@ const handleLike = async () => {
               className={
                 Liked
                   ? "text-largeP md:text-smallT cursor-pointer text-secondary"
-                  : "text-largeP  cursor-pointer md:text-smallT text-gray"
+                  : "text-largeP cursor-pointer md:text-smallT text-gray"
               }
               icon={faThumbsUp}
-            />{" "}
-            <p className="text-smallP md:text-midP lg:text-largeP">
-              {like ==='0'? '' : like }
-            </p>
+            />
           </li>
-          <li className="flex items-center gap-2 cursor-pointer hovor:bg-red-300">
+          <li className="flex items-center gap-2 cursor-pointer">
             <FontAwesomeIcon
               onClick={onCommentShow}
               className="text-largeP md:text-smallT text-gray-400"
               icon={faMessage}
-            />{" "}
-            <p className="text-smallP md:text-midP lg:text-largeP">
-              {comments.postCount}
-            </p>
+            />
           </li>
-          {/* <li className='flex items-center gap-2'>
-                        <FontAwesomeIcon className='text-largeP md:text-smallT text-gray-400' icon={faShare}/> <p className='text-smallP md:text-midP lg:text-largeP'>{comments.postCount}</p>
-                    </li> */}
         </ul>
       </div>
-
       <CommentContainer id={id} isOpen={showComments} />
     </div>
   );
+  
+  
+  
+  
+
+  
+  
 }
