@@ -108,6 +108,7 @@ export default function NewsHolder() {
       });
       
       setTimeline(eventData);
+
     };
     
     eventSource.onerror = (error) => {

@@ -178,7 +178,7 @@ const handleLike = async () => {
          setTimeline(response.data)
        }   
       } catch (error) {
-        message.error('faild to fetch ')
+        // message.error('faild to fetch ')
       }
       // const response = await fetch(Url);
   }
