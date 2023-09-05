@@ -25,17 +25,18 @@ import RequestedRelation from "./Components/RelationsComponents/RequestedRelatio
 import General from "./Components/SettingComponent/General";
 import Second from "./Layouts/Secondary/Second";
 import EditProfile from "./Components/SettingComponent/EditProfile";
-import NotificationSetting from "./Components/SettingComponent/NotificationSetting"
+import NotificationSetting from "./Components/SettingComponent/NotificationSetting";
 import Help from "./Components/SettingComponent/Help";
 import Contact from "./Components/SettingComponent/Contact";
-import PrivacyPolicy from "./Components/SettingComponent/PrivacyPolicy"
+import PrivacyPolicy from "./Components/SettingComponent/PrivacyPolicy";
 import { useCookies } from "react-cookie";
 import SearchAll from "./Components/Topbar/SearchAllCompo/SearchAll";
+import ChatPage from "./Components/Chat/ChatPage";
 
 // import Message from "./Pages/Message/Message";
 
 function App() {
-  const [cookies] = useCookies(['user']);
+  const [cookies] = useCookies(["user"]);
   return (
     <ErrorProvider>
       <Routes>
@@ -46,45 +47,57 @@ function App() {
           <Route path="/forget-password" element={<ForgotPassPage />} />
         </Route>
 
-        
-       
-        <Route path="/feed" element={cookies.user ? <Primary /> : <Navigate to="/" />}>
+        <Route
+          path="/feed"
+          element={cookies.user ? <Primary /> : <Navigate to="/" />}
+        >
           <Route path="/feed" element={<PageLayout />}>
-             <Route path="/feed/Relations" element={<RelationRoute />}>
-           
-            <Route path="/feed/Relations/Recommended" element={<RecomendedRelation />} />
-            <Route path="/feed/Relations/Requested" element={<RequestedRelation/>} />
-            <Route path="/feed/Relations/relation" element={<Relations />} />
-          </Route>
+            <Route path="/feed/Relations" element={<RelationRoute />}>
+              <Route
+                path="/feed/Relations/Recommended"
+                element={<RecomendedRelation />}
+              />
+              <Route
+                path="/feed/Relations/Requested"
+                element={<RequestedRelation />}
+              />
+              <Route path="/feed/Relations/relation" element={<Relations />} />
+            </Route>
             <Route index element={<Home />} />
             <Route path="/feed/notifications" element={<Notification />} />
-            {/* <Route path='/feed/messages' element={<Message/>} /> */}
-            
+            <Route path="/feed/messages" element={<ChatPage />} />
           </Route>
           <Route path="/feed/SearchNav" element={<SearchRoute />}>
-          <Route path="/feed/SearchNav/Company" element={<SearchCompany />} />
-          <Route path="/feed/SearchNav/All" element={<SearchAll />} />
-          {/* <Route path="/SearchNav/All" element={<SearchAll />} /> */}
-          <Route path="/feed/SearchNav/SearchProduct" element={<SearchProduct />} />
-        </Route>
-        
+            <Route path="/feed/SearchNav/Company" element={<SearchCompany />} />
+            <Route path="/feed/SearchNav/All" element={<SearchAll />} />
+            {/* <Route path="/SearchNav/All" element={<SearchAll />} /> */}
+            <Route
+              path="/feed/SearchNav/SearchProduct"
+              element={<SearchProduct />}
+            />
+          </Route>
+
           <Route path="/feed/settings" element={<Second />}>
-              <Route index element={<General />} />
-              <Route path="/feed/settings/edit" element={<EditProfile />} />
-              <Route path="/feed/settings/NotificationSetting" element={<NotificationSetting />} />
-              <Route path="/feed/settings/Help" element={<Help/>} />
-              <Route path="/feed/settings/contact" element={<Contact />} />
-              <Route path="/feed/settings/Privacy" element={<PrivacyPolicy />} />
-            </Route>
+            <Route index element={<General />} />
+            <Route path="/feed/settings/edit" element={<EditProfile />} />
+            <Route
+              path="/feed/settings/NotificationSetting"
+              element={<NotificationSetting />}
+            />
+            <Route path="/feed/settings/Help" element={<Help />} />
+            <Route path="/feed/settings/contact" element={<Contact />} />
+            <Route path="/feed/settings/Privacy" element={<PrivacyPolicy />} />
+          </Route>
           <Route path="/feed/profile/:id" element={<Profile />}>
             <Route index element={<About />} />
             <Route path="/feed/profile/:id/post" element={<Post />} />
-            <Route path="/feed/profile/:id/demand-products" element={<DemandProducts />} />
+            <Route
+              path="/feed/profile/:id/demand-products"
+              element={<DemandProducts />}
+            />
             <Route path="/feed/profile/:id/relations" element={<Relations />} />
             <Route path="/feed/profile/:id/bids" element={<Bids />} />
           </Route>
-
-         
         </Route>
       </Routes>
     </ErrorProvider>
