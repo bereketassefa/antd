@@ -120,6 +120,39 @@ export const Search = [
   //   title: " Appl Name ",
   // },
 ];
+export const Chat = [
+  {
+    key: 1,
+    image: BRhotel,
+    title: "Company Name ",
+    description: "Lorem ipsum dolor sit amet....",
+  },
+  {
+    key: 2,
+    image: star,
+    title: "EagleLion Tech",
+    description: "Lorem ipsum dolor sit amet....",
+  },
+  {
+    key: 3,
+    image: bbm,
+    title: "SkyLight Hotel ",
+    description: "Lorem ipsum dolor sit amet....",
+  },
+  {
+    key: 4,
+    image: bt,
+    title: "Company Name ",
+    description: "Lorem ipsum dolor sit amet....",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    description: "Lorem ipsum dolor sit amet....",
+  },
+ 
+];
 
 export const Requested = [
   {
