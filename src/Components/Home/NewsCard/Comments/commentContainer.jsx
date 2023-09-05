@@ -14,8 +14,6 @@ export default function CommentContainer({ id, isOpen }) {
   const [showSeeMore, setShowSeeMore] = useState(true);
   const [cookies] = useCookies(['User']);
   const [profilePic, setProfilePic]= useState(null) 
-
-  
   const handleCommentSubmit = async () => {
     if (!commentText.trim()) return;  // Ensure comment is not just whitespace
 
@@ -69,7 +67,7 @@ export default function CommentContainer({ id, isOpen }) {
         const response = await fetch(url);
         const data = await response.json();
         setComments(data);
-        // console.log(data)
+        console.log(data)
         if (data.length <= 2) {
           setShowSeeMore(false);
         }
@@ -151,7 +149,7 @@ export default function CommentContainer({ id, isOpen }) {
       key={items?.id || items._id}  // Assuming `items` has a unique ID field
       img={items?.img}
       companyName={items?.party?.party[0]?.party?.businessname}
-      id={items?.account[0]?._id}
+      id={items?.account?._id}
       time={items?.time}
       comment={items?.text}
       likes={items?.likes}

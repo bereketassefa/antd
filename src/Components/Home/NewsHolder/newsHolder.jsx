@@ -97,7 +97,9 @@ export default function NewsHolder() {
       setLoading(false);
       const eventData = JSON.parse(event.data); // This should be an array
       console.log("Parsed event data:", eventData);
-      
+      if (eventData == []){
+        message.error('empty')
+      }
       // Iterate through the array and log the 'id' of each object
       eventData.forEach((item) => {
         if ('id' in item) {

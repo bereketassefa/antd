@@ -13,6 +13,7 @@ import CommentContainer from "./Comments/commentContainer";
 import Avatar from "../../../Fields/Avatar/avatar";
 import axios from "axios";
 import PropTypes from "prop-types";
+import logoAddis from '../../../assets/logo/addisLogoS.png' 
 import { io } from "socket.io-client";
 export default function NewsCard({
   account_id,
@@ -47,6 +48,8 @@ export default function NewsCard({
   const [Liked, setLiked] = useState(false);
   const [comments, setCommentsCounts] = useState("");
   const [data , setTimeline] =useState('')
+  const [showLikeInfo, setShowLikeInfo] = useState(false);
+  const [whoLikedPost, setWhoLikedPost] = useState([]);
   const socket = io('https://timeline.qa.addissystems.et', {
     withCredentials: true,
   
@@ -56,22 +59,18 @@ export default function NewsCard({
   };
   // const [showLikeInfo, setShowLikeInfo] = useState(false);
 
-  const [likeInfo, setLikeInfo] = useState([
-    { name: 'John', image: 'john_image_url' },
-    { name: 'Jane', image: 'jane_image_url' },
-    // more users
-  ]);
-//   useEffect(() => {
-//     // Subscribe to the post
-//     socket.on(`post-${id}`, (data) => {
-//       setAllLiked(data.newLikeCount);
-//     });
+  const [likeInfo, setLikeInfo] = useState(null);
+  useEffect(() => {
+    // Subscribe to the post
+    socket.on(`post-${id}`, (data) => {
+      setAllLiked(data.newLikeCount);
+    });
 
-//     return () => {
-//       // Unsubscribe when the component unmounts
-//       socket.off(`post-${id}`);
-//     };
-//   }, [id]);
+    return () => {
+      // Unsubscribe when the component unmounts
+      socket.off(`post-${id}`);
+    };
+  }, [id]);
 
 const handleLike = async () => {
   try {
@@ -86,7 +85,7 @@ const handleLike = async () => {
     setLiked((prevLiked) => !prevLiked);
 
     // Emit a 'likePost' event to the server
-    socket.emit('likePost', { postId: id, userId: cookies?.user.Uid });
+    // socket.emit('likePost', { postId: id, userId: cookies?.user.Uid });
 
     if (responseData.newLikeCount) {
       setAllLiked(responseData.newLikeCount);
@@ -194,9 +193,27 @@ const handleLike = async () => {
       socket.off('likeCountUpdated');
     };
   }, [id]);
+  const fetchUsersWhoLikedPost = async () => {
+    try {
+
+      const response = await axios.post(`https://timeline.qa.addissystems.et/Like/${id}`);
+      const data = await response.data
+      setWhoLikedPost(data.users);
+      console.log(data.users)
+      
+    } catch (error) {
+      console.error('Failed to fetch users who liked the post:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (showLikeInfo) {
+      fetchUsersWhoLikedPost();
+    }
+  }, [showLikeInfo]);
 
   return (
-    <div className="w-full bg-cards drop-shadow-xl">
+    <div className="w-full bg-cards drop-shadow-xl relative">
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-2">
           <Avatar onClick={hadleNavigateProfile} img={profilePic ? profilePic : alternativeProfile} />
@@ -211,16 +228,7 @@ const handleLike = async () => {
         </div>
         <FontAwesomeIcon icon={faEllipsisVertical} />
       </div>
-      {/* {showLikeInfo && 
-              <div className="absolute bg-gray border p-4 w-1/2">
-                {likeInfo.map((user, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <img src={user.image} alt={user.name} width="50" height="50" />
-                    <span>{user.name}</span>
-                  </div>
-                ))}
-              </div>
-            } */}
+  
       <div className="w-full flex flex-col">
         <div className="p-4 w-full">
           <p className="text-smallP md:text-midP lg:text-largeP">
@@ -231,27 +239,24 @@ const handleLike = async () => {
           <img src={image} alt="Image" className="h-[300px] flex object-contain" />
         </div>
       </div>
+  
       <div className="w-full flex flex-col z-10">
         <div className="flex justify-between items-center p-4 border-b">
-          <span 
+          <span
             className="text-smallP md:text-midP lg:text-largeP cursor-pointer"
-            // onClick={() => setShowLikeInfo(!showLikeInfo)}
+            onClick={() => setShowLikeInfo(true)}
           >
             {allLikes === '0' ? '' : allLikes}
-        
           </span>
           <span className="text-smallP md:text-midP lg:text-largeP">
-  {comments.postCount === undefined ? '' : comments.postCount === '0' ? '' : `${comments.postCount} comments`}
-</span>
-
+          {comments.postCount === undefined ? 'Loading...' : comments.postCount === '0' ? '' : `${comments.postCount} comments`}
+          </span>
         </div>
+  
         <ul className="flex items-center p-4 gap-4">
           <li className="flex items-center gap-2">
             <FontAwesomeIcon
-              onClick={() => {
-                handleLike();
-                setLiked(!Liked);
-              }}
+              onClick={handleLike}
               className={
                 Liked
                   ? "text-largeP md:text-smallT cursor-pointer text-secondary"
@@ -269,7 +274,39 @@ const handleLike = async () => {
           </li>
         </ul>
       </div>
+      
+      {/* Like Info Modal */}
+      {showLikeInfo && (
+      <div 
+        className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
+        onClick={() => setShowLikeInfo(false)}
+      >
+        <div 
+      className="bg-white p-4 rounded  sm:w-3/4 md:w-1/2 lg:w-1/2  flex flex-col overflow-y-auto"
+
+          onClick={(e) => e.stopPropagation()}
+        >
+           <div className="flex items-center mb-4">
+            <img src={logoAddis} alt="Company Logo" className="w-6 h-6 self-center ml-3" />
+            <h3 className="text-center ml-7">company who liked this</h3>
+          </div>
+          <div className={`flex-1 overflow-y-auto ${whoLikedPost.length > 6 ? 'max-h-60' : ''}`}>
+            {whoLikedPost?.map((user) => (
+              <div key={user?.uid} className="flex items-center mb-2">
+                <Avatar img={user?.account?.profilePicture ? user?.account?.profilePicture  :alternativeProfile} />
+                <span className="ml-4"> {user.account?.party?.length > 19 
+                    ? `${user?.account?.party.slice(0, 19).toLowerCase()}...` 
+                    : user?.account?.party}</span>
+                     
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+  
       <CommentContainer id={id} isOpen={showComments} />
+      
     </div>
   );
   

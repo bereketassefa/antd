@@ -8,27 +8,12 @@ export default function Post(props) {
   // console.log(window.location.pathname.split('/')[3])
    const id =window.location.pathname.split('/')[3]
 
-   const socket = io('http://localhost:8020', {
-    reconnection: true,
-    reconnectionAttempts: Infinity,
-    reconnectionDelay: 1000,
-    reconnectionDelayMax: 5000,
-    randomizationFactor: 0.5
-  });
-  
 
-   socket.on('connect', () => {
-     console.log('Successfully connected to the server.');
-   });
-   
-   socket.on('data_updated', (newData) => {
-     console.log('Received new data:', newData);
    
      // You can call your fetchMoreTimeliness function here,
      // or update the state directly if the new data is provided
-     fetchMoreTimeliness();
-   });
-   
+    
+ 
 
 // console.log(id)
   const { displayError } = useContext(ErrorContext);
@@ -46,6 +31,7 @@ export default function Post(props) {
   
       if (response.status === 200) {
         setTimeline(response.data);
+        console.log(response.data)
       }
     } catch (error) {
       message.error('Failed to fetch');
@@ -53,6 +39,10 @@ export default function Post(props) {
       setLoading(false);
     }
   }
+
+  useEffect(()=>{
+    fetchMoreTimeliness();
+  })
   return (
     <div className='flex flex-col w-full gap-2'>
       {timeline && timeline.timelines && timeline.timelines.map((item, index) => (
@@ -63,7 +53,7 @@ export default function Post(props) {
           timestamp={item.time}
           id={item.id}
           like={item.like}
-          comanyName={timeline?.party}
+          companyName={timeline?.party}
         />
       ))}
     </div>
