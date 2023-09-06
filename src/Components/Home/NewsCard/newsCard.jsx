@@ -364,12 +364,14 @@ const handleLike = async () => {
           <div className={`flex-1 overflow-y-auto ${whoLikedPost.length > 6 ? 'max-h-60' : ''}`}>
             {whoLikedPost?.map((user) => (
               <div key={user?.uid} className="flex items-center mb-2">
-                <Avatar img={user?.account?.profilePicture ? user?.account?.profilePicture  :alternativeProfile} />
-                <span className="ml-4"> {user.account?.party?.length > 19 
-                    ? `${user?.account?.party.slice(0, 19).toLowerCase()}...` 
-                    : user?.account?.party}</span>
-                     
-              </div>
+              <Avatar className="h-8 w-8" img={user?.account?.profilePicture ? user?.account?.profilePicture : alternativeProfile} />
+              <span className="ml-4 text-sm"> 
+                {user?.account?.party?.length > 19 
+                  ? `${user?.account?.party.slice(0, 19).toLowerCase()}...` 
+                  : user?.account?.party}
+              </span>
+            </div>
+            
             ))}
           </div>
         </div>
