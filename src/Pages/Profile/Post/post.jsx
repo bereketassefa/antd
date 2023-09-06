@@ -31,10 +31,10 @@ export default function Post(props) {
   
       if (response.status === 200) {
         setTimeline(response.data);
-        console.log(response.data)
+        // console.log(response.data)
       }
     } catch (error) {
-      message.error('Failed to fetch');
+      console.warn('Failed to fetch');
     } finally {
       setLoading(false);
     }

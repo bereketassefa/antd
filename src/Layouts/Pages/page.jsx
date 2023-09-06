@@ -9,7 +9,7 @@ export default function PageLayout() {
     const [showAddProductModal, setShowAddProductModal] = useState(false)
 
     function handleShowModal() {
-        console.log('kkkkkkk')
+      
       setShowAddProductModal(!showAddProductModal)
     }
     return (

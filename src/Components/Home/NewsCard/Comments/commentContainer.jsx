@@ -67,7 +67,7 @@ export default function CommentContainer({ id, isOpen }) {
         const response = await fetch(url);
         const data = await response.json();
         setComments(data);
-        console.log(data)
+        // console.log(data)
         if (data.length <= 2) {
           setShowSeeMore(false);
         }
@@ -98,6 +98,7 @@ export default function CommentContainer({ id, isOpen }) {
                
             })
             .catch((error)=>{
+              console.warn(error)
                 // message.error('Cant find user account')
             })
             
@@ -134,13 +135,14 @@ export default function CommentContainer({ id, isOpen }) {
       </div>
 
       <div className='w-full flex items-center justify-start'>
-        <div className='flex p-2 bg-lightBg'>
-          <select className='outline-none bg-transparent text-smallP md:text-midP lg:text-largeP'>
-            <option><p className='text-smallP md:text-midP lg:text-largeP'>Most Recent</p></option>
-            <option value=""><p className='text-smallP md:text-midP lg:text-largeP'>Yesterday</p></option>
-          </select>
-        </div>
-      </div>
+  <div className='flex p-2 bg-lightBg'>
+    <select className='outline-none bg-transparent text-smallP md:text-midP lg:text-largeP'>
+      <option className='text-smallP md:text-midP lg:text-largeP'>Most Recent</option>
+      <option className='text-smallP md:text-midP lg:text-largeP' value="">Yesterday</option>
+    </select>
+  </div>
+</div>
+
 
       <div className='w-full flex flex-col gap-4'>
       {Array.isArray(comments) ? comments.slice(0, visibleComments).map((items) => {

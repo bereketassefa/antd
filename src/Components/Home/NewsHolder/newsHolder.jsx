@@ -1,12 +1,12 @@
-import React, { useEffect,useContext, useRef, useState } from 'react';
+import  { useEffect, useRef, useState } from 'react';
 import NewsCard from '../NewsCard/newsCard';
-import { ErrorContext } from '../../Error/ErrorContext';
+// import { ErrorContext } from '../../Error/ErrorContext';
 
 import { message } from 'antd';
 import axios from 'axios';
 // import { useCookies } from 'react-cookie';
 export default function NewsHolder() {
-  const { displayError } = useContext(ErrorContext);
+  // const { displayError } = useContext(ErrorContext);
   const [loading, setLoading] = useState(false);
   const [timeline, setTimeline] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -14,7 +14,7 @@ export default function NewsHolder() {
   const elementRef = useRef(null);
   const [error] = useState(null);
   // const [cookies] = useCookies(['user'])
-  let loadingMsg;
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(onIntersection, {
@@ -29,103 +29,93 @@ export default function NewsHolder() {
     return () => observer.disconnect();
   }, [timeline, hasMore]);
 
-  // async function fetchMoreTimelines() {
-  //   let serverDownTimer;
-   
-  //   try {
-  //     setLoading(true);
-  
-  //     serverDownTimer = setTimeout(() => {
-       
-  //       setLoading(false);
-  //     }, 20000); // Set the timer for 10 seconds
-
-  //     loadingMsg = message.loading('Loading news...', 0);
-  //     setTimeout(() => {
-  //         loadingMsg();  // Close the loading message after 1 minute
-  //         // message.error("Loading took too long. Please try again later.");  // Inform the user
-  //     }, 10000); 
-  
-  //     const Url = `${import.meta.env.VITE_GET_ALL_POSTS}`;
-  //     // const response = await fetch(Url);
-  //     try {
-  //       loadingMsg(); 
-  //       await axios.get(Url)
-  //       .then((response)=>{
-  //         setLoading(false);
-  //         setHasMore(false);
-  //         setTimeout(loadingMsg, 0);
-  //         if(response.status === 200){
-  //          console.log(response.data)
-  //           setTimeline(response.data)
-  //         }  
-  //       })
-  //     } catch (error) {
-  //       setLoading(false);
-  //       setHasMore(false);
-  //       setTimeout(loadingMsg, 0);
-  //       // message.error('faild to fetch ')
-  //     }
-
-  
-  //     clearTimeout(serverDownTimer); // Clear the timer if data is fetched successfully before 10 seconds
-  //   } catch (error) {
-  //     setLoading(false);
-     
-  //     if (error.message === "Failed to fetch") {
-  //       message.error("Network Error: Failed to fetch data.");
-  //       loadingMsg(); 
-  //     } else {
-  //       message.error("Error fetching data.");
-  //       loadingMsg(); 
-  //     }
-  //   } finally {
-  //     setLoading(false);
-  //     setTimeout(() => {
-  //       if (loading) {
-  //         displayError("Server down");
-  //       }
-  //     }, 20000);
-  //   }
-  // }
   useEffect(() => {
-    try {
-      setLoading(true);
-      const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POSTS}`);
+    let serverDownTimer, loadingMsgId;
     
-    eventSource.onmessage = (event) => {
-      setLoading(false);
-      const eventData = JSON.parse(event.data); // This should be an array
-      console.log("Parsed event data:", eventData);
-      if (eventData == []){
-        message.error('empty')
-      }
-      // Iterate through the array and log the 'id' of each object
-      eventData.forEach((item) => {
-        if ('id' in item) {
-          console.log("ID exists:", item.id);
-        } else {
-          console.log("ID does not exist in item");
+    async function fetchMoreTimelines() {
+      try {
+        setLoading(true);
+    
+        serverDownTimer = setTimeout(() => {
+          setLoading(false);
+        }, 20000);
+    
+        loadingMsgId = message.loading('Loading news...', 0);
+    
+        const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
+        const response = await axios.get(Url);
+  
+        clearTimeout(serverDownTimer);
+        
+        if (loadingMsgId) {
+          loadingMsgId();
         }
-      });
-      
-      setTimeline(eventData);
-
-    };
-    
-    eventSource.onerror = (error) => {
-      console.error('SSE Error:', error);
-    };
-    
-    return () => {
-      eventSource.close();
-    };
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
+  
+        if(response.status === 200){
+          setTimeline(response.data);
+        }
+  
+        setLoading(false);
+        setHasMore(false);
+  
+      } catch (error) {
+        setLoading(false);
+        setHasMore(false);
+        
+        if (loadingMsgId) {
+          loadingMsgId();
+        }
+  
+        if (error.message === "Failed to fetch") {
+          message.error("Network Error: Failed to fetch data.");
+        } else {
+          message.error("Error fetching data.");
+        }
+      }
     }
     
-  }, []);
+    fetchMoreTimelines();
+  }, []); // added an empty dependency array
+  
+
+  // useEffect(() => {
+  //   try {
+  //     setLoading(true);
+  //     const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POSTS}`);
+    
+  //   eventSource.onmessage = (event) => {
+  //     setLoading(false);
+  //     const eventData = JSON.parse(event.data); // This should be an array
+  //     console.log("Parsed event data:", eventData);
+  //     if (eventData == []){
+  //       message.error('empty')
+  //     }
+  //     // Iterate through the array and log the 'id' of each object
+  //     eventData.forEach((item) => {
+  //       if ('id' in item) {
+  //         console.log("ID exists:", item.id);
+  //       } else {
+  //         console.log("ID does not exist in item");
+  //       }
+  //     });
+      
+  //     setTimeline(eventData);
+
+  //   };
+    
+  //   eventSource.onerror = (error) => {
+  //     console.error('SSE Error:', error);
+  //   };
+    
+  //   return () => {
+  //     eventSource.close();
+  //   };
+  //   } catch (error) {
+  //     setLoading(false);
+  //     console.error(error);
+  //   }
+    
+  // }, []);
   
   
 
@@ -185,6 +175,7 @@ return (
         <NewsCard
           key={index}
           image={item?.image}
+          myKey={index}
           newContent={item?.description}
           profilePic={item?.account[0]?.profilePicture}
           timestamp={item?.time}

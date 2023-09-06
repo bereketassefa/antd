@@ -61,12 +61,17 @@ const fetchRecordsOfProduct = async() => {
 };
 const fetchRecordsOfRelation = async () => {
   try {
-    setLoading(true);
+    // setLoading(true);
     const url = `${import.meta.env.VITE_FETCH_ACCEPTED_RELATION}/${cookies?.user.Uid}`;
     const res = await axios.get(url);
+    if (res.data.status === 404){
+      console.log('No data found for the provided Uid')
+    }
+
     setDataSource(res.data);
-    console.log(res.data[0])
+    // console.log(res.data[0])
   } catch (error) {
+    console.warn('empty');
     // If you'd like to show the user a notification, you could use Ant Design's message component like so:
     // message.error('An error occurred while fetching data. Please try again.');
   } finally {
@@ -82,7 +87,7 @@ const fetchRelationRequest = async() => {
       )
     .then((res) => {
       setDataRelation(res.data);
-       console.log(res.data);
+      console.log(res.data);
        
     });
 };
@@ -142,7 +147,7 @@ useEffect(() => {
    
     <div className='hidden lg:flex items-start justify-center w-[300px] flex-col gap-2'>
         {
-        cards.map(items => {
+        cards?.map(items => {
           // Check if items.data has data
           if (items.data.length > 0) {
             return (

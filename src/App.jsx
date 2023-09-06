@@ -31,6 +31,7 @@ import Contact from "./Components/SettingComponent/Contact";
 import PrivacyPolicy from "./Components/SettingComponent/PrivacyPolicy"
 import { useCookies } from "react-cookie";
 import SearchAll from "./Components/Topbar/SearchAllCompo/SearchAll";
+import { ToastProvider } from "./Components/Toast/toastContext";
 
 // import Message from "./Pages/Message/Message";
 
@@ -38,6 +39,7 @@ function App() {
   const [cookies] = useCookies(['user']);
   return (
     <ErrorProvider>
+        <ToastProvider>
       <Routes>
         <Route path="/">
           <Route index element={<LoginPage />} />
@@ -87,6 +89,7 @@ function App() {
          
         </Route>
       </Routes>
+      </ToastProvider>
     </ErrorProvider>
   );
 }

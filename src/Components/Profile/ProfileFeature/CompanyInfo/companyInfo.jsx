@@ -69,7 +69,7 @@ const [isLoading, setIsLoading] = useState(false);
           "Content-Type": "multipart/form-data",
         },
       };
-      const response = await axios.post("https://account.addispay.et/uploads", formData, config);
+      const response = await axios.post("https://account.qa.addissystems.et/uploads", formData, config);
       if (response.status === 200) {
         setSelectedImage(response.data.profilePicture);
         console.log(response.data.profilePicture)
@@ -157,7 +157,7 @@ const [isLoading, setIsLoading] = useState(false);
         throw new Error("Request failed"); // Handle non-successful response
       }
   
-      const data = await response.json();
+      await response.json();
       //   console.log(data); // Process the response data if needed
       
       // Call FetchCountRetation here to update the count
@@ -181,7 +181,7 @@ const [isLoading, setIsLoading] = useState(false);
   
       try {
      
-        const url = `https://connection.qa.addispay.et/connection/get/${OwnerUid}/${UidData}`;
+        const url = `https://connection.qa.addissystems.et/connection/get/${OwnerUid}/${UidData}`;
         const response = await fetch(url, {
           method: "GET",
         });
@@ -254,7 +254,7 @@ const [isLoading, setIsLoading] = useState(false);
     const fetchAccountDataForProfile = async () => {
         try {
             // const url= `http://localhost:8010/account/${cookies?.user._id}`;
-            await axios.get(`https://account.addispay.et/account/${id}`)
+            await axios.get(`https://account.qa.addissystems.et/account/${id}`)
             .then((res)=>{
                 // console.log(res)
                 if(res?.data){
@@ -265,7 +265,7 @@ const [isLoading, setIsLoading] = useState(false);
                
             })
             .catch((error)=>{
-                message.error('Error occurred')
+                console.warn(error)
             })
    
         } catch (error) {
@@ -304,14 +304,14 @@ const DisconnectPopup = ({ onConfirm, onCancel }) => {
     </div>
   );
 };
-console.log(countData)
+// console.log(countData)
   return (
     
     <>
     
     <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem]">
                 <div className="w-full flex items-end justify-between">
-                <div className="bg-white w-fit p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[100px] md:w-[130px] aspect-square flex justify-end">
+                <div className="bg-white w-fit p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
     <div className="w-full flex items-center justify-center">
         <img className="w-full object-cover h-full flex" src={profilePic ? profilePic : alternativeProfile} alt="Profile" />
     </div>

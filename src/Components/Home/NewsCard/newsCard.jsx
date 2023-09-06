@@ -15,6 +15,11 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import logoAddis from '../../../assets/logo/addisLogoS.png' 
 import { io } from "socket.io-client";
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useToast } from '../../Toast/toastContext';
+
 export default function NewsCard({
   account_id,
   myKey,
@@ -26,13 +31,13 @@ export default function NewsCard({
   id,
   like,
 }) {
- 
+  const { showToast } = useToast();
 // console.log(like)
   NewsCard.propTypes = {
-    myKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+   
     profilePic: PropTypes.string,
     items: PropTypes.array,
-    comanyName: PropTypes.string.isRequired,
+    companyName: PropTypes.string.isRequired,
     timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
       .isRequired,
     newContent: PropTypes.string.isRequired,
@@ -40,6 +45,7 @@ export default function NewsCard({
     key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     like: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    myKey: PropTypes.any.isRequired,
   };
 //   const socket = io("http://localhost:8020");
   const [allLikes, setAllLiked] = useState(like);
@@ -50,6 +56,8 @@ export default function NewsCard({
   const [data , setTimeline] =useState('')
   const [showLikeInfo, setShowLikeInfo] = useState(false);
   const [whoLikedPost, setWhoLikedPost] = useState([]);
+  const [showDownloadCard, setShowDownloadCard] = useState(false);
+
   const socket = io('https://timeline.qa.addissystems.et', {
     withCredentials: true,
   
@@ -89,6 +97,7 @@ const handleLike = async () => {
 
     if (responseData.newLikeCount) {
       setAllLiked(responseData.newLikeCount);
+
     } else {
       !Liked ? setAllLiked(allLikes + 1) : setAllLiked(allLikes - 1);
     }
@@ -173,7 +182,7 @@ const handleLike = async () => {
       try {
        const response=  await axios.get(Url)
        if(response.status === 200){
-        console.log(response.data)
+        // console.log(response.data)
          setTimeline(response.data)
        }   
       } catch (error) {
@@ -182,17 +191,17 @@ const handleLike = async () => {
       // const response = await fetch(Url);
   }
 
-  useEffect(() => {
-    // Listen for like updates
-    socket.on('likeCountUpdated', (data) => {
-      if (data.postId === id) { // Only update if this is the post that got liked/unliked
-        setAllLiked(data.newLikeCount);
-      }
-    });
-    return () => {
-      socket.off('likeCountUpdated');
-    };
-  }, [id]);
+  // useEffect(() => {
+  //   // Listen for like updates
+  //   socket.on('likeCountUpdated', (data) => {
+  //     if (data.postId === id) { // Only update if this is the post that got liked/unliked
+  //       setAllLiked(data.newLikeCount);
+  //     }
+  //   });
+  //   return () => {
+  //     socket.off('likeCountUpdated');
+  //   };
+  // }, [id]);
   const fetchUsersWhoLikedPost = async () => {
     try {
 
@@ -212,15 +221,77 @@ const handleLike = async () => {
     }
   }, [showLikeInfo]);
 
+  const handleDownloadImage = async () => {
+    try {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", image, true);
+      xhr.responseType = "blob";
+  
+      // Event handler for download progress
+      xhr.onprogress = function (event) {
+        const percentComplete = ((event.loaded / event.total) * 100).toFixed(2);
+        showToast(`Downloading: ${percentComplete}%`);
+      };
+  
+      // Event handler for successful download
+      xhr.onload = function () {
+        if (this.status === 200) {
+          const blob = this.response;
+          const url = URL.createObjectURL(blob);
+  
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "image.jpg";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+  
+          URL.revokeObjectURL(url);
+  
+          showToast('Download successful!', 'success'); 
+
+        } else {
+            showToast('Download failed!', 'error'); 
+        }
+      };
+  
+      // Event handler for download failure
+      xhr.onerror = function () {
+          showToast('Download failed!', 'error'); 
+      };
+  
+      xhr.send();
+    } catch (err) {
+      console.error("Failed to download image:", err);
+        showToast('Download failed!', 'error'); 
+    }
+  };
+  
+
   return (
-    <div className="w-full bg-cards drop-shadow-xl relative">
+    
+    <div 
+    
+    className="w-full bg-cards drop-shadow-xl relative"
+    onClick={() => setShowDownloadCard(!showDownloadCard)}
+  > 
+    {showDownloadCard && (
+      <div className="absolute top-0 right-0 mt-4 mr-4 bg-white p-2 rounded shadow-lg">
+        <button onClick={handleDownloadImage}>
+          <FontAwesomeIcon icon={faDownload} /> Save Image
+        </button>
+      </div>
+    )}
+    
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-2">
           <Avatar onClick={hadleNavigateProfile} img={profilePic ? profilePic : alternativeProfile} />
           <div className="flex flex-col gap-1">
-            <h1 onClick={hadleNavigateProfile} className="font-bold flex items-center gap-2 text-smallP md:text-midP lg:text-largeP">
-              {companyName}
-            </h1>
+          <h1 onClick={hadleNavigateProfile} className="font-bold flex items-center gap-2 text-xs md:text-xs lg:text-xs">
+  {companyName}
+</h1>
+
+
             <span className="text-smallP md:text-midP text-gray-400">
               {format(timestamp)}
             </span>
@@ -302,6 +373,7 @@ const handleLike = async () => {
             ))}
           </div>
         </div>
+       
       </div>
     )}
   
