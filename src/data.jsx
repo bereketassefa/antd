@@ -82,6 +82,33 @@ export const Relation = [
   },
 ];
 
+
+export const comments = [
+  {
+    key: 2,
+    image: bt,
+    CompanyName: "AddisPay",
+    message: "Another message from anoter  ",
+    fromOther: true,
+    description: "Lorem ipsum dolor sit amet....",
+  },
+  {
+    key: 3,
+    image: star,
+    CompanyName: "AAu",
+    message: "In publishing and graphic design",
+    fromOther: true,
+  },
+  {
+    key: 4,
+    image: bt,
+    CompanyName: "CBE",
+    message: " a typeface without relying on meaningful content. ",
+    fromOther: true,
+  },
+
+  
+];
 export const Search = [
   {
     key: 1,
@@ -89,6 +116,7 @@ export const Search = [
     title: "Company Name ",
     isAccepted: false,
     isConnected: true
+    
   },
   {
     key: 1,

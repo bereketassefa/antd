@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 import Avatar from "../../Fields/Avatar/avatar";
-const SearchCard = ({ title, image }) => {
+const ChatCard = ({ title, image, description, onSelect }) => {
   return (
-    <div className="gap-4 hover:bg-slate-200 ">
+    <div className="gap-4 hover:bg-slate-200 " onClick={onSelect}>
       <div className="flex items-center justify-start  gap-2 ">
         <Avatar img={image} />
 
@@ -10,8 +10,9 @@ const SearchCard = ({ title, image }) => {
           {title}
         </h2>
       </div>
+      <p className="ml-12">{description}</p>
     </div>
   );
 };
 
-export default SearchCard;
+export default ChatCard
