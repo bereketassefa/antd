@@ -195,7 +195,6 @@ useEffect(() => {
               </Link>
             )}
           </div>
-          <ToastContainer position={toast.POSITION.TOP_RIGHT} />
           <div className="flex gap-[1rem] items-center ">
             <div className="flex gap-[1rem] items-center">
               {/* search bar */}
@@ -208,7 +207,7 @@ useEffect(() => {
                     />
                   </div>
                   <input
-                    className="dark:bg-[#38434f] outline-none text-[17px] w-1/4 dark:text-white"
+                    className="outline-none text-[17px] w-full"
                     type="text"
                     value={searchInput}
                     placeholder="Search"
@@ -219,7 +218,7 @@ useEffect(() => {
                 </div>
                 {searchInput && (
                   <div className="absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col sm:flex-row">
                       {searchResults.map((result, index) => (
                         <SearchCard
                           key={index}
@@ -234,14 +233,14 @@ useEffect(() => {
                         />
                       ))}
                     </div>
-                    <hr className="border-[1px] border-blue-800 dark:border-white-200" />
+                    <hr className="border-[1px] border-blue-800" />
                     <Link
                       to="/feed/SearchNav/All"
                       onClick={() => setSearchInput("")}
                     >
-                      {/* <p className="flex justify-center text-primary ">
+                      <p className="flex justify-center text-primary ">
                         See All results
-                      </p> */}
+                      </p>
                     </Link>
                   </div>
                 )}
@@ -251,12 +250,12 @@ useEffect(() => {
               {/* message  */}
               <Link to={"/feed/notifications"}>
                 <Badge count={notificationCount}>
-                  <FontAwesomeIcon icon={faBell} className="dark:text-white text-largeT" />
+                  <FontAwesomeIcon icon={faBell} className="text-largeT" />
                 </Badge>
               </Link>
               {/* notification */}
               <Link to={"/feed/messages"}>
-                <FontAwesomeIcon icon={faMessage} className="dark:text-white text-largeT" />
+                <FontAwesomeIcon icon={faMessage} className="text-largeT" />
               </Link>
             </div>
             <FontAwesomeIcon
@@ -273,48 +272,46 @@ useEffect(() => {
               onClick={handleHover}
               // onMouseLeave={handleLeaveHover}
             >
-              <div className=" flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <Avatar
                   img={profilePic ? profilePic : alternativeProfile}
                   alt="image"
                 />
 
-                <div className=" flex items-center gap-2">
-                  <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+                <div className="flex items-center gap-2">
+                  <h1 className=" text-smallP md:text-midP lg:text-largeP">
                     {truncateCompanyName(cookies?.user.party)}
                   </h1>
-                  <FontAwesomeIcon className="dark:text-white" icon={faCaretDown} />
+                  <FontAwesomeIcon icon={faCaretDown} />
                 </div>
               </div>
-             
               <div
-  className={
-    dropDown
-      ? "rounded-lg dark:bg-[#1b1f23] absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
-      : "h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg transition ease-in-out delay-150"
-  }
->
-  <ul className="flex flex-col w-full h-full items-center justify-center">
-    <Link onClick={hadleNavigateProfile} className="w-full">
-      <li className="w-full p-3 items-center justify-start hover:bg-lightPrimaryHover">
-        <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
-          {" "}
-          View Profile
-        </p>
-      </li>
-    </Link>
-    <hr className="w-full border-t border-gray-300 dark:border-gray-700" /> {/* Added this line */}
-    <li
-      className="w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover"
-      onClick={handleLogOut}
-    >
-      <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
-        Sign Out
-      </p>
-    </li>
-  </ul>
-</div>
+                className={
+                  dropDown
+                    ? "absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
+                    : "h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
+                }
+              >
+                <ul className="flex flex-col w-full h-full items-center justify-center">
+                  <Link onClick={hadleNavigateProfile} className="w-full">
+                    <li className="w-full p-3 items-center justify-start hover:bg-lightPrimaryHover">
+                      <p className="text-smallP md:text-midP lg:text-largeP">
+                        {" "}
+                        View Profile
+                      </p>
+                    </li>
+                  </Link>
 
+                  <li
+                    className="w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover"
+                    onClick={handleLogOut}
+                  >
+                    <p className=" text-smallP md:text-midP lg:text-largeP">
+                      Sign Out
+                    </p>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
