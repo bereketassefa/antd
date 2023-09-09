@@ -7,8 +7,8 @@ function SearchAll() {
   const [filter, setFilter] = useState("");
   return (
     <div>
-      <div className="border-gray-300 flex gap-2 flex-col md:flex-row  rounded-md shadow-lg">
-        <div className="flex justify-between items-center   px-4 ">
+      <div className=" max-w-[780px] md:w-[780px]  gap-2 flex-col md:flex-row  justify-between  bg-white drop-shadow-xl">
+        <div className="flex justify-between items-center    px-4 ">
           <h1 className="text-xl font-bold ">Search result</h1>
           <div className="flex justify-center items-center  gap-4">
             <p>Sort By:</p>
@@ -35,7 +35,7 @@ function SearchAll() {
             : null
         ).map((search) => {
           return (
-            <div className="flex flex-col md:flex-row justify-between md:items-center   px-4 ">
+            <div className="flex flex-col md:flex-row justify-between  md:items-center py-1  px-4 ">
               <div className="justify-start flex items-center lg:justify-center gap-2 ">
                 <Avatar img={search.image} />
                 <h2 className=" font-bold text-[#000] text-center text-[17px] ">
@@ -43,7 +43,7 @@ function SearchAll() {
                 </h2>
               </div>
 
-              <div className=" flex gap-4 py-4 items-center">
+              <div className="  py-4  justify-between  ">
                 {search.isAccepted === false ? (
                   <div className="flex gap-4">
                     <Button text={"Accept"} filled color="[#D71A62]" />

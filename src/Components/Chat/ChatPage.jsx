@@ -4,7 +4,7 @@ import { FiSearch } from "react-icons/fi";
 import { BiSolidMessageRounded } from "react-icons/bi";
 import { Chat } from "../../data";
 import { BiLogoTelegram } from "react-icons/bi";
-import { BsEmojiSmile } from "react-icons/bs";
+import { BsEmojiSmile, BsArrowLeftShort } from "react-icons/bs";
 import { ImAttachment } from "react-icons/im";
 import Avatar from "../../Fields/Avatar/avatar";
 import CuteGirl from "../../assets/image/cute-girl-pic (12).jpg";
@@ -18,7 +18,7 @@ function ChatPage() {
   const [newChat, setNewchat] = useState("");
   const [messages, setMessages] = useState(comments);
   const containerRef = useRef(null);
-
+  const [file, setFile] = useState(null);
   const handleStartMessage = () => {
     setNewchat(true);
   };
@@ -34,28 +34,7 @@ function ChatPage() {
     setMessageInput("");
   };
 
-  // const searchUser=async()=>{
-  //   try{
-  //    const res = await axios.get("http://localhost:3000/chat?id=1")
-  //    console.log(res.data)
-  //   }catch(e){
-  //     console.log(e)
-  //   }
-  // }
-  //   const sendMs=async(user,chat)=>{
-  //  searchUser()
-  //     try{
-  //       const res = await axios.post("http://localhost:3000/chat/message", {
-  //         id: 2,
-  //         sender: user.name,
-  //         recipient: chat.title,
-  //         content: messageinput,
-  //         timestamp: "22",
-  //       });
-  //       console.log(res)
-  //       return res
-  //     }catch(e){console.log(e)}
-  //   }
+
 
   const handleMessageSubmit = () => {
     // e.preventDefault();
@@ -73,17 +52,43 @@ function ChatPage() {
     }, 1);
   };
 
+const handleFileUpload = (e) => {
+  setFile(e.target.files[0]);
+};
+
+  
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      e.preventDefault();
+      handleMessageSubmit();
+    }
+  };
+
+
+    const sendMs = async (user, selectedChat) => {
+      try {
+        // Make an API call to send the message
+        const response = await axios.post("/api/sendMessage", {
+          user,
+          selectedChat,
+          message: messageinput,
+        });
+        console.log("Message sent:", response.data);
+      } catch (error) {
+        console.error("Failed to send message:", error);
+      }
+    };
   return (
     <div>
-      <div className=" flex">
-        <div className="  ml-2 w-[350px]">
-          <div className=" ml-3 flex justify-between ">
-            <div className="  flex gap-2 border-[2px] border-blue-800 py-[8px] px-2 items-center min-w-[200px] ">
+      <div className="  flex">
+        <div className=" hidden sm:block  ml-2 w-[350px]">
+          <div className=" ml-3 flex gap-4  items-center   ">
+            <div className="  h-8 flex gap-2 border-[2px] border-blue-800 ml-2  mt-5    px-2 items-center min-w-[150px] ">
               <div>
                 <FiSearch className="text-xl text-gray-500 " />
               </div>
               <input
-                className=" outline-none text-[17px] "
+                className=" outline-none text-[15px] "
                 type="text"
                 value={chatInput}
                 placeholder="Search"
@@ -93,15 +98,15 @@ function ChatPage() {
               />
             </div>
 
-            <div className=" mr-6 mt-2 border-2 border-[#3222C6] text-[#D71A62] rounded-full w-8 h-8 p-1 ">
+            <div className="   mt-4 border-2 border-[#3222C6] text-[#D71A62] rounded-full w-8 h-8 p-1 ">
               <AiOutlinePlus className="text-xl " />
             </div>
           </div>
-          <div className="flex items-center gap-2 mt-4">
+          <div className="flex items-center  gap-2 mt-2">
             <BiSolidMessageRounded className="text-3xl " />
             <p>Message</p>
           </div>
-          <div className="gap-2 w-[350px] p-1 mt-5 translate-y-[1px]">
+          <div className="gap-2 w-[350px] p-1 mt-4  ">
             <div className="flex flex-col gap-4">
               {Chat.filter((item) =>
                 item.title.toLowerCase().includes(chatInput.toLowerCase())
@@ -110,6 +115,8 @@ function ChatPage() {
                   key={chat.key}
                   title={chat.title}
                   image={chat.image}
+                  time={chat.time}
+                  AmoutOfmessage={chat.AmoutOfmessage}
                   description={chat.description}
                   onSelect={() => handleChatSelect(chat)}
                 />
@@ -117,17 +124,25 @@ function ChatPage() {
             </div>
           </div>
         </div>
-        <div className="w-[500px] bg-[#F0F0F0] h-[650px]">
+        <div className=" md:w-[510px] bg-[#F0F0F0] h-[650px] mt-2">
           {selectedChat ? (
             newChat ? (
-              <div className="w-[500px] bg-[#F0F0F0] h-[600px] flex flex-col justify-between">
-                <div className="flex bg-[#F9F7F7]">
+              <div className=" max-w-[610px] bg-[#F0F0F0]  flex flex-col justify-between">
+                <div className="flex gap-2 bg-[#F9F7F7] items-center mb-4">
+                  <BsArrowLeftShort className=" text-4xl sm:hidden" />
                   <Avatar img={selectedChat.image} />
-                  <p>{selectedChat.title}</p>
+                  <div className="flex flex-col">
+                    <h1 className="font-bold text-[#000] text-[17px]">
+                      {selectedChat.title}
+                    </h1>
+                    <p className="text-green-500">
+                      {selectedChat.online ? "Online" : "Offline"}
+                    </p>
+                  </div>
                 </div>
                 <div
                   ref={containerRef}
-                  className="  rounded-md flex flex-col  px-4 mt-4 max-h-[500px]  overflow-y-scroll overflow-x-hidden gap-6"
+                  className=" rounded-md flex flex-col px-4 mx-1 h-[540px]  overflow-y-scroll overflow-x-hidden gap-6"
                 >
                   {messages?.map((comment, index) => (
                     <div
@@ -191,7 +206,7 @@ function ChatPage() {
                   </div>
                 )}
 
-                <div className="flex bg-gray-100 justify-center items-center mx-1 mb-1 px-4 border border-gray-300 rounded-md">
+                <div className="flex bg-gray-100 justify-center  items-center mx-1 mb-1  px-4 border border-gray-300 rounded-md">
                   <BsEmojiSmile className="text-3xl mr-2" />
 
                   <textarea
@@ -200,19 +215,39 @@ function ChatPage() {
                     className="w-full bg-transparent outline-none resize-none"
                     placeholder="Type your message..."
                     onChange={(e) => setMessageInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
                   ></textarea>
+
+                  <div>
+                    {file ? (
+                      <img
+                        src={URL.createObjectURL(file)}
+                        alt="Selected File"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <ImAttachment className="text-xl mx-5" />
+                    )}
+                    <input
+                      type="file"
+                      id="file"
+                      name="file"
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                  </div>
                   <div
                     className="bg-whit flex items-center gap-3"
-                    onClick={handleMessageSubmit} // Add onClick event handler
+                    onClick={handleMessageSubmit}
                   >
-                    <ImAttachment className="text-xl" />
                     <BiLogoTelegram className="text-white text-xl bg-[#D71A62]" />
                   </div>
                 </div>
               </div>
             ) : (
               <div className="flex flex-col justify-center items-center pt-40">
-                <div className="p-6 border-2 border-blue-900 rounded-full">
+                <div className="sm:p-6 border-2 border-blue-900 rounded-full">
                   <BiLogoTelegram className="text-5xl text-[#D71A62]" />
                 </div>
                 <p className="text-[15px] font-semibold my-3">

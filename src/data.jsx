@@ -8,89 +8,89 @@ export const Relation = [
     key: 1,
     image: BRhotel,
     title: "Company Name ",
-    time: '17'
+    time: "17",
   },
   {
     key: 2,
     image: bt,
     title: "Africa Hote",
-    time: '34'
+    time: "34",
   },
   {
     key: 3,
     image: bbm,
     title: "Skyligh Hotel",
-    time: '34'
+    time: "34",
   },
   {
     key: 4,
 
     image: star,
     title: "Company Name ",
-    time: '34'
+    time: "34",
   },
   {
     key: 1,
     image: BRhotel,
     title: "Company Name ",
-    time: '29'
+    time: "29",
   },
   {
     key: 2,
     image: bt,
     title: "Company Name ",
-    time: '34'
+    time: "34",
   },
   {
     key: 3,
     image: bbm,
     title: " Company Name ",
-    time: '34'
+    time: "34",
   },
   {
     key: 4,
 
     image: star,
     title: "Company Name ",
-    time: '31'
+    time: "31",
   },
   {
     key: 2,
     image: bt,
     title: "Company Name ",
-    time: '34'
+    time: "34",
   },
   {
     key: 3,
     image: bbm,
     title: " Company Name ",
-    time: '34'
+    time: "34",
   },
   {
     key: 4,
 
     image: star,
     title: "Company Name ",
-    time: '04'
+    time: "04",
   },
   {
     key: 4,
 
     image: star,
     title: "Company Name ",
-    time: '24'
+    time: "24",
   },
 ];
-
 
 export const comments = [
   {
     key: 2,
     image: bt,
+   
     CompanyName: "AddisPay",
     message: "Another message from anoter  ",
     fromOther: true,
-    description: "Lorem ipsum dolor sit amet....",
+    description: "Lorem ipsum dolor sit amet ",
   },
   {
     key: 3,
@@ -106,64 +106,61 @@ export const comments = [
     message: " a typeface without relying on meaningful content. ",
     fromOther: true,
   },
-
-  
 ];
 export const Search = [
   {
     key: 1,
     image: BRhotel,
     title: "Company Name ",
+    description:
+      " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.",
+    Price: "  50000 $",
     isAccepted: false,
-    isConnected: true
-    
+    isConnected: true,
   },
   {
     key: 1,
     image: star,
     title: "EagleLion Tech",
+    description:
+      " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.",
+    isAccepted: false,
     isAccepted: true,
-    isConnected: true
+    isConnected: true,
   },
   {
     key: 1,
     image: bbm,
     title: "SkyLight Hotel ",
+    description:
+      " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.",
+    isAccepted: false,
     isAccepted: true,
-    isConnected: false
+    isConnected: false,
   },
-  // {
-  //   key: 2,
-  //   image: bt,
-  //   title: "Company Name ",
-  // },
-  // {
-  //   key: 3,
-  //   image: bbm,
-  //   title: " Banana Name ",
-  // },
-  // {
-  //   key: 3,
-  //   image: star,
-  //   title: " Appl Name ",
-  // },
 ];
 export const Chat = [
   {
     key: 1,
     image: BRhotel,
+    time: "7:30 am",
+    AmoutOfmessage: "30",
     title: "Company Name ",
     description: "Lorem ipsum dolor sit amet....",
   },
   {
     key: 2,
+
     image: star,
+    time: "2:30 pm",
     title: "EagleLion Tech",
     description: "Lorem ipsum dolor sit amet....",
   },
   {
     key: 3,
     image: bbm,
+    time: "8:46 am",
+    AmoutOfmessage: "12",
     title: "SkyLight Hotel ",
     description: "Lorem ipsum dolor sit amet....",
   },
@@ -177,9 +174,9 @@ export const Chat = [
     key: 5,
     image: bbm,
     title: " Banana Name ",
+    AmoutOfmessage: "3",
     description: "Lorem ipsum dolor sit amet....",
   },
- 
 ];
 
 export const Requested = [
@@ -202,7 +199,7 @@ export const Requested = [
     title: "Company Name ",
     time: "34",
   },
- 
+
   {
     key: 4,
     image: bt,
@@ -215,7 +212,6 @@ export const Requested = [
     title: " Company Name ",
     time: "34",
   },
-  
 ];
 export const Recomend = [
   {
@@ -269,6 +265,4 @@ export const Recomend = [
     title: "Company Name ",
     time: "34",
   },
-
-  
 ];

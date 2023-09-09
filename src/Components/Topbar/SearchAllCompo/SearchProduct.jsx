@@ -7,7 +7,7 @@ import Avatar from "../../../Fields/Avatar/avatar";
 function SearchProduct() {
   const [selectDroped, setSelectDroped] = useState(false);
   return (
-    <div className=" bg-white drop-shadow-xl">
+    <div className=" max-w-[780px] md:w-[780px] bg-white drop-shadow-xl">
       <div className="flex justify-between items-center   px-4 ">
         <h1 className="text-xl font-bold ">Search result</h1>
         <div className="flex justify-center items-center  gap-4">
@@ -28,11 +28,22 @@ function SearchProduct() {
       {Search.map((items) => {
         return (
           <div className="flex flex-col md:flex-row justify-between md:items-center   px-4 ">
-            <div className="justify-start flex items-center lg:justify-center gap-2 ">
-              <Avatar img={items.image} />
-              <h2 className=" font-bold text-[#000] text-center text-[17px] ">
-                {items.title}
-              </h2>
+            <div className="justify-start flex flex-col lg:justify-center gap-2 ">
+              <div className="flex justify-start ">
+                <Avatar img={items.image} />
+                <div>
+                  <h2 className=" font-bold text-[#000] text-center text-[17px] my-4 mx-1 ">
+                    {items.title}
+                  </h2>
+                  <div className="border-2 flex justify-center ">
+                    {" "}
+                    <p>Price: </p>
+                    {items.Price}
+                  </div>
+                </div>
+              </div>
+
+              <p className=" max-w-[670px] mb-6"> {items.description}</p>
             </div>
           </div>
         );
