@@ -198,7 +198,7 @@ export default function Topbar() {
                 </div>
                 {searchInput && (
                   <div className="absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
-                    <div className="flex flex-col sm:flex-row">
+                    <div className="flex flex-col  ">
                       {searchResults.map((result, index) => (
                         <SearchCard
                           key={index}
