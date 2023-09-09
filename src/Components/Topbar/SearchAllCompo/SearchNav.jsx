@@ -9,8 +9,8 @@ function SearchNav() {
     setActiveLink(link);
   };
   return (
-    <div className=" border-gray-300  rounded-md shadow-lg bg-[#FFF] text-[#000000]   ">
-      <ul className=" md:w-[300px] max-w-[400px] flex  justify-between flex-row md:flex-col  ml-6 gap-4 mt-4">
+    <div className="   rounded-md shadow-lg  h-[200px] text-[#000000] bg-white drop-shadow-xl  ">
+      <ul className="   md:w-[220px] max-w-[400px] flex  justify-between flex-row md:flex-col  ml-6 gap-4 mt-4">
         <Link
           to="/feed/SearchNav/All"
           className={`${

@@ -3,10 +3,10 @@ import { Outlet } from "react-router-dom";
 import SearchNav from '../../Components/Topbar/SearchAllCompo/SearchNav';
 function SearchRoute() {
   return (
-    <div className=" lg:max-w-[235px] h-auto p-0 m-0 flex  items-center border-2 border-slate-200 mt-2 bg-white drop-shadow-xl ">
-      <div className=" w-full md:max-w-[310px] gap-2 px-2 md:px-0   ">
+    <div className="  mt-4   ">
+      <div className="  flex flex-col md:flex-row  md:max-w-[310px] gap-4 px-2 ">
         <SearchNav />
-        <div className="w-full h-full   ">
+        <div className="">
           <Outlet />
         </div>
       </div>

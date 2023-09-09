@@ -7,7 +7,7 @@ function SearchCompany() {
   const [filter, setFilter] = useState("");
 
   return (
-    <div className=" border-gray-300  rounded-md shadow-lg">
+    <div className=" border-gray-300 max-w-[780px] md:w-[780px] rounded-md shadow-lg">
       <div className=" flex justify-between items-center   px-4 ">
         <h1 className="text-xl font-bold ">Search result</h1>
         <div className="flex justify-center items-center  gap-4">
@@ -33,9 +33,12 @@ function SearchCompany() {
           : filter == "connected"
           ? item.isConnected == true && item.isAccepted == true
           : null
-      )?.map((search,index) => {
+      )?.map((search, index) => {
         return (
-          <div key={index} className="flex flex-col md:flex-row justify-between md:items-center   px-4 ">
+          <div
+            key={index}
+            className="flex flex-col md:flex-row justify-between md:items-center   px-4 "
+          >
             <div className="justify-start flex items-center lg:justify-center gap-2 ">
               <Avatar img={search.image} />
               <h2 className=" font-bold text-[#000] text-center text-[17px] ">

@@ -195,7 +195,6 @@ useEffect(() => {
               </Link>
             )}
           </div>
-          <ToastContainer position={toast.POSITION.TOP_RIGHT} />
           <div className="flex gap-[1rem] items-center ">
             <div className="flex gap-[1rem] items-center">
               {/* search bar */}
@@ -208,7 +207,7 @@ useEffect(() => {
                     />
                   </div>
                   <input
-                    className="dark:bg-[#38434f] outline-none text-[17px] w-1/4 dark:text-white"
+                    className="outline-none text-[17px] w-full"
                     type="text"
                     value={searchInput}
                     placeholder="Search"
@@ -219,7 +218,7 @@ useEffect(() => {
                 </div>
                 {searchInput && (
                   <div className="absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col  ">
                       {searchResults.map((result, index) => (
                         <SearchCard
                           key={index}
@@ -234,14 +233,14 @@ useEffect(() => {
                         />
                       ))}
                     </div>
-                    <hr className="border-[1px] border-blue-800 dark:border-white-200" />
+                    <hr className="border-[1px] border-blue-800" />
                     <Link
                       to="/feed/SearchNav/All"
                       onClick={() => setSearchInput("")}
                     >
-                      {/* <p className="flex justify-center text-primary ">
+                      <p className="flex justify-center text-primary ">
                         See All results
-                      </p> */}
+                      </p>
                     </Link>
                   </div>
                 )}

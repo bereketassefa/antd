@@ -1,6 +1,6 @@
 import React from "react";
 import Avatar from "../../Fields/Avatar/avatar";
-const SearchCard = ({ title, image, description }) => {
+const SearchCard = ({ title, image }) => {
   return (
     <div className="gap-4 hover:bg-slate-200 ">
       <div className="flex items-center justify-start  gap-2 ">
@@ -10,7 +10,6 @@ const SearchCard = ({ title, image, description }) => {
           {title}
         </h2>
       </div>
-      <p className="ml-12">{description}</p>
     </div>
   );
 };

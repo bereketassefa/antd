@@ -6,7 +6,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import Helppra from "./Helppra";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useCookies } from 'react-cookie'
+import { useCookies } from "react-cookie";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ function Login() {
   const [passwordError, setPasswordError] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(['User']);
+  const [cookies, setCookie, removeCookie] = useCookies(["User"]);
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -39,8 +39,10 @@ function Login() {
         setErrMsg("Please enter your credentials");
       } else {
         setLoading(true);
-        
-        const apiUrl = `${import.meta.env.VITE_LOGIN_USER_API}/${email}/${pass}`;
+
+        const apiUrl = `${
+          import.meta.env.VITE_LOGIN_USER_API
+        }/${email}/${pass}`;
         // console.log(apiUrl);
         const response = await axios.post(
           apiUrl,
@@ -55,7 +57,10 @@ function Login() {
         if (response.status === 400) {
           setErrMsg("Server not responding!");
           setLoading(false);
-        } else if (response.status === 200 && response.data.error === "Invalid password") {
+        } else if (
+          response.status === 200 &&
+          response.data.error === "Invalid password"
+        ) {
           setErrMsg("Please enter the correct credentials!");
           setLoading(false);
         } else if (response.status === 201) {
@@ -63,7 +68,7 @@ function Login() {
           let expires = new Date();
           expires.setTime(expires.getTime() + 2 * 60 * 60 * 1000);
 
-          setCookie('user', response.data);
+          setCookie("user", response.data);
           // console.log(response.data)
           // setCookie("user", response.data, { path: "/", expires });
           // Commenting out the setCookie function since it's not defined in the code provided
@@ -90,8 +95,19 @@ function Login() {
       <Heading Title={"Welcome Back!!"} text={"Please Login to your Account"} />
       {errMsg && (
         <div className="bg-[#d71a62] text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out transform animate-slideIn flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
           <span>{errMsg}</span>
         </div>
