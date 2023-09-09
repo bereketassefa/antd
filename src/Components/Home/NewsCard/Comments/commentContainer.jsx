@@ -7,13 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faSmile } from '@fortawesome/free-regular-svg-icons';
 import CommentCard from './commentCard';
 import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
-export default function CommentContainer({ id, isOpen }) {
+export default function CommentContainer({ account_id,id, isOpen }) {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
   const [visibleComments, setVisibleComments] = useState(2);
   const [showSeeMore, setShowSeeMore] = useState(true);
   const [cookies] = useCookies(['User']);
   const [profilePic, setProfilePic]= useState(null) 
+  const [showDeleteOption, setShowDeleteOption] = useState(false);
+
   const handleCommentSubmit = async () => {
     if (!commentText.trim()) return;  // Ensure comment is not just whitespace
 
@@ -60,7 +62,7 @@ export default function CommentContainer({ id, isOpen }) {
 } 
 // console.log(id)
   useEffect(() => {
-    // console.log('helloo')
+    
     async function fetchComments() {
       try {
         const url =`${import.meta.env.VITE_GET_COMMENT}/${id}`
@@ -83,6 +85,7 @@ export default function CommentContainer({ id, isOpen }) {
       handleCommentSubmit();
     }
   };
+  // console.log(id)
   useEffect(() => {
     const fetchAccountDataForProfile = async () => {
         try {
@@ -110,6 +113,11 @@ export default function CommentContainer({ id, isOpen }) {
     fetchAccountDataForProfile();
    
 }, []);
+
+const toggleDeleteOption = () => {
+  setShowDeleteOption(!showDeleteOption);
+};
+
   return (
     <div className={isOpen ? 'w-full flex flex-col gap-4 p-2' : 'w-full flex flex-col gap-4 p-2 hidden'}>
       <div className='flex gap-2 items-center'>
@@ -156,6 +164,9 @@ export default function CommentContainer({ id, isOpen }) {
       comment={items?.text}
       likes={items?.likes}
       replays={items?.repays}
+      postId={items.post_id}
+      account_id={account_id}
+      
     />
   );
 }) : null}

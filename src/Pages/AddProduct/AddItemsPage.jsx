@@ -92,14 +92,14 @@ function AddItemsPage({ handleModal }) {
     setProductImage(file);
   };
   return (
-    <div className=" w-full">
-      <p className="text-2xl font-bold">Add Product</p>
+    <div className="dark:bg-[#1b1f23] w-full">
+      <p className="dark:text-white text-2xl font-bold">Add Product</p>
       <hr className="bg-[#B7B7B7] h-[1px] mb-5" />
       <form onSubmit={handleSubmit} noValidate>
         <div className="">
           <label
             htmlFor="productName"
-            className="text-xl font-semibold text-black"
+            className="dark:text-white text-xl font-semibold text-black"
           >
             <p>Product Name</p>
           </label>
@@ -120,7 +120,7 @@ function AddItemsPage({ handleModal }) {
         <div className="">
           <label
             htmlFor="productDescription"
-            className="text-xl font-semibold text-black"
+            className="dark:text-white text-xl font-semibold text-black"
           >
             <p>Product Description</p>
           </label>
@@ -140,7 +140,7 @@ function AddItemsPage({ handleModal }) {
         <div>
           <label
             htmlFor="productFeatures"
-            className="text-xl font-semibold text-black"
+            className="dark:text-white text-xl font-semibold text-black"
           >
             <p>Product Features</p>
           </label>
@@ -164,7 +164,7 @@ function AddItemsPage({ handleModal }) {
               <div className=" relative bg-red-300 p-2 text-[17px]">
                 {featu}
                 <div className=" " onClick={() => handleRemoveFeature(featu)}>
-                  <AiFillCloseCircle className=" absolute top-0 right-0 translate-x-2 -translate-y-1 text-red-500 text-[18px]" />
+                  <AiFillCloseCircle className="dark:text-white absolute top-0 right-0 translate-x-2 -translate-y-1 text-red-500 text-[18px]" />
                 </div>
               </div>
             ))}
@@ -177,7 +177,7 @@ function AddItemsPage({ handleModal }) {
           <div>
             <label
               htmlFor="productPrice"
-              className="text-xl font-semibold text-black"
+              className="dark:text-white text-xl font-semibold text-black"
             >
               <p>Product Price</p>
             </label>
@@ -187,13 +187,13 @@ function AddItemsPage({ handleModal }) {
                 id="productPrice"
                 name="productPrice"
                 placeholder="ETB"
-                className="bg-[#FFF] outline-none bg-transparent w-full px-3 py-2"
+                className="dark:tex-white bg-[#FFF] outline-none bg-transparent w-full px-3 py-2"
                 value={productPrice}
                 onChange={(e) => setProductPrice(e.target.value)}
                 required
               />
 
-              <span>ETB</span>
+              <span className="dark:text-white">ETB</span>
             </div>
             {errors.productPrice && (
               <p className="text-red-500">{errors.productPrice}</p>
@@ -202,7 +202,7 @@ function AddItemsPage({ handleModal }) {
           <div className="w-56"></div>
 
           <div className="w-56">
-            <label htmlFor="HsnNo" className="text-xl text-black">
+            <label htmlFor="HsnNo" className="dark:text-white text-xl text-black">
               <p>HSN no</p>
             </label>
             <input
@@ -210,7 +210,7 @@ function AddItemsPage({ handleModal }) {
               id="HsnNo"
               name="HsnNo"
               placeholder="123456"
-              className="bg-[#FFF] outline-none bg-transparent w-full px-3 py-2 border-2 border-[#3222C6]"
+              className="dark:text-white bg-[#FFF] outline-none bg-transparent w-full px-3 py-2 border-2 border-[#3222C6]"
               value={hsnNo}
               onChange={(e) => setHsnNo(e.target.value)}
               required
@@ -219,7 +219,7 @@ function AddItemsPage({ handleModal }) {
           </div>
         </div>
         <div className="">
-          <p className="text-xl text-black">Upload Product Image</p>
+          <p className="dark:text-white text-xl text-black">Upload Product Image</p>
           <div className="w-[135px] h-[88px] border-2 border-[#3222C6] flex flex-col">
             {productImage ? (
               <img
@@ -246,7 +246,7 @@ function AddItemsPage({ handleModal }) {
         <div className="flex justify-center items-center pb-8">
           <button
             type="submit"
-            className="w-[131px] h-[50px] text-white text-xl font-bold bg-[#D71A62]"
+            className="w-[101px] h-[40px] text-white text-xl font-bold bg-[#D71A62]"
           >
             Save
           </button>

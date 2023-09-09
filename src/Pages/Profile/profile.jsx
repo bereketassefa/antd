@@ -32,7 +32,7 @@ export default function Profile({dataConnection}) {
 
 
   return (
-    <div className='w-full flex flex-col gap-2 mt-2'>
+    <div className=' w-full flex flex-col gap-2 mt-2'>
         <div className='w-full flex flex-col gap-2' >
              {/* profile feature display */}
              <ProfileFeature Uid={data?.connections[0]?.node?.Uid} data={data} />
@@ -41,7 +41,7 @@ export default function Profile({dataConnection}) {
         </div>
 
 
-        <div className='flex gap-2 flex-col md:flex-row'>
+        <div className=' flex gap-2 flex-col md:flex-row'>
              {/* basic profile info */}
              <div className='w-full md:w-[35%]'>
                 <BasicInfo   data={data} />

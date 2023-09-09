@@ -102,3 +102,16 @@
     background-position: 200% 0;
   }
 }
+
+.ant-modal.newspost{
+  background-color: white;
+}
+.ant-modal.newspost .ant-modal-content{
+  background:transparent
+}
+.ant-modal.dnewspost .ant-modal-content{
+  background:transparent
+}
+.ant-modal.dnewspost{
+  background-color: transparent;
+}

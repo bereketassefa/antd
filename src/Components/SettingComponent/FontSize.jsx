@@ -27,14 +27,14 @@ function FontSize() {
 
   return (
     <div className="mb-8">
-      <p style={{ fontSize: 16 + myFontSize }} className="mb-6">
+      <p style={{ fontSize: 16 + myFontSize }} className="dark:text-white mb-6">
         Font Size
       </p>
       <p
         style={{ fontSize: 16 + myFontSize }}
         className="flex justify-start pl-6 mb-3 "
       >
-        <p className="flex justify-center items-center">Aa Bb Cc</p>{" "}
+        <p className="dark:text-white flex justify-center items-center">Aa Bb Cc</p>{" "}
         {inputValue}
       </p>
       <>

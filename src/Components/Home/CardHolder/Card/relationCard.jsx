@@ -59,14 +59,14 @@ console.log(id)
        
     }, []);
     return (
-        <div className='flex items-center justify-between' key={id}>
+        <div className='dark:text-white flex items-center justify-between' key={id}>
             <div className='flex gap-2 items-center'>
             
                     
                     <Avatar onClick={hadleNavigateProfile} img={profilePic?profilePic:alternativeProfile} />
     
                 
-                <h1 onClick={hadleNavigateProfile} className='text-smallP md:text-midP lg:text-largeP' >{truncateCompanyName(companyName)}</h1>
+                <h1 onClick={hadleNavigateProfile} className='dark:text-white text-smallP md:text-midP lg:text-largeP' >{truncateCompanyName(companyName)}</h1>
             </div>
         </div>
     )

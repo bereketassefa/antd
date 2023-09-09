@@ -87,7 +87,7 @@ const fetchRelationRequest = async() => {
       )
     .then((res) => {
       setDataRelation(res.data);
-      console.log(res.data);
+      // console.log(res.data);
        
     });
 };
@@ -96,7 +96,7 @@ const fetchRecomendation =async () => {
   axios
     .post(import.meta.env.VITE_GET_RECOMMENDATION,{ Uid: cookies?.user.Uid })
     .then((res) => {
-      console.log("Recommendation response:", res.data); // Log the response
+      // console.log("Recommendation response:", res.data); // Log the response
       // Check if the data is an array, if not, set it to an empty array
       const recommendationData = Array.isArray(res.data) ? res.data : [];
       setRecommendation(recommendationData);
@@ -145,7 +145,7 @@ useEffect(() => {
   return (
    
    
-    <div className='hidden lg:flex items-start justify-center w-[300px] flex-col gap-2'>
+    <div className={`dark:bg-[#1b1f23] hidden lg:flex items-start justify-center w-[300px] flex-col gap-2`}>
         {
         cards?.map(items => {
           // Check if items.data has data
