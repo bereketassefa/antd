@@ -45,7 +45,7 @@ export default function Details() {
     //   },
   ];
   return (
-    <div className='w-full'>
+    <div className=' w-full'>
         <div className='w-full' >
             <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} className='w-full bg-violet-200' />
         </div>

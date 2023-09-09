@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { message } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import { format } from "timeago.js";
@@ -13,12 +13,12 @@ import CommentContainer from "./Comments/commentContainer";
 import Avatar from "../../../Fields/Avatar/avatar";
 import axios from "axios";
 import PropTypes from "prop-types";
-import logoAddis from '../../../assets/logo/addisLogoS.png' 
+import logoAddis from "../../../assets/logo/addisLogoS.png";
 import { io } from "socket.io-client";
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useToast } from '../../Toast/toastContext';
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "../../Toast/toastContext";
 
 export default function NewsCard({
   account_id,
@@ -32,9 +32,9 @@ export default function NewsCard({
   like,
 }) {
   const { showToast } = useToast();
-// console.log(like)
-  NewsCard.propTypes = {
+  const downloadCardRef = useRef(null);
    
+  NewsCard.propTypes = {
     profilePic: PropTypes.string,
     items: PropTypes.array,
     companyName: PropTypes.string.isRequired,
@@ -47,20 +47,21 @@ export default function NewsCard({
     like: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     myKey: PropTypes.any.isRequired,
   };
-//   const socket = io("http://localhost:8020");
+  //   const socket = io("http://localhost:8020");
   const [allLikes, setAllLiked] = useState(like);
   const [showComments, setShowComments] = useState(false);
   const [cookies] = useCookies(["user"]);
   const [Liked, setLiked] = useState(false);
   const [comments, setCommentsCounts] = useState("");
-  const [data , setTimeline] =useState('')
+  const [data, setTimeline] = useState("");
   const [showLikeInfo, setShowLikeInfo] = useState(false);
   const [whoLikedPost, setWhoLikedPost] = useState([]);
   const [showDownloadCard, setShowDownloadCard] = useState(false);
-
-  const socket = io('https://timeline.qa.addissystems.et', {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+ 
+  const socket = io("", {
     withCredentials: true,
-  
   });
   const onCommentShow = () => {
     setShowComments(!showComments);
@@ -80,33 +81,34 @@ export default function NewsCard({
     };
   }, [id]);
 
-const handleLike = async () => {
-  try {
-    const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user.Uid}/${id}`;
-    const response = await fetch(url, { method: "POST" });
-    const responseData = await response.json();
+  const handleLike = async () => {
+    try {
+      const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${
+        cookies?.user.Uid
+      }/${id}`;
+      const response = await fetch(url, { method: "POST" });
+      const responseData = await response.json();
 
-    if (!response.ok) {
-      throw new Error(responseData.message || "Failed to like or unlike the post");
+      if (!response.ok) {
+        throw new Error(
+          responseData.message || "Failed to like or unlike the post"
+        );
+      }
+
+      setLiked((prevLiked) => !prevLiked);
+
+      // Emit a 'likePost' event to the server
+      // socket.emit('likePost', { postId: id, userId: cookies?.user.Uid });
+
+      if (responseData.newLikeCount) {
+        setAllLiked(responseData.newLikeCount);
+      } else {
+        !Liked ? setAllLiked(allLikes + 1) : setAllLiked(allLikes - 1);
+      }
+    } catch (error) {
+      // message.error(`An error occurred: ${error.message}`);
     }
-
-    setLiked((prevLiked) => !prevLiked);
-
-    // Emit a 'likePost' event to the server
-    // socket.emit('likePost', { postId: id, userId: cookies?.user.Uid });
-
-    if (responseData.newLikeCount) {
-      setAllLiked(responseData.newLikeCount);
-
-    } else {
-      !Liked ? setAllLiked(allLikes + 1) : setAllLiked(allLikes - 1);
-    }
-  } catch (error) {
-    message.error(`An error occurred: ${error.message}`);
-  }
-};
-
-  
+  };
 
   const checkIfLiked = async () => {
     try {
@@ -136,25 +138,24 @@ const handleLike = async () => {
     // Fetch comments when component mounts
     fetchComments();
     checkIfLiked();
-    fetchMoreTimelines()
+    fetchMoreTimelines();
   }, [id]);
 
   // Make an API call to fetch comments for the given post ID
   async function fetchComments() {
     try {
-      const url = `${import.meta.env.VITE_COUNT_COMMENTS}/${id}`
-      const response = await axios.post(
-       url
-      );
+      const url = `${import.meta.env.VITE_COUNT_COMMENTS}/${id}`;
+      const response = await axios.post(url);
       setCommentsCounts(response.data); // use response.data instead of response.json()
     } catch (error) {
-      console.error("Failed to fetch comments:", error);
+      // console.error("Failed to fetch comments:", error);
     }
   }
 
-  fetchComments();
+
 
   useEffect(() => {
+    fetchComments();
     checkIfLiked();
   }, [Liked]);
   if (comments.postCount === "0") {
@@ -164,7 +165,7 @@ const handleLike = async () => {
     e.preventDefault();
     try {
       const url = `${import.meta.env.VITE_FIND_MY_DATA}/${account_id}`;
-       await axios.get(url);
+      await axios.get(url);
       //  console.log(response?.data)
       //   setProfilePic(response?.data?.account[0]?.profilePicture)
 
@@ -175,20 +176,19 @@ const handleLike = async () => {
     }
   };
 
-    async function fetchMoreTimelines() {
-  
-      const Url = `https://timeline.qa.addissystems.et/time-line/${id}`;
+  async function fetchMoreTimelines() {
+    const Url = `https://timeline.qa.addissystems.et/time-line/${id}`;
 
-      try {
-       const response=  await axios.get(Url)
-       if(response.status === 200){
+    try {
+      const response = await axios.get(Url);
+      if (response.status === 200) {
         // console.log(response.data)
-         setTimeline(response.data)
-       }   
-      } catch (error) {
-        // message.error('faild to fetch ')
+        setTimeline(response.data);
       }
-      // const response = await fetch(Url);
+    } catch (error) {
+      // message.error('faild to fetch ')
+    }
+    // const response = await fetch(Url);
   }
 
   // useEffect(() => {
@@ -204,14 +204,14 @@ const handleLike = async () => {
   // }, [id]);
   const fetchUsersWhoLikedPost = async () => {
     try {
-
-      const response = await axios.post(`https://timeline.qa.addissystems.et/Like/${id}`);
-      const data = await response.data
+      const response = await axios.post(
+        `https://timeline.qa.addissystems.et/Like/${id}`
+      );
+      const data = await response.data;
       setWhoLikedPost(data.users);
-      console.log(data.users)
-      
+      console.log(data.users);
     } catch (error) {
-      console.error('Failed to fetch users who liked the post:', error);
+      console.error("Failed to fetch users who liked the post:", error);
     }
   };
 
@@ -221,109 +221,175 @@ const handleLike = async () => {
     }
   }, [showLikeInfo]);
 
-  const handleDownloadImage = async () => {
+  const handleDownloadImage = async (event) => {
     try {
+      event.stopPropagation();
+      setIsLoading(true);
       const xhr = new XMLHttpRequest();
       xhr.open("GET", image, true);
       xhr.responseType = "blob";
-  
+
       // Event handler for download progress
       xhr.onprogress = function (event) {
         const percentComplete = ((event.loaded / event.total) * 100).toFixed(2);
         showToast(`Downloading: ${percentComplete}%`);
       };
-  
+
       // Event handler for successful download
       xhr.onload = function () {
+        setIsLoading(false);
         if (this.status === 200) {
           const blob = this.response;
           const url = URL.createObjectURL(blob);
-  
+
           const link = document.createElement("a");
           link.href = url;
           link.download = "image.jpg";
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-  
-          URL.revokeObjectURL(url);
-  
-          showToast('Download successful!', 'success'); 
 
+          URL.revokeObjectURL(url);
+
+          showToast("Download successful!", "success");
         } else {
-            showToast('Download failed!', 'error'); 
+          showToast("Download failed!", "error");
         }
       };
-  
+
       // Event handler for download failure
       xhr.onerror = function () {
-          showToast('Download failed!', 'error'); 
+        setIsLoading(false);
+        showToast("Download failed!", "error");
       };
-  
+
       xhr.send();
     } catch (err) {
+      setIsLoading(false);
       console.error("Failed to download image:", err);
-        showToast('Download failed!', 'error'); 
+      showToast("Download failed!", "error");
     }
   };
-  
+  const handleClickOutside = (event) => {
+    if (
+      downloadCardRef.current &&
+      !downloadCardRef.current.contains(event.target)
+    ) {
+      setShowDownloadCard(false);
+    }
+  };
+  useEffect(() => {
+    // Attach click event listener
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup: Remove event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  // const handleBookmark = () => {
+  //   // Logic to bookmark the post
+  //   let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+  //   if (isBookmarked) {
+  //     bookmarks = bookmarks.filter((bookmark) => bookmark !== id);
+  //   } else {
+  //     bookmarks.push(id);
+  //   }
+  //   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  //   setIsBookmarked(!isBookmarked);
+
+  //   console.log("Updated bookmarks:", bookmarks); // Log to console
+  // };
+  // useEffect(() => {
+  //   const bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+  //   setIsBookmarked(bookmarks.includes(id));
+
+  //   console.log("Current bookmarks:", bookmarks); // Log to console
+  // }, [id]);
 
   return (
-    
-    <div 
-    
-    className="w-full bg-cards drop-shadow-xl relative"
-    onClick={() => setShowDownloadCard(!showDownloadCard)}
-  > 
-    {showDownloadCard && (
-      <div className="absolute top-0 right-0 mt-4 mr-4 bg-white p-2 rounded shadow-lg">
-        <button onClick={handleDownloadImage}>
-          <FontAwesomeIcon icon={faDownload} /> Save Image
-        </button>
-      </div>
-    )}
-    
+    <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative">
+      {showDownloadCard && (
+        <div
+          ref={downloadCardRef}
+          className="absolute top-0 right-0 mt-4 mr-4 bg-white p-2 rounded shadow-lg flex flex-col"
+        >
+          <div className="mb-2">
+            <button onClick={handleDownloadImage}>
+              {isLoading ? (
+                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-black"></div>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faDownload} /> Save Image
+                </>
+              )}
+            </button>
+          </div>
+          {/* <div>
+            <button onClick={handleBookmark} className="text-sm">
+              {isBookmarked ? "Remove Bookmark" : "Save as Bookmark"}
+            </button>
+          </div> */}
+        </div>
+      )}
+
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-2">
-          <Avatar onClick={hadleNavigateProfile} img={profilePic ? profilePic : alternativeProfile} />
+          <Avatar
+            onClick={hadleNavigateProfile}
+            img={profilePic ? profilePic : alternativeProfile}
+          />
           <div className="flex flex-col gap-1">
-          <h1 onClick={hadleNavigateProfile} className="font-bold flex items-center gap-2 text-xs md:text-xs lg:text-xs">
-  {companyName}
-</h1>
+            <h1
+              onClick={hadleNavigateProfile}
+              className="dark:text-white font-bold flex items-center gap-2 text-xs md:text-xs lg:text-xs"
+            >
+              {companyName}
+            </h1>
 
-
-            <span className="text-smallP md:text-midP text-gray-400">
+            <span className="text-smallP md:text-midP text-gray-400 dark:text-white">
               {format(timestamp)}
             </span>
           </div>
         </div>
-        <FontAwesomeIcon icon={faEllipsisVertical} />
+        <FontAwesomeIcon className="dark:text-white"
+          onClick={() => setShowDownloadCard(!showDownloadCard)}
+          icon={faEllipsisVertical}
+        />
       </div>
-  
+
       <div className="w-full flex flex-col">
         <div className="p-4 w-full">
-          <p className="text-smallP md:text-midP lg:text-largeP">
+          <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
             {newContent}
           </p>
         </div>
         <div className="overflow-hidden flex z-0 items-center justify-center w-full">
-          <img src={image} alt="Image" className="h-[300px] flex object-contain" />
+          <img
+            src={image}
+            alt="Image"
+            className="h-[300px] flex object-contain"
+          />
         </div>
       </div>
-  
+
       <div className="w-full flex flex-col z-10">
         <div className="flex justify-between items-center p-4 border-b">
           <span
-            className="text-smallP md:text-midP lg:text-largeP cursor-pointer"
+            className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
             onClick={() => setShowLikeInfo(true)}
           >
-            {allLikes === '0' ? '' : allLikes}
+            {allLikes === "0" ? "" : allLikes}
           </span>
-          <span className="text-smallP md:text-midP lg:text-largeP">
-          {comments.postCount === undefined ? 'Loading...' : comments.postCount === '0' ? '' : `${comments.postCount} comments`}
+          <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+            {comments.postCount === undefined
+              ? "Loading..."
+              : comments.postCount === "0"
+              ? ""
+              : `${comments.postCount} comments`}
           </span>
         </div>
-  
+
         <ul className="flex items-center p-4 gap-4">
           <li className="flex items-center gap-2">
             <FontAwesomeIcon
@@ -345,49 +411,53 @@ const handleLike = async () => {
           </li>
         </ul>
       </div>
-      
+
       {/* Like Info Modal */}
       {showLikeInfo && (
-      <div 
-        className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
-        onClick={() => setShowLikeInfo(false)}
-      >
-        <div 
-      className="bg-white p-4 rounded  sm:w-3/4 md:w-1/2 lg:w-1/2  flex flex-col overflow-y-auto"
-
-          onClick={(e) => e.stopPropagation()}
+        <div
+          className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          onClick={() => setShowLikeInfo(false)}
         >
-           <div className="flex items-center mb-4">
-            <img src={logoAddis} alt="Company Logo" className="w-6 h-6 self-center ml-3" />
-            <h3 className="text-center ml-7">company who liked this</h3>
-          </div>
-          <div className={`flex-1 overflow-y-auto ${whoLikedPost.length > 6 ? 'max-h-60' : ''}`}>
-            {whoLikedPost?.map((user) => (
-              <div key={user?.uid} className="flex items-center mb-2">
-              <Avatar className="h-8 w-8" img={user?.account?.profilePicture ? user?.account?.profilePicture : alternativeProfile} />
-              <span className="ml-4 text-sm"> 
-                {user?.account?.party?.length > 19 
-                  ? `${user?.account?.party.slice(0, 19).toLowerCase()}...` 
-                  : user?.account?.party}
-              </span>
+          <div
+            className="bg-white p-4 rounded  sm:w-3/4 md:w-1/2 lg:w-1/2  flex flex-col overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center mb-4">
+              <img
+                src={logoAddis}
+                alt="Company Logo"
+                className="w-6 h-6 self-center ml-3"
+              />
+              <h3 className="text-center ml-7">company who liked this</h3>
             </div>
-            
-            ))}
+            <div
+              className={`flex-1 overflow-y-auto ${
+                whoLikedPost.length > 6 ? "max-h-60" : ""
+              }`}
+            >
+              {whoLikedPost?.map((user) => (
+                <div key={user?.uid} className="flex items-center mb-2">
+                  <Avatar
+                    className="h-8 w-8"
+                    img={
+                      user?.account?.profilePicture
+                        ? user?.account?.profilePicture
+                        : alternativeProfile
+                    }
+                  />
+                  <span className="ml-4 text-sm">
+                    {user?.account?.party?.length > 19
+                      ? `${user?.account?.party.slice(0, 19).toLowerCase()}...`
+                      : user?.account?.party}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-       
-      </div>
-    )}
-  
-      <CommentContainer id={id} isOpen={showComments} />
-      
+      )}
+
+      <CommentContainer account_id={account_id} id={id} isOpen={showComments} />
     </div>
   );
-  
-  
-  
-  
-
-  
-  
 }

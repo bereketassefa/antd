@@ -15,11 +15,11 @@ function getFirstWord(str) {
 export default function Card({ id, type, title, data }) {
 //  console.log(data.account.party)
     return (
-        <div className='w-[300px] p-4 flex flex-col gap-4 bg-cards drop-shadow-xl' key={id}>
+        <div className='dark:bg-[#1b1f23] w-[300px] p-4 flex flex-col gap-4 bg-cards drop-shadow-xl' key={id}>
             <div className='w-full flex items-center justify-between'>
-                <h1 className='font-bold text-smallP md:text-midP lg:text-largeP'>{title}</h1>
+                <h1 className='dark:text-white font-bold text-smallP md:text-midP lg:text-largeP'>{title}</h1>
                 <div className='p-0'>
-                    <FontAwesomeIcon icon={faEllipsisVertical} className='text-largeP md:text-smallT cursor-pointer' />
+                    <FontAwesomeIcon icon={faEllipsisVertical} className='dark:text-white text-largeP md:text-smallT cursor-pointer' />
                 </div>
             </div>
             <div className='w-full flex flex-col gap-2'>
@@ -29,6 +29,7 @@ export default function Card({ id, type, title, data }) {
                         return (
                             <>
                                 {
+                                    
                                     type === 'product' ?
                                         <ProductCard
                                             key={items.key}

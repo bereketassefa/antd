@@ -4,7 +4,7 @@ import NewsHolder from '../NewsHolder/newsHolder'
 
 export default function Feed() {
   return (
-    <div className='w-full flex flex-col gap-2 items-center justify-center '>
+    <div className='dark:bg-black w-full flex flex-col gap-2 items-start justify-center '>
         <NewsPost />
 
         <NewsHolder />

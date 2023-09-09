@@ -10,11 +10,11 @@ export default function BasicInfo({data}) {
     return (
     <Collapse
       defaultActiveKey={'1'}
-      className='w-full bg-violet-200 basicInfo'
+      className='dark:bg-[#1b1f23] w-full bg-violet-200 basicInfo'
       items={[
         {
           key: '1',
-          label: (<p>Basic Info</p>),
+          label: (<p className='dark:text-white' >Basic Info</p>),
           children: (
             <div className='' >
                 <ul className='flex flex-col gap-2'>

@@ -167,10 +167,21 @@ useEffect(() => {
     hideToast();
   }
 }, [toastMessage]);
+// In your top-level component, e.g., App.js
+
+useEffect(() => {
+  // Initialize theme from localStorage right when the app mounts
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+}, []);
 
   return (
     <>
-      <div className=" z-20 w-full drop-shadow-lg h-topbarH bg-topbarBg border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center fixed md:sticky ">
+      <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg h-topbarH bg-topbarBg border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center fixed md:sticky ">
         <div className="flex  w-full md:max-w-[1120px] items-center justify-between">
           <div className="w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center">
             {isScreenMdOrLarger ? (
@@ -189,7 +200,7 @@ useEffect(() => {
             <div className="flex gap-[1rem] items-center">
               {/* search bar */}
               <div className=" relative">
-                <div className=" flex gap-2 border-[2px] border-blue-800 py-[10px] px-4 items-center min-w-[300px] ">
+                <div className="dark:bg-[#38434f] flex gap-2 border-[2px] border-blue-800 py-[10px] px-4 items-center min-w-[300px] ">
                   <div>
                     <FontAwesomeIcon
                       icon={faSearch}
@@ -197,7 +208,7 @@ useEffect(() => {
                     />
                   </div>
                   <input
-                    className="outline-none text-[17px] w-1/4"
+                    className="dark:bg-[#38434f] outline-none text-[17px] w-1/4 dark:text-white"
                     type="text"
                     value={searchInput}
                     placeholder="Search"
@@ -223,7 +234,7 @@ useEffect(() => {
                         />
                       ))}
                     </div>
-                    <hr className="border-[1px] border-blue-800" />
+                    <hr className="border-[1px] border-blue-800 dark:border-white-200" />
                     <Link
                       to="/feed/SearchNav/All"
                       onClick={() => setSearchInput("")}
@@ -240,13 +251,13 @@ useEffect(() => {
               {/* message  */}
               <Link to={"/feed/notifications"}>
                 <Badge count={notificationCount}>
-                  <FontAwesomeIcon icon={faBell} className="text-largeT" />
+                  <FontAwesomeIcon icon={faBell} className="dark:text-white text-largeT" />
                 </Badge>
               </Link>
               {/* notification */}
-              {/* <Link to={"/feed/messages"}>
-                <FontAwesomeIcon icon={faMessage} className="text-largeT" />
-              </Link> */}
+              <Link to={"/feed/messages"}>
+                <FontAwesomeIcon icon={faMessage} className="dark:text-white text-largeT" />
+              </Link>
             </div>
             <FontAwesomeIcon
               icon={!menuOpen ? faBars : faSquareXmark}
@@ -262,47 +273,48 @@ useEffect(() => {
               onClick={handleHover}
               // onMouseLeave={handleLeaveHover}
             >
-              <div className="flex items-center gap-2">
+              <div className=" flex items-center gap-2">
                 <Avatar
                   img={profilePic ? profilePic : alternativeProfile}
                   alt="image"
                 />
 
-                <div className="flex items-center gap-2">
-                  <h1 className=" text-smallP md:text-midP lg:text-largeP">
+                <div className=" flex items-center gap-2">
+                  <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP">
                     {truncateCompanyName(cookies?.user.party)}
                   </h1>
-                  <FontAwesomeIcon icon={faCaretDown} />
+                  <FontAwesomeIcon className="dark:text-white" icon={faCaretDown} />
                 </div>
               </div>
              
               <div
-                className={
-                  dropDown
-                    ? "absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
-                    : "h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
-                }
-              >
-                <ul className="flex flex-col w-full h-full items-center justify-center">
-                  <Link onClick={hadleNavigateProfile} className="w-full">
-                    <li className="w-full p-3 items-center justify-start hover:bg-lightPrimaryHover">
-                      <p className="text-smallP md:text-midP lg:text-largeP">
-                        {" "}
-                        View Profile
-                      </p>
-                    </li>
-                  </Link>
+  className={
+    dropDown
+      ? "rounded-lg dark:bg-[#1b1f23] absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
+      : "h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg transition ease-in-out delay-150"
+  }
+>
+  <ul className="flex flex-col w-full h-full items-center justify-center">
+    <Link onClick={hadleNavigateProfile} className="w-full">
+      <li className="w-full p-3 items-center justify-start hover:bg-lightPrimaryHover">
+        <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+          {" "}
+          View Profile
+        </p>
+      </li>
+    </Link>
+    <hr className="w-full border-t border-gray-300 dark:border-gray-700" /> {/* Added this line */}
+    <li
+      className="w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover"
+      onClick={handleLogOut}
+    >
+      <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+        Sign Out
+      </p>
+    </li>
+  </ul>
+</div>
 
-                  <li
-                    className="w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover"
-                    onClick={handleLogOut}
-                  >
-                    <p className=" text-smallP md:text-midP lg:text-largeP">
-                      Sign Out
-                    </p>
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
         </div>

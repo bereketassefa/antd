@@ -132,7 +132,7 @@ function General() {
     }
   };
   const ConfirmationModal = ({ onClose, onConfirm }) => (
-    <div className="fixed  z-10 inset-0 overflow-y-auto">
+    <div className=" fixed  z-10 inset-0 overflow-y-auto">
       <div className="flex  items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         {/* Background overlay */}
         <div className="fixed inset-0 transition-opacity" onClick={onClose}>
@@ -173,19 +173,19 @@ function General() {
   );
   
   return (
-    <div className="bg-[#F9F7F7]  mt-5 mx-auto p-4">
+    <div className="dark:bg-[#1b1f23] bg-[#F9F7F7]  mt-5 mx-auto p-4">
       <a href="Settings" className="flex justify-start items-center gap-2 pl-2 mt-2">
         <BsArrowLeft
           style={{ fontSize: 16 + myFontSize }}
           className="md:hidden lg:hidden text-[#555555] h-[27px] w-[27px]"
         />
-        <h1 style={{ fontSize: 16 + myFontSize }} className={` font-bold `}>
+        <h1 style={{ fontSize: 16 + myFontSize }} className={`dark:text-white font-bold `}>
           Select Theme
         </h1>
       </a>
       <p
         style={{ fontSize: 16 + myFontSize }}
-        className="flex justify-start pl-2"
+        className="dark:text-white flex justify-start pl-2"
       >
         Customize your workspace and make it enjoyable...
       </p>
@@ -195,12 +195,12 @@ function General() {
       <hr className="max-w-[480px] mt-16 mx-auto h-0 border-2 border-gray-400 "></hr>
       <p
         style={{ fontSize: 16 + myFontSize }}
-        className="flex justify-start pl-2 mb-3"
+        className="dark:text-white flex justify-start pl-2 mb-3"
       >
         Account Security
       </p>
 
-      <div className=" flex  justify-between pl-2 mb-3">
+      <div className="dark:text-white flex  justify-between pl-2 mb-3">
         <h1 style={{ fontSize: 16 + myFontSize }}>Two-step Authentication </h1>
         <button
           onClick={toggleMode}
@@ -218,7 +218,7 @@ function General() {
 
       <div
         onClick={() => setChangePassDropped(!changePassDropped)}
-        className=" relative flex justify-between pl-2 mb-3"
+        className="dark:text-white relative flex justify-between pl-2 mb-3"
       >
         <p style={{ fontSize: 16 + myFontSize }}>Change Password</p>
         <RiArrowDropDownLine className="text-4xl mt-2  lg:hidden" />
@@ -238,7 +238,7 @@ function General() {
                 } text-gray-400`}
               />
               <input
-                className="bg-transparent text-[17px] outline-none w-full"
+                className="dark:text-whie bg-transparent text-[17px] outline-none w-full"
                 type={showPass1 ? "text" : "password"}
                 placeholder="Current Password"
                 name="password"

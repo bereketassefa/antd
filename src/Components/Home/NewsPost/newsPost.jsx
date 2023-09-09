@@ -45,25 +45,25 @@ export default function NewsPost() {
 }, []);
   return (
      <>
-        <div className='w-full bg-cards p-4 flex flex-col gap-4 max-w-[550px]  drop-shadow-xl  '>
-            <div className='flex items-center gap-2'  >
+        <div className='rounded-lg dark:bg-[#1b1f23] w-full bg-cards p-4 flex flex-col gap-4 max-w-[550px]  drop-shadow-xl  '>
+            <div className=' flex items-center gap-2'  >
                 <Avatar  img={profilePic? profilePic : alternativeProfile} />
                 <input 
                     type="text" placeholder='Write somthing here ...'  
-                    className='text-smallP md:text-midP lg:text-largeP w-full outline-none '
+                    className='dark:bg-[#1b1f23] dark:text-white text-smallP md:text-midP lg:text-largeP w-full outline-none '
                     onClick={onModalOpen}
                     />
             </div>
-            <div className='w-full'>
+            <div className=' w-full'>
                 <ul className='w-full flex items-center justify-between'>
                     <li className='flex items-center gap-2'>
-                        <FontAwesomeIcon className='text-secondary text-smallT' icon={faImage} /> <p className='text-smallP md:text-midP lg:text-largeP'>Image</p>
+                        <FontAwesomeIcon className='text-secondary text-smallT' icon={faImage} /> <p className='dark:text-white text-smallP md:text-midP lg:text-largeP'>Image</p>
                     </li>
                     <li className='flex items-center gap-2'>
-                        <FontAwesomeIcon className='text-secondary text-smallT' icon={faVideo}/> <p className='text-smallP md:text-midP lg:text-largeP'>Video</p>
+                        <FontAwesomeIcon className='text-secondary text-smallT' icon={faVideo}/> <p className='dark:text-white text-smallP md:text-midP lg:text-largeP'>Video</p>
                     </li>
                     <li className='flex items-center gap-2'>
-                        <FontAwesomeIcon className='text-secondary text-smallT' icon={faFile}  /> <p className='text-smallP md:text-midP lg:text-largeP'>Document</p>
+                        <FontAwesomeIcon className='text-secondary text-smallT' icon={faFile}  /> <p className='dark:text-white text-smallP md:text-midP lg:text-largeP'>Document</p>
                     </li>
                 </ul>
             </div>
