@@ -1,32 +1,25 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import logos from "../../assets/logo/addisLogoS.png";
 import logo from "../../assets/logo/addisLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowDown,
   faBars,
   faCaretDown,
   faSearch,
   faSquareXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBell, faMessage } from "@fortawesome/free-regular-svg-icons";
-import profilePlaceHolder from "../../assets/logo/profilePlaceHolder.png";
 import alternativeProfile from "../../assets/image/alternativeProfile.png";
 import DropMenu from "./DropMenu/dropMenu";
 import { useMediaQuery } from "react-responsive";
 import Avatar from "../../Fields/Avatar/avatar";
-import { Link, useNavigate } from "react-router-dom";
-import { Badge, message } from "antd";
-import SearchField from "./SearchField";
+import { Link } from "react-router-dom";
+import { Badge } from "antd";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { ErrorContext } from "../Error/ErrorContext";
-import { Search } from "../../data";
-import SearchRoute from "../../Layouts/Search/SearchRoute";
-import SearchProduct from "./SearchAllCompo/SearchProduct";
 import SearchCard from "./SearchAllCompo/SearchCard";
 import { useToast } from '../Toast/toastContext';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 export default function Topbar() {
   function truncateCompanyName(name) {
     return name && name.length > 8 ? name.substring(0, 8) + "..." : name;
@@ -38,9 +31,8 @@ export default function Topbar() {
   const [notificationCount, setNotificationsCount] = useState();
   const [searchInput, setSearchInput] = useState("");
   const isScreenMdOrLarger = useMediaQuery({ minWidth: 768 });
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-  const navigate = useNavigate();
-  const { error, showError, hideError } = useContext(ErrorContext);
+  const [cookies, removeCookie] = useCookies(["user"]);
+
   const handleHover = () => {
     setDropDown(!dropDown);
   };
@@ -55,35 +47,47 @@ export default function Topbar() {
     removeCookie(["user"]);
     window.location.reload(true);
   };
+  const [showResults, setShowResults] = useState(false);
+  useEffect(() => {
+    console.log("showResults changed:", showResults);
+  }, [showResults]);
+  
   const handleSearch = async () => {
     if (searchInput.trim() === "") {
       setSearchResults([]);
+      setShowResults(false);
       return;
     }
+
     try {
-      const url = `${import.meta.env.VITE_SEARCH_PARTIALLY}`;
+      const url = 'http://localhost:8031/partially'; // Replace with your actual URL
       const response = await axios.post(url, {
         query: searchInput,
       });
-      if (response.data.length > 0) {
-        const formattedResults = response.data.map((item) => {
-          let result = { type: item.type };
-          if (item.type === "business") {
-            result.name = item.businessName;
-            result.profilePicture = item.profilePicture; // Add profile picture
-          } else if (item.type === "product") {
-            result.name = item.productName;
-            result.imageUrl = item.imageUrl; // Add image URL for product
-          }
-          return result;
-        });
 
-        setSearchResults(formattedResults);
-      }
+      const formattedResults = response.data.map((item) => {
+        let result = { entityType: item.entityType };
+        if (item.entityType === 'party') {
+          result.name = item.party.businessname;
+          result.Uid = item.Uid
+        } else if (item.entityType === 'product') {
+          result.name = item.productName;
+          result.Uid= item.Uid
+        }
+        return result;
+      });
+
+      setSearchResults(formattedResults);
+      setShowResults(true); 
     } catch (error) {
       console.error("Error performing search", error);
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchInput]);
+
 
   useEffect(() => {
     handleSearch();
@@ -216,31 +220,36 @@ useEffect(() => {
                     }}
                   />
                 </div>
-                {searchInput && (
-                  <div className="absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
-                    <div className="flex flex-col  ">
-                      {searchResults.map((result, index) => (
-                        <SearchCard
-                          key={index}
-                          id={result.id}
-                          name={result.name}
-                          type={result.type} // This will be either "business" or "product"
-                          image={
-                            result.type === "business"
-                              ? result.profilePicture
-                              : result.imageUrl
-                          } // Pass the appropriate image based on the type
-                        />
-                      ))}
-                    </div>
+                {searchInput && showResults&&(
+  <div className="absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
+    <div className="flex flex-col max-h-[120px] overflow-y-auto">
+      {searchResults.map((result, index) => (
+        <SearchCard
+          key={index}
+          id={result.id}
+          setShowResults={setShowResults}
+          name={result.name}
+          ProUid={result.Uid}
+          type={result.entityType} // This will be either "business" or "product"
+          image={
+            result.type === "business"
+              ? result.profilePicture
+              : result.imageUrl
+          } // Pass the appropriate image based on the type
+        />
+      ))}
+    </div>
+
+
+
                     <hr className="border-[1px] border-blue-800" />
                     <Link
-                      to="/feed/SearchNav/All"
+                      to={`/feed/SearchNav/${searchInput}`}
                       onClick={() => setSearchInput("")}
                     >
-                      <p className="flex justify-center text-primary ">
+                      {/* <p className="flex justify-center text-primary ">
                         See All results
-                      </p>
+                      </p> */}
                     </Link>
                   </div>
                 )}

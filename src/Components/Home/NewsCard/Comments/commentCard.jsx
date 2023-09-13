@@ -89,8 +89,7 @@ export default function CommentCard({account_id,id,img,companyName, time , comme
         console.log("User ID from cookies:", cookies.user._id);
       }, []);
     
-      console.log('deleteCardRef.current:', deleteCardRef.current);
-      console.log('showDeleteOption:', showDeleteOption);
+
 
       return (
         <>

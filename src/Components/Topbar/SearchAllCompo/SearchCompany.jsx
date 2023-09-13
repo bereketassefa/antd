@@ -1,15 +1,102 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineAddTask, MdPersonAddAlt1 } from "react-icons/md";
 import { Search } from "../../../data";
 import Avatar from "../../../Fields/Avatar/avatar";
 import Button from "../../../Fields/Button/button";
+import { useLocation,useParams } from "react-router-dom";
+import alternativeProfile from "../../../assets/image/alternativeProfile.png";
+import axios from "axios";
+import { useCookies } from "react-cookie";
 function SearchCompany() {
+  const { name } = useParams();
+  // Decode name if needed
+  const decodedName = name.includes('%') ? decodeURIComponent(name).split(' ')[0] : name.split(' ')[0];
+
+  // console.log(decodedName);
+  const [DataProducts, setSearchCompany] = useState(null);  // Renamed state variable
+  const [connectionStatus, setConnectionStatus] = useState({});
   const [filter, setFilter] = useState("");
+  const [cookies] =useCookies (['user'])
+
+  const handleSearch = async () => {
+    try {
+      const url = 'http://localhost:8031/partially';
+      const response = await axios.post(url, {
+        query: decodedName,
+      });
+
+      const formattedResults = response.data
+
+      
+        .filter(item => item.entityType === 'party')
+        .map(item => ({
+          businessname: item.party.businessname,
+          Uid: item.Uid,
+          imageUrl: item.imageUrl,
+        }));
+
+      setSearchCompany(formattedResults);
+       console.log(formattedResults);
+    } catch (error) {
+      console.error('Error performing search', error.message);
+    }
+  };
+  useEffect(() => {
+    handleSearch();
+
+    // Assuming DataProducts is available at this point
+    if (DataProducts) {
+      DataProducts.forEach(async (item) => {
+        try {
+          const url = `https://connection.qa.addissystems.et/connection/get/${cookies?.user?.Uid}/${item.Uid}`;
+          const response = await axios.get(url);
+          if (response.data.sender.Uid === cookies?.user?.Uid) {
+            setConnectionStatus(prevStatus => ({ ...prevStatus, [item.Uid]: 'Pending' }));
+          } else if (response.data.receiver.Uid === cookies?.user?.Uid) {
+            setConnectionStatus(prevStatus => ({ ...prevStatus, [item.Uid]: 'Accept/Decline' }));
+          }
+        } catch (error) {
+          setConnectionStatus(prevStatus => ({ ...prevStatus, [item.Uid]: 'Connect' }));
+        }
+      });
+    }
+  }, [DataProducts]);
+
+
+  const handleRequestConectionlClick = async (targetUid) => {
+    try {
+      const url = `${import.meta.env.VITE_SEND_CONNECION}`;
+      const response = await axios.post(
+        url,
+        {
+          node1: cookies?.user?.Uid?.toString(),
+          node2: targetUid.toString(),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Successful Response:", response.data);
+    } catch (error) {
+      console.error(
+        "Error in handleRequestConectionlClick:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+  
+
+  // Decode the search term if it exists
+
+
+ 
 
   return (
     <div className=" border-gray-300 max-w-[780px] md:w-[780px] rounded-md shadow-lg">
       <div className=" flex justify-between items-center   px-4 ">
-        <h1 className="text-xl font-bold ">Search result</h1>
+        <h1 className="text-xl font-bold ">Search result company</h1>
         <div className="flex justify-center items-center  gap-4">
           <p>Sort By:</p>
           <select
@@ -25,7 +112,7 @@ function SearchCompany() {
         </div>
       </div>
 
-      {Search?.filter((item) =>
+      {DataProducts?.filter((item) =>
         filter === "accepted"
           ? item.isAccepted == true
           : filter === "" || filter == "all"
@@ -40,9 +127,9 @@ function SearchCompany() {
             className="flex flex-col md:flex-row justify-between md:items-center   px-4 "
           >
             <div className="justify-start flex items-center lg:justify-center gap-2 ">
-              <Avatar img={search.image} />
+              <Avatar img={search.image? search.image:alternativeProfile} />
               <h2 className=" font-bold text-[#000] text-center text-[17px] ">
-                {search.title}
+                {search?.businessname}
               </h2>
             </div>
 
@@ -54,20 +141,25 @@ function SearchCompany() {
                 </div>
               ) : (
                 <div>
-                  <Button
-                    text={search.isConnected ? "Connected" : "Connect"}
-                    icon={
-                      search.isConnected ? (
-                        <MdOutlineAddTask />
-                      ) : (
-                        <MdPersonAddAlt1 />
-                      )
-                    }
-                    iconPossition="left"
-                    color="[#D71A62]"
-                    filled={search.isConnected ? false : true}
-                    onClick={null}
-                  />
+                 <Button
+  text={search.isConnected ? "Connected" : "Connect"}
+  icon={
+    search.isConnected ? (
+      <MdOutlineAddTask />
+    ) : (
+      <MdPersonAddAlt1 />
+    )
+  }
+  iconPossition="left"
+  color="[#D71A62]"
+  filled={search.isConnected ? false : true}
+  onClick={() => {
+    if (!search.isConnected) {
+      handleRequestConectionlClick(search.Uid);
+    }
+  }}
+
+/>
                 </div>
               )}
             </div>

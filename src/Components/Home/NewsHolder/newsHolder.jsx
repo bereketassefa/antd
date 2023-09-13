@@ -29,30 +29,31 @@ export default function NewsHolder() {
     return () => observer.disconnect();
   }, [timeline, hasMore]);
 
-  useEffect(() => {
-    let serverDownTimer, loadingMsgId;
-    
+
+    let serverDownTimer;
+    let loadingMsgId;
+  
     async function fetchMoreTimelines() {
       try {
         setLoading(true);
-    
+  
         serverDownTimer = setTimeout(() => {
           setLoading(false);
         }, 20000);
-    
+  
         loadingMsgId = message.loading('Loading news...', 0);
-    
+  
         const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
         const response = await axios.get(Url);
   
         clearTimeout(serverDownTimer);
-        
+  
         if (loadingMsgId) {
           loadingMsgId();
         }
   
         if(response.status === 200){
-          setTimeline(response.data);
+          setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
         }
   
         setLoading(false);
@@ -61,22 +62,16 @@ export default function NewsHolder() {
       } catch (error) {
         setLoading(false);
         setHasMore(false);
-        
-        if (loadingMsgId) {
-          loadingMsgId();
-        }
+  
+     
   
         if (error.message === "Failed to fetch") {
-          message.error("Network Error: Failed to fetch data.");
+          console.warn("Network Error: Failed to fetch data.");
         } else {
-          message.error("Error fetching data.");
+          console.warn("Error fetching data.");
         }
       }
     }
-    
-    fetchMoreTimelines();
-  }, []); // added an empty dependency array
-  
 
   // useEffect(() => {
   //   try {
@@ -121,7 +116,7 @@ export default function NewsHolder() {
 
   function onIntersection(entries) {
     if (entries[0].isIntersecting && hasMore) {
-    //  fetchMoreTimelines();
+      fetchMoreTimelines();
     }
   }
   if (error) {
