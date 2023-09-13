@@ -27,6 +27,7 @@ import SearchProduct from "./SearchAllCompo/SearchProduct";
 import SearchCard from "./SearchAllCompo/SearchCard";
 import { useToast } from '../Toast/toastContext';
 import { ToastContainer, toast } from 'react-toastify';
+import { UpSquareTwoTone } from "@ant-design/icons";
 export default function Topbar() {
   function truncateCompanyName(name) {
     return name && name.length > 8 ? name.substring(0, 8) + "..." : name;
@@ -111,6 +112,8 @@ export default function Topbar() {
         // let response = await fetch(url);
         // let data = await response.json();
         // console.log("Data received from server: ", data);  // Debugging line
+
+        UpSquareTwoTone
         // console.log("Profile Picture URL from server:", data?.[0].profilePicture);
         // setProfilePic(data?.[0].profilePicture);
       } catch (error) {
@@ -218,7 +221,7 @@ useEffect(() => {
                 </div>
                 {searchInput && (
                   <div className="absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
-                    <div className="flex flex-col sm:flex-row">
+                    <div className="flex flex-col  ">
                       {searchResults.map((result, index) => (
                         <SearchCard
                           key={index}

@@ -40,7 +40,7 @@ export default function NewsHolder() {
           setLoading(false);
         }, 20000);
     
-        loadingMsgId = message.loading('Loading post...', 0);
+        loadingMsgId = message.loading('Loading news...', 0);
     
         const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
         const response = await axios.get(Url);
@@ -67,9 +67,9 @@ export default function NewsHolder() {
         }
   
         if (error.message === "Failed to fetch") {
-          // message.error("Network Error: Failed to fetch data.");
+          message.error("Network Error: Failed to fetch data.");
         } else {
-          // message.error("Error fetching data.");
+          message.error("Error fetching data.");
         }
       }
     }
@@ -129,7 +129,7 @@ export default function NewsHolder() {
 }
 
 const NewsCardSkeleton = () => (
-  <div className="dark:bg-[#1b1f23] w-full p-4 rounded shadow bg-white">
+  <div className="w-full p-4 rounded shadow bg-white">
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse"></div>
@@ -182,7 +182,7 @@ return (
           id={item?.id}
           like={item?.like}
           companyName={item?.party?.party[0]?.party?.businessname}
-          account_id={item?.account?._id}
+          account_id={item?.account[0]?._id}
         />
       ))
     )}
