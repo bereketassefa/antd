@@ -1,3 +1,4 @@
+
 import  { useEffect, useRef, useState } from 'react';
 import NewsCard from '../NewsCard/newsCard';
 // import { ErrorContext } from '../../Error/ErrorContext';
@@ -29,30 +30,31 @@ export default function NewsHolder() {
     return () => observer.disconnect();
   }, [timeline, hasMore]);
 
-  useEffect(() => {
-    let serverDownTimer, loadingMsgId;
-    
+
+    let serverDownTimer;
+    let loadingMsgId;
+  
     async function fetchMoreTimelines() {
       try {
         setLoading(true);
-    
+  
         serverDownTimer = setTimeout(() => {
           setLoading(false);
         }, 20000);
-    
+  
         loadingMsgId = message.loading('Loading news...', 0);
-    
+  
         const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
         const response = await axios.get(Url);
   
         clearTimeout(serverDownTimer);
-        
+  
         if (loadingMsgId) {
           loadingMsgId();
         }
   
         if(response.status === 200){
-          setTimeline(response.data);
+          setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
         }
   
         setLoading(false);
@@ -61,27 +63,21 @@ export default function NewsHolder() {
       } catch (error) {
         setLoading(false);
         setHasMore(false);
-        
-        if (loadingMsgId) {
-          loadingMsgId();
-        }
+  
+     
   
         if (error.message === "Failed to fetch") {
-          message.error("Network Error: Failed to fetch data.");
+          console.warn("Network Error: Failed to fetch data.");
         } else {
-          message.error("Error fetching data.");
+          console.warn("Error fetching data.");
         }
       }
     }
-    
-    fetchMoreTimelines();
-  }, []); // added an empty dependency array
-  
 
   // useEffect(() => {
   //   try {
   //     setLoading(true);
-  //     const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POSTS}`);
+  //     const eventSource = new EventSource(${import.meta.env.VITE_GET_ALL_POSTS});
     
   //   eventSource.onmessage = (event) => {
   //     setLoading(false);
@@ -121,7 +117,7 @@ export default function NewsHolder() {
 
   function onIntersection(entries) {
     if (entries[0].isIntersecting && hasMore) {
-    //  fetchMoreTimelines();
+      fetchMoreTimelines();
     }
   }
   if (error) {
@@ -146,7 +142,8 @@ const NewsCardSkeleton = () => (
       <div className="w-full h-32 mt-4 rounded bg-gray-200 animate-pulse"></div>
     </div>
 
-    <div className="flex gap-4 mt-4">
+
+<div className="flex gap-4 mt-4">
       <div className="flex items-center gap-2">
         <div className="w-6 h-6 rounded bg-gray-200 animate-pulse"></div>
         <div className="w-8 h-4 rounded bg-gray-200 animate-bounce"></div>

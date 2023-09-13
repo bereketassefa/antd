@@ -10,6 +10,7 @@ export default function ProfileFeature({data ,Uid }) {
         <FeatureImgHolder data={data} />
          
          <CompanyInfo Uid={Uid} data={data}/>
+         
     </div>
   )
-}
+  }

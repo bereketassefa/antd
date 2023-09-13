@@ -72,12 +72,12 @@ function App() {
             <Route path="/feed/notifications" element={<Notification />} />
             <Route path="/feed/messages" element={<ChatPage />} />
           </Route>
-          <Route path="/feed/SearchNav" element={<SearchRoute />}>
-            <Route path="/feed/SearchNav/Company" element={<SearchCompany />} />
-            <Route path="/feed/SearchNav/All" element={<SearchAll />} />
+          <Route path="/feed/SearchNav/:name" element={<SearchRoute />}>
+            <Route path="/feed/SearchNav/:name/party" element={<SearchCompany />} />
+            <Route path="/feed/SearchNav/:name" element={<SearchAll />} />
             {/* <Route path="/SearchNav/All" element={<SearchAll />} /> */}
             <Route
-              path="/feed/SearchNav/SearchProduct"
+              path="/feed/SearchNav/:name/Product"
               element={<SearchProduct />}
             />
           </Route>
