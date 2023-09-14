@@ -57,16 +57,16 @@ function SearchProduct() {
   return (
     <div className="max-w-[780px] md:w-[780px] bg-white drop-shadow-xl">
 
-      <div className="flex justify-between   py-7  items-center mx-3">
+      <div className="flex justify-between md:w-[700px]  max-w[700px]  py-7  items-center mx-3">
         <p className="text-2xl font-bold">Products</p>
-        <div className="flex justify-between gap-16 items-center ">
+        <div className="flex justify-between gap-1 md:gap-16 items-center ">
           <p>Price</p>{" "}
           <div>
             {" "}
             <Row>
               <Col span={12}>
                 <Slider
-                  min={1}
+                  min={0}
                   max={10000}
                   onChange={onChange}
                   value={typeof inputValue === "number" ? inputValue : 0}
@@ -115,10 +115,13 @@ function SearchProduct() {
                   </div>
                 </div>
                 <div className="flex justify-between">
-                  <p className="max-w-[670px] mb-6"> {item.productDescription}</p>
+                  <p className="max-w-[670px] md:w-[670px] mb-6">
+                   
+                    {item.description}
+                  </p>
                   <img
                     src={item.imageUrl}
-                    alt="product image"
+                    alt="product"
                     className="w-36 h-40 rouded-2 pb-4 object-cover rounded-lg"
                   ></img>
                 </div>

@@ -1,4 +1,8 @@
 import React, { useState, useContext } from "react";
+import { IoAddCircleOutline } from "react-icons/io5";
+import { AiOutlineMessage, AiOutlineSetting } from "react-icons/ai";
+import{PiUsersThreeBold} from 'react-icons/pi'
+import { GoHome } from "react-icons/go";
 import {
   faBell,
   faBoxes,
@@ -9,7 +13,7 @@ import {
   faGear,
   faHome,
   faMessage,
-  faQuestionCircle,
+  faQuestionCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider } from "antd";
@@ -17,7 +21,7 @@ import { Divider } from "antd";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../theme/ThemeContext";
 
-export default function Navigator({handleAddProduct}) {
+export default function Navigator({ handleAddProduct }) {
   const { myFontSize, increaseFontSize, decreaseFontSize } =
     useContext(ThemeContext);
   const [fontSize, setFontSize] = useState(16); // Initial font size of 16px
@@ -28,7 +32,7 @@ export default function Navigator({handleAddProduct}) {
   };
 
   return (
-    <div className=" rounded-lg dark:bg-[#1b1f23] hidden md:flex bg-white  items-start justify-center mt-4 w-[300px] mx-w-[300px] p-4  sticky top-[65px] drop-shadow-xl">
+    <div className=" rounded-lg dark:bg-[#1b1f23] hidden md:flex bg-white  items-start justify-center mt-8 w-[300px] mx-w-[300px] p-4  sticky top-[75px] drop-shadow-xl">
       <div className="w-full">
         <div className="w-full">
           <ul className="w-full flex flex-col gap-3">
@@ -38,7 +42,7 @@ export default function Navigator({handleAddProduct}) {
                   activeLink === "Home" ? "bg-slate-300" : " "
                 }cursor-pointer w-full flex items-center gap-2`}
               >
-                <FontAwesomeIcon
+                <GoHome
                   style={{ fontSize: 16 + myFontSize }}
                   className={` ${
                     activeLink === "Home" ? "text-[#3222C6]" : "text-gray-700"
@@ -53,7 +57,7 @@ export default function Navigator({handleAddProduct}) {
                 </p>
               </li>
             </Link>
-{/* 
+            {/* 
             <li
               className="cursor-pointer w-full flex items-center gap-2"
               onClick={() => handleLinkClick("Dashboard")}
@@ -147,7 +151,7 @@ export default function Navigator({handleAddProduct}) {
               onClick={() => handleLinkClick("Relations")}
             >
               <li className="dark:text-white cursor-pointer w-full flex items-center gap-2">
-                <FontAwesomeIcon
+                <PiUsersThreeBold
                   style={{ fontSize: 16 + myFontSize }}
                   className={` ${
                     activeLink === "Relations"
@@ -168,27 +172,57 @@ export default function Navigator({handleAddProduct}) {
                 </p>
               </li>
             </Link>
-            <Link
-              to="#"
+            {/* <Link
+              to="/feed/messages"
               className={`${
-                activeLink === "General" ? "text-[#3222C6] " : "text-gray-600"
+                activeLink === "Message" ? "text-[#3222C6] " : "text-gray-600"
               } `}
-              onClick={() => handleLinkClick("General")}
+              onClick={() => handleLinkClick("Message")}
             >
-              <li className="dark:text-white cursor-pointer w-full flex items-center gap-2"
-              onClick={handleAddProduct}>
-                <FontAwesomeIcon
+              <li
+                className="dark:text-white cursor-pointer w-full flex items-center gap-2"
+                // onClick={handleAddProduct}
+              >
+                <AiOutlineMessage
                   style={{ fontSize: 16 + myFontSize }}
                   className={` ${
-                    activeLink === "General"
+                    activeLink === "Message"
                       ? "text-[#3222C6]"
                       : "text-gray-600"
-                  }text-largeP md:text-smallT dark:text-white`}
-                  icon={faMessage}
+                  } text-[28px]  dark:text-white`}
                 />{" "}
                 <p
                   style={{ fontSize: 16 + myFontSize }}
-                  className={`dark:text-white  text-smallP md:text-midP lg:text-largeP `}
+                  className={`dark:text-white  text-xl md:text-2xl lg:text-2xl `}
+                >
+                  Message
+                </p>
+              </li>
+            </Link> */}
+            <Link
+              to="#"
+              className={`${
+                activeLink === "Add Product"
+                  ? "text-[#3222C6] "
+                  : "text-gray-600"
+              } `}
+              onClick={() => handleLinkClick("Add Product")}
+            >
+              <li
+                className="dark:text-white cursor-pointer w-full flex items-center gap-2"
+                onClick={handleAddProduct}
+              >
+                <IoAddCircleOutline
+                  style={{ fontSize: 16 + myFontSize }}
+                  className={` ${
+                    activeLink === "Add Product"
+                      ? "text-[#3222C6]"
+                      : "text-gray-600"
+                  }   text-xl md:text-2xl lg:text-2xl dark:text-white `}
+                />
+                <p
+                  style={{ fontSize: 16 + myFontSize }}
+                  className={`dark:text-white  text-xl md:text-2xl lg:text-2xl `}
                 >
                   Add Product
                 </p>
@@ -246,7 +280,7 @@ export default function Navigator({handleAddProduct}) {
                 className="dark:text-white cursor-pointer w-full flex items-center gap-2"
                 onClick={() => setActiveLink("Setting")}
               >
-                <FontAwesomeIcon
+                <AiOutlineSetting
                   style={{ fontSize: 16 + myFontSize }}
                   className={` ${
                     activeLink === "Setting"

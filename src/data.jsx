@@ -141,7 +141,7 @@ export const Search = [
     image2: iphone14,
     title: "SkyLight Hotel ",
     description:
-      " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.",
+      " relying on meaningful content.",
     isAccepted: false,
     isAccepted: true,
     isConnected: false,

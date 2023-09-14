@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import logos from "../../assets/logo/addisLogoS.png";
 import logo from "../../assets/logo/addisLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AiOutlineMessage } from "react-icons/ai";
 import {
   faBars,
   faCaretDown,
@@ -190,8 +191,8 @@ export default function Topbar() {
 
   return (
     <>
-      <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg h-topbarH bg-topbarBg border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center fixed md:sticky ">
-        <div className="flex  w-full md:max-w-[1120px] items-center justify-between">
+      <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg h-[95px]   bg-topbarBg border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center fixed md:sticky ">
+        <div className="flex  w-full md:max-w-[1120px] items-center justify-between ">
           <div className="w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center">
             {isScreenMdOrLarger ? (
               <Link to={"/feed"}>
@@ -205,10 +206,10 @@ export default function Topbar() {
             )}
           </div>
           <div className="flex gap-[1rem] items-center ">
-            <div className="flex gap-[1rem] items-center">
+            <div className="flex gap-[20px] items-center ">
               {/* search bar */}
               <div className=" relative">
-                <div className="dark:bg-[#38434f] flex gap-2 border-[2px] border-blue-800 py-[10px] px-4 items-center min-w-[300px] ">
+                <div className="dark:bg-[#38434f] flex gap-2 border-[2px]   py-[10px] px-4 items-center rounded-md md:w-[500px]  max-w-[500px] ">
                   <div>
                     <FontAwesomeIcon
                       icon={faSearch}
@@ -216,17 +217,17 @@ export default function Topbar() {
                     />
                   </div>
                   <input
-                    className="outline-none text-[17px] w-full"
+                    className="dark:bg-[#38434f] dark:text-white outline-none text-[17px] w-full"
                     type="text"
                     value={searchInput}
-                    placeholder="Search"
+                    placeholder="What are you looking for?"
                     onChange={(e) => {
                       setSearchInput(e.target.value);
                     }}
                   />
                 </div>
                 {searchInput && (
-                  <div className="absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
+                  <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
                     <div className="flex flex-col  ">
                       {searchResults.map((result, index) => (
                         <SearchCard
@@ -247,7 +248,7 @@ export default function Topbar() {
                       to={`/feed/SearchNav/${searchInput}`}
                       onClick={() => setSearchInput("")}
                     >
-                      <p className="flex justify-center text-primary ">
+                      <p className="dark:text-white flex justify-center text-primary ">
                         See All results
                       </p>
                     </Link>
@@ -261,13 +262,13 @@ export default function Topbar() {
                 <Badge count={notificationCount}>
                   <FontAwesomeIcon
                     icon={faBell}
-                    className="dark:text-white text-largeT"
+                    className="dark:text-white text-[24px]"
                   />
                 </Badge>
               </Link>
               {/* notification */}
               {/* <Link to={"/feed/messages"}>
-                <FontAwesomeIcon icon={faMessage} className="dark:text-white text-largeT" />
+                <AiOutlineMessage className="dark:text-white text-[28px]" />
               </Link> */}
             </div>
             <FontAwesomeIcon
@@ -282,7 +283,7 @@ export default function Topbar() {
             <div
               className="hidden md:flex items-center jutify-center flex-col "
               onClick={handleHover}
-              // onMouseLeave={handleLeaveHover}
+             
             >
               <div className=" flex items-center gap-2">
                 <Avatar
@@ -291,8 +292,11 @@ export default function Topbar() {
                 />
 
                 <div className=" flex items-center gap-2">
-                  <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+                  <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP"
+                    // onMouseLeave={handleHover}
+                  >
                     {truncateCompanyName(cookies?.user.party)}
+                    
                   </h1>
                   <FontAwesomeIcon
                     className="dark:text-white"
