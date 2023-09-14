@@ -6,6 +6,7 @@ import Avatar from "../../../Fields/Avatar/avatar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { BiMoney } from "react-icons/bi";
+import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 function SearchProduct() {
   const { name } = useParams();
   const decodedName = name.includes("%")
@@ -24,7 +25,7 @@ function SearchProduct() {
       const response = await axios.post(url, {
         query: decodedName,
       });
-console.log(decodedName)
+// console.log(decodedName)
       const formattedResults = response.data
         .filter((item) => item.entityType === "product")
         .map((item) => {
@@ -34,11 +35,14 @@ console.log(decodedName)
             imageUrl: item.imageUrl,
             productDescription: item.productDescription,
             ProductPrice: item.ProductPrice,
+            comapanyName: item.companyName,
+            accountId: item.accountId,
+            profilePicture: item.profilePicture
           };
         });
 
       setSearchProduct(formattedResults);
-      console.log(DataProducts)
+       console.log(DataProducts)
     } catch (error) {
       console.error("Error performing search", error);
     }
@@ -96,24 +100,24 @@ console.log(decodedName)
               >
                 <p>ETB</p>
                 <BiMoney className="text-xl" />
-                {item.Price}
+                {item.ProductPrice}
               </div>
             </div>
             <div className="flex flex-col md:flex-row justify-between md:items-center px-4 ">
               <div className="justify-start flex flex-col lg:justify-center gap-2  mt-4">
                 <div className="flex  justify-start items-center">
-                  <Avatar img={item.image1} />
+                  <Avatar img={item.profilePicture? item.image1 : alternativeProfile} />
                   <div>
-                    <h2 className="font-bold text-[#000]  text-[17px]   mx-1">
-                      {item.productName}
+                    <h2 onClick={''} className="font-bold text-[#000]  text-[17px]   mx-1">
+                      {item.comapanyName}
                     </h2>
-                    <p className=" pl-3 flex  ">{item.Product}</p>
+                    <p className=" pl-3 flex  ">{item.productName}</p>
                   </div>
                 </div>
                 <div className="flex justify-between">
-                  <p className="max-w-[670px] mb-6"> {item.description}</p>
+                  <p className="max-w-[670px] mb-6"> {item.productDescription}</p>
                   <img
-                    src={item.image2}
+                    src={item.imageUrl}
                     alt="product image"
                     className="w-36 h-40 rouded-2 pb-4 object-cover rounded-lg"
                   ></img>
