@@ -17,7 +17,7 @@ const SearchCard = ({ setShowResults,name, image, type, ProUid }) => {
     displayableName.length > 16 ? `${displayableName.slice(0, 20)}..` : displayableName;
 
   return (
-    <div className="gap-4">
+    <div className="gap-4 ">
       <div className="flex items-center justify-start gap-2 hover:bg-slate-400">
         <img
           onClick={handleNavigation}

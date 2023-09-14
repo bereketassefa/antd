@@ -124,7 +124,7 @@ const handleFileUpload = (e) => {
             </div>
           </div>
         </div>
-        <div className=" md:w-[510px] bg-[#F0F0F0] h-[650px] mt-2">
+        <div className="  max-w-[610px] md:w-[510px] bg-[#F0F0F0] h-[650px] mt-2">
           {selectedChat ? (
             newChat ? (
               <div className=" max-w-[610px] bg-[#F0F0F0]  flex flex-col justify-between">
