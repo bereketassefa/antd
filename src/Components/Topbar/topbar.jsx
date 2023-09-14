@@ -261,9 +261,9 @@ useEffect(() => {
                 </Badge>
               </Link>
               {/* notification */}
-              <Link to={"/feed/messages"}>
+              {/* <Link to={"/feed/messages"}>
                 <FontAwesomeIcon icon={faMessage} className="dark:text-white text-largeT" />
-              </Link>
+              </Link> */}
             </div>
             <FontAwesomeIcon
               icon={!menuOpen ? faBars : faSquareXmark}

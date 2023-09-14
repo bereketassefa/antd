@@ -15,51 +15,44 @@ export default function CommentContainer({ account_id,id, isOpen }) {
   const [cookies] = useCookies(['User']);
   const [profilePic, setProfilePic]= useState(null) 
   const [showDeleteOption, setShowDeleteOption] = useState(false);
-
+  const [refreshComments, setRefreshComments] = useState(false);
   const handleCommentSubmit = async () => {
     if (!commentText.trim()) return;  // Ensure comment is not just whitespace
-
+  
     try {
-      const url = `${import.meta.env.VITE_COMMENT}`
-        const response = await axios.post(url, {
-            post_id: id,
-            parent_comment_id: null, // or whatever the value should be
-            user_id:cookies?.user.Uid.toString(), // replace with the user ID
-            text: commentText
-        });
-      
-    // console.log(response)
-        if (!response.ok) {
-            // console.error('Server response:', response.status, response.statusText);
-            // console.error('Server response headers:', response.headers);
-            response.text().then(text => {
-                console.error('Server response body:', text);
-            });
-            throw new Error('Failed to post comment');
-        }
-        
-    
-        const responseBody = await response.text();
-        try {
-            const data = await response.json();
-            // ...
-        } catch (jsonError) {
-            console.error('Failed to parse response as JSON:', jsonError);
-        }
-        try {
-            const data = JSON.parse(responseBody);
-            if (data.comment_id) {
-                // console.log(data)
-                // ... rest of the code ...
-            }
-        } catch (jsonError) {
-            console.error('Failed to parse response as JSON:', responseBody);
-        }
-    
+      const url = `${import.meta.env.VITE_COMMENT}`;
+      const response = await axios.post(url, {
+        post_id: id,
+        parent_comment_id: null,
+        user_id: cookies?.user.Uid.toString(),
+        text: commentText
+      });
+  
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error('Failed to post comment');
+      }
+  
+      // Assume the response data has the new comment object
+      const newComment = response.data;
+  
+      // Add the new comment to the existing comments
+      setComments(prevComments => [...prevComments, newComment]);
+  
+      // Clear the text input
+      setCommentText('');
+      setRefreshComments(!refreshComments);
+
     } catch (error) {
-        console.error('Failed to post comment:', error);
+      console.error('Failed to post comment:', error);
     }
-} 
+  };
+  
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleCommentSubmit();
+    }
+  };
+  
 // console.log(id)
   useEffect(() => {
     
@@ -78,13 +71,10 @@ export default function CommentContainer({ account_id,id, isOpen }) {
       }
     }
     fetchComments();
-  }, [id]);
+    
+  }, [id,refreshComments]);
 
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleCommentSubmit();
-    }
-  };
+
   // console.log(id)
   useEffect(() => {
     const fetchAccountDataForProfile = async () => {
