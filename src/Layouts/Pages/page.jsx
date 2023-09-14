@@ -28,7 +28,7 @@ export default function PageLayout() {
             )}     
             <div className=' w-full flex items-start justify-start px-2 md:px-0 mt-2 gap-2'>
                 <Navigator  handleAddProduct={handleShowModal} />
-                <div className='min-h-screen w-full'>
+                <div className='min-h-screen w-full mt-4'>
                     <Outlet />
                 </div>
             </div>

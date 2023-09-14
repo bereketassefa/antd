@@ -80,7 +80,7 @@ const handleFileUpload = (e) => {
     };
   return (
     <div>
-      <div className="  flex">
+      <div className="  mt-6 flex">
         <div className=" hidden sm:block  ml-2 w-[350px]">
           <div className=" ml-3 flex gap-4  items-center   ">
             <div className="  h-8 flex gap-2 border-[2px] border-blue-800 ml-2  mt-5    px-2 items-center min-w-[150px] ">
