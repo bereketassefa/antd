@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { message } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import { format } from "timeago.js";
@@ -15,6 +15,11 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import logoAddis from "../../../assets/logo/addisLogoS.png";
 import { io } from "socket.io-client";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "../../Toast/toastContext";
+
 export default function NewsCard({
   account_id,
   myKey,
@@ -26,12 +31,13 @@ export default function NewsCard({
   id,
   like,
 }) {
-  // console.log(like)
+  const { showToast } = useToast();
+  const downloadCardRef = useRef(null);
+   
   NewsCard.propTypes = {
-    myKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     profilePic: PropTypes.string,
     items: PropTypes.array,
-    comanyName: PropTypes.string.isRequired,
+    companyName: PropTypes.string.isRequired,
     timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
       .isRequired,
     newContent: PropTypes.string.isRequired,
@@ -39,6 +45,7 @@ export default function NewsCard({
     key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     like: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    myKey: PropTypes.any.isRequired,
   };
   //   const socket = io("http://localhost:8020");
   const [allLikes, setAllLiked] = useState(like);
@@ -49,7 +56,11 @@ export default function NewsCard({
   const [data, setTimeline] = useState("");
   const [showLikeInfo, setShowLikeInfo] = useState(false);
   const [whoLikedPost, setWhoLikedPost] = useState([]);
-  const socket = io("https://timeline.qa.addissystems.et", {
+  const [showDownloadCard, setShowDownloadCard] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+ 
+  const socket = io("", {
     withCredentials: true,
   });
   const onCommentShow = () => {
@@ -95,7 +106,7 @@ export default function NewsCard({
         !Liked ? setAllLiked(allLikes + 1) : setAllLiked(allLikes - 1);
       }
     } catch (error) {
-      message.error(`An error occurred: ${error.message}`);
+      // message.error(`An error occurred: ${error.message}`);
     }
   };
 
@@ -137,13 +148,14 @@ export default function NewsCard({
       const response = await axios.post(url);
       setCommentsCounts(response.data); // use response.data instead of response.json()
     } catch (error) {
-      console.error("Failed to fetch comments:", error);
+      // console.error("Failed to fetch comments:", error);
     }
   }
 
-  fetchComments();
+
 
   useEffect(() => {
+    fetchComments();
     checkIfLiked();
   }, [Liked]);
   if (comments.postCount === "0") {
@@ -170,7 +182,7 @@ export default function NewsCard({
     try {
       const response = await axios.get(Url);
       if (response.status === 200) {
-        console.log(response.data);
+        // console.log(response.data)
         setTimeline(response.data);
       }
     } catch (error) {
@@ -179,18 +191,17 @@ export default function NewsCard({
     // const response = await fetch(Url);
   }
 
-  useEffect(() => {
-    // Listen for like updates
-    socket.on("likeCountUpdated", (data) => {
-      if (data.postId === id) {
-        // Only update if this is the post that got liked/unliked
-        setAllLiked(data.newLikeCount);
-      }
-    });
-    return () => {
-      socket.off("likeCountUpdated");
-    };
-  }, [id]);
+  // useEffect(() => {
+  //   // Listen for like updates
+  //   socket.on('likeCountUpdated', (data) => {
+  //     if (data.postId === id) { // Only update if this is the post that got liked/unliked
+  //       setAllLiked(data.newLikeCount);
+  //     }
+  //   });
+  //   return () => {
+  //     socket.off('likeCountUpdated');
+  //   };
+  // }, [id]);
   const fetchUsersWhoLikedPost = async () => {
     try {
       const response = await axios.post(
@@ -210,8 +221,118 @@ export default function NewsCard({
     }
   }, [showLikeInfo]);
 
+  const handleDownloadImage = async (event) => {
+    try {
+      event.stopPropagation();
+      setIsLoading(true);
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", image, true);
+      xhr.responseType = "blob";
+
+      // Event handler for download progress
+      xhr.onprogress = function (event) {
+        const percentComplete = ((event.loaded / event.total) * 100).toFixed(2);
+        showToast(`Downloading: ${percentComplete}%`);
+      };
+
+      // Event handler for successful download
+      xhr.onload = function () {
+        setIsLoading(false);
+        if (this.status === 200) {
+          const blob = this.response;
+          const url = URL.createObjectURL(blob);
+
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "image.jpg";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          URL.revokeObjectURL(url);
+
+          showToast("Download successful!", "success");
+        } else {
+          showToast("Download failed!", "error");
+        }
+      };
+
+      // Event handler for download failure
+      xhr.onerror = function () {
+        setIsLoading(false);
+        showToast("Download failed!", "error");
+      };
+
+      xhr.send();
+    } catch (err) {
+      setIsLoading(false);
+      console.error("Failed to download image:", err);
+      showToast("Download failed!", "error");
+    }
+  };
+  const handleClickOutside = (event) => {
+    if (
+      downloadCardRef.current &&
+      !downloadCardRef.current.contains(event.target)
+    ) {
+      setShowDownloadCard(false);
+    }
+  };
+  useEffect(() => {
+    // Attach click event listener
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup: Remove event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  // const handleBookmark = () => {
+  //   // Logic to bookmark the post
+  //   let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+  //   if (isBookmarked) {
+  //     bookmarks = bookmarks.filter((bookmark) => bookmark !== id);
+  //   } else {
+  //     bookmarks.push(id);
+  //   }
+  //   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  //   setIsBookmarked(!isBookmarked);
+
+  //   console.log("Updated bookmarks:", bookmarks); // Log to console
+  // };
+  // useEffect(() => {
+  //   const bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
+  //   setIsBookmarked(bookmarks.includes(id));
+
+  //   console.log("Current bookmarks:", bookmarks); // Log to console
+  // }, [id]);
+
   return (
-    <div className="w-full bg-cards drop-shadow-xl relative">
+    <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative">
+      {showDownloadCard && (
+        <div
+          ref={downloadCardRef}
+          className="absolute top-0 right-0 mt-4 mr-4 bg-white p-2 rounded shadow-lg flex flex-col"
+        >
+          <div className="mb-2">
+            <button onClick={handleDownloadImage}>
+              {isLoading ? (
+                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-black"></div>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faDownload} /> Save Image
+                </>
+              )}
+            </button>
+          </div>
+          {/* <div>
+            <button onClick={handleBookmark} className="text-sm">
+              {isBookmarked ? "Remove Bookmark" : "Save as Bookmark"}
+            </button>
+          </div> */}
+        </div>
+      )}
+
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-2">
           <Avatar
@@ -221,27 +342,31 @@ export default function NewsCard({
           <div className="flex flex-col gap-1">
             <h1
               onClick={hadleNavigateProfile}
-              className="font-bold flex items-center gap-2 text-smallP md:text-midP lg:text-largeP"
+              className="dark:text-white font-bold flex items-center gap-2 text-xs md:text-xs lg:text-xs"
             >
               {companyName}
             </h1>
-            <span className="text-smallP md:text-midP text-gray-400">
+
+            <span className="text-smallP md:text-midP text-gray-400 dark:text-white">
               {format(timestamp)}
             </span>
           </div>
         </div>
-        <FontAwesomeIcon icon={faEllipsisVertical} />
+        <FontAwesomeIcon className="dark:text-white"
+          onClick={() => setShowDownloadCard(!showDownloadCard)}
+          icon={faEllipsisVertical}
+        />
       </div>
 
       <div className="w-full flex flex-col">
         <div className="p-4 w-full">
-          <p className="text-smallP md:text-midP lg:text-largeP">
+          <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
             {newContent}
           </p>
         </div>
         <div className="overflow-hidden flex z-0 items-center justify-center w-full">
           <img
-            src={alternativeProfile}
+            src={image}
             alt="Image"
             className="h-[300px] flex object-contain"
           />
@@ -251,12 +376,12 @@ export default function NewsCard({
       <div className="w-full flex flex-col z-10">
         <div className="flex justify-between items-center p-4 border-b">
           <span
-            className="text-smallP md:text-midP lg:text-largeP cursor-pointer"
+            className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
             onClick={() => setShowLikeInfo(true)}
           >
             {allLikes === "0" ? "" : allLikes}
           </span>
-          <span className="text-smallP md:text-midP lg:text-largeP">
+          <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
             {comments.postCount === undefined
               ? "Loading..."
               : comments.postCount === "0"
@@ -313,15 +438,15 @@ export default function NewsCard({
               {whoLikedPost?.map((user) => (
                 <div key={user?.uid} className="flex items-center mb-2">
                   <Avatar
+                    className="h-8 w-8"
                     img={
                       user?.account?.profilePicture
                         ? user?.account?.profilePicture
                         : alternativeProfile
                     }
                   />
-                  <span className="ml-4">
-                    {" "}
-                    {user.account?.party?.length > 19
+                  <span className="ml-4 text-sm">
+                    {user?.account?.party?.length > 19
                       ? `${user?.account?.party.slice(0, 19).toLowerCase()}...`
                       : user?.account?.party}
                   </span>
@@ -332,7 +457,7 @@ export default function NewsCard({
         </div>
       )}
 
-      <CommentContainer id={id} isOpen={showComments} />
+      <CommentContainer account_id={account_id} id={id} isOpen={showComments} />
     </div>
   );
 }

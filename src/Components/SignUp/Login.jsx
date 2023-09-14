@@ -87,6 +87,8 @@ function Login() {
   // }, []);
 
   // The email and password validation logic should be inside the handleLogin function, so we can remove it from here
+// In Button.js
+
 
   return (
     <div className=" z-50 w-full">
@@ -162,13 +164,13 @@ function Login() {
           </a>
 
           <Button
-            type="submit"
-            text={"Login"}
-            bgColor={`bg-[#d71a62] ${
-              !email ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={!email ? true : false}
-          />
+  type="submit"
+  text={"Login"}
+  bgColor={`bg-[#d71a62] ${!email ? "opacity-50 cursor-not-allowed" : ""}`}
+  disabled={!email ? true : false}
+  isLoading={loading}
+/>
+
 
           <Helppra />
         </div>

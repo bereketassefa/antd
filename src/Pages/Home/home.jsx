@@ -7,7 +7,7 @@ export default function Home() {
   const { error, showError, hideError } = useContext(ErrorContext);
   return (
     
-    <div className='w-full md:flex items-start justify-center mt-4 '>
+    <div className=' flex items-start mt-4 '>
         {/* feeder  // alwasy visible to see */}
        
         <Feed />

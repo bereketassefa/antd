@@ -18,7 +18,9 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
   const [imagesSelected, setImagesSelected] = useState(false);
   const [warningVisible, setWarningVisible] = useState(false);
   const [profile,setProfilePic]=useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const [theme, setTheme] = useState("light");
   const showWarningModal = () => {
     setWarningVisible(true);
   };
@@ -53,7 +55,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
 
       return;
     }
-
+    setIsLoading(true);
     // Prepare the form data to be sent to the backend API
     const formData = new FormData();
     formData.append("Uid", cookies?.user.Uid); // Assuming you have stored the user's ID in cookies
@@ -105,7 +107,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
                
             })
             .catch((error)=>{
-                message.error('Error occurred '+ error)
+                // message.error('Error occurred '+ error)
             })
    
         } catch (error) {
@@ -116,8 +118,29 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     fetchAccountDataForProfile();
    
 }, []);
+
+useEffect(() => {
+  // Reading from localStorage when component mounts
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme) {
+    setTheme(savedTheme);
+   
+  }
+}, []);
   return (
+    <div>
+      <Modal
+  title="Warning"
+  visible={warningVisible}
+  onCancel={closeWarningModal}
+
+  cancelText="OK"
+>
+  <p>Please select at least one image before publishing.</p>
+</Modal>
+
     <Modal
+    className={`${theme === 'dark'? 'dnewspost' : 'newspost'}`}
       open={isOpen}
       onCancel={handleClose}
       footer={[]}
@@ -126,34 +149,28 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
         borderRadius: 0,
       }}
       width={800}
+      
+   
+      
     >
-      <Modal
-        title="Warning"
-        visible={warningVisible}
-        onOk={closeWarningModal}
-        onCancel={closeWarningModal}
-        okText="Ok"
-        cancelText="Cancel"
-      >
-        <p>Please select at least one image before publishing.</p>
-      </Modal>
-      <div className="w-full md:p-4 flex flex-col gap-4">
+      
+      <div className="dark:bg-[#1b1f23] w-full md:p-4 flex flex-col gap-4">
         <div className="flex gap-2 items-center">
           <Avatar img={profile?profile: alternativeProfile } />
-          <h1 className="text-smallP md:text-midP lg:text-largeP font-bold">
+          <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP font-bold">
             {cookies?.user.party}
           </h1>
         </div>
         <div className="w-full">
           <textarea
-            className="w-full border-none p-3 outline-none text-smallP md:text-midP lg:text-largeP"
+            className="dark:bg-[#1b1f23] dark:text-white  w-full border-none p-3 outline-none text-smallP md:text-midP lg:text-largeP"
             placeholder="Write something here ..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
-        <div className="w-full p-2 pb-0">
+        <div className=" w-full p-2 pb-0">
           <ul className="w-full flex items-center justify-center md:justify-start gap-4">
             <ImgCrop rotationSlider>
               <Upload
@@ -166,10 +183,10 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
                 {fileList.length < 5 && (
                   <p>
                     <FontAwesomeIcon
-                      className="text-secondary text-smallT"
+                      className="dark:text-white text-secondary text-smallT"
                       icon={faImage}
                     />{" "}
-                    <p className="text-smallP">Image</p>
+                    <p className="dark:text-white text-smallP">Image</p>
                   </p>
                 )}
               </Upload>
@@ -177,16 +194,38 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
             {/* Other upload options (video and document) */}
           </ul>
         </div>
-        <Divider className="bg-gray-300" />
+        <Divider className=" bg-gray-300" />
         <div className="w-full flex items-center justify-center">
-          <button
-            className="bg-secondary w-[113px] h-[49px] text-white text-smallP md:text-midP lg:text-largeP"
-            onClick={handlePublish}
-          >
-            Publish
-          </button>
-        </div>
+        <button
+          className="bg-secondary w-[113px] h-[49px] text-white text-smallP md:text-midP lg:text-largeP flex justify-center items-center"
+          onClick={handlePublish}
+          disabled={isLoading}  // Disable button during loading
+        >
+          {isLoading ? (
+            <div className="spinner"></div>
+          ) : (
+            "Publish"
+          )}
+        </button>
+        {/* Add the following styles to create a spinner */}
+        <style jsx>{`
+          .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+          }
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
       </div>
     </Modal>
+    </div>
+ 
   );
 }

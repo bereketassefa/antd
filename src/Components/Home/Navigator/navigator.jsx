@@ -28,7 +28,7 @@ export default function Navigator({handleAddProduct}) {
   };
 
   return (
-    <div className="hidden md:flex bg-white  items-start justify-center mt-4 w-[300px] mx-w-[300px] p-4  sticky top-[65px] drop-shadow-xl">
+    <div className=" rounded-lg dark:bg-[#1b1f23] hidden md:flex bg-white  items-start justify-center mt-4 w-[300px] mx-w-[300px] p-4  sticky top-[65px] drop-shadow-xl">
       <div className="w-full">
         <div className="w-full">
           <ul className="w-full flex flex-col gap-3">
@@ -42,7 +42,7 @@ export default function Navigator({handleAddProduct}) {
                   style={{ fontSize: 16 + myFontSize }}
                   className={` ${
                     activeLink === "Home" ? "text-[#3222C6]" : "text-gray-700"
-                  } text-largeP md:text-smallT `}
+                  } text-largeP md:text-smallT dark:text-white `}
                   icon={faHome}
                 />{" "}
                 <p
@@ -146,14 +146,14 @@ export default function Navigator({handleAddProduct}) {
               } `}
               onClick={() => handleLinkClick("Relations")}
             >
-              <li className=" cursor-pointer w-full flex items-center gap-2">
+              <li className="dark:text-white cursor-pointer w-full flex items-center gap-2">
                 <FontAwesomeIcon
                   style={{ fontSize: 16 + myFontSize }}
                   className={` ${
                     activeLink === "Relations"
                       ? "text-[#3222C6]"
                       : "text-gray-600"
-                  } text-largeP md:text-smallT `}
+                  } text-largeP md:text-smallT dark:text-white `}
                   icon={faBell}
                 />{" "}
                 <p
@@ -162,7 +162,7 @@ export default function Navigator({handleAddProduct}) {
                     activeLink === "Relations"
                       ? "text-[#3222C6]"
                       : "text-gray-600"
-                  } text-smallP md:text-midP lg:text-largeP `}
+                  } text-smallP md:text-midP lg:text-largeP dark:text-white `}
                 >
                   Relations
                 </p>
@@ -175,7 +175,7 @@ export default function Navigator({handleAddProduct}) {
               } `}
               onClick={() => handleLinkClick("General")}
             >
-              <li className="cursor-pointer w-full flex items-center gap-2"
+              <li className="dark:text-white cursor-pointer w-full flex items-center gap-2"
               onClick={handleAddProduct}>
                 <FontAwesomeIcon
                   style={{ fontSize: 16 + myFontSize }}
@@ -183,12 +183,12 @@ export default function Navigator({handleAddProduct}) {
                     activeLink === "General"
                       ? "text-[#3222C6]"
                       : "text-gray-600"
-                  }text-largeP md:text-smallT`}
+                  }text-largeP md:text-smallT dark:text-white`}
                   icon={faMessage}
                 />{" "}
                 <p
                   style={{ fontSize: 16 + myFontSize }}
-                  className={`  text-smallP md:text-midP lg:text-largeP `}
+                  className={`dark:text-white  text-smallP md:text-midP lg:text-largeP `}
                 >
                   Add Product
                 </p>
@@ -243,7 +243,7 @@ export default function Navigator({handleAddProduct}) {
             </li> */}
             <Link to={"/feed/settings"}>
               <li
-                className="cursor-pointer w-full flex items-center gap-2"
+                className="dark:text-white cursor-pointer w-full flex items-center gap-2"
                 onClick={() => setActiveLink("Setting")}
               >
                 <FontAwesomeIcon
@@ -252,7 +252,7 @@ export default function Navigator({handleAddProduct}) {
                     activeLink === "Setting"
                       ? "text-[#3222C6]"
                       : "text-gray-600"
-                  } text-largeP md:text-smallT `}
+                  } text-largeP md:text-smallT dark:text-white `}
                   icon={faGear}
                 />{" "}
                 <p
@@ -261,7 +261,7 @@ export default function Navigator({handleAddProduct}) {
                     activeLink === "Setting"
                       ? "text-[#3222C6]"
                       : "text-gray-600"
-                  }  text-smallP md:text-midP lg:text-largeP `}
+                  }  text-smallP md:text-midP lg:text-largeP dark:text-white `}
                 >
                   Setting
                 </p>

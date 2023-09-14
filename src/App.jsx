@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Primary from "./Layouts/Primary/primary";
 import Home from "./Pages/Home/home";
@@ -31,14 +31,19 @@ import Contact from "./Components/SettingComponent/Contact";
 import PrivacyPolicy from "./Components/SettingComponent/PrivacyPolicy";
 import { useCookies } from "react-cookie";
 import SearchAll from "./Components/Topbar/SearchAllCompo/SearchAll";
+import { ToastProvider } from "./Components/Toast/toastContext";
 import ChatPage from "./Components/Chat/ChatPage";
+
 
 // import Message from "./Pages/Message/Message";
 
 function App() {
   const [cookies] = useCookies(["user"]);
   return (
+
     <ErrorProvider>
+        <ToastProvider>
+        
       <Routes>
         <Route path="/">
           <Route index element={<LoginPage />} />
@@ -67,12 +72,12 @@ function App() {
             <Route path="/feed/notifications" element={<Notification />} />
             <Route path="/feed/messages" element={<ChatPage />} />
           </Route>
-          <Route path="/feed/SearchNav" element={<SearchRoute />}>
-            <Route path="/feed/SearchNav/Company" element={<SearchCompany />} />
-            <Route path="/feed/SearchNav/All" element={<SearchAll />} />
+          <Route path="/feed/SearchNav/:name" element={<SearchRoute />}>
+            <Route path="/feed/SearchNav/:name/party" element={<SearchCompany />} />
+            <Route path="/feed/SearchNav/:name" element={<SearchAll />} />
             {/* <Route path="/SearchNav/All" element={<SearchAll />} /> */}
             <Route
-              path="/feed/SearchNav/SearchProduct"
+              path="/feed/SearchNav/:name/Product"
               element={<SearchProduct />}
             />
           </Route>
@@ -100,7 +105,10 @@ function App() {
           </Route>
         </Route>
       </Routes>
+   
+      </ToastProvider>
     </ErrorProvider>
+
   );
 }
 

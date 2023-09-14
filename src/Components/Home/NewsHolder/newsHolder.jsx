@@ -1,12 +1,13 @@
-import React, { useEffect, useContext, useRef, useState } from "react";
-import NewsCard from "../NewsCard/newsCard";
-import { ErrorContext } from "../../Error/ErrorContext";
 
-import { message } from "antd";
-import axios from "axios";
+import  { useEffect, useRef, useState } from 'react';
+import NewsCard from '../NewsCard/newsCard';
+// import { ErrorContext } from '../../Error/ErrorContext';
+
+import { message } from 'antd';
+import axios from 'axios';
 // import { useCookies } from 'react-cookie';
 export default function NewsHolder() {
-  const { displayError } = useContext(ErrorContext);
+  // const { displayError } = useContext(ErrorContext);
   const [loading, setLoading] = useState(false);
   const [timeline, setTimeline] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -14,84 +15,70 @@ export default function NewsHolder() {
   const elementRef = useRef(null);
   const [error] = useState(null);
   // const [cookies] = useCookies(['user'])
-  let loadingMsg;
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(onIntersection, {
-      threshold: 1.0,
+      threshold: 1.0
     });
 
     if (elementRef.current) {
       observer.observe(elementRef.current);
+      
     }
 
     return () => observer.disconnect();
   }, [timeline, hasMore]);
 
-  async function fetchMoreTimelines() {
+
     let serverDownTimer;
-
-    try {
-      setLoading(true);
-
-      serverDownTimer = setTimeout(() => {
-        setLoading(false);
-      }, 20000); // Set the timer for 10 seconds
-
-      loadingMsg = message.loading("Loading news...", 0);
-      setTimeout(() => {
-        loadingMsg(); // Close the loading message after 1 minute
-        // message.error("Loading took too long. Please try again later.");  // Inform the user
-      }, 10000);
-
-      const Url = `${import.meta.env.VITE_GET_ALL_POSTSV2}`;
-      // const response = await fetch(Url);
+    let loadingMsgId;
+  
+    async function fetchMoreTimelines() {
       try {
-        loadingMsg();
-        await axios.get(Url).then((response) => {
+        setLoading(true);
+  
+        serverDownTimer = setTimeout(() => {
           setLoading(false);
-          setHasMore(false);
-          setTimeout(loadingMsg, 0);
-          if (response.status === 200) {
-            console.log(response.data);
-            setTimeline(response.data);
-          }
-        });
+        }, 20000);
+  
+        loadingMsgId = message.loading('Loading news...', 0);
+  
+        const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
+        const response = await axios.get(Url);
+  
+        clearTimeout(serverDownTimer);
+  
+        if (loadingMsgId) {
+          loadingMsgId();
+        }
+  
+        if(response.status === 200){
+          setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
+        }
+  
+        setLoading(false);
+        setHasMore(false);
+  
       } catch (error) {
         setLoading(false);
         setHasMore(false);
-        setTimeout(loadingMsg, 0);
-        // message.error('faild to fetch ')
-      }
-
-      clearTimeout(serverDownTimer); // Clear the timer if data is fetched successfully before 10 seconds
-    } catch (error) {
-      setLoading(false);
-
-      if (error.message === "Failed to fetch") {
-        message.error("Network Error: Failed to fetch data.");
-        loadingMsg();
-      } else {
-        message.error("Error fetching data.");
-        loadingMsg();
-      }
-    } finally {
-      setLoading(false);
-      setTimeout(() => {
-        if (loading) {
-          displayError("Server down");
+  
+     
+  
+        if (error.message === "Failed to fetch") {
+          console.warn("Network Error: Failed to fetch data.");
+        } else {
+          console.warn("Error fetching data.");
         }
-      }, 20000);
+      }
     }
-  }
-  useEffect(() => {
-    fetchMoreTimelines
-  });
+
   // useEffect(() => {
   //   try {
   //     setLoading(true);
-  //     const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POSTS}`);
-
+  //     const eventSource = new EventSource(${import.meta.env.VITE_GET_ALL_POSTS});
+    
   //   eventSource.onmessage = (event) => {
   //     setLoading(false);
   //     const eventData = JSON.parse(event.data); // This should be an array
@@ -107,15 +94,15 @@ export default function NewsHolder() {
   //         console.log("ID does not exist in item");
   //       }
   //     });
-
+      
   //     setTimeline(eventData);
 
   //   };
-
+    
   //   eventSource.onerror = (error) => {
   //     console.error('SSE Error:', error);
   //   };
-
+    
   //   return () => {
   //     eventSource.close();
   //   };
@@ -123,78 +110,80 @@ export default function NewsHolder() {
   //     setLoading(false);
   //     console.error(error);
   //   }
-
+    
   // }, []);
+  
+  
 
   function onIntersection(entries) {
     if (entries[0].isIntersecting && hasMore) {
-      //  fetchMoreTimelines();
+      fetchMoreTimelines();
     }
   }
   if (error) {
-    return (
-      <div className="flex justify-center items-center h-screen">{error}</div>
-    );
-  }
+    return <div className="flex justify-center items-center h-screen">{error}</div>;
+}
 
-  const NewsCardSkeleton = () => (
-    <div className="w-full p-4 rounded shadow bg-white">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse"></div>
-          <div className="flex flex-col gap-1">
-            <div className="w-24 h-4 rounded bg-gray-200 animate-pulse"></div>
-            <div className="w-16 h-4 rounded bg-gray-200 animate-pulse"></div>
-          </div>
+const NewsCardSkeleton = () => (
+  <div className="w-full p-4 rounded shadow bg-white">
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse"></div>
+        <div className="flex flex-col gap-1">
+          <div className="w-24 h-4 rounded bg-gray-200 animate-pulse"></div>
+          <div className="w-16 h-4 rounded bg-gray-200 animate-pulse"></div>
         </div>
+      </div>
+      <div className="w-6 h-6 rounded bg-gray-200 animate-pulse"></div>
+    </div>
+
+    <div className="flex flex-col mt-4">
+      <div className="w-full h-4 rounded bg-gray-200 animate-bounce"></div>
+      <div className="w-full h-32 mt-4 rounded bg-gray-200 animate-pulse"></div>
+    </div>
+
+
+<div className="flex gap-4 mt-4">
+      <div className="flex items-center gap-2">
         <div className="w-6 h-6 rounded bg-gray-200 animate-pulse"></div>
+        <div className="w-8 h-4 rounded bg-gray-200 animate-bounce"></div>
       </div>
-
-      <div className="flex flex-col mt-4">
-        <div className="w-full h-4 rounded bg-gray-200 animate-bounce"></div>
-        <div className="w-full h-32 mt-4 rounded bg-gray-200 animate-pulse"></div>
-      </div>
-
-      <div className="flex gap-4 mt-4">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded bg-gray-200 animate-pulse"></div>
-          <div className="w-8 h-4 rounded bg-gray-200 animate-bounce"></div>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded bg-gray-200 animate-pulse"></div>
-          <div className="w-8 h-4 rounded bg-gray-200 animate-bounce"></div>
-        </div>
+      <div className="flex items-center gap-2">
+        <div className="w-6 h-6 rounded bg-gray-200 animate-pulse"></div>
+        <div className="w-8 h-4 rounded bg-gray-200 animate-bounce"></div>
       </div>
     </div>
-  );
+  </div>
+);
 
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-screen">{error}</div>
-    );
-  }
 
-  return (
-    <div className="flex flex-col gap-2 w-full max-w-[550px]">
-      {loading
-        ? // Show 5 skeleton cards while loading
-          Array.from({ length: 5 }).map((_, index) => (
-            <NewsCardSkeleton key={index} />
-          ))
-        : timeline.map((item, index) => (
-            <NewsCard
-              key={index}
-              image={item?.image}
-              newContent={item?.description}
-              profilePic={item?.account[0]?.profilePicture}
-              timestamp={item?.time}
-              id={item?.id}
-              like={item?.like}
-              companyName={item?.party?.party[0]?.party?.businessname}
-              account_id={item?.account[0]?._id}
-            />
-          ))}
-      <div ref={elementRef}></div>
-    </div>
-  );
+
+if (error) {
+  return <div className="flex justify-center items-center h-screen">{error}</div>;
+}
+
+return (
+  <div className='flex flex-col gap-2 w-full max-w-[550px]'>
+    {loading ? (
+      // Show 5 skeleton cards while loading
+      Array.from({ length: 5 }).map((_, index) => <NewsCardSkeleton key={index} />)
+    ) : (
+      timeline.map((item, index) => (
+        <NewsCard
+          key={index}
+          image={item?.image}
+          myKey={index}
+          newContent={item?.description}
+          profilePic={item?.account[0]?.profilePicture}
+          timestamp={item?.time}
+          id={item?.id}
+          like={item?.like}
+          companyName={item?.party?.party[0]?.party?.businessname}
+          account_id={item?.account[0]?._id}
+        />
+      ))
+    )}
+    <div ref={elementRef}></div>
+  </div>
+);
 }

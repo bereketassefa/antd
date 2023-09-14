@@ -10,11 +10,11 @@ function RelationPage() {
   };
 
   return (
-    <div className="bg-[#FFF] text-[#000000] ">
+    <div className= "dark:bg-[#1b1f23] bg-[#FFF] text-[#000000] ">
       <ul className=" flex mx-auto sm:px-0  md:justify-between  gap-6 lg:justify-between md:px-10 items-center  lg:px-16 py-4  ">
         <Link
           to="/feed/Relations/relation"
-          className={` ${isClicked ? "underline" : ""}  
+          className={`dark:text-white ${isClicked ? "underline" : ""}  
           }  ${
             activeLink === "Relations" ? "text-[#3222C6]" : "text-gray-700"
           }`}
@@ -22,7 +22,7 @@ function RelationPage() {
         >
           <li>
             <p
-              className={`  ${
+              className={`dark:text-white  ${
                 activeLink === "Relations" ? "text-[#3222C6]" : "text-gray-600"
               }  text-smallP md:text-midP lg:text-xl  `}
             >
@@ -47,7 +47,7 @@ function RelationPage() {
         >
           <li>
             <p
-              className={`  ${
+              className={`dark:text-white  ${
                 activeLink === "Requested Relation"
                   ? "text-[#3222C6]"
                   : "text-gray-600"
@@ -73,7 +73,7 @@ function RelationPage() {
         >
           <li>
             <p
-              className={`  ${
+              className={`dark:text-white  ${
                 activeLink === "Recommended relations"
                   ? "text-[#3222C6]"
                   : "text-gray-600"

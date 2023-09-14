@@ -1,31 +1,26 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import logos from "../../assets/logo/addisLogoS.png";
 import logo from "../../assets/logo/addisLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowDown,
   faBars,
   faCaretDown,
   faSearch,
   faSquareXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBell, faMessage } from "@fortawesome/free-regular-svg-icons";
-import profilePlaceHolder from "../../assets/logo/profilePlaceHolder.png";
 import alternativeProfile from "../../assets/image/alternativeProfile.png";
 import DropMenu from "./DropMenu/dropMenu";
 import { useMediaQuery } from "react-responsive";
 import Avatar from "../../Fields/Avatar/avatar";
-import { Link, useNavigate } from "react-router-dom";
-import { Badge, message } from "antd";
-import SearchField from "./SearchField";
+import { Link } from "react-router-dom";
+import { Badge } from "antd";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { ErrorContext } from "../Error/ErrorContext";
-import { Search } from "../../data";
-import SearchRoute from "../../Layouts/Search/SearchRoute";
-import SearchProduct from "./SearchAllCompo/SearchProduct";
 import SearchCard from "./SearchAllCompo/SearchCard";
-
+import { useToast } from '../Toast/toastContext';
+import { ToastContainer, toast } from 'react-toastify';
+import { UpSquareTwoTone } from "@ant-design/icons";
 export default function Topbar() {
   function truncateCompanyName(name) {
     return name && name.length > 8 ? name.substring(0, 8) + "..." : name;
@@ -37,9 +32,8 @@ export default function Topbar() {
   const [notificationCount, setNotificationsCount] = useState();
   const [searchInput, setSearchInput] = useState("");
   const isScreenMdOrLarger = useMediaQuery({ minWidth: 768 });
-  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-  const navigate = useNavigate();
-  const { error, showError, hideError } = useContext(ErrorContext);
+  const [cookies, removeCookie] = useCookies(["user"]);
+
   const handleHover = () => {
     setDropDown(!dropDown);
   };
@@ -54,35 +48,47 @@ export default function Topbar() {
     removeCookie(["user"]);
     window.location.reload(true);
   };
+  const [showResults, setShowResults] = useState(false);
+  useEffect(() => {
+    console.log("showResults changed:", showResults);
+  }, [showResults]);
+  
   const handleSearch = async () => {
     if (searchInput.trim() === "") {
       setSearchResults([]);
+      setShowResults(false);
       return;
     }
+
     try {
-      const url = `${import.meta.env.VITE_SEARCH_PARTIALLY}`;
+      const url = 'http://localhost:8031/partially'; // Replace with your actual URL
       const response = await axios.post(url, {
         query: searchInput,
       });
-      if (response.data.length > 0) {
-        const formattedResults = response.data.map((item) => {
-          let result = { type: item.type };
-          if (item.type === "business") {
-            result.name = item.businessName;
-            result.profilePicture = item.profilePicture; // Add profile picture
-          } else if (item.type === "product") {
-            result.name = item.productName;
-            result.imageUrl = item.imageUrl; // Add image URL for product
-          }
-          return result;
-        });
 
-        setSearchResults(formattedResults);
-      }
+      const formattedResults = response.data.map((item) => {
+        let result = { entityType: item.entityType };
+        if (item.entityType === 'party') {
+          result.name = item.party.businessname;
+          result.Uid = item.Uid
+        } else if (item.entityType === 'product') {
+          result.name = item.productName;
+          result.Uid= item.Uid
+        }
+        return result;
+      });
+
+      setSearchResults(formattedResults);
+      setShowResults(true); 
     } catch (error) {
       console.error("Error performing search", error);
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchInput]);
+
 
   useEffect(() => {
     handleSearch();
@@ -110,6 +116,8 @@ export default function Topbar() {
         // let response = await fetch(url);
         // let data = await response.json();
         // console.log("Data received from server: ", data);  // Debugging line
+
+        UpSquareTwoTone
         // console.log("Profile Picture URL from server:", data?.[0].profilePicture);
         // setProfilePic(data?.[0].profilePicture);
       } catch (error) {
@@ -158,9 +166,29 @@ export default function Topbar() {
     }, 1000);
   }, []);
 
+  const { toastMessage, hideToast } = useToast();
+
+useEffect(() => {
+  if (toastMessage) {
+    toast.success(toastMessage, { position: toast.POSITION.TOP_RIGHT, autoClose: 2000 });
+    hideToast();
+  }
+}, [toastMessage]);
+// In your top-level component, e.g., App.js
+
+useEffect(() => {
+  // Initialize theme from localStorage right when the app mounts
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+}, []);
+
   return (
     <>
-      <div className=" z-20 w-full drop-shadow-lg h-topbarH bg-topbarBg border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center fixed md:sticky ">
+      <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg h-topbarH bg-topbarBg border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center fixed md:sticky ">
         <div className="flex  w-full md:max-w-[1120px] items-center justify-between">
           <div className="w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center">
             {isScreenMdOrLarger ? (
@@ -174,12 +202,11 @@ export default function Topbar() {
               </Link>
             )}
           </div>
-
           <div className="flex gap-[1rem] items-center ">
             <div className="flex gap-[1rem] items-center">
               {/* search bar */}
               <div className=" relative">
-                <div className=" flex gap-2 border-[2px] border-blue-800 py-[10px] px-4 items-center min-w-[450px] ">
+                <div className="dark:bg-[#38434f] flex gap-2 border-[2px] border-blue-800 py-[10px] px-4 items-center min-w-[300px] ">
                   <div>
                     <FontAwesomeIcon
                       icon={faSearch}
@@ -215,12 +242,12 @@ export default function Topbar() {
                     </div>
                     <hr className="border-[1px] border-blue-800" />
                     <Link
-                      to="/feed/SearchNav/All"
+                      to={`/feed/SearchNav/${searchInput}`}
                       onClick={() => setSearchInput("")}
                     >
-                      <p className="flex justify-center text-primary ">
+                      {/* <p className="flex justify-center text-primary ">
                         See All results
-                      </p>
+                      </p> */}
                     </Link>
                   </div>
                 )}
@@ -230,12 +257,12 @@ export default function Topbar() {
               {/* message  */}
               <Link to={"/feed/notifications"}>
                 <Badge count={notificationCount}>
-                  <FontAwesomeIcon icon={faBell} className="text-largeT" />
+                  <FontAwesomeIcon icon={faBell} className="dark:text-white text-largeT" />
                 </Badge>
               </Link>
               {/* notification */}
               <Link to={"/feed/messages"}>
-                <FontAwesomeIcon icon={faMessage} className="text-largeT" />
+                <FontAwesomeIcon icon={faMessage} className="dark:text-white text-largeT" />
               </Link>
             </div>
             <FontAwesomeIcon
@@ -252,46 +279,47 @@ export default function Topbar() {
               onClick={handleHover}
               // onMouseLeave={handleLeaveHover}
             >
-              <div className="flex items-center gap-2">
+              <div className=" flex items-center gap-2">
                 <Avatar
                   img={profilePic ? profilePic : alternativeProfile}
                   alt="image"
                 />
 
-                <div className="flex items-center gap-2">
-                  <h1 className=" text-smallP md:text-midP lg:text-largeP">
+                <div className=" flex items-center gap-2">
+                  <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP">
                     {truncateCompanyName(cookies?.user.party)}
                   </h1>
-                  <FontAwesomeIcon icon={faCaretDown} />
+                  <FontAwesomeIcon className="dark:text-white" icon={faCaretDown} />
                 </div>
               </div>
               <div
-                className={
-                  dropDown
-                    ? "absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
-                    : "h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
-                }
-              >
-                <ul className="flex flex-col w-full h-full items-center justify-center">
-                  <Link onClick={hadleNavigateProfile} className="w-full">
-                    <li className="w-full p-3 items-center justify-start hover:bg-lightPrimaryHover">
-                      <p className="text-smallP md:text-midP lg:text-largeP">
-                        {" "}
-                        View Profile
-                      </p>
-                    </li>
-                  </Link>
+  className={
+    dropDown
+      ? "rounded-lg dark:bg-[#1b1f23] absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
+      : "h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg transition ease-in-out delay-150"
+  }
+>
+  <ul className="flex flex-col w-full h-full items-center justify-center">
+    <Link onClick={hadleNavigateProfile} className="w-full">
+      <li className="w-full p-3 items-center justify-start hover:bg-lightPrimaryHover">
+        <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+          {" "}
+          View Profile
+        </p>
+      </li>
+    </Link>
+    <hr className="w-full border-t border-gray-300 dark:border-gray-700" /> {/* Added this line */}
+    <li
+      className="w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover"
+      onClick={handleLogOut}
+    >
+      <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+        Sign Out
+      </p>
+    </li>
+  </ul>
+</div>
 
-                  <li
-                    className="w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover"
-                    onClick={handleLogOut}
-                  >
-                    <p className=" text-smallP md:text-midP lg:text-largeP">
-                      Sign Out
-                    </p>
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
         </div>
