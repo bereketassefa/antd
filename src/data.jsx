@@ -2,7 +2,9 @@ import bt from "./assets/image/BT.png";
 import BRhotel from "./assets/image/BRUHWAY-HOTEL.png";
 import bbm from "./assets/image/bbm-.png";
 import star from "./assets/image/STARTIMES.png";
-
+import iphone13 from "./assets/image/cute-girl-pic (12).jpg";
+import iphone12 from "./assets/image/iphone2.webp";
+import iphone14 from "./assets/image/10-20AK6_phoneFront.png";
 export const Relation = [
   {
     key: 1,
@@ -86,7 +88,7 @@ export const comments = [
   {
     key: 2,
     image: bt,
-   
+
     CompanyName: "AddisPay",
     message: "Another message from anoter  ",
     fromOther: true,
@@ -110,17 +112,21 @@ export const comments = [
 export const Search = [
   {
     key: 1,
-    image: BRhotel,
+    image1: BRhotel,
+    Price: "10,000 ",
+    image2: iphone12,
     title: "Company Name ",
     description:
       " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.",
-    Price: "  50000 $",
+    Product: " iphpne-13",
     isAccepted: false,
     isConnected: true,
   },
   {
     key: 1,
-    image: star,
+    image1: star,
+    Price: "10,000",
+    image2: iphone13,
     title: "EagleLion Tech",
     description:
       " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.",
@@ -130,7 +136,9 @@ export const Search = [
   },
   {
     key: 1,
-    image: bbm,
+    image1: bbm,
+    Price: "10,000",
+    image2: iphone14,
     title: "SkyLight Hotel ",
     description:
       " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.",
