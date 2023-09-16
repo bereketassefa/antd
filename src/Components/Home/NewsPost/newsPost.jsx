@@ -57,14 +57,14 @@ export default function NewsPost() {
             <div className=' w-full'>
                 <ul className='w-full flex items-center justify-between'>
                     <li className='flex items-center gap-2'>
-                        <FontAwesomeIcon className='text-secondary text-smallT' icon={faImage} /> <p className='dark:text-white text-smallP md:text-midP lg:text-largeP'>Image</p>
+                        <FontAwesomeIcon className='text-secondary text-smallT' onClick={onModalOpen} icon={faImage} /> <p onClick={onModalOpen} className='dark:text-white text-smallP md:text-midP lg:text-largeP'>Image</p>
                     </li>
-                    <li className='flex items-center gap-2'>
+                    {/* <li className='flex items-center gap-2'>
                         <FontAwesomeIcon className='text-secondary text-smallT' icon={faVideo}/> <p className='dark:text-white text-smallP md:text-midP lg:text-largeP'>Video</p>
                     </li>
                     <li className='flex items-center gap-2'>
                         <FontAwesomeIcon className='text-secondary text-smallT' icon={faFile}  /> <p className='dark:text-white text-smallP md:text-midP lg:text-largeP'>Document</p>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         </div>

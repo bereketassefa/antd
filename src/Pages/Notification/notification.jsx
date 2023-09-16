@@ -16,9 +16,9 @@ export default function Notification() {
   useEffect(() => {
     const fetchNotifications = async () => {
         try {
-            let response = await fetch(`https://account.addispay.et/Notification/${cookies?.user._id}`);
+            let response = await fetch(`https://account.qa.addissystems.et/Notification/${cookies?.user._id}`);
             let data = await response.json();
-            console.log(data);
+            // console.log(data);
             setNotifications(data);
         } catch (error) {
             console.error("Error fetching notifications:", error);
@@ -31,17 +31,17 @@ export default function Notification() {
     },1000)
     
 }, []);
-console.log(notifications)
+// console.log(notifications)
   return (
     <div className='w-full flex flex-col items-start justify-center mt-4 gap-4 p-2' >
          <div className='flex items-cetner justify-between w-full'>
               <div className='flex items-center gap-2'>
                     <FontAwesomeIcon icon={faBell} className='text-largeT'/>
-                    <h1 className='text-smallP md:text-midP lg:text-largeP' >Notification</h1>
+                    <h1 className='dark:text-white text-smallP md:text-midP lg:text-largeP' >Notification</h1>
               </div>
               <div className='flex items-center gap-2'>
                     <FontAwesomeIcon icon={faGear}  className='text-largeT' />
-                    <h1 className='hidden md:flex' >Go to notification setting</h1>
+                    <h1 className='dark:text-white hidden md:flex' >Go to notification setting</h1>
               </div>
          </div>
          <div className='w-full flex flex-col gap-2'>

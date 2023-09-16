@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const SearchCard = ({ setShowResults,name, image, type, ProUid }) => {
   const navigate = useNavigate();
   const handleNavigation = () => {
-    console.log("handleNavigation called");
+    // console.log("handleNavigation called");
     navigate(`/feed/SearchNav/${name}`, { state: { image, type, ProUid } });
     setShowResults(false);
     console.log("setShowResults called");

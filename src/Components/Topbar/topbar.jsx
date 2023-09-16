@@ -62,7 +62,7 @@ export default function Topbar() {
     }
 
     try {
-      const url = "http://localhost:8031/partially"; // Replace with your actual URL
+      const url = "https://search.qa.addissystems.et/partially"; // Replace with your actual URL
       const response = await axios.post(url, {
         query: searchInput,
       });

@@ -33,7 +33,8 @@ export default function NewsCard({
 }) {
   const { showToast } = useToast();
   const downloadCardRef = useRef(null);
-   
+ 
+
   NewsCard.propTypes = {
     profilePic: PropTypes.string,
     items: PropTypes.array,
@@ -287,6 +288,7 @@ export default function NewsCard({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  video: PropTypes.string
   // const handleBookmark = () => {
   //   // Logic to bookmark the post
   //   let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
@@ -365,11 +367,12 @@ export default function NewsCard({
           </p>
         </div>
         <div className="overflow-hidden flex z-0 items-center justify-center w-full">
-          <img
-            src={image}
-            alt="Image"
-            className="h-[300px] flex object-contain"
-          />
+        {image && <img src={image} alt="Image" className="h-[300px] flex object-contain" />}
+  {/* If it's a video
+  {image && <video className="h-[300px] flex object-contain" controls>
+    <source src={image} type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>} */}
         </div>
       </div>
 
@@ -379,7 +382,7 @@ export default function NewsCard({
             className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
             onClick={() => setShowLikeInfo(true)}
           >
-            {allLikes === "0" ? "" : allLikes}
+             {allLikes === 0 || allLikes === "0" ? "" : allLikes}
           </span>
           <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
             {comments.postCount === undefined
@@ -396,8 +399,8 @@ export default function NewsCard({
               onClick={handleLike}
               className={
                 Liked
-                  ? "text-largeP md:text-smallT cursor-pointer text-secondary"
-                  : "text-largeP cursor-pointer md:text-smallT text-gray"
+                  ? "text-largeP md:text-smallT cursor-pointer text-secondary "
+                  : "text-largeP cursor-pointer md:text-smallT text-gray dark:text-white"
               }
               icon={faThumbsUp}
             />
@@ -405,7 +408,7 @@ export default function NewsCard({
           <li className="flex items-center gap-2 cursor-pointer">
             <FontAwesomeIcon
               onClick={onCommentShow}
-              className="text-largeP md:text-smallT text-gray-400"
+              className="dark:text-white text-largeP md:text-smallT text-gray-400"
               icon={faMessage}
             />
           </li>

@@ -85,29 +85,29 @@ export default function CommentCard({account_id,id,img,companyName, time , comme
         setShowDeleteOption(false);
       };
       useEffect(() => {
-        console.log("Comment ID:", id);
-        console.log("User ID from cookies:", cookies.user._id);
+        // console.log("Comment ID:", id);
+        // console.log("User ID from cookies:", cookies.user._id);
       }, []);
     
-      console.log('deleteCardRef.current:', deleteCardRef.current);
-      console.log('showDeleteOption:', showDeleteOption);
+      // console.log('deleteCardRef.current:', deleteCardRef.current);
+      // console.log('showDeleteOption:', showDeleteOption);
 
       return (
         <>
-          <div className='w-full flex gap-2'>
+          <div className=' w-full flex gap-2'>
             <div className='flex'>
               <Avatar 
                 onClick={hadleNavigateProfile}
                 img={profilePic ? profilePic : alternativeProfile}
               />
             </div>
-            <div className='bg-lightBg flex flex-col w-full p-4 gap-3'>
+            <div className='dark:bg-[#1b1f23] dark:border bg-lightBg flex flex-col w-full p-4 gap-3'>
               <div className='w-full flex items-center justify-between'>
                 <div className='flex flex-col'>
-                  <h1 onClick={hadleNavigateProfile} className='text-smallP md:text-midP lg:text-largeP font-bold'>{companyName}</h1>
-                  <span className='text-smallP md:text-midP text-gray-500'>{time}</span>
+                  <h1 onClick={hadleNavigateProfile} className='dark:text-white text-smallP md:text-midP lg:text-largeP font-bold'>{companyName}</h1>
+                  <span className='dark:text-white text-smallP md:text-midP text-gray-500'>{time}</span>
                 </div>
-                {console.log("Checking conditions: ", account_id, id, cookies.user._id)}
+                {/* {console.log("Checking conditions: ", account_id, id, cookies.user._id)} */}
                 {(account_id === cookies.user._id || id === cookies.user._id) && (
             <div ref={deleteCardRef}>
               <FontAwesomeIcon icon={faEllipsisVertical} onClick={toggleDeleteOption} />
@@ -122,13 +122,13 @@ export default function CommentCard({account_id,id,img,companyName, time , comme
                 )}
               </div>
               <div>
-                <p className='text-smallP md:text-midP lg:text-largeP'>
+                <p className='dark:text-white text-smallP md:text-midP lg:text-largeP'>
                   {comment}
                 </p>
               </div>
-              <div className='flex w-full items-center justify-start gap-4'>
-                <p className='text-smallP md:text-midP lg:text-largeP text-secondary cursor-pointer'>Likes <span>{likes === 0 ? '' : likes}</span></p>
-                <p className='text-smallP md:text-midP lg:text-largeP cursor-pointer flex gap-1' onClick={onShowReplay}>
+              <div className=' flex w-full items-center justify-start gap-4'>
+                <p className='dark:text-white text-smallP md:text-midP lg:text-largeP text-secondary cursor-pointer'>Likes <span>{likes === 0 ? '' : likes}</span></p>
+                <p className='dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer flex gap-1' onClick={onShowReplay}>
                   Replay
                   <span>{replays?.length}</span>
                 </p>

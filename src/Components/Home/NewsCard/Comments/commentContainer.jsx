@@ -109,7 +109,7 @@ const toggleDeleteOption = () => {
 };
 
   return (
-    <div className={isOpen ? 'w-full flex flex-col gap-4 p-2' : 'w-full flex flex-col gap-4 p-2 hidden'}>
+    <div className={ isOpen ? 'w-full flex flex-col gap-4 p-2 ' : 'w-full flex flex-col gap-4 p-2 hidden'}>
       <div className='flex gap-2 items-center'>
         <div className='flex items-center justify-center w-fit'>
         <Avatar img={profilePic ? profilePic : alternativeProfile} />
@@ -119,7 +119,7 @@ const toggleDeleteOption = () => {
         <div className='flex flex-col items-end justify-center border border-primary w-full h-[45px] rounded-[5px]'>
           <input
             type="text"
-            className='flex w-full h-full outline-none pl-3 text-smallP md:text-midP lg:text-largeP'
+            className='dark:bg-[#1b1f23]  flex w-full h-full outline-none pl-3 text-smallP md:text-midP lg:text-largeP'
             placeholder='Add a comment ...'
             value={commentText}
             onChange={e => setCommentText(e.target.value)}
@@ -133,16 +133,16 @@ const toggleDeleteOption = () => {
       </div>
 
       <div className='w-full flex items-center justify-start'>
-  <div className='flex p-2 bg-lightBg'>
-    <select className='outline-none bg-transparent text-smallP md:text-midP lg:text-largeP'>
-      <option className='text-smallP md:text-midP lg:text-largeP'>Most Recent</option>
-      <option className='text-smallP md:text-midP lg:text-largeP' value="">Yesterday</option>
+  <div className='dark:bg-[#1b1f23] flex p-2 bg-lightBg'>
+    <select className='dark:text-white outline-none bg-transparent text-smallP md:text-midP lg:text-largeP'>
+      <option className='dark:bg-[#1b1f23] text-smallP md:text-midP lg:text-largeP'>Most Recent</option>
+      <option className='dark:bg-[#1b1f23] text-smallP md:text-midP lg:text-largeP' value="">Yesterday</option>
     </select>
   </div>
 </div>
 
 
-      <div className='w-full flex flex-col gap-4'>
+      <div className=' w-full flex flex-col gap-4'>
       {Array.isArray(comments) ? comments.slice(0, visibleComments).map((items) => {
   return (
     <CommentCard 
@@ -162,9 +162,9 @@ const toggleDeleteOption = () => {
 }) : null}
 
         {showSeeMore && (
-          <div className='w-full flex items-center justify-center'>
+          <div className= ' w-full flex items-center justify-center'>
             <p
-              className='text-primary font-bold text-smallP md:text-midP lg:text-largeP underline underline-offset-2 cursor-pointer'
+              className=' text-primary font-bold text-smallP md:text-midP lg:text-largeP underline underline-offset-2 cursor-pointer'
               onClick={() => {
                 setVisibleComments(visibleComments + 2);
                 if (visibleComments + 2 >= comments.length) {
