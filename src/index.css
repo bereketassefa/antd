@@ -27,7 +27,11 @@
 
 
 /* antd custom css */
-
+.custom-modal .ant-modal-content {
+  background-color: transparent; /* Set the desired background color */
+  padding: 0px; /* Set the desired padding value */
+ 
+}
 
 /* news postPostPopup override */
 

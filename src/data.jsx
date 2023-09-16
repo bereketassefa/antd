@@ -114,6 +114,8 @@ export const Search = [
     key: 1,
     image1: BRhotel,
     Price: "10,000 ",
+    futures: "128 GB Storage",
+    futures: "128 GB Storage",
     image2: iphone12,
     title: "Company Name ",
     description:
@@ -123,9 +125,10 @@ export const Search = [
     isConnected: true,
   },
   {
-    key: 1,
+    key: 2,
     image1: star,
     Price: "10,000",
+    futures: "128 GB Storage",
     image2: iphone13,
     title: "EagleLion Tech",
     description:
@@ -135,13 +138,13 @@ export const Search = [
     isConnected: true,
   },
   {
-    key: 1,
+    key: 3,
     image1: bbm,
     Price: "10,000",
+    futures: "128 GB Storage",
     image2: iphone14,
     title: "SkyLight Hotel ",
-    description:
-      " relying on meaningful content.",
+    description: " relying on meaningful content.",
     isAccepted: false,
     isAccepted: true,
     isConnected: false,
@@ -183,6 +186,54 @@ export const Chat = [
     image: bbm,
     title: " Banana Name ",
     AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+  },
+];
+export const Message = [
+  {
+    key: 1,
+    image: BRhotel,
+    time: "7:30 am",
+    ActiveTime: " since Mar 02,2016 EC",
+    AmoutOfMessage: "you have 3 new message",
+    title: "Company Name ",
+    description:
+      "Lorem ipsum dolor sit amet....Lorem ipsum dolor sit amet....Lorem ipsum dolor sit amet....Lorem ipsum dolor sit amet....Lorem ipsum dolor sit amet....Lorem ipsum dolor sit amet....",
+  },
+  {
+    key: 2,
+
+    image: star,
+    time: "2:30 pm",
+    ActiveTime: " last seen recently",
+    title: "EagleLion Tech",
+    description: "Lorem ipsum dolor sit amet....",
+  },
+  {
+    key: 2,
+
+    image: star,
+    time: "2:30 pm",
+    ActiveTime: " last seen recently",
+    title: "EagleLion Tech",
+    description: "Lorem ipsum dolor sit amet....",
+  },
+  {
+    key: 2,
+
+    image: star,
+    time: "2:30 pm",
+    ActiveTime: " last seen recently",
+    title: "EagleLion Tech",
+    description: "Lorem ipsum dolor sit amet....",
+  },
+  {
+    key: 2,
+
+    image: star,
+    time: "2:30 pm",
+    ActiveTime: " last seen recently",
+    title: "EagleLion Tech",
     description: "Lorem ipsum dolor sit amet....",
   },
 ];

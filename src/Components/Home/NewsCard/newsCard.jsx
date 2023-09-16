@@ -13,12 +13,14 @@ import CommentContainer from "./Comments/commentContainer";
 import Avatar from "../../../Fields/Avatar/avatar";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { Modal } from "antd";
 import logoAddis from "../../../assets/logo/addisLogoS.png";
 import { io } from "socket.io-client";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useToast } from "../../Toast/toastContext";
+import NewSlider from '../../../Components/Home/NewsHolder/NewSlider'
 
 export default function NewsCard({
   account_id,
@@ -59,7 +61,7 @@ export default function NewsCard({
   const [showDownloadCard, setShowDownloadCard] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
- 
+  const [modalOpen, setModalOpen] = useState(false);
   const socket = io("", {
     withCredentials: true,
   });
@@ -309,6 +311,19 @@ export default function NewsCard({
 
   return (
     <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative">
+      <Modal
+        centered
+        open={modalOpen}
+        onOk={() => setModalOpen(false)}
+        onCancel={() => setModalOpen(false)}
+        footer={[]}
+        closable={false}
+        width={900}
+        className="custom-modal"
+      >
+        <NewSlider />
+      </Modal>
+
       {showDownloadCard && (
         <div
           ref={downloadCardRef}
@@ -352,7 +367,8 @@ export default function NewsCard({
             </span>
           </div>
         </div>
-        <FontAwesomeIcon className="dark:text-white"
+        <FontAwesomeIcon
+          className="dark:text-white"
           onClick={() => setShowDownloadCard(!showDownloadCard)}
           icon={faEllipsisVertical}
         />
@@ -369,6 +385,7 @@ export default function NewsCard({
             src={image}
             alt="Image"
             className="h-[300px] flex object-contain"
+            onClick={() => setModalOpen(true)}
           />
         </div>
       </div>

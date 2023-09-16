@@ -49,7 +49,6 @@ function SearchProduct() {
 
   return (
     <div className="max-w-[780px] md:w-[780px] bg-white drop-shadow-xl">
-
       <div className="flex justify-between md:w-[700px]  max-w[700px]  py-7  items-center mx-3">
         <p className="text-2xl font-bold">Products</p>
         <div className="flex justify-between gap-1 md:gap-16 items-center ">
@@ -81,7 +80,7 @@ function SearchProduct() {
           <p>ETB</p>
         </div>
       </div>
-      <hr className="mx-6 my-6  "/>
+      <hr className="mx-6 my-6  " />
       {Search?.map((item) => {
         return (
           <div className="border-2    rounded-lg my-4">
@@ -109,7 +108,6 @@ function SearchProduct() {
                 </div>
                 <div className="flex justify-between">
                   <p className="max-w-[670px] md:w-[670px] mb-6">
-                   
                     {item.description}
                   </p>
                   <img
@@ -122,13 +120,9 @@ function SearchProduct() {
             </div>
             <div className="flex flex-col ml-10 mb-4">
               <p>Feature </p>
-              <div className="flex gap-5">
-                {" "}
+              <div className="flex gap-5 mt-4">
                 <div className="border-2 rounded-md  w-36 px h-10 ">
-                  128 GB Storage{" "}
-                </div>
-                <div className="border-2 rounded-md  w-36 px h-10 ">
-                  128 GB Storage{" "}
+                  {item.futures}
                 </div>
               </div>
             </div>

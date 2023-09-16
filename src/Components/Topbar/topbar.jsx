@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import logos from "../../assets/logo/addisLogoS.png";
+import { Message } from "../../data";
 import logo from "../../assets/logo/addisLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AiOutlineMessage } from "react-icons/ai";
+import { AiOutlineMessage, AiFillMessage } from "react-icons/ai";
 import {
   faBars,
   faCaretDown,
@@ -22,6 +23,9 @@ import SearchCard from "./SearchAllCompo/SearchCard";
 import { useToast } from "../Toast/toastContext";
 import { ToastContainer, toast } from "react-toastify";
 import { UpSquareTwoTone } from "@ant-design/icons";
+import MessageCard from "../../Components/Chat/MessageCard";
+import { ImAttachment } from "react-icons/im";
+import { BiLogoTelegram } from "react-icons/bi";
 export default function Topbar() {
   function truncateCompanyName(name) {
     return name && name.length > 8 ? name.substring(0, 8) + "..." : name;
@@ -34,6 +38,8 @@ export default function Topbar() {
   const [searchInput, setSearchInput] = useState("");
   const isScreenMdOrLarger = useMediaQuery({ minWidth: 768 });
   const [cookies, removeCookie] = useCookies(["user"]);
+  const [showMessageDrop, setShowMessageDrop] = useState(false);
+  const [selectedChat, setSelectedChat] = useState(null);
 
   const handleHover = () => {
     setDropDown(!dropDown);
@@ -189,6 +195,11 @@ export default function Topbar() {
     }
   }, []);
 
+  const handleChatSelect = (selectedChat) => {
+    setSelectedChat(selectedChat);
+    setNewchat(false);
+  };
+
   return (
     <>
       <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg h-[95px]   bg-topbarBg border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center fixed md:sticky ">
@@ -257,7 +268,7 @@ export default function Topbar() {
               </div>
 
               {/* <SearchRoute  /> */}
-              {/* message  */}
+              {/* notification */}
               <Link to={"/feed/notifications"}>
                 <Badge count={notificationCount}>
                   <FontAwesomeIcon
@@ -266,9 +277,44 @@ export default function Topbar() {
                   />
                 </Badge>
               </Link>
-              {/* notification */}
-              <Link to={"/feed/messages"}>
-                <AiOutlineMessage className="dark:text-white text-[28px]" />
+              {/* message  */}
+
+              <Link to={""}>
+                <div className=" ">
+                  <div
+                    className=""
+                    onClick={() => setShowMessageDrop(!showMessageDrop)}
+                  >
+                    <Badge count={notificationCount}>
+                      <AiOutlineMessage className="dark:text-white text-[28px]" />
+                    </Badge>
+                  </div>
+                  {showMessageDrop && (
+                    <div className="absolute -translate-x-1/2 w-[500px] h-[400px] bg-slate-50  z-999 mt-8 border-2 rounded-lg">
+                      <div className=" ml-10 gap-3 mt-4 flex items-center">
+                        <AiFillMessage className=" text-[38px]" />
+                        <div>
+                          <h2>Your Messages</h2>
+                          <p>you have 3 new messages</p>
+                        </div>
+                      </div>
+                      <hr className="mt-2" />
+                      <div className="flex flex-col  h-[310px] overflow-y-scroll">
+                        {Message.map((message) => (
+                          <MessageCard
+                            key={message.key}
+                            title={message.title}
+                            image={message.image}
+                            time={message.time}
+                            ActiveTime={message.ActiveTime}
+                            description={message.description}
+                            onSelect={() => handleChatSelect(chat)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </Link>
             </div>
             <FontAwesomeIcon

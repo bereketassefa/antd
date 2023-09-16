@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { AiOutlineMessage, AiOutlineSetting } from "react-icons/ai";
-import{PiUsersThreeBold} from 'react-icons/pi'
+import { PiUsersThreeBold } from "react-icons/pi";
 import { GoHome } from "react-icons/go";
 import {
   faBell,
@@ -13,7 +13,7 @@ import {
   faGear,
   faHome,
   faMessage,
-  faQuestionCircle
+  faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider } from "antd";
@@ -32,10 +32,13 @@ export default function Navigator({ handleAddProduct }) {
   };
 
   return (
-    <div className=" rounded-lg dark:bg-[#1b1f23] hidden md:flex bg-white  items-start justify-center mt-8 w-[300px] mx-w-[300px] p-4  sticky top-[75px] drop-shadow-xl">
+    <div className=" rounded-lg dark:bg-[#1b1f23] hidden md:flex bg-white  items-start justify-center mt-8 w-[300px] mx-w-[300px] p-4 sticky top-[75px] drop-shadow-xl">
       <div className="w-full">
         <div className="w-full">
-          <ul className="w-full flex flex-col gap-3">
+          <ul
+            className="w-full flex flex-col gap-3"
+            onClick={() => handleLinkClick("Home")}
+          >
             <Link to={"/feed"}>
               <li
                 className={` ${
@@ -46,12 +49,13 @@ export default function Navigator({ handleAddProduct }) {
                   style={{ fontSize: 16 + myFontSize }}
                   className={` ${
                     activeLink === "Home" ? "text-[#3222C6]" : "text-gray-700"
-                  } text-largeP md:text-smallT dark:text-white `}
-                  icon={faHome}
-                />{" "}
+                  }  text-2xl `}
+                />
                 <p
                   style={{ fontSize: 16 + myFontSize }}
-                  className="text-smallP dark:text-slate-50 text-black md:text-midP lg:text-largeP "
+                  className={` ${
+                    activeLink === "Home" ? "text-[#3222C6]" : "text-gray-600"
+                  } text-smallP md:text-midP lg:text-largeP `}
                 >
                   Home
                 </p>
@@ -158,7 +162,6 @@ export default function Navigator({ handleAddProduct }) {
                       ? "text-[#3222C6]"
                       : "text-gray-600"
                   } text-largeP md:text-smallT dark:text-white `}
-                  icon={faBell}
                 />{" "}
                 <p
                   style={{ fontSize: 16 + myFontSize }}
