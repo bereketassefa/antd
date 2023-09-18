@@ -20,7 +20,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useToast } from "../../Toast/toastContext";
-import NewSlider from '../../../Components/Home/NewsHolder/NewSlider'
+import NewSlider from "../../../Components/Home/NewsHolder/NewSlider";
 
 export default function NewsCard({
   account_id,
@@ -35,7 +35,7 @@ export default function NewsCard({
 }) {
   const { showToast } = useToast();
   const downloadCardRef = useRef(null);
-   
+
   NewsCard.propTypes = {
     profilePic: PropTypes.string,
     items: PropTypes.array,
@@ -153,8 +153,6 @@ export default function NewsCard({
       // console.error("Failed to fetch comments:", error);
     }
   }
-
-
 
   useEffect(() => {
     fetchComments();
@@ -312,16 +310,16 @@ export default function NewsCard({
   return (
     <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative">
       <Modal
-        centered
         open={modalOpen}
         onOk={() => setModalOpen(false)}
         onCancel={() => setModalOpen(false)}
         footer={[]}
         closable={false}
-        width={900}
+        width={800}
+        height={100}
         className="custom-modal"
       >
-        <NewSlider />
+        <NewSlider image={image} newContent={newContent} />
       </Modal>
 
       {showDownloadCard && (
