@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const SearchCard = ({ setShowResults,name, image, type, ProUid }) => {
   const navigate = useNavigate();
   const handleNavigation = () => {
-    console.log("handleNavigation called");
+    // console.log("handleNavigation called");
     navigate(`/feed/SearchNav/${name}`, { state: { image, type, ProUid } });
     setShowResults(false);
     console.log("setShowResults called");
@@ -18,7 +18,7 @@ const SearchCard = ({ setShowResults,name, image, type, ProUid }) => {
 
   return (
     <div className="gap-4 ">
-      <div className="flex items-center justify-start gap-2 hover:bg-slate-400">
+      <div className=" flex items-center justify-start gap-2 hover:bg-slate-400">
         <img
           onClick={handleNavigation}
           src={image ? image : alternativeProfile}
@@ -26,7 +26,7 @@ const SearchCard = ({ setShowResults,name, image, type, ProUid }) => {
         />
         <h2
           onClick={handleNavigation}
-          className="font-bold text-[#000] text-center text-[17px]"
+          className="dark:text-white font-bold text-[#000] text-center text-[17px]"
         >
           {truncatedName}
         </h2>

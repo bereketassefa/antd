@@ -68,7 +68,7 @@ export default function Topbar() {
     }
 
     try {
-      const url = "http://localhost:8031/partially"; // Replace with your actual URL
+      const url = "https://search.qa.addissystems.et/partially"; // Replace with your actual URL
       const response = await axios.post(url, {
         query: searchInput,
       });
@@ -228,7 +228,7 @@ export default function Topbar() {
                     />
                   </div>
                   <input
-                    className="outline-none text-[17px] w-full"
+                    className="dark:bg-[#38434f] dark:text-white outline-none text-[17px] w-full"
                     type="text"
                     value={searchInput}
                     placeholder="What are you looking for?"
@@ -238,7 +238,7 @@ export default function Topbar() {
                   />
                 </div>
                 {searchInput && (
-                  <div className="absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
+                  <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
                     <div className="flex flex-col  ">
                       {searchResults.map((result, index) => (
                         <SearchCard
@@ -259,7 +259,7 @@ export default function Topbar() {
                       to={`/feed/SearchNav/${searchInput}`}
                       onClick={() => setSearchInput("")}
                     >
-                      <p className="flex justify-center text-primary ">
+                      <p className="dark:text-white flex justify-center text-primary ">
                         See All results
                       </p>
                     </Link>
@@ -329,7 +329,7 @@ export default function Topbar() {
             <div
               className="hidden md:flex items-center jutify-center flex-col "
               onClick={handleHover}
-              // onMouseLeave={handleLeaveHover}
+             
             >
               <div className=" flex items-center gap-2">
                 <Avatar
@@ -338,8 +338,11 @@ export default function Topbar() {
                 />
 
                 <div className=" flex items-center gap-2">
-                  <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+                  <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP"
+                    // onMouseLeave={handleHover}
+                  >
                     {truncateCompanyName(cookies?.user.party)}
+                    
                   </h1>
                   <FontAwesomeIcon
                     className="dark:text-white"

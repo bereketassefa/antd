@@ -22,8 +22,8 @@ export default function NotificationCard({type,message,companyName,img,timeStamp
   return (
     <div className='w-full flex items-center justify-between bg-notificationCardBg p-4 gap-2' key={id} onClick={()=>seeNotification(id)} >
         <div className='flex gap-2 items-center'>
-            <div className={`p-[0.3rem] bg-primary rounded-full ${seen? 'hidden': ''}`}></div>
-            <div className='w-full' >
+            <div className={` p-[0.3rem] bg-primary rounded-full ${seen? 'hidden': ''}`}></div>
+            <div className='dark:text-white w-full' >
               {
                   type === 'notice'? <Notice  message={message}       />:
                   type === 'like' ? <Like companyName={companyName} img={img}  />: 
@@ -34,7 +34,7 @@ export default function NotificationCard({type,message,companyName,img,timeStamp
         </div>
 
         <div className='w-fit '>
-            <span className='text-smallP md:text-midP lg:text-largeP'>{format(timeStamp)}</span>
+            <span className='dark:text-white text-smallP md:text-midP lg:text-largeP'>{format(timeStamp)}</span>
         </div>
     </div>
   )

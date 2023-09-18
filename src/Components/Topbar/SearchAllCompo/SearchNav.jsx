@@ -14,7 +14,7 @@ function SearchNav() {
 
 
   return (
-    <div className="  sticky top-10 rounded-md     mt-4h-[60px] md:h-[200px] text-[#000000] bg-white drop-shadow-xl  ">
+    <div className="dark:bg-[#1b1f23]  sticky top-10 rounded-md     mt-4h-[60px] md:h-[200px] text-[#000000] bg-white drop-shadow-xl  ">
       <ul className="   md:w-[220px] max-w-[400px] flex  justify-between flex-row md:flex-col  ml-6 gap-4 ">
         <Link
           to={`/feed/SearchNav/${name}`}
@@ -24,7 +24,7 @@ function SearchNav() {
           onClick={() => handleLinkClick("All")}
         >
           <li
-            className="
+            className="dark:text-white
             cursor-pointer w-full flex items-center gap-3 "
           >
             <BsWalletFill
@@ -38,7 +38,7 @@ function SearchNav() {
         <Link
           to={`/feed/SearchNav/${name}/party`}
           className={`${
-            activeLink === "Company" ? "text-[#3222C6] " : "text-gray-700"
+            activeLink === "Company" ? "text-[#3222C6] " : "text-gray-700 dark:text-white"
           } `}
           onClick={() => handleLinkClick("Company")}
         >
@@ -74,9 +74,9 @@ function SearchNav() {
                 activeLink === "Demand Product"
                   ? "text-[#3222C6]"
                   : "text-gray-700"
-              }text-2xl `}
+              }text-2xl dark:text-white `}
             />
-            <p className="font-normal text-xl ">Products</p>
+            <p className="font-normal text-xl dark:text-white ">Products</p>
           </li>
         </Link>
       </ul>

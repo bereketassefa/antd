@@ -15,51 +15,44 @@ export default function CommentContainer({ account_id,id, isOpen }) {
   const [cookies] = useCookies(['User']);
   const [profilePic, setProfilePic]= useState(null) 
   const [showDeleteOption, setShowDeleteOption] = useState(false);
-
+  const [refreshComments, setRefreshComments] = useState(false);
   const handleCommentSubmit = async () => {
     if (!commentText.trim()) return;  // Ensure comment is not just whitespace
-
+  
     try {
-      const url = `${import.meta.env.VITE_COMMENT}`
-        const response = await axios.post(url, {
-            post_id: id,
-            parent_comment_id: null, // or whatever the value should be
-            user_id:cookies?.user.Uid.toString(), // replace with the user ID
-            text: commentText
-        });
-      
-    // console.log(response)
-        if (!response.ok) {
-            // console.error('Server response:', response.status, response.statusText);
-            // console.error('Server response headers:', response.headers);
-            response.text().then(text => {
-                console.error('Server response body:', text);
-            });
-            throw new Error('Failed to post comment');
-        }
-        
-    
-        const responseBody = await response.text();
-        try {
-            const data = await response.json();
-            // ...
-        } catch (jsonError) {
-            console.error('Failed to parse response as JSON:', jsonError);
-        }
-        try {
-            const data = JSON.parse(responseBody);
-            if (data.comment_id) {
-                // console.log(data)
-                // ... rest of the code ...
-            }
-        } catch (jsonError) {
-            console.error('Failed to parse response as JSON:', responseBody);
-        }
-    
+      const url = `${import.meta.env.VITE_COMMENT}`;
+      const response = await axios.post(url, {
+        post_id: id,
+        parent_comment_id: null,
+        user_id: cookies?.user.Uid.toString(),
+        text: commentText
+      });
+  
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error('Failed to post comment');
+      }
+  
+      // Assume the response data has the new comment object
+      const newComment = response.data;
+  
+      // Add the new comment to the existing comments
+      setComments(prevComments => [...prevComments, newComment]);
+  
+      // Clear the text input
+      setCommentText('');
+      setRefreshComments(!refreshComments);
+
     } catch (error) {
-        console.error('Failed to post comment:', error);
+      console.error('Failed to post comment:', error);
     }
-} 
+  };
+  
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleCommentSubmit();
+    }
+  };
+  
 // console.log(id)
   useEffect(() => {
     
@@ -78,13 +71,10 @@ export default function CommentContainer({ account_id,id, isOpen }) {
       }
     }
     fetchComments();
-  }, [id]);
+    
+  }, [id,refreshComments]);
 
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleCommentSubmit();
-    }
-  };
+
   // console.log(id)
   useEffect(() => {
     const fetchAccountDataForProfile = async () => {
@@ -119,7 +109,7 @@ const toggleDeleteOption = () => {
 };
 
   return (
-    <div className={isOpen ? 'w-full flex flex-col gap-4 p-2' : 'w-full flex flex-col gap-4 p-2 hidden'}>
+    <div className={ isOpen ? 'w-full flex flex-col gap-4 p-2 ' : 'w-full flex flex-col gap-4 p-2 hidden'}>
       <div className='flex gap-2 items-center'>
         <div className='flex items-center justify-center w-fit'>
         <Avatar img={profilePic ? profilePic : alternativeProfile} />
@@ -129,7 +119,7 @@ const toggleDeleteOption = () => {
         <div className='flex flex-col items-end justify-center border border-primary w-full h-[45px] rounded-[5px]'>
           <input
             type="text"
-            className='flex w-full h-full outline-none pl-3 text-smallP md:text-midP lg:text-largeP'
+            className='dark:bg-[#1b1f23]  flex w-full h-full outline-none pl-3 text-smallP md:text-midP lg:text-largeP'
             placeholder='Add a comment ...'
             value={commentText}
             onChange={e => setCommentText(e.target.value)}
@@ -143,16 +133,16 @@ const toggleDeleteOption = () => {
       </div>
 
       <div className='w-full flex items-center justify-start'>
-  <div className='flex p-2 bg-lightBg'>
-    <select className='outline-none bg-transparent text-smallP md:text-midP lg:text-largeP'>
-      <option className='text-smallP md:text-midP lg:text-largeP'>Most Recent</option>
-      <option className='text-smallP md:text-midP lg:text-largeP' value="">Yesterday</option>
+  <div className='dark:bg-[#1b1f23] flex p-2 bg-lightBg'>
+    <select className='dark:text-white outline-none bg-transparent text-smallP md:text-midP lg:text-largeP'>
+      <option className='dark:bg-[#1b1f23] text-smallP md:text-midP lg:text-largeP'>Most Recent</option>
+      <option className='dark:bg-[#1b1f23] text-smallP md:text-midP lg:text-largeP' value="">Yesterday</option>
     </select>
   </div>
 </div>
 
 
-      <div className='w-full flex flex-col gap-4'>
+      <div className=' w-full flex flex-col gap-4'>
       {Array.isArray(comments) ? comments.slice(0, visibleComments).map((items) => {
   return (
     <CommentCard 
@@ -172,9 +162,9 @@ const toggleDeleteOption = () => {
 }) : null}
 
         {showSeeMore && (
-          <div className='w-full flex items-center justify-center'>
+          <div className= ' w-full flex items-center justify-center'>
             <p
-              className='text-primary font-bold text-smallP md:text-midP lg:text-largeP underline underline-offset-2 cursor-pointer'
+              className=' text-primary font-bold text-smallP md:text-midP lg:text-largeP underline underline-offset-2 cursor-pointer'
               onClick={() => {
                 setVisibleComments(visibleComments + 2);
                 if (visibleComments + 2 >= comments.length) {

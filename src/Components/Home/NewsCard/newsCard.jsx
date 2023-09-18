@@ -35,6 +35,7 @@ export default function NewsCard({
 }) {
   const { showToast } = useToast();
   const downloadCardRef = useRef(null);
+ 
 
   NewsCard.propTypes = {
     profilePic: PropTypes.string,
@@ -287,6 +288,7 @@ export default function NewsCard({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  video: PropTypes.string
   // const handleBookmark = () => {
   //   // Logic to bookmark the post
   //   let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
@@ -394,7 +396,7 @@ export default function NewsCard({
             className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
             onClick={() => setShowLikeInfo(true)}
           >
-            {allLikes === "0" ? "" : allLikes}
+             {allLikes === 0 || allLikes === "0" ? "" : allLikes}
           </span>
           <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
             {comments.postCount === undefined
@@ -411,8 +413,8 @@ export default function NewsCard({
               onClick={handleLike}
               className={
                 Liked
-                  ? "text-largeP md:text-smallT cursor-pointer text-secondary"
-                  : "text-largeP cursor-pointer md:text-smallT text-gray"
+                  ? "text-largeP md:text-smallT cursor-pointer text-secondary "
+                  : "text-largeP cursor-pointer md:text-smallT text-gray dark:text-white"
               }
               icon={faThumbsUp}
             />
@@ -420,7 +422,7 @@ export default function NewsCard({
           <li className="flex items-center gap-2 cursor-pointer">
             <FontAwesomeIcon
               onClick={onCommentShow}
-              className="text-largeP md:text-smallT text-gray-400"
+              className="dark:text-white text-largeP md:text-smallT text-gray-400"
               icon={faMessage}
             />
           </li>

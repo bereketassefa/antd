@@ -16,7 +16,7 @@ function SearchAll() {
   const decodedName = name ? (name.includes('%') ? decodeURIComponent(name).split(' ')[0] : name.split(' ')[0]) : '';
   const handleSearch = async () => {
     try {
-      const url = 'http://localhost:8031/partially';
+      const url = 'https://search.qa.addissystems.et/partially';
       const response = await axios.post(url, {
         query: decodedName,
       });

@@ -42,16 +42,16 @@ export default function NewsHolder() {
           setLoading(false);
         }, 20000);
   
-        loadingMsgId = message.loading('Loading news...', 0);
+        // loadingMsgId = message.loading('Loading news...', 0);
   
         const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
         const response = await axios.get(Url);
   
         clearTimeout(serverDownTimer);
   
-        if (loadingMsgId) {
-          loadingMsgId();
-        }
+        // if (loadingMsgId) {
+        //   loadingMsgId();
+        // }
   
         if(response.status === 200){
           setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
@@ -67,9 +67,11 @@ export default function NewsHolder() {
      
   
         if (error.message === "Failed to fetch") {
+          setLoading(true);
           console.warn("Network Error: Failed to fetch data.");
         } else {
           console.warn("Error fetching data.");
+          setLoading(true);
         }
       }
     }
@@ -125,7 +127,7 @@ export default function NewsHolder() {
 }
 
 const NewsCardSkeleton = () => (
-  <div className="w-full p-4 rounded shadow bg-white">
+  <div className="dark:bg-[#1b1f23] w-full p-4 rounded shadow bg-white">
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse"></div>
