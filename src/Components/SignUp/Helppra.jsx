@@ -2,7 +2,7 @@ import React from "react";
 
 function Helppra() {
   return (
-    <div>
+    <div className=" ">
       {" "}
       <h1 className="text-[15px] font-semibold not-italic">
         Need Help? Contact{" "}

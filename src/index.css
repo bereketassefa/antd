@@ -2,79 +2,100 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 /* custome scroll bar design */
 
 /* Firefox */
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 5px;
-  }
-  
-  *::-webkit-scrollbar-track {
-    background:  white;
-    border-radius: 5px;
-  }
-  
-  *::-webkit-scrollbar-thumb {
-    background-color:  rgb(50 34 198);
-    border-radius: 14px;
-    border: none;
-  }
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+}
 
+*::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 5px;
+}
 
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(50 34 198);
+  border-radius: 14px;
+  border: none;
+}
 
 /* antd custom css */
+.custom-modal .ant-modal-content {
+  background-color: transparent; /* Set the desired background color */
+  padding: 0px; /* Set the desired padding value */
+}
+
+.custom-img-crop .ant-image-crop-modal .ant-image-crop-footer .ant-btn-primary {
+  /* Add your custom styles for the Ok button here */
+  background-color: #ff0000; /* Example: Change background color to red */
+  color: #ffffff; /* Example: Change text color to white */
+  border-color: #ff0000; /* Example: Change border color to red */
+}
+
+.custom-ok {
+  width: 100%;
+  color: black;
+
+}
+
+.custom-ok:hover {
+  width: '100%';
+  color: rgb(255, 255, 255);
+}
 
 
 /* news postPostPopup override */
 
 .ant-modal .ant-modal-content .ant-modal-close {
-    background-color: rgb(215 26 98);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: rgb(215 26 98);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.ant-modal .ant-modal-content .ant-modal-close .ant-modal-close-x .anticon.anticon-close.ant-modal-close-icon svg {
-    color: white;
+.ant-modal
+  .ant-modal-content
+  .ant-modal-close
+  .ant-modal-close-x
+  .anticon.anticon-close.ant-modal-close-icon
+  svg {
+  color: white;
 }
-
 
 /* custom css for image preview modal */
-.ant-modal .ant-modal-content .ant-modal-footer .ant-btn{
+.ant-modal .ant-modal-content .ant-modal-footer .ant-btn {
 }
-
 
 /* profile progress bar css */
-.ant-progress.ant-progress-line.ant-progress-status-active.ant-progress-default.w-full .ant-progress-outer .ant-progress-inner .ant-progress-bg{
-  background: linear-gradient(to right , rgb(215 26 98) , transparent)
+.ant-progress.ant-progress-line.ant-progress-status-active.ant-progress-default.w-full
+  .ant-progress-outer
+  .ant-progress-inner
+  .ant-progress-bg {
+  background: linear-gradient(to right, rgb(215 26 98), transparent);
 }
-
 
 /* profile page basic info collapse css */
 /* .ant-collapse-item{
   background-color: rgba(50, 34, 198, 0.164);
 } */
-.ant-collapse-content.ant-collapse-content{
-  background-color: white
+.ant-collapse-content.ant-collapse-content {
+  background-color: white;
 }
 .ant-collapse.basicInfo .ant-collapse-content.ant-collapse-content-active {
   background-color: rgb(241, 241, 241);
 }
 
-
 /* profile detail pages menu bar css */
-.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light.w-full{
+.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light.w-full {
   width: 100%;
   /* background-color: rgba(50, 34, 198, 0.164);; */
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
 }
-.ant-menu-overflow-item.ant-menu-item.ant-menu-item-only-child{
-
+.ant-menu-overflow-item.ant-menu-item.ant-menu-item-only-child {
 }
 /* login animation */
 
@@ -103,15 +124,15 @@
   }
 }
 
-.ant-modal.newspost{
+.ant-modal.newspost {
   background-color: white;
 }
-.ant-modal.newspost .ant-modal-content{
-  background:transparent
+.ant-modal.newspost .ant-modal-content {
+  background: transparent;
 }
-.ant-modal.dnewspost .ant-modal-content{
-  background:transparent
+.ant-modal.dnewspost .ant-modal-content {
+  background: transparent;
 }
-.ant-modal.dnewspost{
+.ant-modal.dnewspost {
   background-color: transparent;
 }

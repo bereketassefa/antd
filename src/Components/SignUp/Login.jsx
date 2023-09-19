@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import Button from "./Login/Button";
 import { MdLockOutline } from "react-icons/md";
-import { AiOutlineMail } from "react-icons/ai";
+import { AiOutlineMail, AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Helppra from "./Helppra";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
 function Login() {
+  const [showPass, setShowPass] = useState(true);
   const [email, setEmail] = useState("");
+  const [showEmail, setShowEmail] = useState(false);
   const [pass, setPass] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -87,8 +89,7 @@ function Login() {
   // }, []);
 
   // The email and password validation logic should be inside the handleLogin function, so we can remove it from here
-// In Button.js
-
+  // In Button.js
 
   return (
     <div className=" z-50 w-full">
@@ -123,12 +124,14 @@ function Login() {
 
             <input
               className="text-[17px] outline-none w-full"
-              type="email"
+              type={showEmail ? "email" : "text"}
               placeholder="Email Address"
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+
+          
           </div>
 
           {emailError && <p className="text-red-500">{emailError}</p>}
@@ -147,30 +150,44 @@ function Login() {
             />
             <input
               className="text-[17px] outline-none w-full"
-              type="password"
+              type={showPass ? "password" : "text"}
               placeholder="Password"
               name="password"
               value={pass}
               onChange={(e) => setPass(e.target.value)}
             />
+            <div
+              className={`${pass?.length < 1 ? "hidden" : "block"}`}
+              onClick={() => setShowPass(!showPass)}
+            >
+              {showPass ? (
+                <AiFillEyeInvisible className="text-[26px] text-[#3222C6]" />
+              ) : (
+                <AiFillEye className="text-[26px] text-[#3222C6]" />
+              )}
+            </div>
           </div>
 
           {passwordError && !emailError && (
             <p className="text-red-500">{passwordError}</p>
           )}
 
-          <a className="text-red-500 flex justify-end" href="forget-password">
-            Forget Password?
-          </a>
+          <div className="flex justify-end">
+            {" "}
+            <a className="text-red-500 flex justify-end" href="forget-password">
+              Forget Password?
+            </a>
+          </div>
 
           <Button
-  type="submit"
-  text={"Login"}
-  bgColor={`bg-[#d71a62] ${!email ? "opacity-50 cursor-not-allowed" : ""}`}
-  disabled={!email ? true : false}
-  isLoading={loading}
-/>
-
+            type="submit"
+            text={"Login"}
+            bgColor={`bg-[#d71a62] ${
+              !email ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={!email ? true : false}
+            isLoading={loading}
+          />
 
           <Helppra />
         </div>

@@ -22,7 +22,7 @@ const ChatCard = ({
         </div>
       </div>
       <div className="flex  justify-between">
-        <p className="ml-14">{description}</p>
+        <p className="  ml-12 w-[300px]">{description}</p>
         <div
           className={`${
             AmoutOfmessage > 0 ? "flex" : "hidden"

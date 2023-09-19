@@ -34,81 +34,89 @@ import SearchAll from "./Components/Topbar/SearchAllCompo/SearchAll";
 import { ToastProvider } from "./Components/Toast/toastContext";
 import ChatPage from "./Components/Chat/ChatPage";
 
-
 // import Message from "./Pages/Message/Message";
 
 function App() {
   const [cookies] = useCookies(["user"]);
   return (
-
     <ErrorProvider>
-        <ToastProvider>
-        
-      <Routes>
-        <Route path="/">
-          <Route index element={<LoginPage />} />
-          <Route path="/create-password/:id" element={<CreatePssPage />} />
-          <Route path="/ResetPss" element={<ResetPssPage />} />
-          <Route path="/forget-password" element={<ForgotPassPage />} />
-        </Route>
+      <ToastProvider>
+        <Routes>
+          <Route path="/">
+            <Route index element={<LoginPage />} />
+            <Route path="/create-password/:id" element={<CreatePssPage />} />
+            <Route path="/ResetPss" element={<ResetPssPage />} />
+            <Route path="/forget-password" element={<ForgotPassPage />} />
+          </Route>
 
-        <Route
-          path="/feed"
-          element={cookies.user ? <Primary /> : <Navigate to="/" />}
-        >
-          <Route path="/feed" element={<PageLayout />}>
-            <Route path="/feed/Relations" element={<RelationRoute />}>
-              <Route
-                path="/feed/Relations/Recommended"
-                element={<RecomendedRelation />}
-              />
-              <Route
-                path="/feed/Relations/Requested"
-                element={<RequestedRelation />}
-              />
-              <Route path="/feed/Relations/relation" element={<Relations />} />
+          <Route
+            path="/feed"
+            element={cookies.user ? <Primary /> : <Navigate to="/" />}
+          >
+            <Route path="/feed" element={<PageLayout />}>
+              <Route path="/feed/Relations" element={<RelationRoute />}>
+                <Route
+                  path="/feed/Relations/Recommended"
+                  element={<RecomendedRelation />}
+                />
+                <Route
+                  path="/feed/Relations/Requested"
+                  element={<RequestedRelation />}
+                />
+                <Route
+                  path="/feed/Relations/relation"
+                  element={<Relations />}
+                />
+              </Route>
+              <Route index element={<Home />} />
+              <Route path="/feed/notifications" element={<Notification />} />
+              <Route path="/feed/messages" element={<ChatPage />} />
+              
             </Route>
-            <Route index element={<Home />} />
-            <Route path="/feed/notifications" element={<Notification />} />
-            <Route path="/feed/messages" element={<ChatPage />} />
-          </Route>
-          <Route path="/feed/SearchNav/:name" element={<SearchRoute />}>
-            <Route path="/feed/SearchNav/:name/party" element={<SearchCompany />} />
-            <Route path="/feed/SearchNav/:name" element={<SearchAll />} />
-            {/* <Route path="/SearchNav/All" element={<SearchAll />} /> */}
-            <Route
-              path="/feed/SearchNav/:name/Product"
-              element={<SearchProduct />}
-            />
-          </Route>
+            <Route path="/feed/SearchNav/:name" element={<SearchRoute />}>
+              <Route
+                path="/feed/SearchNav/:name/party"
+                element={<SearchCompany />}
+              />
+              <Route path="/feed/SearchNav/:name" element={<SearchAll />} />
+              {/* <Route path="/SearchNav/All" element={<SearchAll />} /> */}
+              <Route
+                path="/feed/SearchNav/:name/Product"
+                element={<SearchProduct />}
+              />
+            </Route>
 
-          <Route path="/feed/settings" element={<Second />}>
-            <Route index element={<General />} />
-            <Route path="/feed/settings/edit" element={<EditProfile />} />
-            <Route
-              path="/feed/settings/NotificationSetting"
-              element={<NotificationSetting />}
-            />
-            <Route path="/feed/settings/Help" element={<Help />} />
-            <Route path="/feed/settings/contact" element={<Contact />} />
-            <Route path="/feed/settings/Privacy" element={<PrivacyPolicy />} />
+            <Route path="/feed/settings" element={<Second />}>
+              <Route index element={<General />} />
+              <Route path="/feed/settings/edit" element={<EditProfile />} />
+              <Route
+                path="/feed/settings/NotificationSetting"
+                element={<NotificationSetting />}
+              />
+              <Route path="/feed/settings/Help" element={<Help />} />
+              <Route path="/feed/settings/contact" element={<Contact />} />
+              <Route
+                path="/feed/settings/Privacy"
+                element={<PrivacyPolicy />}
+              />
+            </Route>
+            <Route path="/feed/profile/:id" element={<Profile />}>
+              <Route index element={<About />} />
+              <Route path="/feed/profile/:id/post" element={<Post />} />
+              <Route
+                path="/feed/profile/:id/demand-products"
+                element={<DemandProducts />}
+              />
+              <Route
+                path="/feed/profile/:id/relations"
+                element={<Relations />}
+              />
+              <Route path="/feed/profile/:id/bids" element={<Bids />} />
+            </Route>
           </Route>
-          <Route path="/feed/profile/:id" element={<Profile />}>
-            <Route index element={<About />} />
-            <Route path="/feed/profile/:id/post" element={<Post />} />
-            <Route
-              path="/feed/profile/:id/demand-products"
-              element={<DemandProducts />}
-            />
-            <Route path="/feed/profile/:id/relations" element={<Relations />} />
-            <Route path="/feed/profile/:id/bids" element={<Bids />} />
-          </Route>
-        </Route>
-      </Routes>
-   
+        </Routes>
       </ToastProvider>
     </ErrorProvider>
-
   );
 }
 

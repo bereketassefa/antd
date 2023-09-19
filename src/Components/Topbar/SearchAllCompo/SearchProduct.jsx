@@ -156,8 +156,7 @@ function SearchProduct() {
             </div>
             <div className="dark:text-white flex flex-col ml-10 mb-4">
               <p>Feature </p>
-              <div className="flex gap-5">
-                {" "}
+              <div className="flex gap-5 mt-4">
                 <div className="border-2 rounded-md  w-36 px h-10 ">
                 {item.ProductFeature}
                 </div>

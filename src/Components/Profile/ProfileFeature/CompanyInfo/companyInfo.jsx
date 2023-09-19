@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,7 +13,8 @@ import Button from "../../../../Fields/Button/button";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { message } from "antd";
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import CompanyPP from "./CompanyPP";
 
 export default function CompanyInfo({ data, Uid }) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -33,7 +33,6 @@ export default function CompanyInfo({ data, Uid }) {
   const [isAccepted, setIsAccepted] = useState(false);
   const [isDeclineLoading, setDeclineLoading] = useState(false);
 
-
   const id = window.location.pathname.split("/")[3];
 
   //    console.log(Uid)
@@ -44,7 +43,7 @@ export default function CompanyInfo({ data, Uid }) {
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   const handleImageChange = (e) => {
-    const file = e.target.files[0]; 
+    const file = e.target.files[0];
     if (file) {
       setSelectedFile(file); // <-- Set the selected file here
       const reader = new FileReader();
@@ -89,103 +88,97 @@ export default function CompanyInfo({ data, Uid }) {
     }
   };
 
-useEffect(()=>{
-  let intervalId1, intervalId2, intervalId3;
+  useEffect(() => {
+    let intervalId1, intervalId2, intervalId3;
 
- 
-  const fetchData = async () => {
+    const fetchData = async () => {
+      try {
+        if (!id) {
+          console.warn("ID is not available");
+          return;
+        }
+        const url = `https://account.qa.addissystems.et/account/${id}`;
+        const response = await axios.get(url);
+
+        if (response.status !== 200) {
+          throw new Error(`Failed to fetch data: ${response.status}`);
+        }
+
+        if (response?.data) {
+          setUid(response?.data[0]?.Uid);
+          // handlecheckWhoisSender();  // Calling this function after setting Uid
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    const fetchAccountDataForProfile = async () => {
+      try {
+        if (!id) {
+          return;
+        }
+        // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+        await axios
+          .get(`https://account.qa.addissystems.et/account/${id}`)
+          .then((res) => {
+            // console.log(res)
+            if (res?.data) {
+              setProfilePic(res?.data[0]?.profilePicture);
+            }
+          })
+          .catch((error) => {
+            console.warn(error);
+          });
+      } catch (error) {
+        console.error("Error fetching profile picture:", error);
+      }
+    };
+
+    // Set intervals
+    intervalId1 = setInterval(fetchData, 1000); // Runs every 1 second
+    intervalId2 = setInterval(fetchAccountDataForProfile, 1000); // Runs every 1 second
+    intervalId3 = setInterval(handlecheckWhoisSender, 1000); // Runs every 1 second
+
+    // Clear intervals when component unmounts
+    return () => {
+      clearInterval(intervalId1);
+      clearInterval(intervalId2);
+      clearInterval(intervalId3);
+    };
+  }, [UidData, OwnerUid, id]);
+
+  const handlecheckWhoisSender = async () => {
+    // Only proceed if both OwnerUid and anotherUid are available
+
+    if (!UidData || !OwnerUid) {
+      return;
+    }
+    setButtonLoading(true);
+    // Set loading to true when fetching starts
+
     try {
-      if (!id) {
-        console.warn("ID is not available");
-        return;
-      }
-      const url = `https://account.qa.addissystems.et/account/${id}`;
-      const response = await axios.get(url);
-  
-      if (response.status !== 200) {
-        throw new Error(`Failed to fetch data: ${response.status}`);
-      }
-  
-      if (response?.data) {
-        setUid(response?.data[0]?.Uid);
-        // handlecheckWhoisSender();  // Calling this function after setting Uid
-      }
+      const url = `https://connection.qa.addissystems.et/connection/get/${OwnerUid}/${UidData}`;
+      const response = await fetch(url, {
+        method: "GET",
+      });
+
+      const data = await response.json();
+      setSender(data);
+      // console.log(data)
+      setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error(error);
+    } finally {
+      setButtonLoading(false); // Set loading to false when fetching is done
     }
   };
-const fetchAccountDataForProfile = async () => {
-        try {
-          if (!id) {
-            return;
-          }
-          // const url= `http://localhost:8010/account/${cookies?.user._id}`;
-          await axios
-            .get(`https://account.qa.addissystems.et/account/${id}`)
-            .then((res) => {
-              // console.log(res)
-              if (res?.data) {
-                setProfilePic(res?.data[0]?.profilePicture);
-              }
-            })
-            .catch((error) => {
-              console.warn(error);
-            });
-        } catch (error) {
-          console.error("Error fetching profile picture:", error);
-        }
-      };
-
-     
-
-  // Set intervals
-  intervalId1 = setInterval(fetchData, 1000); // Runs every 1 second
-  intervalId2 = setInterval(fetchAccountDataForProfile, 1000); // Runs every 1 second
-  intervalId3 = setInterval(handlecheckWhoisSender, 1000); // Runs every 1 second
-
-  // Clear intervals when component unmounts
-  return () => {
-    clearInterval(intervalId1);
-    clearInterval(intervalId2);
-    clearInterval(intervalId3);
-  };
-}, [UidData, OwnerUid,id]); 
-
-const handlecheckWhoisSender = async () => {
-  // Only proceed if both OwnerUid and anotherUid are available
-
-  if (!UidData || !OwnerUid) {
-    return;
-  }
-  setButtonLoading(true);
-  // Set loading to true when fetching starts
-
-  try {
-    const url = `https://connection.qa.addissystems.et/connection/get/${OwnerUid}/${UidData}`;
-    const response = await fetch(url, {
-      method: "GET",
-    });
-   
-    
-    const data = await response.json();
-    setSender(data);
-    // console.log(data)
-    setIsLoading(false);
-  } catch (error) {
-    console.error(error);
-  } finally {
-    setButtonLoading(false);  // Set loading to false when fetching is done
-  }
-};
-
 
   const handleModalChangeClick = () => {
     openModal(false);
     document.getElementById("profileImageInput").click();
   };
 
-
-const [datacONENCTION, setConnection] = useState(null);
+  const [datacONENCTION, setConnection] = useState(null);
   const handleRequestConectionlClick = async () => {
     try {
       if (!UidData) {
@@ -193,7 +186,7 @@ const [datacONENCTION, setConnection] = useState(null);
         return;
       }
       const url = `${import.meta.env.VITE_SEND_CONNECION}`;
-     const res = await axios.post(
+      const res = await axios.post(
         url,
         {
           node1: OwnerUid.toString(),
@@ -204,10 +197,8 @@ const [datacONENCTION, setConnection] = useState(null);
             "Content-Type": "application/json",
           },
         }
-        
       );
-      setConnection(res) 
-    
+      setConnection(res);
     } catch (error) {
       console.error(
         "Error in handleRequestConectionlClick:",
@@ -230,11 +221,15 @@ const [datacONENCTION, setConnection] = useState(null);
       console.error(`Error fetching status: ${error}`);
     }
   }
-  useEffect(() => {
-    FetchCountRetation();
-    // Async function inside useEffect should be executed this way
-    checkTheStatus(OwnerUid, UidData, setRes);
-  }, [OwnerUid, UidData],1000);
+  useEffect(
+    () => {
+      FetchCountRetation();
+      // Async function inside useEffect should be executed this way
+      checkTheStatus(OwnerUid, UidData, setRes);
+    },
+    [OwnerUid, UidData],
+    1000
+  );
 
   const FetchCountRetation = async () => {
     setIsLoading(true);
@@ -258,7 +253,7 @@ const [datacONENCTION, setConnection] = useState(null);
   };
   // Runs only when Uid changes
 
-const handleAcceptClick = async () => {
+  const handleAcceptClick = async () => {
     try {
       const url = `${import.meta.env.VITE_ACCEPT_THE_RELATION}/${
         res[0].relation?.properties?.id
@@ -276,73 +271,72 @@ const handleAcceptClick = async () => {
 
       // Call FetchCountRetation here to update the count
       FetchCountRetation();
-    
     } catch (error) {
       console.error(error); // Handle the error, e.g., show an error message
     }
   };
- 
+
   const handleCancelClick = async () => {
     try {
-      const url = `${import.meta.env.VITE_CANCEL_THE_RELATION}/${ res[0]?.relation?.properties?.id
+      const url = `${import.meta.env.VITE_CANCEL_THE_RELATION}/${
+        res[0]?.relation?.properties?.id
       }`;
       // console.log(    res[0].relation?.properties?.id)
       const response = await fetch(url, {
         method: "DELETE", // Or the appropriate HTTP method for your API
       });
-  
+
       if (!response.ok) {
-        return // Handle non-successful response
+        return; // Handle non-successful response
       }
-  
+
       await response.json();
       handlecheckWhoisSender();
       FetchCountRetation();
       //   console.log(data); // Process the response data if needed
-  
+
       return true; // This will close the modal
     } catch (error) {
       console.error(error); // Handle the error, e.g., show an error message
     }
-  
+
     // Handle cancel click logic here
   };
 
-
   // console.log(id)
 
+  // Empty dependency array means this effect runs once when the component mounts
+  const [buttonText, setButtonText] = useState("Connect");
+  const [buttonIcon, setButtonIcon] = useState(
+    <FontAwesomeIcon icon={faUserPlus} />
+  );
 
+  useEffect(() => {
+    connectButton();
+  }, [res, sender, OwnerUid]);
 
-// Empty dependency array means this effect runs once when the component mounts
-const [buttonText, setButtonText] = useState("Connect");
-const [buttonIcon, setButtonIcon] = useState(<FontAwesomeIcon icon={faUserPlus} />);
-
-useEffect(() => {
-  connectButton();
-}, [res, sender, OwnerUid]);
-
-const connectButton = () => {
-  if (res && res[0] && res[0]?.relation && res[0]?.relation?.properties?.status) {
-    const status = res[0]?.relation?.properties?.status;
-    if (status === "Accepted") {
-      // setButtonText("Connected");
-      setButtonIcon(<FontAwesomeIcon icon={faUserCheck} />);
-    } else if (status === "pending") {
-      if (sender && sender.sender === OwnerUid?.toString()) {
-        setButtonText("Pending");
-      } else if (sender && sender.receiver === OwnerUid.toString()) {
-        setButtonText("Accept");
+  const connectButton = () => {
+    if (
+      res &&
+      res[0] &&
+      res[0]?.relation &&
+      res[0]?.relation?.properties?.status
+    ) {
+      const status = res[0]?.relation?.properties?.status;
+      if (status === "Accepted") {
+        // setButtonText("Connected");
+        setButtonIcon(<FontAwesomeIcon icon={faUserCheck} />);
+      } else if (status === "pending") {
+        if (sender && sender.sender === OwnerUid?.toString()) {
+          setButtonText("Pending");
+        } else if (sender && sender.receiver === OwnerUid.toString()) {
+          setButtonText("Accept");
+        }
       }
     }
-  }
-};
-    
-  
+  };
 
-
-   // default icon
-
-
+  // default icon
 
   const CancelRequestPopup = ({ onConfirm, onCancel }) => {
     return (
@@ -353,7 +347,6 @@ const connectButton = () => {
             <button
               onClick={handleCancelClick}
               className="bg-blue-500 text-white py-1 px-4 rounded"
-              
             >
               Yes
             </button>
@@ -383,8 +376,7 @@ const connectButton = () => {
         {/* Skeleton for Name */}
         <div className="ml-[3rem] w-[15rem] h-4 bg-gray-300 animate-pulse rounded"></div>
 
-
-{/* Skeleton for Relations */}
+        {/* Skeleton for Relations */}
         <div className="ml-[3rem] w-[10rem] h-4 bg-gray-300 animate-pulse rounded"></div>
         <div className="ml-[3rem] w-[5rem] h-4 bg-gray-300 animate-pulse rounded"></div>
         {/* Skeleton for Button */}
@@ -399,6 +391,15 @@ const connectButton = () => {
 
   return (
     <>
+      {/* <Modal
+        open={modalOpen}
+        onOk={() => setModalOpen(false)}
+        onCancel={() => setModalOpen(false)}
+        footer={[]}
+      >
+        <CompanyPP />
+      </Modal> */}
+
       <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem]">
         <div className="w-full flex items-end justify-between">
           <div className="bg-white w-fit p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
@@ -457,7 +458,7 @@ const connectButton = () => {
             <p className="dark:text-white w-full text-smallP">
               {data?.account[0]?.party}
             </p>
-<div className="flex gap-4 items-center">
+            <div className="flex gap-4 items-center">
               <span className="flex gap-2 items-center">
                 <h1 className="dark:text-white font-bold text-smallP">
                   {countData ? countData : ""}
@@ -471,96 +472,100 @@ const connectButton = () => {
             </div>
           </div>
           {data &&
-      data.account &&
-      data.account[0] &&
-      data.account[0]._id !== cookies?.user?._id ? (
-        <>
-          {sender?.status === 'Accepted' ?
-          
-          <div className="w-full flex items-center justify-start gap-2 flex-wrap">
-          <Button
-                text={"Message"}
-                filled={false}
-                color={"secondary"}
-                icon={<FontAwesomeIcon icon={faMessage} />}
-                iconPossition="left"
-              />
-              </div>
-               : (
-            <div className="w-full flex items-center justify-start gap-2 flex-wrap">
-           <Button
-  onClick={async () => {
-    if (buttonText === "Connect") {
-      setIsLoadingButton(true); // Show loading
+          data.account &&
+          data.account[0] &&
+          data.account[0]._id !== cookies?.user?._id ? (
+            <>
+              {sender?.status === "Accepted" ? (
+                <div className="w-full flex items-center justify-start gap-2 flex-wrap">
+                  <Button
+                    text={"Message"}
+                    filled={false}
+                    color={"secondary"}
+                    icon={<FontAwesomeIcon icon={faMessage} />}
+                    iconPossition="left"
+                  />
+                </div>
+              ) : (
+                <div className="w-full flex items-center justify-start gap-2 flex-wrap">
+                  <Button
+                    onClick={async () => {
+                      if (buttonText === "Connect") {
+                        setIsLoadingButton(true); // Show loading
 
-      await handleRequestConectionlClick();
-      await handlecheckWhoisSender();
+                        await handleRequestConectionlClick();
+                        await handlecheckWhoisSender();
 
-      setIsLoadingButton(false); // Hide loading
-      setButtonText("Pending"); // Update button text
-  
-      await checkTheStatus()
-    } else if (buttonText === "Accept") {
-      setIsLoadingButton(true); // Show loading
+                        setIsLoadingButton(false); // Hide loading
+                        setButtonText("Pending"); // Update button text
 
-      await handleAcceptClick();
-      await handlecheckWhoisSender();
-      setIsAccepted(true); // Disable
-      setButtonText("Message");
-      setIsLoadingButton(false);
-    } else if (buttonText === "Pending") {
-      setIsLoadingButton(true);
-      handleCancelClick()
-      setButtonText("Connect");
-      setIsLoadingButton(false);
-    }
-    else if(buttonText === "Decline") {
-      setIsLoadingButton(true);
-    
-     await handleCancelClick()
-      setButtonText("Connect");
-      setIsLoadingButton(false);
-    }
-  }}
-  text={isLoadingButton ? null : buttonText} // if loading, don't show text
-  filled={true}
-  color={"secondary"}
-  icon={isLoadingButton ? <FontAwesomeIcon icon={faSpinner} spin /> : buttonIcon} // if loading, show spinner
-  iconPossition="left"
-  disabled={isAccepted}
-/>
+                        await checkTheStatus();
+                      } else if (buttonText === "Accept") {
+                        setIsLoadingButton(true); // Show loading
 
-{sender?.receiver === OwnerUid.toString() && sender?.status === 'pending' && (
-                <Button
-                text={isDeclineLoading ? "Loading..." : "Decline"}
-                filled={false}
-                color={"secondary"}
-                icon={<FontAwesomeIcon icon={faRemove} />}
-                iconPossition="left"
-                onClick={async () => {
-                    setDeclineLoading(true);
-                    await handleCancelClick();
-                    setDeclineLoading(false);
-                    setButtonText("Connect");
-                }}
-            />
+                        await handleAcceptClick();
+                        await handlecheckWhoisSender();
+                        setIsAccepted(true); // Disable
+                        setButtonText("Message");
+                        setIsLoadingButton(false);
+                      } else if (buttonText === "Pending") {
+                        setIsLoadingButton(true);
+                        handleCancelClick();
+                        setButtonText("Connect");
+                        setIsLoadingButton(false);
+                      } else if (buttonText === "Decline") {
+                        setIsLoadingButton(true);
+
+                        await handleCancelClick();
+                        setButtonText("Connect");
+                        setIsLoadingButton(false);
+                      }
+                    }}
+                    text={isLoadingButton ? null : buttonText} // if loading, don't show text
+                    filled={true}
+                    color={"secondary"}
+                    icon={
+                      isLoadingButton ? (
+                        <FontAwesomeIcon icon={faSpinner} spin />
+                      ) : (
+                        buttonIcon
+                      )
+                    } // if loading, show spinner
+                    iconPossition="left"
+                    disabled={isAccepted}
+                  />
+
+                  {sender?.receiver === OwnerUid.toString() &&
+                    sender?.status === "pending" && (
+                      <Button
+                        text={isDeclineLoading ? "Loading..." : "Decline"}
+                        filled={false}
+                        color={"secondary"}
+                        icon={<FontAwesomeIcon icon={faRemove} />}
+                        iconPossition="left"
+                        onClick={async () => {
+                          setDeclineLoading(true);
+                          await handleCancelClick();
+                          setDeclineLoading(false);
+                          setButtonText("Connect");
+                        }}
+                      />
+                    )}
+                </div>
               )}
-            
+            </>
+          ) : (
+            // Your existing "Invite" button code
+            <div className="w-full flex items-center justify-start gap-2 flex-wrap">
+              <Button
+                text={"Invite"}
+                filled={false}
+                color={"secondary"}
+                icon={<FontAwesomeIcon icon={faShareNodes} />}
+                iconPossition={"left"}
+              />
             </div>
           )}
-        </>
-      ) : (
-        // Your existing "Invite" button code
-        <div className="w-full flex items-center justify-start gap-2 flex-wrap">
-        <Button
-          text={"Invite"}
-          filled={false}
-          color={"secondary"}
-          icon={<FontAwesomeIcon icon={faShareNodes} />}
-          iconPossition={"left"}
-        />
-        </div>
-      )}
         </div>
         {isModalOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -591,15 +596,14 @@ const connectButton = () => {
       {/* Add your custom popups here */}
       {showCancelRequestPopup && (
         <CancelRequestPopup
-        onConfirm={async () => {
-          await handleCancelClick();
-          setShowCancelRequestPopup(false);
-        }}
+          onConfirm={async () => {
+            await handleCancelClick();
+            setShowCancelRequestPopup(false);
+          }}
           onCancel={() => setShowCancelRequestPopup(false)}
         />
       )}
 
-     
       {/* End of custom popups */}
     </>
   );
