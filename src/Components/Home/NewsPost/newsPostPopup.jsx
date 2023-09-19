@@ -14,7 +14,7 @@ import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 export default function NewsPostPopup({ isOpen, handleClose }) {
   const [fileList, setFileList] = useState([]);
   const [description, setDescription] = useState(""); // State to store the user's input description
-  const [cookies] = useCookies(["User"]); // If you are using cookies for authentication
+  const [cookies] = useCookies(["user"]); // If you are using cookies for authentication
   const [imagesSelected, setImagesSelected] = useState(false);
   const [warningVisible, setWarningVisible] = useState(false);
   const [profile, setProfilePic] = useState(null);
@@ -52,42 +52,36 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
   const handlePublish = async () => {
     if (!imagesSelected) {
       showWarningModal();
-
       return;
     }
     setIsLoading(true);
-    // Prepare the form data to be sent to the backend API
+  
     const formData = new FormData();
-    formData.append("Uid", cookies?.user.Uid); // Assuming you have stored the user's ID in cookies
+    formData.append("Uid", cookies?.user?.Uid);
     formData.append("description", description);
     fileList.forEach((file) => {
       formData.append("image", file.originFileObj);
     });
-
+  
     try {
-      // Make a POST request to the backend API
-      await axios
-        .post(import.meta.env.VITE_POST_NEWS, formData) // Replace '/api/timeline' with the appropriate backend API endpoint URL
-        .then((response) => {
-          if (response) {
-            message.success("Upload sucess");
-            // Handle the response from the backend if needed
-            console.log("Data inserted successfully");
-            handleClose();
-          }
-        })
-        .catch((error) => {
-          if (error.message === "Network Error") {
-            message.error("Network Error: Failed to post.");
-          } else {
-            console.error("Error inserting data:", error);
-          }
-        });
+      const response = await axios.post(import.meta.env.VITE_POST_NEWS, formData);
+      if (response.status === 200) {
+        message.success("Upload successful");
+        console.log("Data inserted successfully");
+        handleClose();
+      } else {
+        console.error("Unexpected response status:", response.status);
+      }
     } catch (error) {
-      message.error("Faild to post");
+      if (error.message === "Network Error") {
+        message.error("Network Error: Failed to post.");
+      } else {
+        console.error("Error inserting data:", error);
+      }
       handleClose();
     }
   };
+  
   useEffect(() => {
     const fetchAccountDataForProfile = async () => {
       try {
