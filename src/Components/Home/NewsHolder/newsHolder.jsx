@@ -45,7 +45,7 @@ export default function NewsHolder() {
         // loadingMsgId = message.loading('Loading news...', 0);
   
         const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
-        const response = await axios.get(Url);
+        const response = await axios.get(`http://localhost:8020/time-line/sse`);
   
         clearTimeout(serverDownTimer);
   
@@ -76,50 +76,50 @@ export default function NewsHolder() {
       }
     }
 
-  // useEffect(() => {
-  //   try {
-  //     setLoading(true);
-  //     const eventSource = new EventSource(${import.meta.env.VITE_GET_ALL_POSTS});
+ useEffect(() => {
+    try {
+      setLoading(true);
+      const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POSTS}`);
     
-  //   eventSource.onmessage = (event) => {
-  //     setLoading(false);
-  //     const eventData = JSON.parse(event.data); // This should be an array
-  //     console.log("Parsed event data:", eventData);
-  //     if (eventData == []){
-  //       message.error('empty')
-  //     }
-  //     // Iterate through the array and log the 'id' of each object
-  //     eventData.forEach((item) => {
-  //       if ('id' in item) {
-  //         console.log("ID exists:", item.id);
-  //       } else {
-  //         console.log("ID does not exist in item");
-  //       }
-  //     });
+    eventSource.onmessage = (event) => {
+      setLoading(false);
+      const eventData = JSON.parse(event.data); // This should be an array
+      console.log("Parsed event data:", eventData);
+      if (eventData == []){
+        message.error('empty')
+      }
+      // Iterate through the array and log the 'id' of each object
+      eventData.forEach((item) => {
+        if ('id' in item) {
+          console.log("ID exists:", item.id);
+        } else {
+          console.log("ID does not exist in item");
+        }
+      });
       
-  //     setTimeline(eventData);
+      setTimeline(eventData);
 
-  //   };
+    };
     
-  //   eventSource.onerror = (error) => {
-  //     console.error('SSE Error:', error);
-  //   };
+    eventSource.onerror = (error) => {
+      console.error('SSE Error:', error);
+    };
     
-  //   return () => {
-  //     eventSource.close();
-  //   };
-  //   } catch (error) {
-  //     setLoading(false);
-  //     console.error(error);
-  //   }
+    return () => {
+      eventSource.close();
+    };
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
     
-  // }, []);
-  
+  }, []);
+
   
 
   function onIntersection(entries) {
     if (entries[0].isIntersecting && hasMore) {
-      fetchMoreTimelines();
+      
     }
   }
   if (error) {

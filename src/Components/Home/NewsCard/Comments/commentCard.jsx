@@ -110,12 +110,13 @@ export default function CommentCard({account_id,id,img,companyName, time , comme
                 {/* {console.log("Checking conditions: ", account_id, id, cookies.user._id)} */}
                 {(account_id === cookies.user._id || id === cookies.user._id) && (
             <div ref={deleteCardRef}>
+               <button onClick={handleDeleteComment}>
+                    Delete Comment
+                  </button>
               <FontAwesomeIcon icon={faEllipsisVertical} onClick={toggleDeleteOption} />
               {showDeleteOption && (
                 <div className="absolute top-0 right-0 mt-4 mr-4 bg-white p-2 rounded shadow-lg z-10">
-                  <button onClick={handleDeleteComment}>
-                    Delete Comment
-                  </button>
+                 
                       </div>
                     )}
                   </div>
