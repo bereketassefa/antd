@@ -7,7 +7,7 @@ export default function Primary() {
  
 
   return (
-    <div className="h-screen overflow-y-scroll dark:bg-black relative w-full p-0 m-0 flex flex-col max-w-full items-center">
+    <div className="h-screen overflow-y-scroll dark:bg-black bg-[#f3f2f0] relative w-full p-0 m-0 flex flex-col max-w-full items-center">
      
 
       <div className="fixed w-full z-10 bg-green-100 ">
