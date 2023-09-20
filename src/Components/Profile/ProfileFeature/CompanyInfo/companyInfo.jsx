@@ -13,6 +13,7 @@ import Button from "../../../../Fields/Button/button";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { message } from "antd";
+import { Modal } from "antd";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import CompanyPP from "./CompanyPP";
 
@@ -32,7 +33,8 @@ export default function CompanyInfo({ data, Uid }) {
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isAccepted, setIsAccepted] = useState(false);
   const [isDeclineLoading, setDeclineLoading] = useState(false);
-
+  
+  const [mymodalOpen, setMyModalOpen] = useState(false);
   const id = window.location.pathname.split("/")[3];
 
   //    console.log(Uid)
@@ -391,23 +393,24 @@ export default function CompanyInfo({ data, Uid }) {
 
   return (
     <>
-      {/* <Modal
-        open={modalOpen}
-        onOk={() => setModalOpen(false)}
-        onCancel={() => setModalOpen(false)}
+      <Modal
+        open={mymodalOpen}
+        onOk={() => setMyModalOpen(false)}
+        onCancel={() => setMyModalOpen(false)}
         footer={[]}
       >
-        <CompanyPP />
-      </Modal> */}
+        <CompanyPP profilePic={profilePic ? profilePic : alternativeProfile} />
+      </Modal>
 
       <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem]">
         <div className="w-full flex items-end justify-between">
-          <div className="bg-white w-fit p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
+          <div className="bg-white  p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
             <div className="w-full flex items-center justify-center">
               <img
                 className="w-full object-cover h-full flex"
                 src={profilePic ? profilePic : alternativeProfile}
                 alt="Profile"
+                onClick={() => setMyModalOpen(true)}
               />
             </div>
             <div className="bg-white p-[3px] rounded-full absolute mt-[-0.5rem] mr-[-0.5rem]">

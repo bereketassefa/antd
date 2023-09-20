@@ -59,14 +59,7 @@ export default function NewsHolder() {
           setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
         }
 
-        if (error || (timeline.length === 0 && !loading)) {
-          return (
-            <div className="flex justify-center items-center h-screen">
-              <img src={oopsno} alt="No data available" />
-            </div>
-          );
-        }
-  
+     
         setLoading(false);
         setHasMore(false);
   
