@@ -21,7 +21,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useToast } from "../../Toast/toastContext";
 import NewSlider from "../../../Components/Home/NewsHolder/NewSlider";
-
+import { RiDeleteBinLine } from "react-icons/ri";
 export default function NewsCard({
   account_id,
   myKey,
@@ -35,7 +35,6 @@ export default function NewsCard({
 }) {
   const { showToast } = useToast();
   const downloadCardRef = useRef(null);
- 
 
   NewsCard.propTypes = {
     profilePic: PropTypes.string,
@@ -288,7 +287,7 @@ export default function NewsCard({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  video: PropTypes.string
+  video: PropTypes.string;
   // const handleBookmark = () => {
   //   // Logic to bookmark the post
   //   let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
@@ -335,7 +334,10 @@ export default function NewsCard({
                 <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-black"></div>
               ) : (
                 <>
-                  <FontAwesomeIcon icon={faDownload} /> Save Image
+                  <FontAwesomeIcon icon={faDownload} /> Save
+                  <div className="flex items-center gap-[2px]" >
+                    <RiDeleteBinLine /> Delete
+                  </div>
                 </>
               )}
             </button>
@@ -396,7 +398,7 @@ export default function NewsCard({
             className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
             onClick={() => setShowLikeInfo(true)}
           >
-             {allLikes === 0 || allLikes === "0" ? "" : allLikes}
+            {allLikes === 0 || allLikes === "0" ? "" : allLikes}
           </span>
           <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
             {comments.postCount === undefined

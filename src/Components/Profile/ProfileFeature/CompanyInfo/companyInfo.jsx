@@ -33,8 +33,9 @@ export default function CompanyInfo({ data, Uid }) {
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isAccepted, setIsAccepted] = useState(false);
   const [isDeclineLoading, setDeclineLoading] = useState(false);
-  
+
   const [mymodalOpen, setMyModalOpen] = useState(false);
+  const [confirmprofilemodal, setConfirmProfileModal] = useState(false);
   const id = window.location.pathname.split("/")[3];
 
   //    console.log(Uid)
@@ -399,7 +400,10 @@ export default function CompanyInfo({ data, Uid }) {
         onCancel={() => setMyModalOpen(false)}
         footer={[]}
       >
-        <CompanyPP profilePic={profilePic ? profilePic : alternativeProfile} />
+        <CompanyPP
+          profilePic={profilePic ? profilePic : alternativeProfile}
+          setMyModalOpen={setMyModalOpen}
+        />
       </Modal>
 
       <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem]">
