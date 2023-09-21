@@ -104,8 +104,8 @@ function Heroside() {
                 DESIGN
               </h1>
               <p className="text-[#3222C6] font-sans not-italic font-normal leading-none ">
-                Now think about how to <br /> design and design and <br />{" "}
-                develop a new platform
+                Now think about how to <br />  design and develop <br />{" "}
+               a new platform
               </p>
             </div>
           </div>
