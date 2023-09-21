@@ -33,6 +33,7 @@ import { useCookies } from "react-cookie";
 import SearchAll from "./Components/Topbar/SearchAllCompo/SearchAll";
 import { ToastProvider } from "./Components/Toast/toastContext";
 import ChatPage from "./Components/Chat/ChatPage";
+import OTPpage from "./Pages/Signupage/OTPpage";
 
 // import Message from "./Pages/Message/Message";
 
@@ -47,6 +48,7 @@ function App() {
             <Route path="/create-password/:id" element={<CreatePssPage />} />
             <Route path="/ResetPss" element={<ResetPssPage />} />
             <Route path="/forget-password" element={<ForgotPassPage />} />
+            <Route path="/OTP" element={<OTPpage />} />
           </Route>
 
           <Route
@@ -71,7 +73,6 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/feed/notifications" element={<Notification />} />
               <Route path="/feed/messages" element={<ChatPage />} />
-              
             </Route>
             <Route path="/feed/SearchNav/:name" element={<SearchRoute />}>
               <Route

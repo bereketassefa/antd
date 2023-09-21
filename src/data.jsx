@@ -109,6 +109,60 @@ export const comments = [
     fromOther: true,
   },
 ];
+export const product = [
+  {
+    key: 1,
+    image: iphone12,
+    productName: "Iphone 14 Pro Max",
+    place: " in Stock  ",
+    price: " 1000$ ",
+  },
+  {
+    key: 1,
+    image: iphone12,
+    productName: "Iphone 14 Pro Max",
+    place: " in Stock  ",
+    price: " 1000$ ",
+  },
+  {
+    key: 1,
+    image: iphone12,
+    productName: "Iphone 14 Pro Max",
+    place: " in Stock  ",
+    price: " 1000$ ",
+  },
+  {
+    key: 1,
+    image: iphone12,
+    productName: "Iphone 14 Pro Max",
+    place: " in Stock  ",
+    price: " 1000$ ",
+  },
+  {
+    key: 1,
+    image: iphone12,
+    productName: "Iphone 14 Pro Max",
+    place: " in Stock  ",
+    price: " 1000$ ",
+  },
+  {
+    key: 1,
+    image: iphone12,
+    productName: "Iphone 14 Pro Max",
+    place: " in Stock  ",
+    price: " 1000$ ",
+  },
+  {
+    key: 1,
+    image: iphone12,
+    productName: "Iphone 14 Pro Max",
+    place: " in Stock  ",
+    price: " 1000$ ",
+  },
+  
+   
+ 
+];
 export const Search = [
   {
     key: 1,
