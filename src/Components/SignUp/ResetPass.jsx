@@ -7,12 +7,17 @@ import { IoMdClose } from "react-icons/io";
 import { BiCheck } from "react-icons/bi";
 import Helppra from "./Helppra";
 
-function ResetPass() {
+function ResetPass({ setModalOpen }) {
   const [pass1, setPass1] = useState("");
   const [pass2, setPass2] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [showPass1, setShowPass1] = useState(false);
   const [showPass2, setShowPass2] = useState(false);
+
+  const handleReset = (e) => {
+    e.preventDefault();
+    setModalOpen(true);
+  };
 
   return (
     <div>
@@ -149,14 +154,15 @@ function ResetPass() {
             </p>
           </div>
         </div>
-      
+
         <Button
-          type="submit"
+          // type="submit"
           text={"RESET"}
           bgColor={`bg-[#d71a62] ${
             !pass1 ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={!pass1 ? true : false}
+          onClick={(e) => handleReset(e)}
         />
         <div className="ml-5">
           <Helppra />

@@ -1,15 +1,28 @@
-import React from "react";
+import { React, useState } from "react";
 import Heroside from "../../Components/SignUp/Heroside";
 import logo from "../../assets/image/addissystems-logo.png";
 import dotTopBackground from "../../assets/image/dot2for web.jpg";
 import dotTopMobBackground from "../../assets/image/dot1formob.jpg";
 import dotBottomBackground from "../../assets/image/dot1forweb.jpg";
 import dotBottomMobBackground from "../../assets/image/dot2formob.jpg";
-import ResetPass  from "../../Components/SignUp/ResetPass";
-
+import ResetPass from "../../Components/SignUp/ResetPass";
+import { Modal } from "antd";
+import ResetConfirm from "../../Components/SignUp/ResetConfirm";
 function ResetPssPage() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleSubmitBtn = () => {
+    setModalOpen(true);
+  };
   return (
     <div>
+      <Modal
+        open={modalOpen}
+        onOk={() => setModalOpen(false)}
+        onCancel={() => setModalOpen(false)}
+        footer={[]}
+      >
+        <ResetConfirm />
+      </Modal>
       <div>
         <div className=" flex max-w-screen-2xl mx-auto  justify-evenly h-screen  ">
           {/* Login Box  */}
@@ -35,7 +48,7 @@ function ResetPssPage() {
             </div>
 
             <div className="lg:max-w-[550px] md:max-w-[550px] mx-auto flex justify-center px-5 sm:px-0  ">
-              <ResetPass />
+              <ResetPass setModalOpen={setModalOpen} />
             </div>
 
             <div className="">
