@@ -33,7 +33,7 @@ function ForgotPassPage() {
               </div>
             </div>
 
-            <div className="lg:max-w-[550px] md:max-w-[550px] mx-auto flex justify-center px-5 sm:px-0  ">
+            <div className="lg:max-w-[550px] md:max-w-[550px] mx-auto flex justify-center px-5 sm:px-0  mb-5 ">
               <ForgotPass />
             </div>
 
