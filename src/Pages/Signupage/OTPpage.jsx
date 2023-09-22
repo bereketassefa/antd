@@ -5,7 +5,7 @@ import dotTopBackground from "../../assets/image/dot2for web.jpg";
 import dotTopMobBackground from "../../assets/image/dot1formob.jpg";
 import dotBottomBackground from "../../assets/image/dot1forweb.jpg";
 import dotBottomMobBackground from "../../assets/image/dot2formob.jpg";
-
+import LoginOtP from '../../Components/SignUp/LoginOtp'
 
 function OTPpage() {
   return (

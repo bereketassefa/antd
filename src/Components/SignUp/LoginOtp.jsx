@@ -50,8 +50,12 @@ import Button from "../SignUp/Login/Button";
 import Heading from "../SignUp/Heading";
 import Helppra from "../SignUp/Helppra";
 import OTPInputBox from "./OTPInputBox";
+import {useParams} from 'react-router-dom'
 
 const LoginOtp = ({ value, onChange }) => {
+  const phoneNumber = useParams()
+  
+console.log(phoneNumber)
   const [counter, setCounter] = useState(20);
 
   useEffect(() => {
@@ -92,6 +96,7 @@ const LoginOtp = ({ value, onChange }) => {
        
         <div className="flex gap-8">
          
+          <OTPInputBox />
           <OTPInputBox />
           <OTPInputBox />
           <OTPInputBox />
