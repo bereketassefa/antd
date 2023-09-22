@@ -259,9 +259,9 @@ export default function Topbar() {
                       to={`/feed/SearchNav/${searchInput}`}
                       onClick={() => setSearchInput("")}
                     >
-                      <p className="dark:text-white flex justify-center text-primary ">
+                      {/* <p className="dark:text-white flex justify-center text-primary ">
                         See All results
-                      </p>
+                      </p> */}
                     </Link>
                   </div>
                 )}
@@ -279,7 +279,7 @@ export default function Topbar() {
               </Link>
               {/* message  */}
 
-              <Link to={""}>
+              {/* <Link to={""}>
                 <div className=" ">
                   <div
                     className=""
@@ -315,7 +315,7 @@ export default function Topbar() {
                     </div>
                   )}
                 </div>
-              </Link>
+              </Link> */}
             </div>
             <FontAwesomeIcon
               icon={!menuOpen ? faBars : faSquareXmark}

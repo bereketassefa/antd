@@ -19,14 +19,13 @@ function ForgotPass() {
 
   const handleSend = async () => {
     try {
-      console.log('before send')
-      console.log(phoneNumber);
-      const response = await axios.post('http://localhost:8010/account/login/forgot', {
+   
+      const response = await axios.post('https://account.qa.addissystems.et/account/login/forgot', {
         phone: phoneNumber
       });
-console.log('after send', response)
+
       if (response.data) {
-        console.log("OTP sent successfully");
+     
         navigate('/OTP', { state: { phoneNumber: phoneNumber } });
       }
     } catch (error) {
