@@ -12,7 +12,10 @@ const ChatCard = ({
   return (
     <div className="gap-4 hover:bg-slate-200 " onClick={onSelect}>
       <div className="flex items-center justify-start  gap-2 ">
-        <Avatar img={image} />
+        <div>
+          {" "}
+          <Avatar img={image} />
+        </div>
 
         <div className="w-full flex  justify-between  ">
           <p className=" font-bold text-[#000] text-center text-[17px]">

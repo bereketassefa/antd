@@ -154,8 +154,7 @@ function AddItemsPage({ handleModal }) {
                   />
                 ) : (
                   <div className="flex    justify-center items-center ">
-                    <BiSolidImageAlt className="   w-20 h-20   rounded-lg" />
-                     
+                    <BiSolidImageAlt className=" text-[#555555]  w-20 h-20   rounded-lg" />
                   </div>
                 )}
                 <input
@@ -164,6 +163,7 @@ function AddItemsPage({ handleModal }) {
                   name="productImage"
                   accept="image/*"
                   style={{ display: "none" }}
+                  className=" rounded-lg w-20 h-20  border-2 border-red-900 "
                   onChange={handleImageUpload}
                   required
                 />
@@ -264,7 +264,6 @@ function AddItemsPage({ handleModal }) {
             />
             {errors.hsnNo && <p className="text-red-500">{errors.hsnNo}</p>}
           </div>
-
         </div>
 
         <div className="flex justify-end items-center ">
