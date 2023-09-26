@@ -9,7 +9,7 @@ export default function Post(props) {
    const id =window.location.pathname.split('/')[3]
 
 
-   
+
      // You can call your fetchMoreTimeliness function here,
      // or update the state directly if the new data is provided
     
@@ -31,7 +31,7 @@ export default function Post(props) {
   
       if (response.status === 200) {
         setTimeline(response.data);
-        // console.log(response.data)
+       console.log(response.data)
       }
     } catch (error) {
       console.warn('Failed to fetch');

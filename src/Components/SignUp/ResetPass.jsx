@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import Button from "./Login/Button";
 import { MdLockOutline } from "react-icons/md";
@@ -6,19 +6,55 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { BiCheck } from "react-icons/bi";
 import Helppra from "./Helppra";
-
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { message } from "antd";
+import { FaSpinner } from 'react-icons/fa';
 function ResetPass({ setModalOpen }) {
   const [pass1, setPass1] = useState("");
   const [pass2, setPass2] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [showPass1, setShowPass1] = useState(false);
   const [showPass2, setShowPass2] = useState(false);
+  const [loading , setLoading] =useState(false)
+  const { token } = useParams(); // Get the token from the URL params
+  const Navigate = useNavigate();
 
-  const handleReset = (e) => {
+  
+
+  const handleReset = async (e) => {
+    setLoading(true);
+    console.log("Loading state after setting to true:", loading);
+    
     e.preventDefault();
-    setModalOpen(true);
+   
+    const originalToken = token.replace(/\$/g, '.').replace(/&/g, '/');
+    if (pass1 !== pass2) {
+     message.error('Password Does not match')
+     setLoading(false)
+      return;
+    }
+
+    try {
+     
+      const response = await axios.post(`https://account.qa.addissystems.et/reset-Password/${pass1}/${originalToken}`);
+
+      if (response.data) {
+        // setModalOpen(true);
+        message.success("Password Reset successfully");
+        Navigate('/'); // Redirect to login page or wherever you want
+      }
+    } catch (error) {
+      console.error("Error resetting password:", error);
+     message.error('Error resetting password')
+     setLoading(false);
+    }
+    finally{
+      setLoading(false)
+    }
   };
 
+ 
   return (
     <div>
       <Heading Title={"Reset Password"} text={"Please enter a new password"} />
@@ -154,16 +190,18 @@ function ResetPass({ setModalOpen }) {
             </p>
           </div>
         </div>
-
-        <Button
-          // type="submit"
-          text={"RESET"}
+        <Button 
+          text={loading ?  <FaSpinner className="animate-spin" /> : "RESET"}
           bgColor={`bg-[#d71a62] ${
             !pass1 ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={!pass1 ? true : false}
           onClick={(e) => handleReset(e)}
+           
         />
+            
+        
+        
         <div className="ml-5">
           <Helppra />
         </div>

@@ -127,7 +127,7 @@ export default function CommentContainer({ account_id, id, isOpen }) {
             onKeyPress={handleKeyPress}
           />
           <div className="absolute pr-4 flex gap-2">
-            <IoMdSend className="text-largeP md:smallT text-primary" />
+            <IoMdSend onClick={handleCommentSubmit} className="text-largeP md:smallT text-primary" />
             <FontAwesomeIcon
               icon={faSmile}
               className="text-largeP md:smallT text-primary"

@@ -46,7 +46,7 @@ function App() {
           <Route path="/">
             <Route index element={<LoginPage />} />
             <Route path="/create-password/:id" element={<CreatePssPage />} />
-            <Route path="/ResetPss" element={<ResetPssPage />} />
+            <Route path="/ResetPss/:token" element={<ResetPssPage />} />
             <Route path="/forget-password" element={<ForgotPassPage />} />
             <Route path="/OTP" element={<OTPpage />} />
           </Route>

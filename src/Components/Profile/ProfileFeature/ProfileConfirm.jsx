@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import axios from "axios"; // Import axios for API calls
 import profile from "../../../assets/image/cute-girl-pic (12).jpg";
+import { useParams } from "react-router-dom";
 
-function ProfileConfirm({ setConfirmProfileModal }) {
+function ProfileConfirm({ profilePic, setConfirmProfileModal }) {
+
+  const  {id}  = useParams();
   const [image, setImage] = useState(profile);
-  const [isEditing, setIsEditing] = useState(false);
-
+  const [imageFile, setImageFile] = useState(null);
   const handleImageUpload = (event) => {
     const newImage = event.target.files[0];
+    // console.log("Selected image:", newImage); // Log the selected image
+  
     if (newImage) {
+      setImageFile(newImage); // Save the File object
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result);
@@ -15,10 +21,32 @@ function ProfileConfirm({ setConfirmProfileModal }) {
       reader.readAsDataURL(newImage);
     }
   };
-
   const handleImageDelete = () => {
-    setImage(profile);
+    setImage(profilePic);
     setConfirmProfileModal(false);
+  };
+
+  const handleImageConfirm = async () => {
+    try {
+      if (!imageFile) {
+        console.error("No image selected");
+        return;
+      }
+      const formData = new FormData();
+      formData.append("image", imageFile);
+      const response = await axios.put(`https://account.qa.addissystems.et/profile/update/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("Response:", response);
+      if (response.status === 200) {
+        console.log("Profile updated successfully");
+        setConfirmProfileModal(false);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   };
 
   return (
@@ -50,7 +78,7 @@ function ProfileConfirm({ setConfirmProfileModal }) {
         </label>
         <label
           className="bg-gray-200 px-6 py-2 gap-1 rounded-lg flex items-center"
-          onClick={() => setConfirmProfileModal(false)}
+          onClick={handleImageConfirm}
         >
           Confirm
         </label>

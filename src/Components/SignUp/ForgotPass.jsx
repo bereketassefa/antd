@@ -1,66 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "../SignUp/Login/Button";
 import Heading from "../SignUp/Heading";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Helppra from "./Helppra";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function ForgotPass() {
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [demoReqForm, setDemoReqForm] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const navigate = useNavigate();
 
-  const handle=()=>{
+  const handleChange = (value) => {
+    setPhoneNumber(value);
 
+  };
+
+  const handleSend = async () => {
     try {
-      
-      
-    } catch (error) {
-      
-    }
-  }
-  const initialValues = {
-    phone: "",
-  };
+   
+      const response = await axios.post('https://account.qa.addissystems.et/account/login/forgot', {
+        phone: phoneNumber
+      });
 
-  useEffect(() => {
-    setDemoReqForm({
-      ...demoReqForm,
-      phone: phoneNumber,
-    });
-  }, [phoneNumber]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "phone") {
-      setPhoneNumber(value);
-    } else {
-      setDemoReqForm({ ...demoReqForm, [name]: value });
-    }
-
-    if (name === "phone") {
-      if (!value) {
-        setFormErrors({ ...formErrors, phone: "Phone Number is required" });
-      } else if (value.length < 10) {
-        setFormErrors({
-          ...formErrors,
-          phone: "Phone Number must be more than 4 Numbers",
-        });
-      } else if (value.length > 13) {
-        setFormErrors({
-          ...formErrors,
-          phone: "Phone Number cannot exceed more than 13 Numbers",
-        });
-      } else if (value.startsWith("+251")) {
-        // Handle phone number logic for specific country code
-      } else {
-        setFormErrors({ ...formErrors, phone: "" });
+      if (response.data) {
+     
+        navigate('/OTP', { state: { phoneNumber: phoneNumber } });
       }
+    } catch (error) {
+      console.error("Error sending OTP:", error);
     }
-  };
-
-  const isFormValid = () => {
-    return Object.values(formErrors).every((error) => error === "");
   };
 
   return (
@@ -71,40 +41,21 @@ function ForgotPass() {
       />
 
       <div className="flex w-full max-w-[500px] flex-col gap-y-4 sm:w-1/2 mt-4 ">
-        <div
-          className={
-            formErrors.phone
-              ? "flex items-center rounded bg-white pl-2   "
-              : "flex items-center rounded bg-white pl-2"
-          }
-        >
+        <div className={formErrors.phone ? "flex items-center rounded bg-white pl-2" : "flex items-center rounded bg-white pl-2"}>
           <PhoneInput
             country={"et"}
             enableAreaCodes={true}
             value={phoneNumber}
-            onChange={(value) =>
-              handleChange({ target: { name: "phone", value } })
-            }
+            onChange={handleChange}
             inputProps={{
-              className:
-                "w-full py-3 px-12 rounded outline-none rounded border-2 border-[#3222C6]  max-w-[500px] md:w-[480px]",
+              className: "w-full py-3 px-12 rounded outline-none rounded border-2 border-[#3222C6]  max-w-[500px] md:w-[480px]",
             }}
             containerStyle={{ position: "relative" }}
             buttonStyle={{ background: "transparent", border: "none" }}
-            dropdownStyle={{
-              position: "absolute",
-              top: "100%",
-              left: 0,
-            }}
+            dropdownStyle={{ position: "absolute", top: "100%", left: 0 }}
           />
         </div>
-        <p
-          className={
-            formErrors.phone
-              ? "-mb-3 -mt-4 ml-2 text-[11px] text-red-600"
-              : "-mt-4 ml-2 text-[11px] text-red-600"
-          }
-        >
+        <p className={formErrors.phone ? "-mb-3 -mt-4 ml-2 text-[11px] text-red-600" : "-mt-4 ml-2 text-[11px] text-red-600"}>
           {formErrors.phone}
         </p>
       </div>
@@ -112,9 +63,8 @@ function ForgotPass() {
         <Button
           text={"Send"}
           bgColor={"bg-[#d71a62]"}
-          disabled={!isFormValid()}
+          onClick={handleSend}
         />
-
         <div className="ml-5">
           <Helppra />
         </div>

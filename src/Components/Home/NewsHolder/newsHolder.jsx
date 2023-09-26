@@ -1,6 +1,7 @@
 
 import  { useEffect, useRef, useState } from 'react';
 import NewsCard from '../NewsCard/newsCard';
+import oopsno from '../../../assets/image/oops-no.png';
 // import { ErrorContext } from '../../Error/ErrorContext';
 
 import { message } from 'antd';
@@ -49,6 +50,7 @@ export default function NewsHolder() {
   
         clearTimeout(serverDownTimer);
   
+
         // if (loadingMsgId) {
         //   loadingMsgId();
         // }
@@ -56,7 +58,8 @@ export default function NewsHolder() {
         if(response.status === 200){
           setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
         }
-  
+
+     
         setLoading(false);
         setHasMore(false);
   

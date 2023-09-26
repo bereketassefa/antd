@@ -2,15 +2,22 @@ import React, { useState } from "react";
 import profile from "../../../../assets/image/cute-girl-pic (12).jpg";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { AiOutlineLoading } from "react-icons/ai";
 import { Modal } from "antd";
 import ProfileConfirm from "../ProfileConfirm";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function CompanyPP({ profilePic, setMyModalOpen }) {
   const [image, setImage] = useState(profile);
   const [isEditing, setIsEditing] = useState(false);
-  const [confirmprofilemodal, setConfirmProfileModal] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
 
+  const [confirmprofilemodal, setConfirmProfileModal] = useState(false);
+  const  {id}  = useParams();
   const handleImageUpload = (event) => {
+    setLoadingUpdate(true);
     const newImage = event.target.files[0];
     if (newImage) {
       const reader = new FileReader();
@@ -21,13 +28,26 @@ function CompanyPP({ profilePic, setMyModalOpen }) {
     }
   };
 
-  const handleImageDelete = () => {
-    setImage(profile);
+  const handleImageDelete = async() => {
+    setLoading(true)
+    try {
+      const response = await axios.delete(`https://account.qa.addissystems.et/profile/delete/${id}`);
+
+      if (response.status === 200) {
+      setLoading(false)
+      setConfirmProfileModal(false); // Close the modal
+      // console.log('delete success')
+      }
+    } catch (error) {
+      console.error("Error deleting profile picture:", error);
+      setLoading(false);
+    }
   };
 
   const closeWarningModal = () => {
     setConfirmProfileModal(false);
   };
+
 
   const handleUpload = () => {
     setConfirmProfileModal(true);
@@ -36,13 +56,14 @@ function CompanyPP({ profilePic, setMyModalOpen }) {
 
   return (
     <div>
+     
       <Modal
-        open={confirmprofilemodal}
+        visible={confirmprofilemodal}
         onOk={() => setConfirmProfileModal(false)}
-        onCancel={closeWarningModal}
+        onCancel={() => setConfirmProfileModal(false)}
         footer={[]}
       >
-        <ProfileConfirm setConfirmProfileModal={setConfirmProfileModal} />
+        <ProfileConfirm profilePic={profilePic} setConfirmProfileModal={setConfirmProfileModal} />
       </Modal>
       <div className="flex justify-between">
         <p>Updating profile</p>
@@ -66,14 +87,15 @@ function CompanyPP({ profilePic, setMyModalOpen }) {
           onClick={handleUpload}
         >
           <MdOutlineFileUpload className="text-xl" />
-          Update
+         update
+        
         </button>
         <button
           className="bg-gray-200 px-6 rounded-lg gap-1 flex items-center"
           onClick={handleImageDelete}
         >
-          <RiDeleteBin6Line className="text-[15px]" />
-          Delete
+          {loading ? <AiOutlineLoading className="animate-spin" /> : <RiDeleteBin6Line className="text-[15px]" />}
+          {loading ? "Loading..." : "Delete"}
         </button>
       </div>
     </div>

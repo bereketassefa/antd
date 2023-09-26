@@ -2,10 +2,12 @@ import React, { useState, useRef } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { AiFillMessage } from "react-icons/ai";
-import { Chat } from "../../data";
+import { Chat, ChatWithAddisPay } from "../../data";
 import { BiLogoTelegram } from "react-icons/bi";
 import { BsEmojiSmile, BsArrowLeftShort } from "react-icons/bs";
 import { ImAttachment } from "react-icons/im";
+
+import moment from "moment";
 
 import Avatar from "../../Fields/Avatar/avatar";
 import CuteGirl from "../../assets/image/cute-girl-pic (12).jpg";
@@ -19,40 +21,83 @@ function ChatPage() {
   const [selectedChat, setSelectedChat] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageName, setSelectedImageName] = useState("");
-
+  const [chatData, setChatData] = useState([]);
+  const [activeLink, setActiveLink] = useState("");
   const [newChat, setNewchat] = useState("");
   const [messages, setMessages] = useState(comments);
   const containerRef = useRef(null);
   const [file, setFile] = useState(null);
+
   const handleStartMessage = () => {
     setNewchat(true);
   };
 
   const handleChatSelect = (selectedChat) => {
     setSelectedChat(selectedChat);
-    setNewchat(false);
+    console.log("SelectedChat:", selectedChat);
+    setActiveLink("selectedChat");
+    setChatData(selectedChat.chatData || []);
   };
 
   const handleSendMessage = async () => {
     console.log("Sending message:", messageinput);
-    await sendMs(user, selectedChat); // Wait for the sendMs function to complete
+
+    if (selectedImage) {
+      const formData = new FormData();
+      formData.append("image", selectedImage);
+
+      try {
+        // Make an API call to upload the image
+        const response = await axios.post("/api/uploadImage", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Image uploaded:", response.data);
+
+        // Merge the image URL with the message
+        const messageWithImage = `${messageinput} <img src="${response.data.url}" alt="Image" />`;
+
+        await sendMs(user, selectedChat, messageWithImage);
+      } catch (error) {
+        console.error("Failed to upload image:", error);
+      }
+    } else {
+      await sendMs(user, selectedChat, messageinput);
+    }
+
     setMessageInput("");
   };
 
   const handleMessageSubmit = () => {
-    // e.preventDefault();
     const newlyAddedComment = {
       key: 33,
-      // image: star,
       CompanyName: "Me",
       message: messageinput,
-      fromOther: false,
+      timestamp: new Date().getTime(), // Add timestamp property
+      // Other properties...
     };
-    setMessages([...messages, newlyAddedComment]);
+
+    // setMessages([...messages, newlyAddedComment]);
+    setChatData([...chatData, newlyAddedComment]);
     setMessageInput("");
+    setSelectedImage(null);
+    setSelectedImageName("");
     setTimeout(() => {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }, 1);
+  };
+
+  const handleReceiveMessage = (receivedMessage) => {
+    const receivedComment = {
+      key: 34,
+      CompanyName: "Other Company",
+      message: receivedMessage,
+      timestamp: new Date().getTime(), // Add timestamp property
+      // Other properties...
+    };
+
+    setMessages([...messages, receivedComment]);
   };
 
   const handleFileUpload = (e) => {
@@ -81,19 +126,33 @@ function ChatPage() {
       console.error("Failed to send message:", error);
     }
   };
+
+  const getDateDisplay = () => {
+    const today = moment();
+    const messageDate = moment(comment.timestamp);
+
+    if (today.isSame(messageDate, "day")) {
+      return "Today";
+    } else if (today.clone().subtract(1, "day").isSame(messageDate, "day")) {
+      return "Yesterday";
+    } else {
+      return messageDate.format("DD/MM/YYYY");
+    }
+  };
   return (
-    <div className=" h-[500px] sticky top-[75px] rounded-md   ">
-      <div className="flex items-center pl-10 h-[78px]   bg-[#EEFFF2] gap-2 mt-2">
-        <AiFillMessage className="text-4xl text-[#5E5E5E]" />
-        <div className="">
-          <p className="text-xl text-[#5E5E5E] font-bold">Your Messages</p>
-          <p className="text-[13px] text-[#00000075] font-bold">
-            Stay connected!
-          </p>
-        </div>
-      </div>
-      <div className=" flex border-2  ">
-        <div className=" hidden sm:block mb-4 ml-2 w-[350px]">
+    <div className=" h-[500px] sticky top-[75px]   mt-4 ">
+      <div className=" flex border-2 rounded-[12px]  ">
+        <div className=" hidden sm:block mb-4   w-[350px] bg-[#F8F8F8]">
+          <div className="flex items-center pl-10 h-[78px]  gap-2 ">
+            <AiFillMessage className="text-4xl text-[#5E5E5E]" />
+            <div className="">
+              <p className="text-xl text-[#5E5E5E] font-bold">Your Messages</p>
+              <p className="text-[13px] text-[#00000075] font-bold">
+                Stay connected!
+              </p>
+            </div>
+          </div>
+          <hr className="border-[1px]" />
           <div className=" ml-3 flex gap-4  items-center">
             <div className="  h-12 flex gap-2 border-[1px] rounded-md   ml-2  mt-5  bg-[#FFFFFF]   px-2 items-center min-w-[150px] ">
               <div>
@@ -116,7 +175,11 @@ function ChatPage() {
           </div>
 
           <div className="gap-2 w-[350px] p-1 mt-8 max-h-[500px] overflow-y-hidden    ">
-            <div className="flex flex-col gap-4 ">
+            <div
+              className={`flex flex-col gap-4  ${
+                activeLink === "selectedChat" ? "bg-[#F8F8F8] " : "bgt-[ ]"
+              }`}
+            >
               {Chat.filter((item) =>
                 item.title.toLowerCase().includes(chatInput.toLowerCase())
               ).map((chat) => (
@@ -128,16 +191,18 @@ function ChatPage() {
                   AmoutOfmessage={chat.AmoutOfmessage}
                   description={chat.description}
                   onSelect={() => handleChatSelect(chat)}
+                  isActive={selectedChat === chat}
                 />
               ))}
             </div>
           </div>
         </div>
-        <div className="  max-w-[610px] md:w-[510px] bg-[#E2FEEA5E]  ">
+
+        <div className="  max-w-[610px] md:w-[510px]  h-[500px]  ">
           {selectedChat ? (
             newChat ? (
-              <div className=" max-w-[610px] bg-[#E2F1FE]   flex flex-col justify-between">
-                <div className="flex gap-2 items-center my-4 ml-4">
+              <div className=" max-w-[610px] bg-[#FFFFFF]    flex flex-col justify-between">
+                <div className="flex gap-2 items-center h-[78px] ml-4">
                   <BsArrowLeftShort className=" text-4xl sm:hidden" />
                   <Avatar img={selectedChat.image} />
                   <div className="flex flex-col">
@@ -149,73 +214,110 @@ function ChatPage() {
                     </p>
                   </div>
                 </div>
+
+                <hr className="border-[1px]" />
                 <div
                   ref={containerRef}
-                  className=" rounded-md flex flex-col px-4 mx-1 max-h-[540px] md:h-[410px] bg-[#E2FEEA5E] overflow-y-scroll overflow-x-hidden gap-6"
+                  className=" rounded-md flex flex-col px-4 mx-1  ] md:h-[450px] bg-[#FFFFFF] mt-2 overflow-y-scroll overflow-x-hidden gap-6   "
                 >
-                  {messages?.map((comment, index) => (
-                    <div
-                      key={index}
-                      className={`mb-2 ${
-                        comment.fromOther ? "justify-start" : "justify-end"
-                      } flex gap-2`}
-                    >
-                      {comment.fromOther && (
-                        <div className=" w-12 h-10 rounded-full overflow-hidden ">
-                          <img
-                            src={comment.image}
-                            alt=""
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      )}
-                      <div className=" ">
-                        <div className="flex">
-                          <div className=" w-full  ">
-                            <h4
-                              className={`font-semibold text-lg  ${
-                                comment.fromOther ? "text-left" : "text-right"
-                              }`}
-                            >
-                              {comment.CompanyName}
-                            </h4>
-                            <p
-                              className={`font-bold  rounded-r-lg ${
-                                comment.fromOther
-                                  ? "text-left bg-[#FFFFFF]"
-                                  : " bg-[#ddedfb] text-right"
-                              }`}
-                            >
-                              <span className=" font-normal ">
-                                {comment.message}
-                              </span>
-                            </p>
-                          </div>
-                          {!comment.fromOther && (
-                            <div className=" ">
-                              <img
-                                src={CuteGirl}
-                                alt=""
-                                className="w-12  h-10 rounded-full object-cover "
-                              />
-                            </div>
-                          )}
-                        </div>
-                        <div
-                          className={` ${
-                            !comment.fromOther ? "flex mr-20" : "hidden"
-                          }`}
-                        >
-                          {selectedImage && (
+                  {chatData.map((comment, index) => (
+                    <>
+                      <div className="px-4 py-2 bg-gray-200">
+                        <p className="text-gray-500 text-xs text-center">
+                          {moment().calendar(null, {
+                            sameDay: "[Today]",
+                            lastDay: "[Yesterday]",
+                            lastWeek: "DD/MM/YYYY",
+                            sameElse: "DD/MM/YYYY",
+                          })}
+                        </p>
+                      </div>
+                      <div
+                        key={index}
+                        className={`mb-2 ${
+                          comment.fromOther ? "justify-start" : "justify-end"
+                        } flex gap-2`}
+                      >
+                        {comment.fromOther && (
+                          <div className="w-12 h-10 rounded-full overflow-hidden">
                             <img
-                              className="   w-40 h-30 object-cover "
-                              src={URL.createObjectURL(selectedImage)}
+                              src={comment.image}
                               alt=""
+                              className="w-full h-full object-cover"
                             />
-                          )}
+                          </div>
+                        )}
+
+                        <div className="">
+                          <div className="flex">
+                            <div className="w-full flex flex-col">
+                              <h4
+                                className={`font-semibold text-lg  ${
+                                  comment.fromOther ? "text-left" : "text-right"
+                                }`}
+                              >
+                                {comment.CompanyName}
+                              </h4>
+                              <p
+                                className={`font-bold  rounded-r-lg ${
+                                  comment.fromOther
+                                    ? "text-left bg-[#FFFFFF]"
+                                    : " bg-[#ddedfb] text-right"
+                                }`}
+                              >
+                                <span className="font-normal">
+                                  {comment.message}
+                                </span>
+                                <p className="text-right">
+                                  {new Date(
+                                    comment.timestamp
+                                  ).toLocaleTimeString()}
+                                </p>
+                              </p>
+
+                              {comment.fromOther && (
+                                <div
+                                  className={`${
+                                    !comment.fromOther
+                                      ? "flex mr-10 "
+                                      : "hidden"
+                                  }`}
+                                >
+                                  <img
+                                    src={comment.Photo}
+                                    alt=""
+                                    className="mt-8 rounded-lg w-52 h-40 object-cover"
+                                  />
+                                </div>
+                              )}
+                            </div>
+
+                            {!comment.fromOther && (
+                              <div className="">
+                                <img
+                                  src={CuteGirl}
+                                  alt=""
+                                  className="w-12  h-10 rounded-full object-cover"
+                                />
+                              </div>
+                            )}
+                          </div>
+                          <div
+                            className={`${
+                              !comment.fromOther ? "flex mr-10" : "hidden"
+                            }`}
+                          >
+                            {selectedImage && (
+                              <img
+                                className="mt-8 rounded-lg w-52 h-40 object-cover"
+                                src={URL.createObjectURL(selectedImage)}
+                                alt=""
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </>
                   ))}
                 </div>
                 {!newChat && (

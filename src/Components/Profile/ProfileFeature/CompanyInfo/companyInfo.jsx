@@ -330,9 +330,9 @@ export default function CompanyInfo({ data, Uid }) {
         // setButtonText("Connected");
         setButtonIcon(<FontAwesomeIcon icon={faUserCheck} />);
       } else if (status === "pending") {
-        if (sender && sender.sender === OwnerUid?.toString()) {
+        if (sender && sender?.sender === OwnerUid?.toString()) {
           setButtonText("Pending");
-        } else if (sender && sender.receiver === OwnerUid.toString()) {
+        } else if (sender && sender?.receiver === OwnerUid?.toString()) {
           setButtonText("Accept");
         }
       }
@@ -542,7 +542,7 @@ export default function CompanyInfo({ data, Uid }) {
                     disabled={isAccepted}
                   />
 
-                  {sender?.receiver === OwnerUid.toString() &&
+                  {sender?.receiver === OwnerUid?.toString() &&
                     sender?.status === "pending" && (
                       <Button
                         text={isDeclineLoading ? "Loading..." : "Decline"}
