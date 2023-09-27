@@ -151,26 +151,26 @@ export default function Topbar() {
     }
   };
 
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const url = `${import.meta.env.VITE_UNSEEN_NOTIFICATION}/${
-          cookies?.user._id
-        }`;
-        let response = await fetch(url);
-        let data = await response.json();
-        // console.log(data);
-        setNotificationsCount(data);
-      } catch (error) {
-        console.error("Error fetching notifications:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchNotifications = async () => {
+  //     try {
+  //       const url = `${import.meta.env.VITE_UNSEEN_NOTIFICATION}/${
+  //         cookies?.user._id
+  //       }`;
+  //       let response = await fetch(url);
+  //       let data = await response.json();
+  //       // console.log(data);
+  //       setNotificationsCount(data);
+  //     } catch (error) {
+  //       console.error("Error fetching notifications:", error);
+  //     }
+  //   };
 
-    // fetchNotifications();
-    const Interval = setInterval(() => {
-      fetchNotifications();
-    }, 1000);
-  }, []);
+  //   // fetchNotifications();
+  //   const Interval = setInterval(() => {
+  //     fetchNotifications();
+  //   }, );
+  // }, []);
 
   const { toastMessage, hideToast } = useToast();
 

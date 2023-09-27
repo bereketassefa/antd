@@ -36,6 +36,7 @@ function Login() {
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log('hello')
     try {
       if (email === "" || pass === "") {
         setErrMsg("Please enter your credentials");
@@ -72,7 +73,7 @@ function Login() {
 
           setCookie("user", response.data);
           // console.log(response.data)
-          // setCookie("user", response.data, { path: "/", expires });
+          setCookie("user", response.data, { path: "/", expires });
           // Commenting out the setCookie function since it's not defined in the code provided
           navigate("/feed");
         }
