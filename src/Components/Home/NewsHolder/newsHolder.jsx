@@ -131,7 +131,7 @@ export default function NewsHolder() {
 }
 
 const NewsCardSkeleton = () => (
-  <div className="dark:bg-[#1b1f23] w-full p-4 rounded shadow bg-white">
+  <div className="dark:bg-[#1b1f23]  w-full p-4 rounded shadow bg-white">
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse"></div>
