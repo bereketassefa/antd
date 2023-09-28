@@ -5,7 +5,7 @@ import oopsno from '../../../assets/image/oops-no.png';
 // import { ErrorContext } from '../../Error/ErrorContext';
 
 import { message } from 'antd';
-import axios from 'axios';
+ 'axios';
 // import { useCookies } from 'react-cookie';
 export default function NewsHolder() {
   // const { displayError } = useContext(ErrorContext);
@@ -18,22 +18,21 @@ export default function NewsHolder() {
   // const [cookies] = useCookies(['user'])
 
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(onIntersection, {
-      threshold: 1.0
-    });
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(onIntersection, {
+  //     threshold: 1.0
+  //   });
 
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
+  //   if (elementRef.current) {
+  //     observer.observe(elementRef.current);
       
-    }
+  //   }
 
-    return () => observer.disconnect();
-  }, [timeline, hasMore]);
+  //   return () => observer.disconnect();
+  // }, [timeline, hasMore]);
 
 
-    let serverDownTimer;
-    let loadingMsgId;
+   
   
     // async function fetchMoreTimelines() {
     //   try {
@@ -131,7 +130,7 @@ export default function NewsHolder() {
 }
 
 const NewsCardSkeleton = () => (
-  <div className="dark:bg-[#1b1f23]  w-full p-4 rounded shadow bg-white">
+  <div className="dark:bg-[#1b1f23] w-full p-4 rounded shadow bg-white">
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse"></div>
