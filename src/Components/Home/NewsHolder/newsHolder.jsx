@@ -5,7 +5,7 @@ import oopsno from '../../../assets/image/oops-no.png';
 // import { ErrorContext } from '../../Error/ErrorContext';
 
 import { message } from 'antd';
-import axios from 'axios';
+ 'axios';
 // import { useCookies } from 'react-cookie';
 export default function NewsHolder() {
   // const { displayError } = useContext(ErrorContext);
@@ -18,22 +18,21 @@ export default function NewsHolder() {
   // const [cookies] = useCookies(['user'])
 
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(onIntersection, {
-      threshold: 1.0
-    });
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(onIntersection, {
+  //     threshold: 1.0
+  //   });
 
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
+  //   if (elementRef.current) {
+  //     observer.observe(elementRef.current);
       
-    }
+  //   }
 
-    return () => observer.disconnect();
-  }, [timeline, hasMore]);
+  //   return () => observer.disconnect();
+  // }, [timeline, hasMore]);
 
 
-    let serverDownTimer;
-    let loadingMsgId;
+   
   
     // async function fetchMoreTimelines() {
     //   try {

@@ -83,17 +83,18 @@ export default function NewsCard({
         if (updatedPost) {
           setLikeCount(updatedPost?.like);
           console.log(updatedPost?.like);
-          checkIfLiked(); // Check if the current user has liked the updated post
+           checkIfLiked(); // Check if the current user has liked the updated post
         }
       };
       
-      es.onerror = (error) => {
-        console.error('SSE Error:', error);
-        console.error('EventSource readyState:', es.readyState);
-        es.close(); // Close the current EventSource connection
-        // Attempt to reconnect after a delay
-        setTimeout(connect, 1000);
+      es.onmessage = (event) => {
+        const updatedPost = JSON.parse(event.data);
+        if (updatedPost.id === id) {
+          setLikeCount(updatedPost.like);
+          console.log(updatedPost.like);
+        }
       };
+      
     };
     
     connect(); // Initialize the connection
@@ -122,11 +123,11 @@ export default function NewsCard({
     }
   };
 
+
+
   const checkIfLiked = async () => {
     try {
-      const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${
-        cookies?.user.Uid
-      }`;
+      const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${cookies?.user.Uid}`;
       const response = await fetch(url, { method: "GET" });
 
       if (!response.ok) {
@@ -134,13 +135,14 @@ export default function NewsCard({
       }
 
       const data = await response.json();
-
+        console.log(data)
       if (data.likedPosts.length === 0) {
         setLiked(false);
         return;
       }
 
       const isLiked = data.likedPosts.some((post) => post.id === id);
+      console.log(isLiked)
       setLiked(isLiked);
     } catch (error) {
       console.error(error);
@@ -151,7 +153,7 @@ export default function NewsCard({
     fetchComments();
     checkIfLiked();
     fetchMoreTimelines();
-  }, [id]);
+  }, []);
 
   // Make an API call to fetch comments for the given post ID
   async function fetchComments() {
@@ -392,14 +394,19 @@ export default function NewsCard({
             {newContent}
           </p>
         </div>
-        <div className="overflow-hidden flex bg-center ">
-          <img
-            src={image}
-            alt="Image"
-            className="h-[400px] flex object-cover w-full"
-            onClick={() => setModalOpen(true)}
-          />
-        </div>
+      <div className="overflow-hidden flex bg-center ">
+  {Array.isArray(image) && image.length > 1 ? (
+    <NewSlider images={image} />
+  ) : (
+    <img
+      src={image}
+      alt="Image"
+      className="h-[400px] flex object-cover w-full"
+      onClick={() => setModalOpen(true)}
+    />
+  )}
+</div>
+
       </div>
 
       <div className="w-full flex flex-col z-10">

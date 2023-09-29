@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { BsArrowLeftShort } from "react-icons/bs";
-import OTPInput from "react-otp-input";
+import { Link } from "react-router-dom";
 import Button from "../SignUp/Login/Button";
 import Heading from "../SignUp/Heading";
 import Helppra from "../SignUp/Helppra";
@@ -85,9 +85,9 @@ const LoginOtp = ({ value, onChange }) => {
       />
       <p className="text-lg text-center lg:text-left text-[#B7B7B7]">
         No OTP received? Request a{" "}
-        <a className=" underline" href="">
+        <Link to={""} className=" underline">
           resend.
-        </a>
+        </Link>
       </p>
       <div className=" flex flex-col justify-center items-center my-2 ">
        
