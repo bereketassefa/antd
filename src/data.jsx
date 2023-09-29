@@ -213,7 +213,7 @@ export const Search = [
 export const ChatWithAddisPay = [
   {
     key: 1,
-    image: bt,
+    image: BRhotel,
     Photo: iphone12,
     timestamp: new Date().getTime(),
     CompanyName: "AddisPay",
@@ -224,7 +224,7 @@ export const ChatWithAddisPay = [
   },
   {
     key: 1,
-    image: bt,
+    image: BRhotel,
     Photo: iphone12,
     timestamp: new Date().getTime(),
     CompanyName: "AddisPay",
@@ -242,7 +242,29 @@ export const EagleChat = [
     Photo: iphone12,
     timestamp: new Date().getTime(),
     CompanyName: "EagleLion",
-    message: "Another message from anoter  ",
+    message: "  message from anoter  ",
+    fromOther: true,
+    description: "I like your company",
+    fromMe: false,
+  },
+  {
+    key: 1,
+    image: star,
+    Photo: iphone12,
+    timestamp: new Date().getTime(),
+    CompanyName: "EagleLion",
+    message: " Addis pay is especial  message from anoter  ",
+    fromOther: true,
+    description: "I like your company",
+    fromMe: false,
+  },
+  {
+    key: 1,
+    image: star,
+    Photo: iphone12,
+    timestamp: new Date().getTime(),
+    CompanyName: "EagleLion",
+    message: "   i am from 22 Another message from anoter  ",
     fromOther: true,
     description: "I like your company",
     fromMe: false,
@@ -293,6 +315,68 @@ export const Chat = [
     key: 4,
     image: bt,
     title: "Company Name ",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
     description: "Lorem ipsum dolor sit amet....",
 
     chatData: "",

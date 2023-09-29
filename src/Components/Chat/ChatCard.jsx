@@ -25,14 +25,15 @@ function ChatCard({
       <div className="flex flex-col items-center justify-center">
         <p className="text-sm text-[#00000075]">{time}</p>
         {AmoutOfmessage > 0 && (
-          <div className="bg-[#D71A62] w-5 h-5 rounded-full flex items-center justify-center">
-            <p className="text-white text-xs">{AmoutOfmessage}</p>
+          <div className="bg-[#D71A62] w-5 h-5 rounded-full flex items-center justify-center p-2">
+            <p className="text-white text-xs flex items-center">
+              <BsPlus /> {AmoutOfmessage}
+            </p>
           </div>
         )}
       </div>
     </div>
   );
 }
-
 
 export default ChatCard;

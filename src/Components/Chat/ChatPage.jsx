@@ -6,15 +6,14 @@ import { Chat, ChatWithAddisPay } from "../../data";
 import { BiLogoTelegram } from "react-icons/bi";
 import { BsEmojiSmile, BsArrowLeftShort } from "react-icons/bs";
 import { ImAttachment } from "react-icons/im";
-
 import moment from "moment";
-
 import Avatar from "../../Fields/Avatar/avatar";
 import CuteGirl from "../../assets/image/cute-girl-pic (12).jpg";
 import { comments } from "../../data";
 import ChatCard from "../../Components/Chat/ChatCard";
 import axios from "axios";
 import messagelogo from "../../assets/logo/addisLogoS.png";
+
 function ChatPage() {
   const [chatInput, setChatInput] = useState("");
   const [messageinput, setMessageInput] = useState("");
@@ -75,6 +74,8 @@ function ChatPage() {
       CompanyName: "Me",
       message: messageinput,
       timestamp: new Date().getTime(), // Add timestamp property
+      attachement: selectedImage ? selectedImage : null,
+
       // Other properties...
     };
 
@@ -102,6 +103,7 @@ function ChatPage() {
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
+    console.log("Selected Image Data:", file);
     setSelectedImage(file);
     setSelectedImageName(file.name);
   };
@@ -140,8 +142,8 @@ function ChatPage() {
     }
   };
   return (
-    <div className=" h-[500px] sticky top-[75px]   mt-4 ">
-      <div className=" flex border-2 rounded-[12px]  ">
+    <div className=" sticky top-[75px]    mt-4 ">
+      <div className=" flex  rounded-[12px]  h-[630px]  border-2  ">
         <div className=" hidden sm:block mb-4   w-[350px] bg-[#F8F8F8]">
           <div className="flex items-center pl-10 h-[78px]  gap-2 ">
             <AiFillMessage className="text-4xl text-[#5E5E5E]" />
@@ -174,10 +176,10 @@ function ChatPage() {
             </div>
           </div>
 
-          <div className="gap-2 w-[350px] p-1 mt-8 max-h-[500px] overflow-y-hidden    ">
+          <div className="gap-2 w-[350px] p-1 mt-8   ">
             <div
-              className={`flex flex-col gap-4  ${
-                activeLink === "selectedChat" ? "bg-[#F8F8F8] " : "bgt-[ ]"
+              className={`flex flex-col gap-4 overflow-y-scroll h-[440px] overflow-hidden ${
+                activeLink === "selectedChat" ? "bg-[#F8F8F8]" : "bgt-[ ]"
               }`}
             >
               {Chat.filter((item) =>
@@ -198,10 +200,10 @@ function ChatPage() {
           </div>
         </div>
 
-        <div className="  max-w-[610px] md:w-[510px]  h-[500px]  ">
+        <div className="  max-w-[610px] md:w-[510px]  h-[450px]   ">
           {selectedChat ? (
             newChat ? (
-              <div className=" max-w-[610px] bg-[#FFFFFF]    flex flex-col justify-between">
+              <div className=" max-w-[610px] bg-[#FFFFFF]   flex flex-col justify-between">
                 <div className="flex gap-2 items-center h-[78px] ml-4">
                   <BsArrowLeftShort className=" text-4xl sm:hidden" />
                   <Avatar img={selectedChat.image} />
@@ -218,13 +220,13 @@ function ChatPage() {
                 <hr className="border-[1px]" />
                 <div
                   ref={containerRef}
-                  className=" rounded-md flex flex-col px-4 mx-1  ] md:h-[450px] bg-[#FFFFFF] mt-2 overflow-y-scroll overflow-x-hidden gap-6   "
+                  className=" rounded-md flex flex-col px-4 mx-[1px] h-[465px]  max-h-[500px]   bg-[#FFFFFF] mt-2 overflow-y-scroll overflow-x-hidden gap-2  "
                 >
                   {chatData.map((comment, index) => (
                     <>
-                      <div className="px-4 py-2 bg-gray-200">
+                      <div className="px-4 py-2">
                         <p className="text-gray-500 text-xs text-center">
-                          {moment().calendar(null, {
+                          {moment(comment.timestamp).calendar(null, {
                             sameDay: "[Today]",
                             lastDay: "[Yesterday]",
                             lastWeek: "DD/MM/YYYY",
@@ -232,6 +234,7 @@ function ChatPage() {
                           })}
                         </p>
                       </div>
+
                       <div
                         key={index}
                         className={`mb-2 ${
@@ -239,12 +242,15 @@ function ChatPage() {
                         } flex gap-2`}
                       >
                         {comment.fromOther && (
-                          <div className="w-12 h-10 rounded-full overflow-hidden">
-                            <img
-                              src={comment.image}
-                              alt=""
-                              className="w-full h-full object-cover"
-                            />
+                          <div className="w-12 h-10 rounded-full  ">
+                            <div>
+                              {" "}
+                              <img
+                                src={comment.image}
+                                alt=""
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
                           </div>
                         )}
 
@@ -259,16 +265,20 @@ function ChatPage() {
                                 {comment.CompanyName}
                               </h4>
                               <p
-                                className={`font-bold  rounded-r-lg ${
+                                className={`font-bold p-2 border-2 ${
                                   comment.fromOther
-                                    ? "text-left bg-[#FFFFFF]"
-                                    : " bg-[#ddedfb] text-right"
+                                    ? "text-left bg-[#FFFFFF] rounded-r-lg"
+                                    : "  bg-[#ddedfb] text-right rounded-l-lg"
                                 }`}
+                                style={{
+                                  borderBottomRightRadius: "10px",
+                                  borderBottomLeftRadius: "10px",
+                                }}
                               >
                                 <span className="font-normal">
                                   {comment.message}
                                 </span>
-                                <p className="text-right">
+                                <p className="text-right text-[10px]">
                                   {new Date(
                                     comment.timestamp
                                   ).toLocaleTimeString()}
@@ -302,15 +312,19 @@ function ChatPage() {
                               </div>
                             )}
                           </div>
+
+                          {/* Attatchment Image Placeholder, Always hidden untill image is attatched */}
                           <div
                             className={`${
-                              !comment.fromOther ? "flex mr-10" : "hidden"
+                              !comment.fromOther
+                                ? "flex justify-end mr-4  "
+                                : "hidden"
                             }`}
                           >
-                            {selectedImage && (
+                            {comment.attachement && (
                               <img
-                                className="mt-8 rounded-lg w-52 h-40 object-cover"
-                                src={URL.createObjectURL(selectedImage)}
+                                className="mt-2 rounded-lg w-52 h-40 object-cover"
+                                src={URL.createObjectURL(comment.attachement)}
                                 alt=""
                               />
                             )}
@@ -335,44 +349,57 @@ function ChatPage() {
                     <BsEmojiSmile className="text-7xl m-2 text-[#D71A62]" />
                   </div>
                 )}
-                <div className="flex bg-gray-100 justify-center items-center gap-2  ">
-                  <div className=" mr-1  mb-2 ml-2 flex justify-center items-center">
+                <div className="flex bg-gray-100  items-center  gap-2  ">
+                  <div className=" mr-1   ml-2 flex justify-center items-center">
                     <BsEmojiSmile className="text-xl" />
                   </div>
                   <textarea
                     name="message"
                     value={messageinput}
-                    className="w-full bg-transparent justify-center items-center   mt-3 outline-none resize-none"
+                    className="w-full bg-transparent justify-center items-center    mt-3 outline-none resize-none"
                     placeholder="Type your message..."
                     onChange={(e) => setMessageInput(e.target.value)}
                     onKeyDown={handleKeyDown}
                   ></textarea>
-                  <div>
-                    {false ? (
-                      <img
-                        src={URL.createObjectURL(selectedImage)}
-                        alt="Selected File"
-                        className="w-full h-full object-cover"
-                      />
+                  <div className=" items-center">
+                    {selectedImage ? (
+                      <div className=" flex gap-2 items-center">
+                        <div className="w-12">
+                          <img
+                            src={URL.createObjectURL(selectedImage)}
+                            alt="Selected File"
+                            className="w-full object-cover"
+                          />
+                        </div>
+                        <button
+                          onClick={() => setSelectedImage(null)}
+                          className=" bg-red-200 px-2 py-2 rounded-md"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     ) : (
-                      <label htmlFor="file" className="cursor-pointer">
-                        <ImAttachment className="text-xl mx-2" />
-                      </label>
+                      <>
+                        <label htmlFor="file" className="cursor-pointer">
+                          <ImAttachment className="text-xl mx-2" />
+                        </label>
+                        <input
+                          type="file"
+                          id="file"
+                          name="file"
+                          accept="image/*"
+                          onChange={handleFileUpload}
+                          className="hidden"
+                        />
+                      </>
                     )}
-                    <input
-                      type="file"
-                      id="file"
-                      name="file"
-                      accept="image/*"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                    />
+
                     {/* {selectedImageName && <p>{selectedImageName}</p>} */}
                   </div>
-                  <div className="border-[1px] h-8 border-gray-300"></div>{" "}
                   {/* Vertical line */}
+                  <div className=" w-1 h-8 bg-gray-300"></div>{" "}
                   <div
-                    className="bg-whit flex items-center gap-3"
+                    className="bg-whit flex items-center gap-3 border"
                     onClick={handleMessageSubmit}
                   >
                     Send
