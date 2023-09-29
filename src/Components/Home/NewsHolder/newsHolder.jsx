@@ -5,7 +5,7 @@ import oopsno from '../../../assets/image/oops-no.png';
 // import { ErrorContext } from '../../Error/ErrorContext';
 
 import { message } from 'antd';
-import axios from 'axios';
+ 'axios';
 // import { useCookies } from 'react-cookie';
 export default function NewsHolder() {
   // const { displayError } = useContext(ErrorContext);
@@ -18,111 +18,111 @@ export default function NewsHolder() {
   // const [cookies] = useCookies(['user'])
 
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(onIntersection, {
-      threshold: 1.0
-    });
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-      
-    }
-
-    return () => observer.disconnect();
-  }, [timeline, hasMore]);
-
-
-    let serverDownTimer;
-    let loadingMsgId;
-  
-    async function fetchMoreTimelines() {
-      try {
-        setLoading(true);
-  
-        serverDownTimer = setTimeout(() => {
-          setLoading(false);
-        }, 20000);
-  
-        // loadingMsgId = message.loading('Loading news...', 0);
-  
-        const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
-        const response = await axios.get(Url);
-  
-        clearTimeout(serverDownTimer);
-  
-
-        // if (loadingMsgId) {
-        //   loadingMsgId();
-        // }
-  
-        if(response.status === 200){
-          setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
-        }
-
-     
-        setLoading(false);
-        setHasMore(false);
-  
-      } catch (error) {
-        setLoading(false);
-        setHasMore(false);
-  
-     
-  
-        if (error.message === "Failed to fetch") {
-          setLoading(true);
-          console.warn("Network Error: Failed to fetch data.");
-        } else {
-          console.warn("Error fetching data.");
-          setLoading(true);
-        }
-      }
-    }
-
   // useEffect(() => {
-  //   try {
-  //     setLoading(true);
-  //     const eventSource = new EventSource(${import.meta.env.VITE_GET_ALL_POSTS});
-    
-  //   eventSource.onmessage = (event) => {
-  //     setLoading(false);
-  //     const eventData = JSON.parse(event.data); // This should be an array
-  //     console.log("Parsed event data:", eventData);
-  //     if (eventData == []){
-  //       message.error('empty')
-  //     }
-  //     // Iterate through the array and log the 'id' of each object
-  //     eventData.forEach((item) => {
-  //       if ('id' in item) {
-  //         console.log("ID exists:", item.id);
-  //       } else {
-  //         console.log("ID does not exist in item");
-  //       }
-  //     });
-      
-  //     setTimeline(eventData);
+  //   const observer = new IntersectionObserver(onIntersection, {
+  //     threshold: 1.0
+  //   });
 
-  //   };
-    
-  //   eventSource.onerror = (error) => {
-  //     console.error('SSE Error:', error);
-  //   };
-    
-  //   return () => {
-  //     eventSource.close();
-  //   };
-  //   } catch (error) {
-  //     setLoading(false);
-  //     console.error(error);
+  //   if (elementRef.current) {
+  //     observer.observe(elementRef.current);
+      
   //   }
+
+  //   return () => observer.disconnect();
+  // }, [timeline, hasMore]);
+
+
+   
+  
+    // async function fetchMoreTimelines() {
+    //   try {
+    //     setLoading(true);
+  
+    //     serverDownTimer = setTimeout(() => {
+    //       setLoading(false);
+    //     }, 20000);
+  
+    //     // loadingMsgId = message.loading('Loading news...', 0);
+  
+    //     const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
+    //     const response = await axios.get(Url);
+  
+    //     clearTimeout(serverDownTimer);
+  
+
+    //     // if (loadingMsgId) {
+    //     //   loadingMsgId();
+    //     // }
+  
+    //     if(response.status === 200){
+    //       setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
+    //     }
+
+     
+    //     setLoading(false);
+    //     setHasMore(false);
+  
+    //   } catch (error) {
+    //     setLoading(false);
+    //     setHasMore(false);
+  
+     
+  
+    //     if (error.message === "Failed to fetch") {
+    //       setLoading(true);
+    //       console.warn("Network Error: Failed to fetch data.");
+    //     } else {
+    //       console.warn("Error fetching data.");
+    //       setLoading(true);
+    //     }
+    //   }
+    // }
+
+  useEffect(() => {
+    try {
+      setLoading(true);
+      const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POST_V2}`);
     
-  // }, []);
+    eventSource.onmessage = (event) => {
+      setLoading(false);
+      // console.log("Raw event data:", event.data);
+  const eventData = JSON.parse(event.data);// This should be an array
+      // console.log("Parsed event data:", eventData);
+      if (eventData == []){
+        message.error('empty')
+      }
+      // Iterate through the array and log the 'id' of each object
+      eventData.forEach((item) => {
+        if ('id' in item) {
+          // console.log("ID exists:", item.id);
+        } else {
+          console.log("ID does not exist in item");
+        }
+      });
+      
+      setTimeline(eventData);
+
+    };
+    
+    // eventSource.onerror = (error) => {
+    //   console.error('SSE Error:', error);
+    // };
+    
+    return () => {
+      eventSource.close();
+    };
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+    
+  }, []);
   
   
 
   function onIntersection(entries) {
     if (entries[0].isIntersecting && hasMore) {
-      fetchMoreTimelines();
+      // fetchMoreTimelines();
     }
   }
   if (error) {
@@ -130,7 +130,7 @@ export default function NewsHolder() {
 }
 
 const NewsCardSkeleton = () => (
-  <div className="dark:bg-[#1b1f23]  w-full p-4 rounded shadow bg-white">
+  <div className="dark:bg-[#1b1f23] w-full p-4 rounded shadow bg-white">
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
         <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse"></div>
@@ -177,7 +177,7 @@ return (
         <NewsCard
           key={index}
           image={item?.image}
-          myKey={index}
+          index={index} 
           newContent={item?.description}
           profilePic={item?.account[0]?.profilePicture}
           timestamp={item?.time}

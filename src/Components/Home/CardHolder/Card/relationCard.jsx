@@ -15,7 +15,7 @@ export default function RelationCard({id , img, companyName}) {
     //     return str.charAt(0).toUpperCase();
     // }
 
-console.log(id)
+// console.log(id)
     const hadleNavigateProfile = async(e)=>{
         e.preventDefault();
         navigate(`/feed/profile/${id}`)

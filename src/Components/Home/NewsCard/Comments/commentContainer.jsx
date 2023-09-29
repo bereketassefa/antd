@@ -8,6 +8,7 @@ import { faImage, faSmile } from "@fortawesome/free-regular-svg-icons";
 import CommentCard from "./commentCard";
 import { IoMdSend } from "react-icons/io";
 import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
+import { message } from "antd";
 export default function CommentContainer({ account_id, id, isOpen }) {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
@@ -38,7 +39,8 @@ export default function CommentContainer({ account_id, id, isOpen }) {
       const newComment = response.data;
 
       // Add the new comment to the existing comments
-      setComments((prevComments) => [...prevComments, newComment]);
+      setComments((prevComments) => [...(Array.isArray(prevComments) ? prevComments : []), newComment]);
+
 
       // Clear the text input
       setCommentText("");
@@ -55,30 +57,53 @@ export default function CommentContainer({ account_id, id, isOpen }) {
   };
 
   // console.log(id)
-  useEffect(() => {
-    async function fetchComments() {
-      try {
-        const url = `${import.meta.env.VITE_GET_COMMENT}/${id}`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setComments(data);
-        // console.log(data)
-        if (data.length <= 2) {
-          setShowSeeMore(false);
-        }
-      } catch (error) {
-        console.error("Failed to fetch comments:", error);
-      }
-    }
-    fetchComments();
-  }, [id, refreshComments]);
+  // useEffect(() => {
+  //   async function fetchComments() {
+  //     try {
+  //       const url = `${import.meta.env.VITE_GET_COMMENT}/${id}`;
+  //       const response = await fetch(url);
+  //       const data = await response.json();
+  //       setComments(data);
+  //       // console.log(data)
+  //       if (data.length <= 2) {
+  //         setShowSeeMore(false);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch comments:", error);
+  //     }
+  //   }
+  //   fetchComments();
+  // }, [id, refreshComments]);
 
+  useEffect(() => {
+    const eventSource = new EventSource(`${import.meta.env.VITE_GET_COMMENT}/${id}`);
+    
+    eventSource.onmessage = (event) => {
+      const eventData = JSON.parse(event.data);
+      console.log("Parsed event data:", eventData);
+
+      if (Array.isArray(eventData) && eventData.length > 0) {
+        setComments(eventData);
+      } else {
+        console.warn("Received empty or invalid comment data");
+      }
+    };
+    
+    eventSource.onerror = (error) => {
+      console.error('SSE Error:', error);
+    };
+    
+    return () => {
+      eventSource.close();
+    };
+  }, [id, refreshComments]);
+  
   // console.log(id)
   useEffect(() => {
     const fetchAccountDataForProfile = async () => {
       try {
         const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${
-          cookies?.user._id
+          cookies?.user?._id
         }`;
         // const url= `http://localhost:8010/account/${cookies?.user._id}`;
         await axios
@@ -104,7 +129,10 @@ export default function CommentContainer({ account_id, id, isOpen }) {
   const toggleDeleteOption = () => {
     setShowDeleteOption(!showDeleteOption);
   };
-
+  useEffect(() => {
+    console.log("Updated comments state:", comments);
+  }, [comments]);
+  
   return (
     <div
       className={
@@ -157,19 +185,19 @@ export default function CommentContainer({ account_id, id, isOpen }) {
       </div>
 
       <div className=" w-full flex flex-col gap-4">
-        {Array.isArray(comments)
-          ? comments.slice(0, visibleComments).map((items) => {
+        {Array.isArray(comments) && comments.length > 0
+          ? comments.slice(0, visibleComments).map((item) => {
               return (
                 <CommentCard
-                  key={items?.id || items._id} // Assuming `items` has a unique ID field
-                  img={items?.img}
-                  companyName={items?.party?.party[0]?.party?.businessname}
-                  id={items?.account?._id}
-                  time={items?.time}
-                  comment={items?.text}
-                  likes={items?.likes}
-                  replays={items?.repays}
-                  postId={items.post_id}
+                  key={item?.comment_id || item?._id}
+                  img={item?.account?.profilePicture || alternativeProfile}
+                  companyName={item?.party?.party[0]?.party?.businessname}
+                  id={item?.account?._id}
+                  time={item?.DateCreated}
+                  comment={item?.text}
+                  likes={item?.likes}
+                  replays={item?.repays}
+                  postId={item?.post_id}
                   account_id={account_id}
                 />
               );

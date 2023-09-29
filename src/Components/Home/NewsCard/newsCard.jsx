@@ -62,61 +62,72 @@ export default function NewsCard({
   const [isLoading, setIsLoading] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const socket = io("", {
-    withCredentials: true,
-  });
+  const [eventSource, setEventSource] = useState(null);
+  const [likeCount, setLikeCount] = useState(null);
+
   const onCommentShow = () => {
     setShowComments(!showComments);
   };
   // const [showLikeInfo, setShowLikeInfo] = useState(false);
 
-  const [likeInfo, setLikeInfo] = useState(null);
+  
   useEffect(() => {
-    // Subscribe to the post
-    socket.on(`post-${id}`, (data) => {
-      setAllLiked(data.newLikeCount);
-    });
-
+    let es; // Declare the EventSource variable
+    
+    const connect = () => {
+      es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+      
+      es.onmessage = (event) => {
+        const updatedPosts = JSON.parse(event.data);
+        const updatedPost = updatedPosts.find(post => post.id === id);
+        if (updatedPost) {
+          setLikeCount(updatedPost?.like);
+          console.log(updatedPost?.like);
+           checkIfLiked(); // Check if the current user has liked the updated post
+        }
+      };
+      
+      es.onmessage = (event) => {
+        const updatedPost = JSON.parse(event.data);
+        if (updatedPost.id === id) {
+          setLikeCount(updatedPost.like);
+          console.log(updatedPost.like);
+        }
+      };
+      
+    };
+    
+    connect(); // Initialize the connection
+    
     return () => {
-      // Unsubscribe when the component unmounts
-      socket.off(`post-${id}`);
+      es.close(); // Close the EventSource connection when the component unmounts
     };
   }, [id]);
-
+  
+  
   const handleLike = async () => {
     try {
-      const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${
-        cookies?.user.Uid
-      }/${id}`;
+      console.log('in',id)
+      const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user.Uid}/${id}`;
       const response = await fetch(url, { method: "POST" });
       const responseData = await response.json();
-
+      console.log(responseData?.updatedPost?.like )
+      setLikeCount(responseData?.updatedPost?.like)
       if (!response.ok) {
-        throw new Error(
-          responseData.message || "Failed to like or unlike the post"
-        );
+        throw new Error(responseData.message || "Failed to like or unlike the post");
       }
 
       setLiked((prevLiked) => !prevLiked);
-
-      // Emit a 'likePost' event to the server
-      // socket.emit('likePost', { postId: id, userId: cookies?.user.Uid });
-
-      if (responseData.newLikeCount) {
-        setAllLiked(responseData.newLikeCount);
-      } else {
-        !Liked ? setAllLiked(allLikes + 1) : setAllLiked(allLikes - 1);
-      }
     } catch (error) {
       // message.error(`An error occurred: ${error.message}`);
     }
   };
 
+
+
   const checkIfLiked = async () => {
     try {
-      const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${
-        cookies?.user.Uid
-      }`;
+      const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${cookies?.user.Uid}`;
       const response = await fetch(url, { method: "GET" });
 
       if (!response.ok) {
@@ -124,13 +135,14 @@ export default function NewsCard({
       }
 
       const data = await response.json();
-
+        console.log(data)
       if (data.likedPosts.length === 0) {
         setLiked(false);
         return;
       }
 
       const isLiked = data.likedPosts.some((post) => post.id === id);
+      console.log(isLiked)
       setLiked(isLiked);
     } catch (error) {
       console.error(error);
@@ -141,7 +153,7 @@ export default function NewsCard({
     fetchComments();
     checkIfLiked();
     fetchMoreTimelines();
-  }, [id]);
+  }, []);
 
   // Make an API call to fetch comments for the given post ID
   async function fetchComments() {
@@ -382,14 +394,19 @@ export default function NewsCard({
             {newContent}
           </p>
         </div>
-        <div className="overflow-hidden flex bg-center ">
-          <img
-            src={image}
-            alt="Image"
-            className="h-[400px] flex object-cover w-full"
-            onClick={() => setModalOpen(true)}
-          />
-        </div>
+      <div className="overflow-hidden flex bg-center ">
+  {Array.isArray(image) && image.length > 1 ? (
+    <NewSlider images={image} />
+  ) : (
+    <img
+      src={image}
+      alt="Image"
+      className="h-[400px] flex object-cover w-full"
+      onClick={() => setModalOpen(true)}
+    />
+  )}
+</div>
+
       </div>
 
       <div className="w-full flex flex-col z-10">
@@ -398,7 +415,7 @@ export default function NewsCard({
             className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
             onClick={() => setShowLikeInfo(true)}
           >
-            {allLikes === 0 || allLikes === "0" ? "" : allLikes}
+            {likeCount === 0 || likeCount === "0" ? "" : likeCount}
           </span>
           <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
             {comments.postCount === undefined
