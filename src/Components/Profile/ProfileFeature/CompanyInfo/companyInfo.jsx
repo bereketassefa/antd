@@ -33,6 +33,8 @@ export default function CompanyInfo({ data, Uid }) {
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [isAccepted, setIsAccepted] = useState(false);
   const [isDeclineLoading, setDeclineLoading] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
 
   const [mymodalOpen, setMyModalOpen] = useState(false);
   const [confirmprofilemodal, setConfirmProfileModal] = useState(false);
@@ -66,7 +68,7 @@ export default function CompanyInfo({ data, Uid }) {
 
     const formData = new FormData();
     formData.append("profilePicture", selectedFile);
-    formData.append("_id", cookies.user._id);
+    formData.append("_id", cookies?.user?._id);
 
     try {
       const config = {
@@ -80,7 +82,7 @@ export default function CompanyInfo({ data, Uid }) {
         config
       );
       if (response.status === 200) {
-        setSelectedImage(response.data.profilePicture);
+        setSelectedImage(response?.data?.profilePicture);
         // console.log(response.data.profilePicture);
         message.success("Profile picture uploaded successfully");
         closeModal();
@@ -169,8 +171,10 @@ export default function CompanyInfo({ data, Uid }) {
       setSender(data);
       // console.log(data)
       setIsLoading(false);
+      setIsDataLoaded(true);
     } catch (error) {
       console.error(error);
+      setIsDataFetched(false);
     } finally {
       setButtonLoading(false); // Set loading to false when fetching is done
     }
@@ -479,7 +483,7 @@ export default function CompanyInfo({ data, Uid }) {
             </div>
           </div>
           {data &&
-          data.account &&
+          data.account && isDataLoaded &&
           data.account[0] &&
           data.account[0]._id !== cookies?.user?._id ? (
             <>
@@ -493,7 +497,8 @@ export default function CompanyInfo({ data, Uid }) {
                     iconPossition="left"
                   />
                 </div>
-              ) : (
+              ) :  (
+                
                 <div className="w-full flex items-center justify-start gap-2 flex-wrap">
                   <Button
                     onClick={async () => {
@@ -561,18 +566,9 @@ export default function CompanyInfo({ data, Uid }) {
                 </div>
               )}
             </>
-          ) : (
-            // Your existing "Invite" button code
-            <div className="w-full flex items-center justify-start gap-2 flex-wrap">
-              <Button
-                text={"Invite"}
-                filled={false}
-                color={"secondary"}
-                icon={<FontAwesomeIcon icon={faShareNodes} />}
-                iconPossition={"left"}
-              />
-            </div>
-          )}
+          ) :null
+          
+          }
         </div>
         {isModalOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -598,7 +594,8 @@ export default function CompanyInfo({ data, Uid }) {
               </div>
             </div>
           </div>
-        )}
+        )
+        }
       </div>
       {/* Add your custom popups here */}
       {showCancelRequestPopup && (

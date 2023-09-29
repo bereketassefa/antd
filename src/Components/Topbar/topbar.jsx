@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faBell, faMessage } from "@fortawesome/free-regular-svg-icons";
 import alternativeProfile from "../../assets/image/alternativeProfile.png";
+import alternativeProfileblack from "../../assets/image/alternativeProfile-black.png";
 import DropMenu from "./DropMenu/dropMenu";
 import { useMediaQuery } from "react-responsive";
 import Avatar from "../../Fields/Avatar/avatar";
@@ -40,7 +41,13 @@ export default function Topbar() {
   const [cookies, removeCookie] = useCookies(["user"]);
   const [showMessageDrop, setShowMessageDrop] = useState(false);
   const [selectedChat, setSelectedChat] = useState(null);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
+  useEffect(() => {
+    // Check the theme from local storage when the component mounts
+    const theme = localStorage.getItem('theme');
+    setIsDarkTheme(theme === 'dark');
+  }, []);
   const handleHover = () => {
     setDropDown(!dropDown);
   };
@@ -332,10 +339,7 @@ export default function Topbar() {
              
             >
               <div className=" flex items-center gap-2">
-                <Avatar
-                  img={profilePic ? profilePic : alternativeProfile}
-                  alt="image"
-                />
+              <Avatar img={isDarkTheme ? alternativeProfileblack : (profilePic ? profilePic : alternativeProfile)} />
 
                 <div className=" flex items-center gap-2">
                   <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP"

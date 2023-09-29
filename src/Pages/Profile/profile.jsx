@@ -28,7 +28,7 @@ export default function Profile({dataConnection}) {
     };
 
     fetchData();
-  },  [cookies.user._id, id]);
+  },  [cookies?.user?._id, id]);
 
 
   return (

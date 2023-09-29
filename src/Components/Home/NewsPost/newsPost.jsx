@@ -5,12 +5,20 @@ import profilePlaceHolder from '../../../assets/logo/profilePlaceHolder.png'
 import Avatar from '../../../Fields/Avatar/avatar'
 import NewsPostPopup from './newsPostPopup'
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
+import alternativeProfileblack from "../../../assets/image/alternativeProfile-black.png";
 import axios from 'axios'
 import { useCookies } from 'react-cookie'
 export default function NewsPost() {
   const [isPosting , setIsPosting ] = useState(false)
   const [profilePic, setProfilePic]= useState(null) 
   const [cookies] = useCookies(['user']) 
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  useEffect(() => {
+    // Check the theme from local storage when the component mounts
+    const theme = localStorage.getItem('theme');
+    setIsDarkTheme(theme === 'dark');
+  }, []);
   const onModalOpen = ()=>{
     setIsPosting(true)
   }
@@ -47,7 +55,7 @@ export default function NewsPost() {
         <div className=" flex  justify-center items-center gap-3  ">
           <div>
             {" "}
-            <Avatar img={profilePic ? profilePic : alternativeProfile} />
+            <Avatar img={isDarkTheme ? alternativeProfileblack : (profilePic ? profilePic : alternativeProfile)} />
           </div>
           <input
             type="text"

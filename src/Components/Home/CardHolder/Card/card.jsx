@@ -42,7 +42,7 @@ export default function Card({ id, type, title, data }) {
                                             <RequestCard
                                                 Uid={items?.account?.Uid}
                                                 id={items.account?._id}
-                                                connections={items?.connections}
+                                                connectionsid={items?.connections?.id}
                                                 img={items.img}
                                                 companyName={items?.account?.party}
                                             /> :

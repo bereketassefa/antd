@@ -8,6 +8,7 @@ import { faImage, faSmile } from "@fortawesome/free-regular-svg-icons";
 import CommentCard from "./commentCard";
 import { IoMdSend } from "react-icons/io";
 import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
+import alternativeProfileblack from "../../../../assets/image/alternativeProfile-black.png";
 import { message } from "antd";
 export default function CommentContainer({ account_id, id, isOpen }) {
   const [comments, setComments] = useState([]);
@@ -19,9 +20,16 @@ export default function CommentContainer({ account_id, id, isOpen }) {
 
   const [showDeleteOption, setShowDeleteOption] = useState(false);
   const [refreshComments, setRefreshComments] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  useEffect(() => {
+    // Check the theme from local storage when the component mounts
+    const theme = localStorage.getItem('theme');
+    setIsDarkTheme(theme === 'dark');
+  }, []);
   const handleCommentSubmit = async () => {
     if (!commentText.trim()) return; // Ensure comment is not just whitespace
-
+  
     try {
       const url = `${import.meta.env.VITE_COMMENT}`;
       const response = await axios.post(url, {
@@ -30,25 +38,25 @@ export default function CommentContainer({ account_id, id, isOpen }) {
         user_id: cookies?.user.Uid.toString(),
         text: commentText,
       });
-
+  
       if (response.status !== 200 && response.status !== 201) {
         throw new Error("Failed to post comment");
       }
-
-      // Assume the response data has the new comment object
-      const newComment = response.data;
-
+  
+      // Access the new comment object correctly
+      const newComment = response.data.comment;
+  
       // Add the new comment to the existing comments
       setComments((prevComments) => [...(Array.isArray(prevComments) ? prevComments : []), newComment]);
-
-
+  
       // Clear the text input
       setCommentText("");
-      setRefreshComments(!refreshComments);
     } catch (error) {
       console.error("Failed to post comment:", error);
     }
   };
+  
+  
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -75,28 +83,26 @@ export default function CommentContainer({ account_id, id, isOpen }) {
   //   fetchComments();
   // }, [id, refreshComments]);
 
-  useEffect(() => {
-    const eventSource = new EventSource(`${import.meta.env.VITE_GET_COMMENT}/${id}`);
-    
-    eventSource.onmessage = (event) => {
-      const eventData = JSON.parse(event.data);
-      console.log("Parsed event data:", eventData);
-
-      if (Array.isArray(eventData) && eventData.length > 0) {
-        setComments(eventData);
+ // Remove the following useEffect block that sets up the SSE connection
+ useEffect(() => {
+  const fetchComments = async () => {
+    try {
+      const url = `${import.meta.env.VITE_GET_COMMENT}/${id}`;
+      const response = await axios.get(url);
+      const data = response.data;
+      if (Array.isArray(data) && data.length > 0) {
+        setComments(data);
       } else {
         console.warn("Received empty or invalid comment data");
       }
-    };
-    
-    eventSource.onerror = (error) => {
-      console.error('SSE Error:', error);
-    };
-    
-    return () => {
-      eventSource.close();
-    };
-  }, [id, refreshComments]);
+    } catch (error) {
+      console.error("Failed to fetch comments:", error);
+    }
+  };
+  fetchComments();
+}, [id]);
+
+
   
   // console.log(id)
   useEffect(() => {
@@ -105,7 +111,7 @@ export default function CommentContainer({ account_id, id, isOpen }) {
         const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${
           cookies?.user?._id
         }`;
-        // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+      
         await axios
           .get(url)
           .then((res) => {
@@ -130,7 +136,7 @@ export default function CommentContainer({ account_id, id, isOpen }) {
     setShowDeleteOption(!showDeleteOption);
   };
   useEffect(() => {
-    console.log("Updated comments state:", comments);
+    // console.log("Updated comments state:", comments);
   }, [comments]);
   
   return (
@@ -142,9 +148,10 @@ export default function CommentContainer({ account_id, id, isOpen }) {
       }
     >
       <div className="flex gap-2 items-center">
-        <div className="flex items-center justify-center w-fit">
-          <Avatar img={profilePic ? profilePic : alternativeProfile} />
+       <div className="flex items-center justify-center w-fit">
+          <Avatar img={isDarkTheme ? alternativeProfileblack : (profilePic ? profilePic : alternativeProfile)} />
         </div>
+
         <div className="flex flex-col items-end justify-center border border-primary w-full h-[45px] rounded-[5px]">
           <input
             type="text"

@@ -8,6 +8,8 @@ import { message } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
+import alternativeProfileblack from "../../../assets/image/alternativeProfile-black.png";
+
 import { format } from "timeago.js";
 import CommentContainer from "./Comments/commentContainer";
 import Avatar from "../../../Fields/Avatar/avatar";
@@ -64,6 +66,13 @@ export default function NewsCard({
   const [modalOpen, setModalOpen] = useState(false);
   const [eventSource, setEventSource] = useState(null);
   const [likeCount, setLikeCount] = useState(null);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  useEffect(() => {
+    // Check the theme from local storage when the component mounts
+    const theme = localStorage.getItem('theme');
+    setIsDarkTheme(theme === 'dark');
+  }, []);
 
   const onCommentShow = () => {
     setShowComments(!showComments);
@@ -127,7 +136,7 @@ export default function NewsCard({
 
   const checkIfLiked = async () => {
     try {
-      const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${cookies?.user.Uid}`;
+      const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${cookies?.user?.Uid}`;
       const response = await fetch(url, { method: "GET" });
 
       if (!response.ok) {
@@ -364,10 +373,7 @@ export default function NewsCard({
 
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-2">
-          <Avatar
-            onClick={hadleNavigateProfile}
-            img={profilePic ? profilePic : alternativeProfile}
-          />
+        <Avatar onClick={hadleNavigateProfile} img={isDarkTheme ? alternativeProfileblack : (profilePic ? profilePic : alternativeProfile)} />
           <div className="flex flex-col gap-1">
             <h1
               onClick={hadleNavigateProfile}

@@ -87,7 +87,7 @@ const fetchRelationRequest = async() => {
       )
     .then((res) => {
       setDataRelation(res.data);
-      // console.log(res.data);
+      //  console.log(res.data);
        
     });
 };
@@ -143,28 +143,29 @@ useEffect(() => {
   // sticky top-[65px]
   
   return (
-   
-   
     <div className={`dark:bg-[#1b1f23] hidden lg:flex items-start justify-center w-[300px] flex-col gap-2`}>
-        {
+      {
         cards?.map(items => {
           // Check if items.data has data
           if (items.data.length > 0) {
+            // Slice the data array to get only the first three items
+            const slicedData = items.data.slice(0, 3);
             return (
               <Card 
                 key={items?.id}
                 id={items?.id}
                 type={items?.type}
                 title={items?.title}
-                data={items?.data}
+                data={slicedData} // Pass the sliced data array to the Card component
               />
             );
           } else {
             // If no data, return null (nothing will be rendered for this card)
             return null;
           }
-  })
-}       
+        })
+      }       
     </div>
   )
+  
 }

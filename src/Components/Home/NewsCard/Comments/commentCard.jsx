@@ -17,6 +17,7 @@ export default function CommentCard({
   comment,
   likes,
   replays,
+  props
 }) {
   const [cookies] = useCookies(["user"]);
   const [showReplys, setShowReplays] = useState(false);
@@ -92,7 +93,7 @@ export default function CommentCard({
   useEffect(() => {
     // console.log("Comment ID:", id);
     // console.log("User ID from cookies:", cookies.user._id);
-  }, []);
+  }, [props]);
 
   // console.log('deleteCardRef.current:', deleteCardRef.current);
   // console.log('showDeleteOption:', showDeleteOption);
@@ -120,7 +121,7 @@ export default function CommentCard({
               </span>
             </div>
             {/* {console.log("Checking conditions: ", account_id, id, cookies.user._id)} */}
-            {(account_id === cookies.user._id || id === cookies.user._id) && (
+            {(account_id === cookies?.user?._id || id === cookies?.user?._id) && (
               <div ref={deleteCardRef} className="relative ">
                 <FontAwesomeIcon
                   icon={faEllipsisVertical}
