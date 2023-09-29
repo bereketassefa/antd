@@ -35,94 +35,95 @@ export default function NewsHolder() {
     let serverDownTimer;
     let loadingMsgId;
   
-    async function fetchMoreTimelines() {
-      try {
-        setLoading(true);
+    // async function fetchMoreTimelines() {
+    //   try {
+    //     setLoading(true);
   
-        serverDownTimer = setTimeout(() => {
-          setLoading(false);
-        }, 20000);
+    //     serverDownTimer = setTimeout(() => {
+    //       setLoading(false);
+    //     }, 20000);
   
-        // loadingMsgId = message.loading('Loading news...', 0);
+    //     // loadingMsgId = message.loading('Loading news...', 0);
   
-        const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
-        const response = await axios.get(Url);
+    //     const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
+    //     const response = await axios.get(Url);
   
-        clearTimeout(serverDownTimer);
+    //     clearTimeout(serverDownTimer);
   
 
-        // if (loadingMsgId) {
-        //   loadingMsgId();
-        // }
+    //     // if (loadingMsgId) {
+    //     //   loadingMsgId();
+    //     // }
   
-        if(response.status === 200){
-          setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
-        }
+    //     if(response.status === 200){
+    //       setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
+    //     }
 
      
-        setLoading(false);
-        setHasMore(false);
+    //     setLoading(false);
+    //     setHasMore(false);
   
-      } catch (error) {
-        setLoading(false);
-        setHasMore(false);
+    //   } catch (error) {
+    //     setLoading(false);
+    //     setHasMore(false);
   
      
   
-        if (error.message === "Failed to fetch") {
-          setLoading(true);
-          console.warn("Network Error: Failed to fetch data.");
-        } else {
-          console.warn("Error fetching data.");
-          setLoading(true);
-        }
+    //     if (error.message === "Failed to fetch") {
+    //       setLoading(true);
+    //       console.warn("Network Error: Failed to fetch data.");
+    //     } else {
+    //       console.warn("Error fetching data.");
+    //       setLoading(true);
+    //     }
+    //   }
+    // }
+
+  useEffect(() => {
+    try {
+      setLoading(true);
+      const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POST_V2}`);
+    
+    eventSource.onmessage = (event) => {
+      setLoading(false);
+      // console.log("Raw event data:", event.data);
+  const eventData = JSON.parse(event.data);// This should be an array
+      // console.log("Parsed event data:", eventData);
+      if (eventData == []){
+        message.error('empty')
       }
-    }
-
-  // useEffect(() => {
-  //   try {
-  //     setLoading(true);
-  //     const eventSource = new EventSource(${import.meta.env.VITE_GET_ALL_POSTS});
-    
-  //   eventSource.onmessage = (event) => {
-  //     setLoading(false);
-  //     const eventData = JSON.parse(event.data); // This should be an array
-  //     console.log("Parsed event data:", eventData);
-  //     if (eventData == []){
-  //       message.error('empty')
-  //     }
-  //     // Iterate through the array and log the 'id' of each object
-  //     eventData.forEach((item) => {
-  //       if ('id' in item) {
-  //         console.log("ID exists:", item.id);
-  //       } else {
-  //         console.log("ID does not exist in item");
-  //       }
-  //     });
+      // Iterate through the array and log the 'id' of each object
+      eventData.forEach((item) => {
+        if ('id' in item) {
+          // console.log("ID exists:", item.id);
+        } else {
+          console.log("ID does not exist in item");
+        }
+      });
       
-  //     setTimeline(eventData);
+      setTimeline(eventData);
 
-  //   };
+    };
     
-  //   eventSource.onerror = (error) => {
-  //     console.error('SSE Error:', error);
-  //   };
+    // eventSource.onerror = (error) => {
+    //   console.error('SSE Error:', error);
+    // };
     
-  //   return () => {
-  //     eventSource.close();
-  //   };
-  //   } catch (error) {
-  //     setLoading(false);
-  //     console.error(error);
-  //   }
+    return () => {
+      eventSource.close();
+    };
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
     
-  // }, []);
+  }, []);
   
   
 
   function onIntersection(entries) {
     if (entries[0].isIntersecting && hasMore) {
-      fetchMoreTimelines();
+      // fetchMoreTimelines();
     }
   }
   if (error) {
@@ -177,7 +178,7 @@ return (
         <NewsCard
           key={index}
           image={item?.image}
-          myKey={index}
+          index={index} 
           newContent={item?.description}
           profilePic={item?.account[0]?.profilePicture}
           timestamp={item?.time}
