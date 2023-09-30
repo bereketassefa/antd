@@ -86,29 +86,37 @@ export const Relation = [
 
 export const comments = [
   {
-    key: 2,
+    key: 1,
     image: bt,
-
+    Photo: iphone12,
+    timestamp: new Date().getTime(),
     CompanyName: "AddisPay",
     message: "Another message from anoter  ",
     fromOther: true,
     description: "Lorem ipsum dolor sit amet ",
+    fromMe: false,
   },
+
   {
-    key: 3,
+    key: 2,
     image: star,
+    timestamp: new Date().getTime(),
     CompanyName: "AAu",
     message: "In publishing and graphic design",
     fromOther: true,
+    fromMe: true,
   },
   {
-    key: 4,
+    key: 3,
     image: bt,
     CompanyName: "CBE",
+    timestamp: new Date().getTime(),
     message: " a typeface without relying on meaningful content. ",
+    fromMe: false,
     fromOther: true,
   },
 ];
+
 export const product = [
   {
     key: 1,
@@ -159,9 +167,6 @@ export const product = [
     place: " in Stock  ",
     price: " 1000$ ",
   },
-  
-   
- 
 ];
 export const Search = [
   {
@@ -204,22 +209,97 @@ export const Search = [
     isConnected: false,
   },
 ];
+
+export const ChatWithAddisPay = [
+  {
+    key: 1,
+    image: BRhotel,
+    Photo: iphone12,
+    timestamp: new Date().getTime(),
+    CompanyName: "AddisPay",
+    message: "Another message from anoter  ",
+    fromOther: true,
+    description: "Lorem ipsum dolor sit amet ",
+    fromMe: false,
+  },
+  {
+    key: 1,
+    image: BRhotel,
+    Photo: iphone12,
+    timestamp: new Date().getTime(),
+    CompanyName: "AddisPay",
+    message: "Another message from anoter  ",
+    fromOther: true,
+    description: "jkfhsd fhf fha hf  ",
+    fromMe: false,
+  },
+];
+
+export const EagleChat = [
+  {
+    key: 1,
+    image: star,
+    Photo: iphone12,
+    timestamp: new Date().getTime(),
+    CompanyName: "EagleLion",
+    message: "  message from anoter  ",
+    fromOther: true,
+    description: "I like your company",
+    fromMe: false,
+  },
+  {
+    key: 1,
+    image: star,
+    Photo: iphone12,
+    timestamp: new Date().getTime(),
+    CompanyName: "EagleLion",
+    message: " Addis pay is especial  message from anoter  ",
+    fromOther: true,
+    description: "I like your company",
+    fromMe: false,
+  },
+  {
+    key: 1,
+    image: star,
+    Photo: iphone12,
+    timestamp: new Date().getTime(),
+    CompanyName: "EagleLion",
+    message: "   i am from 22 Another message from anoter  ",
+    fromOther: true,
+    description: "I like your company",
+    fromMe: false,
+  },
+  {
+    key: 1,
+    image: star,
+    Photo: iphone12,
+    timestamp: new Date().getTime(),
+    CompanyName: "EagleLion",
+    message: "Another message from anoter  ",
+    fromOther: true,
+    description: "Please replay soon",
+    fromMe: false,
+  },
+];
+
 export const Chat = [
   {
     key: 1,
     image: BRhotel,
     time: "7:30 am",
     AmoutOfmessage: "30",
-    title: "Company Name ",
+    title: "AddisPay",
     description: "Lorem ipsum dolor sit amet....",
+    chatData: ChatWithAddisPay,
   },
+
   {
     key: 2,
-
     image: star,
     time: "2:30 pm",
     title: "EagleLion Tech",
     description: "Lorem ipsum dolor sit amet....",
+    chatData: EagleChat,
   },
   {
     key: 3,
@@ -228,12 +308,16 @@ export const Chat = [
     AmoutOfmessage: "12",
     title: "SkyLight Hotel ",
     description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
   },
   {
     key: 4,
     image: bt,
     title: "Company Name ",
     description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
   },
   {
     key: 5,
@@ -241,6 +325,70 @@ export const Chat = [
     title: " Banana Name ",
     AmoutOfmessage: "3",
     description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
+  },
+  {
+    key: 5,
+    image: bbm,
+    title: " Banana Name ",
+    AmoutOfmessage: "3",
+    description: "Lorem ipsum dolor sit amet....",
+
+    chatData: "",
   },
 ];
 export const Message = [
@@ -379,8 +527,6 @@ export const Recomend = [
     time: "34",
   },
 ];
-
-
 
 export const africanCountryCodeMap = {
   DZ: { name: "Algeria", code: "+213" },

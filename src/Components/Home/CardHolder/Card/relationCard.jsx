@@ -59,7 +59,7 @@ export default function RelationCard({id , img, companyName}) {
        
     }, []);
     return (
-        <div className='dark:text-white flex items-center justify-between' key={id}>
+        <div className='dark:text-white flex items-center justify-between ' key={id}>
             <div className='flex gap-2 items-center'>
             
                     

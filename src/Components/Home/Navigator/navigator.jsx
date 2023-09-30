@@ -32,7 +32,7 @@ export default function Navigator({ handleAddProduct }) {
   };
 
   return (
-    <div className=" rounded-lg dark:bg-[#1b1f23] hidden md:flex bg-white  items-start justify-center mt-8 w-[300px] mx-w-[300px] p-4 sticky top-[75px] drop-shadow-xl">
+    <div className=" rounded-lg dark:bg-[#1b1f23] hidden md:flex bg-white  items-start justify-center mt-8 w-[300px] mx-w-[300px] p-4  sticky  top-[75px] drop-shadow-xl">
       <div className="w-full">
         <div className="w-full">
           <ul

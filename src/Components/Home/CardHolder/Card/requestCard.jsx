@@ -7,9 +7,10 @@ import './scss/avatar.scss'
 import { useCookies } from 'react-cookie'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { connection } from "websocket";
 export default function RequestCard({id , img, companyName,Uid,connectionsid}) {
   const navigate= useNavigate()
-// console.log(connections)
+//  console.log(connectionsid)
 const [profilePic, setProfilePic]= useState(null) 
 const [loadingAccept, setLoadingAccept] = useState(false); // Add loading state for Accept
 const [loadingCancel, setLoadingCancel] = useState(false);
@@ -28,7 +29,7 @@ const handleAcceptClick = async () => {
   try {
     // Artificially delay the operation by 6 seconds
   
-    
+    console.log(connectionsid)
     const url = `${import.meta.env.VITE_ACCEPT_THE_RELATION}/${connectionsid}`;
     const response = await fetch(url, { method: "POST" });
     if (!response.ok) throw new Error("Request failed");
@@ -48,7 +49,7 @@ const handleCancelClick = async () => {
     
     // Artificially delay the operation by 6 seconds
    
-    
+    // console.log(connectionsid)
     const url = `${import.meta.env.VITE_CANCEL_THE_RELATION}/${connectionsid}`;
     const response = await fetch(url, { method: "DELETE" });
     if (!response.ok) throw new Error("Request failed");
