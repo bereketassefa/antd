@@ -77,7 +77,7 @@ export default function CompanyInfo({ data, Uid }) {
         },
       };
       const response = await axios.post(
-        "https://account.qa.addissystems.et/uploads",
+        "https://account.qa.addissystems.et/profile/uploads",
         formData,
         config
       );
