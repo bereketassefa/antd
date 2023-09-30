@@ -8,6 +8,7 @@ import {
   faUserCheck,
   faRemove,
 } from "@fortawesome/free-solid-svg-icons";
+import { IoClose } from "react-icons/io5";
 import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
 import Button from "../../../../Fields/Button/button";
 import { useCookies } from "react-cookie";
@@ -16,6 +17,7 @@ import { message } from "antd";
 import { Modal } from "antd";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import CompanyPP from "./CompanyPP";
+import { Link } from "react-router-dom";
 
 export default function CompanyInfo({ data, Uid }) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -39,6 +41,11 @@ export default function CompanyInfo({ data, Uid }) {
   const [mymodalOpen, setMyModalOpen] = useState(false);
   const [confirmprofilemodal, setConfirmProfileModal] = useState(false);
   const id = window.location.pathname.split("/")[3];
+
+ const toggleModal = () => {
+   setModalOpen(false);
+ };
+
 
   //    console.log(Uid)
   const OwnerUid = cookies?.user.Uid;
@@ -348,6 +355,9 @@ export default function CompanyInfo({ data, Uid }) {
   const CancelRequestPopup = ({ onConfirm, onCancel }) => {
     return (
       <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div>
+          <IoClose  />
+        </div>
         <div className="bg-white p-4 rounded-lg">
           <p>Are you sure you want to cancel the request?</p>
           <div className="flex justify-end gap-4">
@@ -448,13 +458,16 @@ export default function CompanyInfo({ data, Uid }) {
             data.account &&
             data.account[0] &&
             data.account[0]._id === cookies?.user?._id && (
-              <div className="mr-[1rem]">
-                <Button
-                  text={"Edit Profile"}
-                  filled={false}
-                  color={"secondary"}
-                />
-              </div>
+              <Link to="/feed/settings/edit">
+                {" "}
+                <div className="mr-[1rem]">
+                  <Button
+                    text={"Edit Profile"}
+                    filled={false}
+                    color={"secondary"}
+                  />
+                </div>
+              </Link>
             )}
         </div>
         <input
@@ -576,8 +589,14 @@ export default function CompanyInfo({ data, Uid }) {
           }
         </div>
         {isModalOpen && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-4 rounded-lg">
+          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+            <div className="bg-white p-2 rounded-lg">
+              <div className=" flex justify-end  mb-1">
+                <IoClose
+                  className="text-red-700 text-xl"
+                  onClick={toggleModal}
+                />
+              </div>
               <img
                 src={selectedImage}
                 alt="Selected"
