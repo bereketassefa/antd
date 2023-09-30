@@ -208,7 +208,7 @@ const EditProfile = () => {
           </div>
 
           <div className="flex px-2">
-            <div className="mb-4 w-52">
+            <div className="mb-4 w-56">
               <label
                 htmlFor="country"
                 className="block mb-2 text-lg font-medium text-gray-700"
