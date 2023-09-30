@@ -7,7 +7,7 @@ import { faDeleteLeft, faDumpster, faPencil, faTrash, faUpRightFromSquare } from
 import AchivementModal from '../AchivementModal/achivementModal'
 
 export default function AchivementCard({edit , certificateName , company , date  }) {
-    const [isOpenModal ,setOpenModal ] = useState(false)
+ 
 
     const handleModal = ()=>{
          setOpenModal(!isOpenModal)
@@ -33,8 +33,8 @@ export default function AchivementCard({edit , certificateName , company , date 
                 
                 
             />
-              {
-                edit?
+               {
+                edit? 
                  <div className='flex gap-2 ml-2'>
                      <FontAwesomeIcon icon={faPencil}   className='text-secondary text-smallT'/>
                      <FontAwesomeIcon  icon={faTrash} className='text-secondary text-smallT'/>

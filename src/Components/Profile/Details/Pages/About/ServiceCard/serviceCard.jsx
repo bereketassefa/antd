@@ -3,8 +3,15 @@ import Avatar from "../../../../../../Fields/Avatar/avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ServiceModal from "../ServiceModal/serviceModal";
-
+import { useParams } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 export default function ServiceCard({ logo, productName, size, onClick }) {
+
+  const { id } = useParams();  // Destructure id from useParams
+  const [cookies] = useCookies(['user']);
+
+  // console.log(cookies.user._id);
+  const isUserIdEqual = cookies.user._id === id;
   return (
     <>
       {size === "small" ? (
@@ -30,7 +37,9 @@ export default function ServiceCard({ logo, productName, size, onClick }) {
             <Avatar img={logo} />
             <h1 className="text-smallP md:text-largeP">{productName}</h1>
           </div>
-          <div className="flex items-center gap-2 ">
+          {
+            isUserIdEqual && (
+               <div className="flex items-center gap-2 ">
             <FontAwesomeIcon
               icon={faPencil}
               className="text-secondary text-smallT"
@@ -40,6 +49,9 @@ export default function ServiceCard({ logo, productName, size, onClick }) {
               className="text-secondary text-smallT"
             />
           </div>
+            )
+          }
+         
         </div>
       ) : null}
     </>

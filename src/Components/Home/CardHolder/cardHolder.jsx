@@ -158,19 +158,19 @@ export default function CardHolder() {
         }
       })}
       <SociaCard />
-      <div className=" border-2 w-[300px] p-4 flex flex-col gap-2  bg- bg-transparent  drop-shadow-xl">
+      <div className="  w-[300px] p-4 flex flex-col gap-2  bg- bg-transparent  drop-shadow-xl">
         <div>
-          <ul className="flex  justify-evenly gap-2 text-[13px] ">
-            <Link to="">
-              <li className=" ">About </li>
+          <ul className="flex  justify-evenly gap-2 text-[11px] ">
+            <Link to="https://www.addissystems.et/about-us">
+              <li className="text-[#00000099] ">About </li>
             </Link>
 
             <Link to="">
-              <li>Help center</li>
+              <li className="text-[#00000099]">Help center</li>
             </Link>
             <Link to="">
               {" "}
-              <select className=" bg-transparent ">
+              <select className=" bg-transparent text-[#00000099] ">
                 <option value="">terms & privacy</option>
               </select>
             </Link>
@@ -181,10 +181,10 @@ export default function CardHolder() {
         <Link to="">
           <div className="flex justify-center items-center">
             <div>
-              <img src={logo} alt="" className="w-8  "></img>
+              <img src={logo} alt="" className="w-5  "></img>
             </div>
 
-            <p className="text-[13px] ">Copyright © 2023 All right reserved.</p>
+            <p className="text-[11px]  ">Copyright © 2023 All right reserved.</p>
           </div>
         </Link>
       </div>

@@ -44,7 +44,7 @@ export default function CompanyInfo({ data, Uid }) {
   const OwnerUid = cookies?.user.Uid;
   // const ownerid = cookies?.user._id;
   //  const anotherid= data?.account[0]?._id
-
+  const isUserIdEqual = cookies.user._id === id;
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   const handleImageChange = (e) => {
@@ -414,12 +414,17 @@ export default function CompanyInfo({ data, Uid }) {
         <div className="w-full flex items-end justify-between">
           <div className="bg-white  p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
             <div className="w-full flex items-center justify-center">
-              <img
-                className="w-full object-cover h-full flex"
-                src={profilePic ? profilePic : alternativeProfile}
-                alt="Profile"
-                onClick={() => setMyModalOpen(true)}
-              />
+            <img
+  className="w-full object-cover h-full flex"
+  src={profilePic ? profilePic : alternativeProfile}
+  alt="Profile"
+  onClick={() => {
+    if (isUserIdEqual) {
+      setMyModalOpen(true);
+    }
+  }}
+/>
+
             </div>
             <div className="bg-white p-[3px] rounded-full absolute mt-[-0.5rem] mr-[-0.5rem]">
               {data &&
