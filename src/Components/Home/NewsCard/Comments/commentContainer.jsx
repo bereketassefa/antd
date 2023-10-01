@@ -10,7 +10,8 @@ import { IoMdSend } from "react-icons/io";
 import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
 import alternativeProfileblack from "../../../../assets/image/alternativeProfile-black.png";
 import { message } from "antd";
-export default function CommentContainer({ account_id, id, isOpen }) {
+import { identifier } from "stylis";
+export default function CommentContainer({ account_id, postid, isOpen }) {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [visibleComments, setVisibleComments] = useState(2);
@@ -33,7 +34,7 @@ export default function CommentContainer({ account_id, id, isOpen }) {
     try {
       const url = `${import.meta.env.VITE_COMMENT}`;
       const response = await axios.post(url, {
-        post_id: id,
+        post_id: postid,
         parent_comment_id: null,
         user_id: cookies?.user.Uid.toString(),
         text: commentText,
@@ -56,8 +57,15 @@ export default function CommentContainer({ account_id, id, isOpen }) {
     }
   };
   
+  const handleCommentDelete = (deletedCommentId) => {
+    setComments((prevComments) => {
+      // Ensure prevComments is an array, then filter out the deleted comment
+      return Array.isArray(prevComments) 
+        ? prevComments.filter(comment => comment.comment_id !== deletedCommentId)
+        : [];
+    });
+  };
   
-
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleCommentSubmit();
@@ -85,11 +93,13 @@ export default function CommentContainer({ account_id, id, isOpen }) {
 
  // Remove the following useEffect block that sets up the SSE connection
  useEffect(() => {
+  console.log(postid)
   const fetchComments = async () => {
     try {
-      const url = `${import.meta.env.VITE_GET_COMMENT}/${id}`;
+      const url = `${import.meta.env.VITE_GET_COMMENT}/${postid}`;
       const response = await axios.get(url);
       const data = response.data;
+      console.log(data)
       if (Array.isArray(data) && data.length > 0) {
         setComments(data);
       } else {
@@ -100,7 +110,14 @@ export default function CommentContainer({ account_id, id, isOpen }) {
     }
   };
   fetchComments();
-}, [id]);
+ // Set up an interval to fetch comments every 5000ms (5 seconds)
+ const intervalId = setInterval(fetchComments, 5000);
+
+ // Cleanup: clear the interval when the component is unmounted
+ return () => {
+   clearInterval(intervalId);
+ };
+}, [postid, refreshComments]);
 
 
   
@@ -206,6 +223,9 @@ export default function CommentContainer({ account_id, id, isOpen }) {
                   replays={item?.repays}
                   postId={item?.post_id}
                   account_id={account_id}
+                  user_id={item?.user_id}
+                  comment_id={item?.comment_id}
+                  onCommentDelete={handleCommentDelete}
                 />
               );
             })

@@ -34,6 +34,7 @@ export default function NewsCard({
   image,
   id,
   like,
+  Uid
 }) {
   const { showToast } = useToast();
   const downloadCardRef = useRef(null);
@@ -52,19 +53,16 @@ export default function NewsCard({
     myKey: PropTypes.any.isRequired,
   };
   //   const socket = io("http://localhost:8020");
-  const [allLikes, setAllLiked] = useState(like);
   const [showComments, setShowComments] = useState(false);
   const [cookies] = useCookies(["user"]);
   const [Liked, setLiked] = useState(false);
   const [comments, setCommentsCounts] = useState("");
-  const [data, setTimeline] = useState("");
+  const [ setTimeline] = useState("");
   const [showLikeInfo, setShowLikeInfo] = useState(false);
   const [whoLikedPost, setWhoLikedPost] = useState([]);
   const [showDownloadCard, setShowDownloadCard] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [eventSource, setEventSource] = useState(null);
   const [likeCount, setLikeCount] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
@@ -499,7 +497,7 @@ export default function NewsCard({
         </div>
       )}
 
-      <CommentContainer account_id={account_id} id={id} isOpen={showComments} />
+      <CommentContainer Uid={Uid} account_id={account_id} postid={id} isOpen={showComments} />
     </div>
   );
 }

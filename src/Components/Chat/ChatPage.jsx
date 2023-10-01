@@ -297,7 +297,9 @@ function ChatPage() {
                                     src={comment.Photo}
                                     alt=""
                                     className="mt-8 rounded-lg w-52 h-40 object-cover"
+                                    
                                   />
+                                  
                                 </div>
                               )}
                             </div>

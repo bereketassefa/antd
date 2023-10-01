@@ -36,7 +36,7 @@ function Login() {
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('hello')
+    console.log("hello");
     try {
       if (email === "" || pass === "") {
         setErrMsg("Please enter your credentials");
@@ -124,15 +124,14 @@ function Login() {
             {!email && <AiOutlineMail className="text-[24px] text-gray-400" />}
 
             <input
-              className="text-[17px] outline-none w-full"
+              className="text-[17px] outline-none w-full bg-transparent"
               type={showEmail ? "email" : "text"}
               placeholder="Email Address"
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              // style={{ backgroundColor: "transparent" }}
             />
-
-          
           </div>
 
           {emailError && <p className="text-red-500">{emailError}</p>}
