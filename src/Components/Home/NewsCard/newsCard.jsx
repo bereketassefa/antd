@@ -52,7 +52,7 @@ export default function NewsCard({
     like: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     myKey: PropTypes.any.isRequired,
   };
-  //   const socket = io("http://localhost:8020");
+
   const [showComments, setShowComments] = useState(false);
   const [cookies] = useCookies(["user"]);
   const [Liked, setLiked] = useState(false);
@@ -114,7 +114,7 @@ export default function NewsCard({
   
   const handleLike = async () => {
     try {
-      console.log('in',id)
+      // console.log('in',id)
       const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user.Uid}/${id}`;
       const response = await fetch(url, { method: "POST" });
       const responseData = await response.json();
@@ -142,14 +142,14 @@ export default function NewsCard({
       }
 
       const data = await response.json();
-        console.log(data)
+        // console.log(data)
       if (data.likedPosts.length === 0) {
         setLiked(false);
         return;
       }
 
       const isLiked = data.likedPosts.some((post) => post.id === id);
-      console.log(isLiked)
+      // console.log(isLiked)
       setLiked(isLiked);
     } catch (error) {
       console.error(error);
@@ -306,26 +306,7 @@ export default function NewsCard({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  video: PropTypes.string;
-  // const handleBookmark = () => {
-  //   // Logic to bookmark the post
-  //   let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
-  //   if (isBookmarked) {
-  //     bookmarks = bookmarks.filter((bookmark) => bookmark !== id);
-  //   } else {
-  //     bookmarks.push(id);
-  //   }
-  //   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-  //   setIsBookmarked(!isBookmarked);
 
-  //   console.log("Updated bookmarks:", bookmarks); // Log to console
-  // };
-  // useEffect(() => {
-  //   const bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
-  //   setIsBookmarked(bookmarks.includes(id));
-
-  //   console.log("Current bookmarks:", bookmarks); // Log to console
-  // }, [id]);
 
   return (
     <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative">
