@@ -8,14 +8,14 @@ import ServiceModal from "./ServiceModal/serviceModal";
 import { useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 export default function Service() {
-  const [openServiceModal, setOpenServiceModal] = useState(false);
   const { id } = useParams();  // Destructure id from useParams
   const [cookies] = useCookies(['user']);
+  const [openServiceModal, setOpenServiceModal] = useState(false);
 
   // console.log(cookies.user._id);
   const isUserIdEqual = cookies.user._id === id;
   const handleServiceModal = () => {
-    setOpenProductModal(!openServiceModal);
+    setOpenServiceModal(!openServiceModal);
   };
   return (
     <>

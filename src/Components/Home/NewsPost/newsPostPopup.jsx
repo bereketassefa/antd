@@ -75,6 +75,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     } catch (error) {
       if (error.message === "Network Error") {
         message.error("Network Error: Failed to post.");
+        handleClose();
       } else {
         console.error("Error inserting data:", error);
       }

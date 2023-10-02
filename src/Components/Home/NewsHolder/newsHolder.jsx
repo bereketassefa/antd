@@ -94,14 +94,14 @@ export default function NewsHolder() {
       // Iterate through the array and log the 'id' of each object
       eventData.forEach((item) => {
         if ('id' in item) {
-          // console.log("ID exists:", item.id);
+          console.log("ID exists:", item.id);
         } else {
           console.log("ID does not exist in item");
         }
       });
       
       setTimeline(eventData);
-
+// console.log(eventData)
     };
     
     // eventSource.onerror = (error) => {
@@ -185,6 +185,7 @@ return (
           like={item?.like}
           companyName={item?.party?.party[0]?.party?.businessname}
           account_id={item?.account[0]?._id}
+          Uid ={item?.uid}
         />
       ))
     )}

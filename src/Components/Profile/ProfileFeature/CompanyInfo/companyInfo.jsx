@@ -39,12 +39,12 @@ export default function CompanyInfo({ data, Uid }) {
 
 
   const [mymodalOpen, setMyModalOpen] = useState(false);
-  const [confirmprofilemodal, setConfirmProfileModal] = useState(false);
   const id = window.location.pathname.split("/")[3];
 
  const toggleModal = () => {
    setModalOpen(false);
  };
+
 
 
   //    console.log(Uid)
@@ -181,7 +181,7 @@ export default function CompanyInfo({ data, Uid }) {
       setIsDataLoaded(true);
     } catch (error) {
       console.error(error);
-      setIsDataFetched(false);
+      // setIsDataFetched(false);
     } finally {
       setButtonLoading(false); // Set loading to false when fetching is done
     }
@@ -434,7 +434,6 @@ export default function CompanyInfo({ data, Uid }) {
     }
   }}
 />
-
             </div>
             <div className="bg-white p-[3px] rounded-full absolute mt-[-0.5rem] mr-[-0.5rem]">
               {data &&

@@ -7,7 +7,7 @@ import profilePlaceHolder from "../../../../assets/logo/newCompanyPlaceHolder.pn
 import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-
+import PropTypes from 'prop-types';
 export default function CommentCard({
   account_id,
   id,
@@ -17,17 +17,39 @@ export default function CommentCard({
   comment,
   likes,
   replays,
-  props
-}) {
+  props,
+  Uid,
+  user_id,
+  comment_id,
+  onCommentDelete
+})
+{
+  CommentCard.propTypes = {
+    account_id: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    img: PropTypes.string,
+    comment_id: PropTypes.string,
+    companyName: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
+    replays: PropTypes.array,
+    props: PropTypes.object
+  };
+  
   const [cookies] = useCookies(["user"]);
   const [showReplys, setShowReplays] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   const [showDeleteOption, setShowDeleteOption] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
   const navigate = useNavigate();
   const deleteCardRef = useRef(null);
   const onShowReplay = () => {
     setShowReplays(!showReplys);
   };
+
   const toggleDeleteOption = (event) => {
     event.stopPropagation(); // Log this
     setShowDeleteOption(!showDeleteOption);
@@ -85,19 +107,43 @@ export default function CommentCard({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  const handleDeleteComment = (event) => {
-    event.stopPropagation();
+  const handleDeleteComment = async () => {
     console.log("Delete comment clicked");
-    setShowDeleteOption(false);
+    setLoading(true); 
+  
+    try {
+      const url = `${import.meta.env.VITE_DELETE_COMMENT_API}/${comment_id}`;
+      console.log("API URL:", url);
+      
+      const response = await axios.delete(url);
+      console.log("API Response:", response);
+      if (response.status === 200) {
+        console.log("Calling onCommentDelete with comment_id:", comment_id);
+        onCommentDelete(comment_id);
+        console.log("Comment deleted successfully");
+      } else {
+        console.error("Failed to delete comment:", response.status, response.data);
+      }
+    } catch (error) {
+      setLoading(false); 
+      console.error("API Error:", error);
+      console.error("Error Details:", error.response?.data || error.message);
+    } finally {
+      setLoading(false); 
+    }
   };
-  useEffect(() => {
-    // console.log("Comment ID:", id);
-    // console.log("User ID from cookies:", cookies.user._id);
-  }, [props]);
+  
+  
+  // useEffect(() => {
+  //   // console.log("Comment ID:", id);
+  //   // console.log("User ID from cookies:", cookies.user._id);
+  // }, [props]);
 
   // console.log('deleteCardRef.current:', deleteCardRef.current);
   // console.log('showDeleteOption:', showDeleteOption);
-
+// const check = Uid === cookies?.user?.Uid
+// console.log('check:', check);
+// console.log('post Uid:', Uid);
   return (
     <>
       <div className=" w-full flex gap-2">
@@ -121,19 +167,20 @@ export default function CommentCard({
               </span>
             </div>
             {/* {console.log("Checking conditions: ", account_id, id, cookies.user._id)} */}
-            {(account_id === cookies?.user?._id || id === cookies?.user?._id) && (
+            {(user_id === cookies?.user?.Uid || Uid === cookies?.user?.Uid) && (
               <div ref={deleteCardRef} className="relative ">
                 <FontAwesomeIcon
                   icon={faEllipsisVertical}
                   onClick={toggleDeleteOption}
                 />
-                {showDeleteOption && (
-                  <div className=" absolute right-3 top-2     bg-white p-2 rounded shadow-lg z-10">
-                    <button onClick={handleDeleteComment} className="   ">
-                      Delete
-                    </button>
-                  </div>
-                )}
+              {showDeleteOption && (
+  <div className="absolute right-3 top-2 bg-white p-2 rounded shadow-lg z-10">
+    <button onClick={handleDeleteComment} className="..." disabled={loading}>
+      {loading ? "Deleting..." : "Delete"}
+    </button>
+  </div>
+)}
+
               </div>
             )}
           </div>
@@ -166,6 +213,7 @@ export default function CommentCard({
             comment={item?.comment}
             likes={item?.likes}
             replays={item?.repays}
+            user_id={user_id}
           />
         ))}
       </div>

@@ -7,11 +7,8 @@ import ProductCard from "./ProductCard";
 import { useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 function ProductPage() {
-
   const { id } = useParams();  // Destructure id from useParams
   const [cookies] = useCookies(['user']);
-
-  // console.log(cookies.user._id);
   const isUserIdEqual = cookies.user._id === id;
   return (
     <div>
