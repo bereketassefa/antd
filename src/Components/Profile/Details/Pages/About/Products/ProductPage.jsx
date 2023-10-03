@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Collapse } from "antd";
 import { product } from "../../../../../../data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,10 +6,30 @@ import { faPencil, faPlus } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from "./ProductCard";
 import { useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import axios from "axios";
 function ProductPage() {
   const { id } = useParams();  // Destructure id from useParams
   const [cookies] = useCookies(['user']);
   const isUserIdEqual = cookies.user._id === id;
+  const [products, setProducts] = useState([]);
+
+  console.log(id)
+  useEffect(() => {
+    // Define an async function
+    const fetchProducts = async () => {
+      try {
+      const  url= `${import.meta.env.VITE_GET_PRODUCT_BY_ID}/${id}`
+        // Replace 'YOUR_SERVER_URL' with your actual server URL
+        const response = await axios.get(url);
+        setProducts(response.data); // Set fetched data to state
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    // Call the async function
+    fetchProducts();
+  }, [id]);
   return (
     <div>
       <Collapse
@@ -39,13 +59,13 @@ function ProductPage() {
             ),
             children: (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 overflow-y-scroll max-h-[430px] scrole-overflow   items-center justify-center gap-3">
-                {product.map((product) => (
+                {products.map((product) => (
                   <ProductCard
                     key={product.key}
                     productName={product.productName}
-                    image={product.image}
+                    image={product.imageUrl}
                     place={product.place}
-                    price={product.price}
+                    price={product.ProductPrice}
                   />
                 ))}
               </div>

@@ -149,7 +149,7 @@ export default function CardHolder() {
               id={items?.id}
               type={items?.type}
               title={items?.title}
-              data={items?.data}
+              data={items?.data?.slice(0, 3)} 
             />
           );
         } else {

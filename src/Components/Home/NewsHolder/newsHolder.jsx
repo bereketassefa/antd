@@ -78,47 +78,39 @@ export default function NewsHolder() {
     //   }
     // }
 
-  useEffect(() => {
-    try {
+    useEffect(() => {
       setLoading(true);
+    
       const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POST_V2}`);
-    
-    eventSource.onmessage = (event) => {
-      setLoading(false);
-      // console.log("Raw event data:", event.data);
-  const eventData = JSON.parse(event.data);// This should be an array
-      // console.log("Parsed event data:", eventData);
-      if (eventData == []){
-        message.error('empty')
-      }
-      // Iterate through the array and log the 'id' of each object
-      eventData.forEach((item) => {
-        if ('id' in item) {
-          console.log("ID exists:", item.id);
-        } else {
-          console.log("ID does not exist in item");
-        }
-      });
       
-      setTimeline(eventData);
-// console.log(eventData)
-    };
+      eventSource.onmessage = (event) => {
+        setLoading(false);
+        const eventData = JSON.parse(event.data);
+        
+        if (eventData.length === 0){
+          message.error('Data is empty');
+        }
+        
+       
+        
+        setTimeline(eventData);
+      };
+      
+      eventSource.onerror = (error) => {
+        console.error('SSE Error:', error);
+        setLoading(false);
+        eventSource.close();
+        // Retry logic: wait for 5 seconds and then try to reconnect.
+        setTimeout(() => {
+          // Your reconnection logic here...
+        }, 5000);
+      };
+      
+      return () => {
+        eventSource.close();
+      };
+    }, []);
     
-    // eventSource.onerror = (error) => {
-    //   console.error('SSE Error:', error);
-    // };
-    
-    return () => {
-      eventSource.close();
-    };
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
-    }
-    
-  }, []);
-  
-  
 
   function onIntersection(entries) {
     if (entries[0].isIntersecting && hasMore) {
@@ -176,7 +168,7 @@ return (
       timeline.map((item, index) => (
         <NewsCard
           key={index}
-          image={item?.image}
+          image={Array.isArray(item?.images) ? item?.images : item?.images.split(',')}
           index={index} 
           newContent={item?.description}
           profilePic={item?.account[0]?.profilePicture}

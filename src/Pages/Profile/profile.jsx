@@ -20,8 +20,8 @@ export default function Profile({dataConnection}) {
         const response = await axios.get(
           url
         );
-        setData(response.data);
-      // console.log(response.data);
+        setData(response?.data);
+       console.log(response.data);
       } catch (error) {
         console.error("Error fetching profile data:", error);
       }
@@ -35,7 +35,7 @@ export default function Profile({dataConnection}) {
     <div className=' w-full flex flex-col gap-2 mt-2'>
         <div className='w-full flex flex-col gap-2' >
              {/* profile feature display */}
-             <ProfileFeature Uid={data?.connections[0]?.node?.Uid} data={data} />
+             <ProfileFeature  data={data} />
              {/* profile completeness view  */}
              {/* <ProfileProgress /> */}
         </div>

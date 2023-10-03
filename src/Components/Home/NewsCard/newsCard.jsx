@@ -380,16 +380,14 @@ export default function NewsCard({
           </p>
         </div>
       <div className="overflow-hidden flex bg-center ">
-  {Array.isArray(image) && image.length > 1 ? (
-    <NewSlider images={image} />
-  ) : (
+
     <img
-      src={image}
+      src={image[0]}
       alt="Image"
       className="h-[400px] flex object-cover w-full"
       onClick={() => setModalOpen(true)}
     />
-  )}
+  
 </div>
 
       </div>

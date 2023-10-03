@@ -53,9 +53,9 @@ function AddItemsPage({ handleModal }) {
       const formData = new FormData();
       formData.append("productName", productName);
       formData.append("productDescription", productDescription);
-      formData.append("productFeatures", productFeatures.join(","));
-      formData.append("productPrice", productPrice);
-      formData.append("hsnNo", hsnNo);
+      formData.append("ProductFeature", JSON.stringify(productFeatures));
+      formData.append("ProductPrice", productPrice);
+      formData.append("HsnNo", hsnNo);
       formData.append("image", productImage);
       formData.append("Uid", Uid);
 

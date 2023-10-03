@@ -74,12 +74,18 @@ import { MdReportGmailerrorred, MdOutlineSaveAlt } from "react-icons/md";
 
 function NewSlider({ image, newContent }) {
   const [activeSession, setActiveSession] = useState(false);
-
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const handleClose = () => {
     setActiveSession(false);
     // Add your close function here
   };
+  const handleNextImage = () => {
+    setActiveImageIndex((prevIndex) => (prevIndex + 1) % image.length);
+  };
 
+  const handlePrevImage = () => {
+    setActiveImageIndex((prevIndex) => (prevIndex - 1 + image.length) % image.length);
+  };
   return (
     <div className="max-w-[1000px] relative flex justify-between gap-16">
       <div className="relative">
@@ -112,9 +118,10 @@ function NewSlider({ image, newContent }) {
 
         <div className="w-full relative">
           <img
-            src={image}
+             src={image[activeImageIndex]}
+             alt={`Slider Image ${activeImageIndex + 1}`}
             className="md:w-[1000px] md:h-[600px] object-cover rounded-lg"
-            alt="Slider Image"
+           
           />
 
           <div className="absolute bottom-0 justify-center  mx-40 md:mx-80 bg-black bg-opacity-50 text-white p-4">
