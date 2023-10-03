@@ -5,7 +5,6 @@ import oopsno from '../../../assets/image/oops-no.png';
 // import { ErrorContext } from '../../Error/ErrorContext';
 
 import { message } from 'antd';
- 'axios';
 // import { useCookies } from 'react-cookie';
 export default function NewsHolder() {
   // const { displayError } = useContext(ErrorContext);
@@ -86,7 +85,7 @@ export default function NewsHolder() {
       eventSource.onmessage = (event) => {
         setLoading(false);
         const eventData = JSON.parse(event.data);
-        
+        console.log(eventData)
         if (eventData.length === 0){
          
           // message.error('Data is empty');
@@ -174,12 +173,12 @@ return (
             image={Array.isArray(item?.images) ? item?.images : item?.images?.split(',')}
             index={index} 
             newContent={item?.description}
-            profilePic={item?.account[0]?.profilePicture}
+            profilePic={item?.account?.profilePicture}
             timestamp={item?.time}
             id={item?.id}
             like={item?.like}
             companyName={item?.party?.party[0]?.party?.businessname}
-            account_id={item?.account[0]?._id}
+            account_id={item?.account?._id}
             Uid ={item?.uid}
           />
         ))
