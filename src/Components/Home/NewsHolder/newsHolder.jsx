@@ -88,7 +88,8 @@ export default function NewsHolder() {
         const eventData = JSON.parse(event.data);
         
         if (eventData.length === 0){
-          message.error('Data is empty');
+         
+          // message.error('Data is empty');
         }
         
        
@@ -158,6 +159,7 @@ const NewsCardSkeleton = () => (
 if (error) {
   return <div className="flex justify-center items-center h-screen">{error}</div>;
 }
+console.log('Rendering with timeline:', timeline);
 
 return (
   <div className='flex flex-col gap-2 w-full max-w-[550px]'>
@@ -165,23 +167,26 @@ return (
       // Show 5 skeleton cards while loading
       Array.from({ length: 5 }).map((_, index) => <NewsCardSkeleton key={index} />)
     ) : (
-      timeline.map((item, index) => (
-        <NewsCard
-          key={index}
-          image={Array.isArray(item?.images) ? item?.images : item?.images.split(',')}
-          index={index} 
-          newContent={item?.description}
-          profilePic={item?.account[0]?.profilePicture}
-          timestamp={item?.time}
-          id={item?.id}
-          like={item?.like}
-          companyName={item?.party?.party[0]?.party?.businessname}
-          account_id={item?.account[0]?._id}
-          Uid ={item?.uid}
-        />
-      ))
+      Array.isArray(timeline) ? (
+        timeline.map((item, index) => (
+          <NewsCard
+            key={index}
+            image={Array.isArray(item?.images) ? item?.images : item?.images?.split(',')}
+            index={index} 
+            newContent={item?.description}
+            profilePic={item?.account[0]?.profilePicture}
+            timestamp={item?.time}
+            id={item?.id}
+            like={item?.like}
+            companyName={item?.party?.party[0]?.party?.businessname}
+            account_id={item?.account[0]?._id}
+            Uid ={item?.uid}
+          />
+        ))
+      ) :null
     )}
     <div ref={elementRef}></div>
   </div>
 );
+
 }

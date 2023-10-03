@@ -7,7 +7,7 @@ import { faDeleteLeft, faDumpster, faPencil, faTrash, faUpRightFromSquare } from
 import AchivementModal from '../AchivementModal/achivementModal'
 
 export default function AchivementCard({edit , certificateName , company , date  }) {
- 
+    const [isOpenModal ,setOpenModal ] = useState(false)
 
     const handleModal = ()=>{
          setOpenModal(!isOpenModal)

@@ -29,7 +29,7 @@ console.log(id)
       const response = await axios.get(Url);
   
       if (response.status === 200) {
-        setTimeline(response.data);
+        setTimeline(response?.data);
        console.log(response.data)
       }
     } catch (error) {
@@ -82,14 +82,14 @@ console.log(id)
       // Show 5 skeleton cards while loading
       Array.from({ length: 3 }).map((_, index) => <NewsCardSkeleton key={index} />)
     ) : (
-     timeline && timeline.timelines && timeline.timelines.map((item, index) => (
+     timeline && timeline?.timelines && timeline?.timelines.map((item, index) => (
         <NewsCard
-        key={item.id}
-          image={item.image}
-          newContent={item.description}
-          timestamp={item.time}
-          id={item.id}
-          like={item.like}
+        key={item?.id}
+          image={item?.image}
+          newContent={item?.description}
+          timestamp={item?.time}
+          id={item?.id}
+          like={item?.like}
           companyName={timeline?.party}
         />
         ))

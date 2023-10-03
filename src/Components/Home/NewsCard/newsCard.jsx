@@ -382,7 +382,7 @@ export default function NewsCard({
       <div className="overflow-hidden flex bg-center ">
 
     <img
-      src={image[0]}
+      src={image}
       alt="Image"
       className="h-[400px] flex object-cover w-full"
       onClick={() => setModalOpen(true)}
