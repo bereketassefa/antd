@@ -1,38 +1,39 @@
-# build:
-#   stage: build
-#   image: docker:19.03.12
-#   services:
-#     - docker:19.03.12-dind
-
-#   variables:
-#     CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-#     CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
-
-#   script:
-#     - docker build -t $CONTAINER_TEST_IMAGE .
-#     - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
-#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-#     - docker push $CONTAINER_RELEASE_IMAGE
+variables:
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
 
 
-
+build:
+  stage: build
+  image: docker:19.03.12
+  script:
+    - docker build -t $CONTAINER_RELEASE_IMAGE .
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker push $CONTAINER_RELEASE_IMAGE
+    - docker save $CONTAINER_RELEASE_IMAGE > landingpage.tar
+  artifacts:
+    paths:
+      - landingpage.tar
 
 deploy:
   stage: deploy
   image: alpine:latest
 
   before_script:
-    - apk update && apk add openssh-client bash rsync
-    
-
-  script:
+    - apk update && apk add openssh-client bash rsync 
+    - apk add --no-cache docker-cli
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - echo "${SSH_HOST_KEY1}" > ~/.ssh/known_hosts
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    
-    - rsync -vv -rz --checksum --delete . root@196.188.237.74:/var/www/html/landingpage/
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $CONTAINER_RELEASE_IMAGE
+    - docker load < landingpage.tar
+    - docker container rm -f landingpage
+    - docker run -d --name landingpage $CONTAINER_RELEASE_IMAGE
+    - docker cp landingpage:/var/www/html/. ./build/
+    - rsync -vv -rz --checksum --delete ./build/ root@196.188.237.74:/var/www/html/landingpage/
 
   only:
   - master
