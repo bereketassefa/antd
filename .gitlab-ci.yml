@@ -1,7 +1,6 @@
 variables:
   CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
 
-
 build:
   stage: build
   image: docker:19.03.12
