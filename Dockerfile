@@ -1,7 +1,8 @@
 FROM node:latest AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --production
+RUN npm ci --silent
+
 COPY . .
 
 RUN npm run build
