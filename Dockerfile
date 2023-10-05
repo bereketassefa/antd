@@ -1,8 +1,8 @@
 FROM node:latest AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --silent
-
+RUN npm install vite --save-dev
+RUN npm install
 COPY . .
 
 RUN npm run build
