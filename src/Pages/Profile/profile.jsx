@@ -21,7 +21,7 @@ export default function Profile({dataConnection}) {
           url
         );
         setData(response?.data);
-       console.log(response.data);
+      //  console.log(response.data);
       } catch (error) {
         console.error("Error fetching profile data:", error);
       }

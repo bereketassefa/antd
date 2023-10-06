@@ -14,6 +14,8 @@ export default function NewsHolder() {
   // const [page, setPage] = useState(1); // Start from page 1
   const elementRef = useRef(null);
   const [error] = useState(null);
+
+  
   // const [cookies] = useCookies(['user'])
 
 
@@ -78,38 +80,48 @@ export default function NewsHolder() {
     // }
 
     useEffect(() => {
-      setLoading(true);
+      const fetchInitialData = async () => {
+        try {
+          setLoading(true);  // Start loading
+          const url= `${import.meta.env.VITE_WITH_OUT_SSE_GET_TIMELINE}`;
+          const response = await fetch(url);
+          const data = await response.json();
+          console.log(data);
+          setTimeline(data);  // Update state with fetched data
+        } catch (error) {
+          console.error('Error fetching initial data:', error);
+        } finally {
+          setLoading(false);  // Stop loading
+        }
+      };
+      
+      fetchInitialData();
+    }, []);
     
+
+    useEffect(() => {
       const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POST_V2}`);
       
       eventSource.onmessage = (event) => {
-        setLoading(false);
-        const eventData = JSON.parse(event.data);
-        console.log(eventData)
-        if (eventData.length === 0){
-         
-          // message.error('Data is empty');
+        try {
+          const newData = JSON.parse(event.data);
+          setTimeline((prevData) => [newData, ...prevData]);
+          console.log(newData);
+        } catch (error) {
+          console.error('Error parsing SSE data:', error);
         }
-        
-       
-        
-        setTimeline(eventData);
       };
       
       eventSource.onerror = (error) => {
         console.error('SSE Error:', error);
-        setLoading(false);
         eventSource.close();
-        // Retry logic: wait for 5 seconds and then try to reconnect.
-        setTimeout(() => {
-          // Your reconnection logic here...
-        }, 5000);
       };
       
       return () => {
         eventSource.close();
       };
     }, []);
+    
     
 
   function onIntersection(entries) {
@@ -158,7 +170,7 @@ const NewsCardSkeleton = () => (
 if (error) {
   return <div className="flex justify-center items-center h-screen">{error}</div>;
 }
-console.log('Rendering with timeline:', timeline);
+// console.log('Rendering with timeline:', timeline);
 
 return (
   <div className='flex flex-col gap-2 w-full max-w-[550px]'>

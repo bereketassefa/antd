@@ -72,34 +72,44 @@ export default function CompanyInfo({ data, Uid }) {
       message.error("No file selected");
       return;
     }
-
+  
+    // Check file size on client side before uploading
+    if (selectedFile.size > 5 * 1024 * 1024) {
+      message.error("File size should not exceed 5 MB");
+      return;
+    }
+  
     const formData = new FormData();
     formData.append("profilePicture", selectedFile);
     formData.append("_id", cookies?.user?._id);
-
+  
     try {
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       };
+    const url = `${import.meta.env.VITE_ACCOUNT_UPLOAD_PROFILE}`
       const response = await axios.post(
-        "https://account.qa.addissystems.et/profile/uploads",
+       url,
         formData,
         config
       );
+
       if (response.status === 200) {
         setSelectedImage(response?.data?.profilePicture);
-        // console.log(response.data.profilePicture);
-        message.success("Profile picture uploaded successfully");
+        message.success("Profile updated successfully");
         closeModal();
+      } else {
+        // Handle other status codes here if needed
+        message.error("An unexpected error occurred");
       }
     } catch (error) {
       console.error("Error uploading profile picture:", error);
-      message.error(error.response ? error.response.data : "An error occurred");
+      message.error(error.response ? error.response.data.error : "An error occurred");
     }
   };
-
+  
   useEffect(() => {
     let intervalId1, intervalId2, intervalId3;
 
@@ -109,7 +119,7 @@ export default function CompanyInfo({ data, Uid }) {
           console.warn("ID is not available");
           return;
         }
-        const url = `https://account.qa.addissystems.et/account/${id}`;
+        const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${id}`
         const response = await axios.get(url);
 
         if (response.status !== 200) {
@@ -129,9 +139,9 @@ export default function CompanyInfo({ data, Uid }) {
         if (!id) {
           return;
         }
-        // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+        const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${id}`
         await axios
-          .get(`https://account.qa.addissystems.et/account/${id}`)
+          .get(url)
           .then((res) => {
             // console.log(res)
             if (res?.data) {
@@ -169,7 +179,7 @@ export default function CompanyInfo({ data, Uid }) {
     // Set loading to true when fetching starts
 
     try {
-      const url = `https://connection.qa.addissystems.et/connection/get/${OwnerUid}/${UidData}`;
+      const url =`${import.meta.env.VITE_CHECK_WHO_IS_THE_SENDER}/${OwnerUid}/${UidData}`;
       const response = await fetch(url, {
         method: "GET",
       });
