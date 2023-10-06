@@ -4,21 +4,21 @@ import { product } from "../../../../../../data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from "./ProductCard";
-import { useParams } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import axios from "axios";
 function ProductPage() {
-  const { id } = useParams();  // Destructure id from useParams
-  const [cookies] = useCookies(['user']);
+  const { id } = useParams(); // Destructure id from useParams
+  const [cookies] = useCookies(["user"]);
   const isUserIdEqual = cookies.user._id === id;
   const [products, setProducts] = useState([]);
 
-  console.log(id)
+  console.log(id);
   useEffect(() => {
     // Define an async function
     const fetchProducts = async () => {
       try {
-      const  url= `${import.meta.env.VITE_GET_PRODUCT_BY_ID}/${id}`
+        const url = `${import.meta.env.VITE_GET_PRODUCT_BY_ID}/${id}`;
         // Replace 'YOUR_SERVER_URL' with your actual server URL
         const response = await axios.get(url);
         setProducts(response.data); // Set fetched data to state
@@ -40,21 +40,20 @@ function ProductPage() {
             label: (
               <div className="w-full flex items-center justify-between">
                 <h1 className="font-bold text-smallP">Products</h1>
-                {
-                  isUserIdEqual && (
-                      <div className="flex gap-2 items-center">
-                  <FontAwesomeIcon
-                    icon={faPencil}
-                    className="text-secondary text-smallT cursor-pointer"
-                  />
-                  <FontAwesomeIcon
-                    icon={faPlus}
-                    className="text-secondary text-smallT cursor-pointer"
-                  />
-                </div>
-                  )
-                }
-              
+                {isUserIdEqual && (
+                  <div className="flex gap-2 items-center">
+                    <FontAwesomeIcon
+                      icon={faPencil}
+                      className="text-secondary text-smallT cursor-pointer"
+                    />
+                    <Link to="">
+                      <FontAwesomeIcon
+                        icon={faPlus}
+                        className="text-secondary text-smallT cursor-pointer"
+                      />
+                    </Link>
+                  </div>
+                )}
               </div>
             ),
             children: (

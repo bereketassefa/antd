@@ -14,7 +14,7 @@ function SearchNav() {
 
 
   return (
-    <div className="dark:bg-[#1b1f23]  sticky top-10 rounded-md     mt-4h-[60px] md:h-[200px] text-[#000000] bg-white drop-shadow-xl  ">
+    <div className="dark:bg-[#1b1f23]  sticky top-[105px] rounded-md     mt-4h-[60px] md:h-[200px] text-[#000000] bg-white drop-shadow-xl  ">
       <ul className="   md:w-[220px] max-w-[400px] flex  justify-between flex-row md:flex-col  ml-6 gap-4 ">
         <Link
           to={`/feed/SearchNav/${name}`}

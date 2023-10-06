@@ -266,9 +266,9 @@ export default function Topbar() {
                       to={`/feed/SearchNav/${searchInput}`}
                       onClick={() => setSearchInput("")}
                     >
-                      {/* <p className="dark:text-white flex justify-center text-primary ">
+                      <p className="dark:text-white flex justify-center text-primary ">
                         See All results
-                      </p> */}
+                      </p>
                     </Link>
                   </div>
                 )}
