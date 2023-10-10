@@ -57,17 +57,19 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     setIsLoading(true);
   
     const formData = new FormData();
-    console.log('File List:', fileList);
-    console.log('Description:', description);
-    console.log('Uid:', cookies?.user?.Uid);
+    // console.log('File List:', fileList);
+    // console.log('Description:', description);
+    // console.log('Uid:', cookies?.user?.Uid);
     
     fileList.forEach((file) => {
-        console.log('Appending file:', file.originFileObj);
+        // console.log('Appending file:', file.originFileObj);
         formData.append("image", file.originFileObj);
+        formData.append("description",description)
+        formData.append("Uid",cookies?.user?.Uid)
     });
     try {
       const url = `${import.meta.env.VITE_POST_NEWS}`;
-      console.log('Sending request to:', url);
+      // console.log('Sending request to:', url);
       const response = await axios.post(url, formData);
       console.log('Response received:', response);
 
@@ -81,7 +83,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     } catch (error) {
       console.error("Error inserting data:", error);
       message.error("Error: Failed to post.");
-      handleClose();
+      
     } finally {
       setIsLoading(false);
     }

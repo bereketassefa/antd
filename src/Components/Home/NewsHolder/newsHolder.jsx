@@ -181,7 +181,7 @@ return (
       Array.isArray(timeline) ? (
         timeline.map((item, index) => (
           <NewsCard
-            key={index}
+            key={item.id}
             image={Array.isArray(item?.images) ? item?.images : item?.images?.split(',')}
             index={index} 
             newContent={item?.description}
