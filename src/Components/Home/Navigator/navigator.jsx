@@ -20,19 +20,40 @@ import { Divider } from "antd";
 
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../theme/ThemeContext";
-
+import { Modal } from "antd";
+import AddItemsPage from "../../../Pages/AddProduct/AddItemsPage";
 export default function Navigator({ handleAddProduct }) {
   const { myFontSize, increaseFontSize, decreaseFontSize } =
     useContext(ThemeContext);
   const [fontSize, setFontSize] = useState(16); // Initial font size of 16px
   const [activeLink, setActiveLink] = useState("");
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const handleLinkClick = (link) => {
     setActiveLink(link);
   };
+   ;
+
+    const handleOpenModal = () => {
+      setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+      setIsModalOpen(false);
+    };
 
   return (
     <div className=" rounded-lg dark:bg-[#1b1f23] hidden md:flex bg-white  items-start justify-center mt-8 w-[300px] mx-w-[300px] p-4  sticky  top-[105px] drop-shadow-xl">
+      <Modal
+      centered
+        visible={isModalOpen}
+        width={700}
+        footer={null}
+        onCancel={handleCloseModal}
+        
+      >
+        <AddItemsPage />
+      </Modal>
+
       <div className="w-full">
         <div className="w-full">
           <ul
@@ -203,18 +224,15 @@ export default function Navigator({ handleAddProduct }) {
               </li>
             </Link>
             <Link
-              to="#"
+              to=" "
               className={`${
                 activeLink === "Add Product"
                   ? "text-[#3222C6] "
                   : "text-gray-600"
               } `}
-              onClick={() => handleLinkClick("Add Product")}
+              onClick={handleOpenModal}
             >
-              <li
-                className="dark:text-white cursor-pointer w-full flex items-center gap-2"
-                onClick={handleAddProduct}
-              >
+              <li className="dark:text-white cursor-pointer w-full flex items-center gap-2">
                 <IoAddCircleOutline
                   style={{ fontSize: 16 + myFontSize }}
                   className={` ${

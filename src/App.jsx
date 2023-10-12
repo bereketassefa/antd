@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Primary from "./Layouts/Primary/primary";
@@ -34,22 +35,71 @@ import SearchAll from "./Components/Topbar/SearchAllCompo/SearchAll";
 import { ToastProvider } from "./Components/Toast/toastContext";
 import ChatPage from "./Components/Chat/ChatPage";
 import OTPpage from "./Pages/Signupage/OTPpage";
+import AddItemsPage from "./Pages/AddProduct/AddItemsPage";
 
 // import Message from "./Pages/Message/Message";
 
+//////// Public imports//////
+
+
+import Layout from "../src/Layouts/PublicLayout/Layout";
+import PublicHome from "../src/Pages/PublicPage/PublicHome";
+
+import Service from "../src/Pages/PublicPage/Service";
+import posHero from "../src/assets/PuplicImage/M-pos webbb.png";
+
+import erpHero from "../src/assets/PuplicImage/ERP-image.png";
+
+import invoiceimage from "../src/assets/PuplicImage/Addis e-invoice-01.png";
+
+import businessinteligence from "../src/assets/PuplicImage/business inteligent.png";
+
+import AboutPublic from "./Pages/PublicPage/AboutPublic";
+
+import Blog from "../src/Pages/PublicPage/Blog";
+import ContactPublic from "./Pages/PublicPage/ContactPublic";
+
+import UserGuide from "../src/Pages/PublicPage/UserGuide";
+
+import Faq from "../src/Pages/PublicPage/Faq";
+
+import HelpPublic from "./Pages/PublicPage/HelpPublic";
+
+import DemoRequest from "../src/Pages/PublicPage/DemoRequest";
+
+import Submitted from "../src/Pages/PublicPage/Submitted";
+
+import PageNotFound from "../src/Pages/PublicPage/PageNotFound";
+
+import { features } from "../src/PublicData/data";
+
+import Aos from "aos";
+import AOS from "aos";
+
+import JobApply from "../src/Pages/PublicPage/JobApply";
+
+import Vacancy from "../src/Pages/PublicPage/Vacancy";
+import ForTesting from "../src/ForTesting";
+
+////////////
+
 function App() {
   const [cookies] = useCookies(["user"]);
+  // Public Route
+  useEffect(() => {
+    Aos.init({
+      duration: 1000,
+    });
+  }, []);
   return (
     <ErrorProvider>
       <ToastProvider>
         <Routes>
-          <Route path="/">
-            <Route index element={<LoginPage />} />
-            <Route path="/create-password/:id" element={<CreatePssPage />} />
-            <Route path="/ResetPss/:token" element={<ResetPssPage />} />
-            <Route path="/forget-password" element={<ForgotPassPage />} />
-            <Route path="/OTP" element={<OTPpage />} />
-          </Route>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/create-password/:id" element={<CreatePssPage />} />
+          <Route path="/ResetPss/:token" element={<ResetPssPage />} />
+          <Route path="/forget-password" element={<ForgotPassPage />} />
+          <Route path="/OTP" element={<OTPpage />} />
 
           <Route
             path="/feed"
@@ -73,6 +123,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/feed/notifications" element={<Notification />} />
               <Route path="/feed/messages" element={<ChatPage />} />
+              <Route path="/feed/products" element={<AddItemsPage />} />
             </Route>
             <Route path="/feed/SearchNav/:name" element={<SearchRoute />}>
               <Route
@@ -114,6 +165,95 @@ function App() {
               />
               <Route path="/feed/profile/:id/bids" element={<Bids />} />
             </Route>
+          </Route>
+
+          {/* Public Route */}
+
+          <Route path="/" element={<Layout />}>
+            <Route index element={<PublicHome />} />
+            <Route
+              path="pos-service"
+              element={
+                <Service
+                  heading={"POS service"}
+                  title={"pos-title"}
+                  paragraph={"POS-system-para"}
+                  featureData1={features.posFeature.feature}
+                  bannerImage={posHero}
+                />
+              }
+            />
+
+            <Route
+              path="erp-service"
+              element={
+                <Service
+                  heading={"ERP as a Service"}
+                  title={"ERP-title"}
+                  paragraph={"ERP-para"}
+                  featureData1={features.posFeature.feature}
+                  bannerImage={erpHero}
+                />
+              }
+            />
+
+            <Route
+              path="electronic-invoice"
+              element={
+                <Service
+                  heading={"Electronic Invoice"}
+                  title={"electronic-title"}
+                  paragraph={"electronic-para"}
+                  featureData1={features.electronicInvoice.feature}
+                  bannerImage={invoiceimage}
+                />
+              }
+            />
+
+            <Route
+              path="business-intelligence"
+              element={
+                <Service
+                  heading={"Business Intelligence"}
+                  title={"Business I title"}
+                  paragraph={"Business I para1"}
+                  featureData1={
+                    features.businessIntelligence.featureToBusinessCommunity
+                  }
+                  featureData2={features.businessIntelligence.featureToAuthor}
+                  bannerImage={businessinteligence}
+                />
+              }
+            />
+
+            <Route // M-POSS
+              path="m-pos"
+              element={
+                <Service
+                  heading={"Mpos head"}
+                  title={"m-poss title"}
+                  paragraph={"M-pos para1"}
+                  featureData1={features.mpos.benefitOfMPOS}
+                  featureData2={features.mpos.benefitToManagement}
+                  bannerImage={businessinteligence}
+                />
+              }
+            />
+            <Route path="about-us" element={<AboutPublic />} />
+            <Route path="blog" element={<Blog />} />
+            <Route path="contact" element={<ContactPublic />} />
+            <Route path="user-guide" element={<UserGuide />} />
+            <Route path="faq" element={<Faq />} />
+            <Route path="help" element={<HelpPublic />} />
+            <Route path="demo-request" element={<DemoRequest />} />
+            <Route path="demo-request/submitted" element={<Submitted />} />
+            <Route path="vacancy" element={<Vacancy />} />
+            <Route
+              path="vacancy-apply/:id/:jobposition"
+              element={<JobApply />}
+            />
+            <Route path="/odootest" element={<ForTesting />} />
+            <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
       </ToastProvider>

@@ -13,7 +13,7 @@ export default function PageLayout() {
   }
   return (
     <div className="w-full p-0 m-0 flex flex-col max-w-full items-center sticky top-[75px]">
-      {showAddProductModal && (
+      {/* {showAddProductModal && (
         <div
           className="flex justify-center items-center absolute bg-[rgba(0,0,0,0.5)] w-full z-50 min-h-screen"
           style={{
@@ -49,7 +49,7 @@ export default function PageLayout() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
       <div className="w-full flex items-start justify-start px-2 md:px-0 mt-2 gap-2">
         <Navigator handleAddProduct={handleShowModal} />
         <div className="min-h-screen w-full mt-4">

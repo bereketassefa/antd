@@ -95,7 +95,7 @@ function AddItemsPage({ handleModal }) {
   };
   
   return (
-    <div className="dark:bg-[#1b1f23] w-full  ">
+    <div className="dark:bg-[#1b1f23]      ">
       <p className="dark:text-white text-2xl font-bold">Add Product</p>
       <hr className="bg-[#B7B7B7] h-[1px] mb-5" />
       <form onSubmit={handleSubmit} noValidate>
