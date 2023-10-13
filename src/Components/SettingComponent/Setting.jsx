@@ -18,10 +18,8 @@ const Setting = () => {
     setActiveLink(link);
   };
 
-
-
   return (
-    <div className="dark:bg-[#1b1f23] rounded-lg flex sticky top-[50px] drop-shadow-xl">
+    <div className="dark:bg-[#1b1f23] rounded-lg flex sticky top-[85px] drop-shadow-xl">
       <nav className="dark:bg-[#1b1f23] bg-[#F9F7F7] hidden lg:block text-[#000000]  mt-5 w-[325px]  h-[452px]">
         <ul className=" space-y-4 gap-4 mt-4">
           <li className="py-2 px-6 mb-3 flex items-center gap-2">
@@ -31,7 +29,10 @@ const Setting = () => {
                 className="dark:text-white text-[#000000] h-6 w-6"
               />
             </Link>
-            <p className="dark:text-white text-[#000000]" style={{ fontSize: 16 + myFontSize }}>
+            <p
+              className="dark:text-white text-[#000000]"
+              style={{ fontSize: 16 + myFontSize }}
+            >
               {" "}
               Setting
             </p>

@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import alternativeProfileblack from "../../../assets/image/alternativeProfile-black.png";
+import newusimage from "../../../assets/image/iphone2.webp";
 
 import { format } from "timeago.js";
 import CommentContainer from "./Comments/commentContainer";
@@ -24,6 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useToast } from "../../Toast/toastContext";
 import NewSlider from "../../../Components/Home/NewsHolder/NewSlider";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { Image } from "antd";
 export default function NewsCard({
   account_id,
   myKey,
@@ -34,7 +36,7 @@ export default function NewsCard({
   image,
   id,
   like,
-  Uid
+  Uid,
 }) {
   const { showToast } = useToast();
   const downloadCardRef = useRef(null);
@@ -57,7 +59,7 @@ export default function NewsCard({
   const [cookies] = useCookies(["user"]);
   const [Liked, setLiked] = useState(false);
   const [comments, setCommentsCounts] = useState("");
-  const [ setTimeline] = useState("");
+  const [setTimeline] = useState("");
   const [showLikeInfo, setShowLikeInfo] = useState(false);
   const [whoLikedPost, setWhoLikedPost] = useState([]);
   const [showDownloadCard, setShowDownloadCard] = useState(false);
@@ -66,10 +68,22 @@ export default function NewsCard({
   const [likeCount, setLikeCount] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
+  const [showText, setShowText] = useState(false);
+
+  const handleImageClick = () => {
+    setShowText((prevShowText) => !prevShowText);
+  };
+
+  const handleTextClick = () => {
+    setShowText(false);
+  };
+  const handleToggleText = () => {
+    setShowText(!showText);
+  };
   useEffect(() => {
     // Check the theme from local storage when the component mounts
-    const theme = localStorage.getItem('theme');
-    setIsDarkTheme(theme === 'dark');
+    const theme = localStorage.getItem("theme");
+    setIsDarkTheme(theme === "dark");
   }, []);
 
   const onCommentShow = () => {
@@ -77,64 +91,63 @@ export default function NewsCard({
   };
   // const [showLikeInfo, setShowLikeInfo] = useState(false);
 
-  
   useEffect(() => {
     let es; // Declare the EventSource variable
-    
+
     const connect = () => {
-      es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
-      
+      es = new EventSource(
+        `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
+      );
+
       es.onmessage = (event) => {
         const updatedPosts = JSON.parse(event.data);
-        const updatedPost = updatedPosts.find(post => post.id === id);
+        const updatedPost = updatedPosts.find((post) => post.id === id);
         if (updatedPost) {
           setLikeCount(updatedPost?.like);
           console.log(updatedPost?.like);
-           checkIfLiked(); // Check if the current user has liked the updated post
+          checkIfLiked(); // Check if the current user has liked the updated post
         }
       };
-      
+
       es.onmessage = (event) => {
         const updatedPost = JSON.parse(event.data);
         if (updatedPost.id === id) {
           setLikeCount(updatedPost.like);
-          console.log(updatedPost.like);
+          // console.log(updatedPost.like);
         }
       };
-      
     };
-    
+
     connect(); // Initialize the connection
-    
+
     return () => {
       es.close(); // Close the EventSource connection when the component unmounts
     };
   }, [id]);
-  
-  
+
   const handleLike = async () => {
     try {
-      // console.log('in',id)
-      const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user.Uid}/${id}`;
-      const response = await fetch(url, { method: "POST" });
-      const responseData = await response.json();
-      console.log(responseData?.updatedPost?.like )
-      setLikeCount(responseData?.updatedPost?.like)
-      if (!response.ok) {
-        throw new Error(responseData.message || "Failed to like or unlike the post");
-      }
-
-      setLiked((prevLiked) => !prevLiked);
+      setLiked((prevLiked) => !prevLiked); // Optimistic update
+      const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user?.Uid}/${id}`;
+     await fetch(url, { method: "POST"}).then(response => response.json()).then((data) => {
+        console.log(data)
+      })
+      // const responseData = await response.json();
+      // setLikeCount(responseData?.updatedPost?.like);
+      // if (!response.ok) {
+      //   throw new Error(responseData.message || "Failed to like or unlike the post");
+      // }
     } catch (error) {
-      // message.error(`An error occurred: ${error.message}`);
+      setLiked((prevLiked) => !prevLiked); // Revert optimistic update if API call fails
     }
   };
-
-
+  
 
   const checkIfLiked = async () => {
     try {
-      const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${cookies?.user?.Uid}`;
+      const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${
+        cookies?.user?.Uid
+      }`;
       const response = await fetch(url, { method: "GET" });
 
       if (!response.ok) {
@@ -142,7 +155,7 @@ export default function NewsCard({
       }
 
       const data = await response.json();
-        // console.log(data)
+      // console.log(data)
       if (data.likedPosts.length === 0) {
         setLiked(false);
         return;
@@ -307,35 +320,24 @@ export default function NewsCard({
     };
   }, []);
 
+  const text =
+    "In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design";
 
   return (
     <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative">
-      <Modal
-        open={modalOpen}
-        onOk={() => setModalOpen(false)}
-        onCancel={() => setModalOpen(false)}
-        footer={[]}
-        closable={false}
-        width={800}
-        height={100}
-        className="custom-modal"
-      >
-        <NewSlider image={image} newContent={newContent} />
-      </Modal>
-
       {showDownloadCard && (
         <div
           ref={downloadCardRef}
           className="absolute top-0 right-0 mt-4 mr-4 bg-white p-2 rounded shadow-lg flex flex-col"
         >
-          <div className="mb-2">
+          <div className="mb-2 flex flex-col">
             <button onClick={handleDownloadImage}>
               {isLoading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-black"></div>
               ) : (
                 <>
-                  <FontAwesomeIcon icon={faDownload} /> Save
-                  <div className="flex items-center gap-[2px]" >
+                  <FontAwesomeIcon icon={faDownload}  className="gap-2"/> Save
+                  <div className="flex items-center gap-1 ml-3">
                     <RiDeleteBinLine /> Delete
                   </div>
                 </>
@@ -350,9 +352,18 @@ export default function NewsCard({
         </div>
       )}
 
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-3">
         <div className="flex items-center gap-2">
-        <Avatar onClick={hadleNavigateProfile} img={isDarkTheme ? alternativeProfileblack : (profilePic ? profilePic : alternativeProfile)} />
+          <Avatar
+            onClick={hadleNavigateProfile}
+            img={
+              isDarkTheme
+                ? alternativeProfileblack
+                : profilePic
+                ? profilePic
+                : alternativeProfile
+            }
+          />
           <div className="flex flex-col gap-1">
             <h1
               onClick={hadleNavigateProfile}
@@ -372,24 +383,42 @@ export default function NewsCard({
           icon={faEllipsisVertical}
         />
       </div>
-
+      {/* {newContent} */}
       <div className="w-full flex flex-col">
-        <div className="p-4 w-full">
-          <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
-            {newContent}
+        <div className="p-2 flex w-full ">
+          <p
+            id="fullText"
+            className={`dark:text-white text-smallP md:text-midP lg:text-largeP ${
+              showText
+                ? "w-auto max-h-[none]"
+                : "  max-w-[300px] md:max-w-[450px] max-h-[45px] overflow-hidden"
+            }`}
+          >
+            {newContent.length > 120 && !showText ? newContent.slice(0, 120) + "..." : newContent}
           </p>
+          {!showText && newContent.length > 120 && (
+            <p
+              className={`md:mt-6 text-[15px] ${
+                showText ? "hidden" : "text-blue-900"
+              }`}
+              onClick={handleToggleText}
+            >
+              see more
+            </p>
+          )}
         </div>
-      <div className="overflow-hidden flex bg-center ">
 
-    <img
-      src={image}
-      alt="Image"
-      className="h-[400px] flex object-cover w-full"
-      onClick={() => setModalOpen(true)}
-    />
-  
-</div>
-
+        <div className="overflow-hidden flex bg-center">
+          <Image.PreviewGroup>
+            <Image
+              width={600}
+              height={450}
+              src={
+                image
+              }
+            />
+          </Image.PreviewGroup>
+        </div>
       </div>
 
       <div className="w-full flex flex-col z-10">
@@ -476,7 +505,12 @@ export default function NewsCard({
         </div>
       )}
 
-      <CommentContainer Uid={Uid} account_id={account_id} postid={id} isOpen={showComments} />
+      <CommentContainer
+        Uid={Uid}
+        account_id={account_id}
+        postid={id}
+        isOpen={showComments}
+      />
     </div>
   );
 }

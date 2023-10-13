@@ -1,4 +1,3 @@
-
 import  { useEffect, useRef, useState } from 'react';
 import NewsCard from '../NewsCard/newsCard';
 import oopsno from '../../../assets/image/oops-no.png';
@@ -86,7 +85,7 @@ export default function NewsHolder() {
           const url= `${import.meta.env.VITE_WITH_OUT_SSE_GET_TIMELINE}`;
           const response = await fetch(url);
           const data = await response.json();
-          console.log(data);
+          // console.log(data);
           setTimeline(data);  // Update state with fetched data
         } catch (error) {
           console.error('Error fetching initial data:', error);
@@ -106,7 +105,7 @@ export default function NewsHolder() {
         try {
           const newData = JSON.parse(event.data);
           setTimeline((prevData) => [newData, ...prevData]);
-          console.log(newData);
+          // console.log(newData);
         } catch (error) {
           console.error('Error parsing SSE data:', error);
         }
@@ -181,7 +180,7 @@ return (
       Array.isArray(timeline) ? (
         timeline.map((item, index) => (
           <NewsCard
-            key={item.id}
+            key={index}
             image={Array.isArray(item?.images) ? item?.images : item?.images?.split(',')}
             index={index} 
             newContent={item?.description}

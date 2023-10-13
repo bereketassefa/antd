@@ -96,7 +96,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
         const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${
           cookies?.user._id
         }`;
-        // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+  
         await axios
           .get(url)
           .then((res) => {

@@ -142,7 +142,7 @@ function ChatPage() {
     }
   };
   return (
-    <div className=" sticky top-[75px]    mt-4 ">
+    <div className=" sticky top-[105px]    mt-4 ">
       <div className=" flex  rounded-[12px]  h-[630px]  border-2  ">
         <div className=" hidden sm:block mb-4   w-[350px] bg-[#F8F8F8]">
           <div className="flex items-center pl-10 h-[78px]  gap-2 ">
