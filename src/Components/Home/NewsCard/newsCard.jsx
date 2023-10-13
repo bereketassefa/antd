@@ -41,19 +41,6 @@ export default function NewsCard({
   const { showToast } = useToast();
   const downloadCardRef = useRef(null);
 
-  NewsCard.propTypes = {
-    profilePic: PropTypes.string,
-    items: PropTypes.array,
-    companyName: PropTypes.string.isRequired,
-    timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-      .isRequired,
-    newContent: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    like: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    myKey: PropTypes.any.isRequired,
-  };
 
   const [showComments, setShowComments] = useState(false);
   const [cookies] = useCookies(["user"]);
@@ -125,22 +112,20 @@ export default function NewsCard({
     };
   }, [id]);
 
-  const handleLike = async () => {
-    try {
+  const handleLike = async (e) => {
+    e.preventDefault()
+    console.log(e);
+   
       setLiked((prevLiked) => !prevLiked); // Optimistic update
       const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user?.Uid}/${id}`;
-     await fetch(url, { method: "POST"}).then(response => response.json()).then((data) => {
-        console.log(data)
+      console.log(url);
+      await fetch(url, { method: "POST"}).then(response => response.json()).then((data) => {
+        console.log(data);
       })
-      // const responseData = await response.json();
-      // setLikeCount(responseData?.updatedPost?.like);
-      // if (!response.ok) {
-      //   throw new Error(responseData.message || "Failed to like or unlike the post");
-      // }
-    } catch (error) {
-      setLiked((prevLiked) => !prevLiked); // Revert optimistic update if API call fails
-    }
+   
   };
+  
+  
   
 
   const checkIfLiked = async () => {
@@ -172,7 +157,7 @@ export default function NewsCard({
     // Fetch comments when component mounts
     fetchComments();
     checkIfLiked();
-    fetchMoreTimelines();
+    // fetchMoreTimelines();
   }, []);
 
   // Make an API call to fetch comments for the given post ID
@@ -207,6 +192,7 @@ export default function NewsCard({
       console.log(error);
     }
   };
+  // console.log(id)
 
   async function fetchMoreTimelines() {
     const Url = `https://timeline.qa.addissystems.et/time-line/${id}`;
@@ -214,7 +200,7 @@ export default function NewsCard({
     try {
       const response = await axios.get(Url);
       if (response.status === 200) {
-        // console.log(response.data)
+        console.log(response.data)
         setTimeline(response.data);
       }
     } catch (error) {
@@ -310,15 +296,15 @@ export default function NewsCard({
       setShowDownloadCard(false);
     }
   };
-  useEffect(() => {
-    // Attach click event listener
-    document.addEventListener("mousedown", handleClickOutside);
+  // useEffect(() => {
+  //   // Attach click event listener
+  //   document.addEventListener("mousedown", handleClickOutside);
 
-    // Cleanup: Remove event listener
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  //   // Cleanup: Remove event listener
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   const text =
     "In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design";
@@ -441,7 +427,7 @@ export default function NewsCard({
         <ul className="flex items-center p-4 gap-4">
           <li className="flex items-center gap-2">
             <FontAwesomeIcon
-              onClick={handleLike}
+              onClick={(e)=> handleLike(e)}
               className={
                 Liked
                   ? "text-largeP md:text-smallT cursor-pointer text-secondary "

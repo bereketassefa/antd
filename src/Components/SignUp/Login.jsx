@@ -36,7 +36,7 @@ function Login() {
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("hello");
+    // console.log("hello");
     try {
       if (email === "" || pass === "") {
         setErrMsg("Please enter your credentials");
@@ -50,11 +50,7 @@ function Login() {
         const response = await axios.post(
           apiUrl,
           {},
-          {
-            headers: {
-              // Add your headers here if needed
-            },
-          }
+          
         );
         // console.log(response);
         if (response.status === 400) {

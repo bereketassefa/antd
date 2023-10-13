@@ -1,5 +1,6 @@
 import React from "react";
 import Avatar from "../../../Fields/Avatar/avatar";
+import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import {
   BiSolidUserPlus,
   BiMessageDetail,
@@ -14,7 +15,7 @@ const SearchCardTwo = ({ title, image, time, description, status }) => {
         <div className="flex gap-[7px] ">
           {" "}
           <div>
-            <Avatar img={image} />
+            <Avatar img={alternativeProfile} />
           </div>
           <div className="flex flex-col">
             <h1 className="font-bold text-[#000] text-[17px]">{title}</h1>

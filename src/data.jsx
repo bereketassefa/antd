@@ -176,7 +176,6 @@ export const Search = [
     productName: " Iphone-13",
     futures: "128 GB Storage",
     ProductFeature: "128 GB Storage",
-    ProductFeature: "128 GB Storage",
     image2: iphone12,
     title: "Company Name ",
     description:
@@ -196,7 +195,6 @@ export const Search = [
     description:
       " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content.",
     isAccepted: false,
-    isAccepted: true,
     isConnected: true,
   },
   {
@@ -209,7 +207,6 @@ export const Search = [
     title: "SkyLight Hotel ",
     description: " relying on meaningful content.",
     isAccepted: false,
-    isAccepted: true,
     isConnected: false,
   },
 ];

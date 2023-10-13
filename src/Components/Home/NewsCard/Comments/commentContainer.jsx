@@ -36,7 +36,7 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
       const response = await axios.post(url, {
         post_id: postid,
         parent_comment_id: null,
-        user_id: cookies?.user.Uid.toString(),
+        user_id: cookies?.user?.Uid.toString(),
         text: commentText,
       });
   
@@ -93,13 +93,13 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
 
  // Remove the following useEffect block that sets up the SSE connection
  useEffect(() => {
-  console.log(postid)
+  console.log(postid);
   const fetchComments = async () => {
     try {
       const url = `${import.meta.env.VITE_GET_COMMENT}/${postid}`;
       const response = await axios.get(url);
       const data = response.data;
-      console.log(data)
+      // console.log(data)
       if (Array.isArray(data) && data.length > 0) {
         setComments(data);
       } else {
@@ -111,12 +111,12 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
   };
   fetchComments();
  // Set up an interval to fetch comments every 5000ms (5 seconds)
- const intervalId = setInterval(fetchComments, 5000);
+//  const intervalId = setInterval(fetchComments, 5000);
 
  // Cleanup: clear the interval when the component is unmounted
- return () => {
-   clearInterval(intervalId);
- };
+//  return () => {
+//    clearInterval(intervalId);
+//  };
 }, [postid, refreshComments]);
 
 

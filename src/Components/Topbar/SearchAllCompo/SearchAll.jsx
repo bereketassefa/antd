@@ -52,7 +52,7 @@ function SearchAll() {
     container.classList.remove("overflow-y-hidden");
   }
 
-  console.log(name);
+  // console.log(name);
   const decodedName = name
     ? name.includes("%")
       ? decodeURIComponent(name).split(" ")[0]
@@ -65,12 +65,14 @@ function SearchAll() {
         query: decodedName,
       });
       setData(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error("Error performing search", error.message);
     }
   };
 
   useEffect(() => {
+    
     if (decodedName) {
       // Add a check before calling handleSearch
       handleSearch();
@@ -143,16 +145,12 @@ function SearchAll() {
                   : "max-h-[400px] overflow-hidden"
               }`}
             >
-              {(!hasSliderTouched
-                ? Search
-                : DataProducts?.filter(
-                    (item) => item?.ProductPrice <= inputValue
-                  )
-              )?.map((item, index) => {
-                if (!showAllProducts && index >= 5) {
-                  return null; // Skip rendering the remaining products
-                }
-
+           {data
+      .filter((item) => item.entityType === "product")
+      .map((item, index) => {
+        if (!showAllProducts && index >= 5) {
+          return null;
+        }
                 return (
                   <div className="border-[1px]   h-[400px]   ">
                     <div className="flex justify-end ">
@@ -163,7 +161,7 @@ function SearchAll() {
                       >
                         <p>ETB</p>
                         <BiMoney className="text-xl text-white" />
-                        {item.Price}
+                        {item.ProductPrice}
                       </div>
                     </div>
                     <div className="flex flex-col md:flex-row justify-between md:items-center px-4 ">
@@ -183,7 +181,7 @@ function SearchAll() {
                                 onClick={hadleNavigateProfile}
                                 className="dark:text-white font-bold text-[#000]  text-[13px]   mx-1"
                               >
-                                {item?.title?.toLowerCase()}
+                                {item?.companyName?.toLowerCase()}
                               </h2>
                               <di>
                                 <img src={verifiyPNG} alt="" />
@@ -197,7 +195,7 @@ function SearchAll() {
 
                         <div className="flex justify-between">
                           <p className="dark:text-white max-w-[670px] md:w-[670px]  ">
-                            {item.description}
+                            {item.productDescription}
                           </p>
                           <img
                             // src={idphne}
@@ -214,9 +212,9 @@ function SearchAll() {
                         <div className="border-2 rounded-md  w-36  h-10 ">
                           {item.ProductFeature}
                         </div>
-                        <div className="border-2 rounded-md  w-36   h-10 ">
+                        {/* <div className="border-2 rounded-md  w-36   h-10 ">
                           128 GB Storage{" "}
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -235,21 +233,27 @@ function SearchAll() {
           </div>
         </div>
         <div>
-        <p className="ml-3 my-3 text-2xl font-bold">Companies</p>
-        <div className="border-2 rounded-lg m-2">
-          <div
-            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 items-center justify-center gap-6 ${
-              showHiddenContent2 ? " h-auto overflow-hidden" : "max-h-[200px] overflow-hidden"
-            }`}
-          >
-            {data
+          <p className=" ml-3 my-3 text-2xl font-bold">Companies</p>
+
+          <div className="border-2 rounded-lg m-2  ">
+            <div
+              className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 items-center justify-center gap-6    ${
+                showHiddenContent2
+                  ? " h-auto overflow-hidden"
+                  : "max-h-[200px] overflow-hidden"
+              }    `}
+            >
+             {data
               .filter((item) => item.entityType === "party")
               .map((party, index) => {
                 return (
                   <SearchCardTwo
                     key={party.Uid}
                     title={party.party.businessname}
-                  
+                    // description={/* Description Here */}
+                    description={party?.branch[0]?.country ? party?.branch[0]?.country : party?.branch[0]?.city }
+                    // image={}
+                   
                   />
                 );
               })}
@@ -268,6 +272,6 @@ function SearchAll() {
     </div>
   </div>
 );
-}
+            }
 
 export default SearchAll;
