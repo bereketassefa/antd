@@ -114,13 +114,13 @@ export default function NewsCard({
 
   const handleLike = async (e) => {
     e.preventDefault()
-    console.log(e);
+    // console.log(e);
    
       setLiked((prevLiked) => !prevLiked); // Optimistic update
       const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user?.Uid}/${id}`;
       console.log(url);
       await fetch(url, { method: "POST"}).then(response => response.json()).then((data) => {
-        console.log(data);
+        // console.log(data);
       })
    
   };

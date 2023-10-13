@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 import CompanyPP from "../CompanyInfo/CompanyPP";
 import { Modal } from "antd";
 import { IoClose } from "react-icons/io5";
+import axios from "axios";
 export default function FeatureImgHolder({ data }) {
   const [cookies] = useCookies(["user"]);
   const [isLoading] = useState(false);
