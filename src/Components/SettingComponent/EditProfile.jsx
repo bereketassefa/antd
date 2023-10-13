@@ -1,7 +1,20 @@
 import React, { useState, useContext } from "react";
 import flag from "../../assets/image/etflag.png";
 import { ThemeContext } from "../../theme/ThemeContext";
+import { useNavigate } from "react-router-dom";
+import {
+  africanCountryCodeMap,
+  africanCountryCapitalCity,
+} from "../../../src/data";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 const EditProfile = () => {
+  const [companyPhoneError, setCompanyPhoneError] = useState("");
+  const [salesPhoneError, setSalesPhoneError] = useState("");
+
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const navigate = useNavigate();
+  const [formErrors, setFormErrors] = useState({});
   const { myFontSize, increaseFontSize, decreaseFontSize } =
     useContext(ThemeContext);
   const [fontSize, setFontSize] = useState(16); // Initial font size of 16px
@@ -16,6 +29,23 @@ const EditProfile = () => {
     foundedYear: "",
     foundedMonth: "",
   });
+
+  // const handleSend = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       "https://account.qa.addissystems.et/account/login/forgot",
+  //       {
+  //         phone: phoneNumber,
+  //       }
+  //     );
+
+  //     if (response.data) {
+  //       navigate("/OTP", { state: { phoneNumber: phoneNumber } });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error sending OTP:", error);
+  //   }
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -29,8 +59,21 @@ const EditProfile = () => {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: "" });
+
+    if (name === "companyPhone") {
+      setCompanyPhoneError(
+        value.trim() === "" ? "Company Phone Number is required" : ""
+      );
+    }
+
+    if (name === "salesPhone") {
+      setSalesPhoneError(
+        value.trim() === "" ? "Sales Phone Number is required" : ""
+      );
+    }
   };
 
   const validateForm = () => {
@@ -84,15 +127,15 @@ const EditProfile = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className=" mx-auto bg-[#F9F7F7] p-4 mt-5 ">
+      <div className="  bg-[#F9F7F7]  mt-5">
         <h1
           style={{ fontSize: 16 + myFontSize }}
           className="ml-8 text-[18p] font-bold"
         >
           Edit Profile
         </h1>
-        <div className="max-w-[472] p-6 mx-6">
-          <div className="mb-4 ">
+        <div className="max-w-[650px]  w-[400px] p-6 mx-1    md:w-full lg:max-w-[800px] lg:w-full">
+          <div className="flex w-full max-w-[500px] flex-col   mt-4">
             <label
               htmlFor="overview"
               className="block mb-2 text-lg font-medium text-gray-700"
@@ -107,7 +150,7 @@ const EditProfile = () => {
               placeholder="Eg: Lorem ipsum dolor sit amet consectetur."
               value={formData.overview}
               onChange={handleChange}
-              className={`bg-[#FFF]  outline-none bg-transparent w-full px-3 py-2 border ${
+              className={` py-3   pl-4   outline-none rounded border-2 border-[#3222C6] max-w-[650px] md:w-[650px]   ${
                 errors.overview ? "border-red-500" : "border-2 border-[#3222C6]"
               } `}
             />
@@ -115,76 +158,78 @@ const EditProfile = () => {
               <p className="text-red-500 text-sm">{errors.overview}</p>
             )}
           </div>
-          <div className="  mb-4">
+          <div className="my-2 ">
             <label
               htmlFor="companyPhone"
               className="block mb-2 text-lg font-medium text-gray-700"
             >
               <p style={{ fontSize: 16 + myFontSize }}> Company Phone Number</p>
             </label>
-            <div
-              className={` bg-[#FFF] flex px-3 py-2 border items-center ${
-                errors.companyPhone
-                  ? "border-red-500"
-                  : "border-2 border-[#3222C6]"
-              } `}
-            >
-              <img
-                className="h-7 w-9 rounded object-cover"
-                src={flag}
-                alt="ethiopian flag"
-              />{" "}
-              <span className="ml-1 text-base">+251</span> {""}
-              <input
-                type="number"
-                id="companyPhone"
-                name="companyPhone"
-                value={formData.companyPhone}
-                onChange={handleChange}
-                className={` bg-transparent w-full outline-none `}
-              />
+            <div className="flex w-full max-w-[500px] flex-col gap-y-4 mt-4 ">
+              <div
+                className={
+                  companyPhoneError
+                    ? "flex items-center rounded bg-white pl-2 border-2 border-red-500 max-w-[650px]  md:w-[650px]"
+                    : "flex items-center rounded bg-white pl-2 border-2 border-[#3222C6] max-w-[650px]  md:w-[650px]"
+                }
+              >
+                <PhoneInput
+                  country={"et"}
+                  enableAreaCodes={true}
+                  value={formData.companyPhone}
+                  inputProps={{
+                    className: "w-full py-3 px-12 rounded outline-none ",
+                  }}
+                  containerStyle={{ position: "relative" }}
+                  buttonStyle={{ background: "transparent", border: "none" }}
+                  dropdownStyle={{ position: "absolute", top: "100%", left: 0 }}
+                  onChange={(value) =>
+                    handleChange({ target: { name: "companyPhone", value } })
+                  }
+                />
+              </div>
+              {companyPhoneError && (
+                <p className="text-red-500 text-sm">{companyPhoneError}</p>
+              )}
             </div>
-
-            {errors.companyPhone && (
-              <p className="text-red-500 text-sm">{errors.companyPhone}</p>
-            )}
           </div>
-          <div className="mb-4">
+          <div className="my-2">
             <label
               htmlFor="salesPhone"
               className="block mb-2 text-lg font-medium text-gray-700"
             >
               <p style={{ fontSize: 16 + myFontSize }}> Sales Phone Number</p>
             </label>
-            <div
-              className={`bg-[#FFF]  flex px-3 py-2 border items-center ${
-                errors.companyPhone
-                  ? "border-red-500"
-                  : "border-2 border-[#3222C6]"
-              }  }`}
-            >
-              <img
-                className="h-7 w-9 rounded object-cover"
-                src={flag}
-                alt="ethiopian flag"
-              />{" "}
-              <span className="ml-1 text-base">+251</span>
-              <input
-                type="number"
-                id="salesPhone"
-                name="salesPhone"
-                value={formData.salesPhone}
-                onChange={handleChange}
-                className="  bg-transparent  w-full  outline-none "
-              />
+            <div className="flex w-full max-w-[700px] flex-col   mt-4">
+              <div
+                className={
+                  salesPhoneError
+                    ? "flex items-center rounded bg-white pl-2 border-2 border-red-500 max-w-[650px]  md:w-[650px]"
+                    : "flex items-center rounded bg-white pl-2 border-2 border-[#3222C6] max-w-[650px]  md:w-[650px]"
+                }
+              >
+                <PhoneInput
+                  country={"et"}
+                  enableAreaCodes={true}
+                  value={formData.salesPhone}
+                  inputProps={{
+                    className: "w-full py-3 px-12 rounded outline-none ",
+                  }}
+                  containerStyle={{ position: "relative" }}
+                  buttonStyle={{ background: "transparent", border: "none" }}
+                  dropdownStyle={{ position: "absolute", top: "100%", left: 0 }}
+                  onChange={(value) =>
+                    handleChange({ target: { name: "salesPhone", value } })
+                  }
+                />
+              </div>
+              {salesPhoneError && (
+                <p className="text-red-500 text-sm">{salesPhoneError}</p>
+              )}
             </div>
-
-            {errors.salesPhone && (
-              <p className="text-red-500 text-sm">{errors.salesPhone}</p>
-            )}
           </div>
 
-          <div className="mb-4">
+          <div className="flex w-full max-w-[500px] flex-col   my-2">
             <label
               htmlFor="website"
               className="block mb-2 text-lg font-medium text-gray-700"
@@ -198,7 +243,7 @@ const EditProfile = () => {
               placeholder="Eg: www.helloWorld.com"
               value={formData.website}
               onChange={handleChange}
-              className={` bg-[#FFF]  outline-none w-full px-3 py-2 border ${
+              className={` py-3 pl-4  outline-none rounded border-2 border-[#3222C6] max-w-[650px]  md:w-[650px] ${
                 errors.website ? "border-red-500" : "border-2 border-[#3222C6]"
               }`}
             />
@@ -208,7 +253,7 @@ const EditProfile = () => {
           </div>
 
           <div className="flex px-2">
-            <div className="mb-4 w-56">
+            <div className="flex flex-col my-2 w-56">
               <label
                 htmlFor="country"
                 className="block mb-2 text-lg font-medium text-gray-700"
@@ -221,59 +266,43 @@ const EditProfile = () => {
                 value={formData.country}
                 placeholder="Country"
                 onChange={handleChange}
-                className={` outline-none w-full px-3 py-2 border ${
+                className={` w-full py-3 pl-4  outline-none rounded border-2 border-[#3222C6] max-w-[650px]   ${
                   errors.country
                     ? "border-red-500"
                     : "border-2 border-[#3222C6]"
                 } `}
               >
-                <option style={{ fontSize: 16 + myFontSize }} value="">
-                  Select Country
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="Eth">
-                  Ethiopia
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="USA">
-                  USA
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="keniya">
-                  Keniya
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="USA">
-                  USA
-                </option>
+                <option value="">Select Country</option>
+                {Object.keys(africanCountryCodeMap).map((countryCode) => (
+                  <option
+                    key={countryCode}
+                    value={africanCountryCodeMap[countryCode].name}
+                  >
+                    {africanCountryCodeMap[countryCode].name}
+                  </option>
+                ))}
               </select>
               {errors.country && (
                 <p className="text-red-500 text-sm">{errors.country}</p>
               )}
             </div>
-            <div className="mt-9 w-56 ml-6">
+            <div className="mt-11 w-56 ml-6">
               <div className="">
                 <select
                   id="city"
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className={`  outline-none w-full px-3 py-2 border ${
+                  className={`w-full py-3 pl-3 rounded outline-none border-2 border-[#3222C6] max-w-[650px] ${
                     errors.city ? "border-red-500" : "border-2 border-[#3222C6]"
-                  }
-                   `}
+                  }`}
                 >
-                  <option style={{ fontSize: 16 + myFontSize }} value="">
-                    City
-                  </option>
-                  <option
-                    style={{ fontSize: 16 + myFontSize }}
-                    value="Ethiopia"
-                  >
-                    Addis Ababa
-                  </option>
-                  <option style={{ fontSize: 16 + myFontSize }} value="USA">
-                    Hawasa
-                  </option>
-                  <option style={{ fontSize: 16 + myFontSize }} value="USA">
-                    Adama
-                  </option>
+                  <option value="">Select City</option>
+                  {Object.values(africanCountryCapitalCity).map((country) => (
+                    <option key={country.capital} value={country.capital}>
+                      {country.capital}
+                    </option>
+                  ))}
                 </select>
                 {errors.city && (
                   <p className="text-red-500 text-sm">{errors.city}</p>
@@ -281,14 +310,14 @@ const EditProfile = () => {
               </div>
             </div>
           </div>
-          
-          <div className="flex mx-2">
+
+          <div className="flex px-2 ">
             <div className=" w-56">
               <label
                 htmlFor="foundedMonth"
-                className="block mb-2 text-lg font-medium text-gray-700"
+                className="block mb-2   text-lg font-medium text-gray-700"
               >
-                Founded Year
+                <p style={{ fontSize: 16 + myFontSize }}> Founded Year</p>
               </label>
               <select
                 type="text"
@@ -296,7 +325,7 @@ const EditProfile = () => {
                 name="foundedMonth"
                 value={formData.foundedMonth}
                 onChange={handleChange}
-                className={`  outline-none foundedMonth w-full px-3 py-2 border ${
+                className={`w-full py-3 pl-3  rounded outline-none  border-2 border-[#3222C6] max-w-[650px]   ${
                   errors.foundedMonth
                     ? "border-red-500"
                     : "border-2 border-[#3222C6]"
@@ -305,17 +334,41 @@ const EditProfile = () => {
                 <option style={{ fontSize: 16 + myFontSize }} value="">
                   Select Month
                 </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="January">
+                <option style={{ fontSize: 16 + myFontSize }} value="Jan">
                   January
                 </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="February">
+                <option style={{ fontSize: 16 + myFontSize }} value="Feb">
                   February
                 </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="February">
-                  march
+                <option style={{ fontSize: 16 + myFontSize }} value="mar">
+                  March
                 </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="February">
-                  april
+                <option style={{ fontSize: 16 + myFontSize }} value="apr">
+                  April
+                </option>
+                <option style={{ fontSize: 16 + myFontSize }} value=" may">
+                  May
+                </option>
+                <option style={{ fontSize: 16 + myFontSize }} value="jun ">
+                  June
+                </option>
+                <option style={{ fontSize: 16 + myFontSize }} value="jul">
+                  July
+                </option>
+                <option style={{ fontSize: 16 + myFontSize }} value="aug">
+                  August
+                </option>
+                <option style={{ fontSize: 16 + myFontSize }} value="sep">
+                  September
+                </option>
+                <option style={{ fontSize: 16 + myFontSize }} value="oct">
+                  October
+                </option>
+                <option style={{ fontSize: 16 + myFontSize }} value="nov">
+                  November
+                </option>
+                <option style={{ fontSize: 16 + myFontSize }} value="dec">
+                  December
                 </option>
               </select>
               {errors.foundedMonth && (
@@ -330,7 +383,7 @@ const EditProfile = () => {
                 name="foundedYear"
                 value={formData.foundedYear}
                 onChange={handleChange}
-                className={`  outline-none w-full px-3 py-2 border ${
+                className={`w-full py-3 pl-3   outline-none rounded border-2 border-[#3222C6] max-w-[650px]    ${
                   errors.foundedYear
                     ? "border-red-500"
                     : "border-2 border-[#3222C6]"
@@ -343,6 +396,7 @@ const EditProfile = () => {
                 <option value="February">2021</option>
                 <option value="February">2022</option>
                 <option value="February">2023</option>
+                <option value="February">202</option>
               </select>
               {errors.foundedYear && (
                 <p className="text-red-500 text-sm">{errors.foundedYear}</p>

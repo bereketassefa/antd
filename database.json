@@ -1,0 +1,24 @@
+{
+  "features": [
+    {
+      "title": "Enhance your customer service",
+      "paragraph": "Automate time-consuming procedures, avoid manual entry that is prone to error, and quickly spot and correct problems to keep business operations operating smoothly and customers satisfied.",
+      "icon": "./image/1x/Asset 1.png"
+    },
+    {
+      "title": "Lower Cost",
+      "paragraph": "To save time and money, eliminate manual paper-based operations, connect to all trading partners, and share information in any format through a single connection.",
+      "icon": "./image/1x/Asset 2.png"
+    },
+    {
+      "title": "Cooperate to grow more quickly",
+      "paragraph": "Use the industry-leading B2B/ERP Service integration to stay competitive, connect with partners fast, and satisfy buyer and vendor connectivity needs.",
+      "icon": "./image/1x/Asset 3.png"
+    },
+    {
+      "title": "",
+      "paragraph": "",
+      "icon": "./image/1x/Asset 4.png"
+    }
+  ]
+}

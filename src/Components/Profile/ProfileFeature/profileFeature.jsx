@@ -5,7 +5,7 @@ import CompanyInfo from './CompanyInfo/companyInfo'
 export default function ProfileFeature({data ,Uid }) {
 
   return (
-    <div className='dark:bg-[#1b1f23] flex flex-col  bg-lightBg py-2 overflow-hidden' >
+    <div className='dark:bg-[#1b1f23] flex flex-col  mt-4 bg-lightBg py-2 overflow-hidden' >
          
         <FeatureImgHolder data={data} />
          

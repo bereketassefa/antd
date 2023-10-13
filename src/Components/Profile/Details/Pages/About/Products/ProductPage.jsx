@@ -7,12 +7,20 @@ import ProductCard from "./ProductCard";
 import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import { Modal } from "antd";
+
+import AddItemsPage from "../../../../../../Pages/AddProduct/AddItemsPage";
 function ProductPage() {
   const { id } = useParams(); // Destructure id from useParams
   const [cookies] = useCookies(["user"]);
   const isUserIdEqual = cookies.user._id === id;
   const [products, setProducts] = useState([]);
 
+  // console.log(id);
+    const [showAddProductModal, setShowAddProductModal] = useState(false);
+ const [isModalOpen, setIsModalOpen] = useState(false);
+     
+     
   // console.log(id);
   useEffect(() => {
     // Define an async function
@@ -30,8 +38,25 @@ function ProductPage() {
     // Call the async function
     fetchProducts();
   }, [id]);
+
+   const handleOpenModal = () => {
+     setIsModalOpen(true);
+   };
+
+   const handleCloseModal = () => {
+     setIsModalOpen(false);
+   };
   return (
     <div>
+      <Modal
+        centered
+        visible={isModalOpen}
+        width={700}
+        footer={null}
+        onCancel={handleCloseModal}
+      >
+        <AddItemsPage />
+      </Modal>
       <Collapse
         className="w-full bg-zinc-50"
         items={[
@@ -46,18 +71,18 @@ function ProductPage() {
                       icon={faPencil}
                       className="text-secondary text-smallT cursor-pointer"
                     />
-                    <Link to="">
-                      <FontAwesomeIcon
-                        icon={faPlus}
-                        className="text-secondary text-smallT cursor-pointer"
-                      />
-                    </Link>
+
+                    <FontAwesomeIcon
+                      icon={faPlus}
+                      className="text-secondary text-smallT cursor-pointer"
+                      onClick={handleOpenModal}
+                    />
                   </div>
                 )}
               </div>
             ),
             children: (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 overflow-y-scroll max-h-[430px] scrole-overflow   items-center justify-center gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 overflow-y-scroll max-h-[430px] scrole-overflow  items-center justify-center gap-3">
                 {products.map((product) => (
                   <ProductCard
                     key={product.key}

@@ -29,6 +29,7 @@ function SearchAll() {
   const [showAllCompanies, setShowAllCompanies] = useState(false);
   const [hasSliderTouched, setHasSliderTouched] = useState(false);
   const [inputValue, setInputValue] = useState(1);
+  const [data, setData] = useState([]);
   const hadleNavigateProfile = async (e) => {
     e.preventDefault();
     try {
@@ -63,31 +64,7 @@ function SearchAll() {
       const response = await axios.post(url, {
         query: decodedName,
       });
-
-      const formattedResults = response.data
-        .filter((item) => ["party", "product"].includes(item.entityType))
-        .map((item) => {
-          if (item.entityType === "party") {
-            return {
-              businessname: item.party.businessname,
-              Uid: item.Uid,
-              entityType: item.entityType,
-              // Add more fields for 'party' if needed
-            };
-          } else if (item.entityType === "product") {
-            return {
-              productName: item.productName,
-              productDescription: item.productDescription,
-              imageUrl: item.imageUrl,
-              Uid: item.Uid,
-              entityType: item.entityType,
-              // Add more fields for 'product' if needed
-            };
-          }
-          return null;
-        });
-
-      setSearchCompany(formattedResults);
+      setData(response.data);
     } catch (error) {
       console.error("Error performing search", error.message);
     }
@@ -163,7 +140,6 @@ function SearchAll() {
               className={`rounded-lg ${
                 showHiddenContent
                   ? " h-auto overflow-hidden"
-                  
                   : "max-h-[400px] overflow-hidden"
               }`}
             >
@@ -259,42 +235,39 @@ function SearchAll() {
           </div>
         </div>
         <div>
-          <p className=" ml-3 my-3 text-2xl font-bold">Companies</p>
-
-          <div className="border-2 rounded-lg m-2  ">
-            <div
-              className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 items-center justify-center gap-6    ${
-                showHiddenContent2
-                  ? " h-auto overflow-hidden"
-                  : "max-h-[200px] overflow-hidden"
-              }    `}
+        <p className="ml-3 my-3 text-2xl font-bold">Companies</p>
+        <div className="border-2 rounded-lg m-2">
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 items-center justify-center gap-6 ${
+              showHiddenContent2 ? " h-auto overflow-hidden" : "max-h-[200px] overflow-hidden"
+            }`}
+          >
+            {data
+              .filter((item) => item.entityType === "party")
+              .map((party, index) => {
+                return (
+                  <SearchCardTwo
+                    key={party.Uid}
+                    title={party.party.businessname}
+                  
+                  />
+                );
+              })}
+          </div>
+          <hr className="border-[1px]" />
+          <div className="flex justify-center items-center">
+            <button
+              className="text-[#3222C6]"
+              onClick={() => setShowHiddenContent2(!showHiddenContent2)}
             >
-              {Chat.map((index) => (
-                <SearchCardTwo
-                  key={index.title}
-                  title={index.title}
-                  description={index.description}
-                  time={index.time}
-                  image={index.image}
-                  status={index.status}
-                />
-              ))}
-            </div>
-            <hr className="border-[1px]" />
-
-            <div className="flex justify-center items-center">
-              <button
-                className="text-[#3222C6]"
-                onClick={() => setShowHiddenContent2(!showHiddenContent2)}
-              >
-                See All Companies
-              </button>
-            </div>
+              See All Companies
+            </button>
           </div>
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default SearchAll;

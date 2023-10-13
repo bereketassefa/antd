@@ -37,15 +37,12 @@ export default function CompanyInfo({ data, Uid }) {
   const [isDeclineLoading, setDeclineLoading] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-
   const [mymodalOpen, setMyModalOpen] = useState(false);
   const id = window.location.pathname.split("/")[3];
 
- const toggleModal = () => {
-   setModalOpen(false);
- };
-
-
+  const toggleModal = () => {
+    setModalOpen(false);
+  };
 
   //    console.log(Uid)
   const OwnerUid = cookies?.user.Uid;
@@ -366,7 +363,7 @@ export default function CompanyInfo({ data, Uid }) {
     return (
       <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
         <div>
-          <IoClose  />
+          <IoClose />
         </div>
         <div className="bg-white p-4 rounded-lg">
           <p>Are you sure you want to cancel the request?</p>
@@ -392,9 +389,9 @@ export default function CompanyInfo({ data, Uid }) {
   // console.log(countData)
   if (isLoading) {
     return (
-      <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem]">
-        <div className="w-full flex items-end justify-between">
-          <div className="bg-white w-fit p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
+      <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem]   ">
+        <div className="w-full flex items-end justify-between ">
+          <div className="bg-white   p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
             <div className="w-full flex items-center justify-center bg-gray-400 animate-pulse"></div>
           </div>
         </div>
@@ -424,26 +421,23 @@ export default function CompanyInfo({ data, Uid }) {
         onCancel={() => setMyModalOpen(false)}
         footer={[]}
       >
-        <CompanyPP
-          profilePic={profilePic ? profilePic : alternativeProfile}
-          setMyModalOpen={setMyModalOpen}
-        />
+        <CompanyPP />
       </Modal>
 
       <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem]">
         <div className="w-full flex items-end justify-between">
           <div className="bg-white  p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
             <div className="w-full flex items-center justify-center">
-            <img
-  className="w-full object-cover h-full flex"
-  src={profilePic ? profilePic : alternativeProfile}
-  alt="Profile"
-  onClick={() => {
-    if (isUserIdEqual) {
-      setMyModalOpen(true);
-    }
-  }}
-/>
+              <img
+                className="w-full object-cover h-full flex"
+                src={profilePic ? profilePic : alternativeProfile}
+                alt="Profile"
+                onClick={() => {
+                  if (isUserIdEqual) {
+                    setMyModalOpen(true);
+                  }
+                }}
+              />
             </div>
             <div className="bg-white p-[3px] rounded-full absolute mt-[-0.5rem] mr-[-0.5rem]">
               {data &&
@@ -510,7 +504,8 @@ export default function CompanyInfo({ data, Uid }) {
             </div>
           </div>
           {data &&
-          data.account && isDataLoaded &&
+          data.account &&
+          isDataLoaded &&
           data.account[0] &&
           data.account[0]._id !== cookies?.user?._id ? (
             <>
@@ -524,8 +519,7 @@ export default function CompanyInfo({ data, Uid }) {
                     iconPossition="left"
                   />
                 </div>
-              ) :  (
-                
+              ) : (
                 <div className="w-full flex items-center justify-start gap-2 flex-wrap">
                   <Button
                     onClick={async () => {
@@ -593,9 +587,7 @@ export default function CompanyInfo({ data, Uid }) {
                 </div>
               )}
             </>
-          ) :null
-          
-          }
+          ) : null}
         </div>
         {isModalOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
@@ -607,7 +599,7 @@ export default function CompanyInfo({ data, Uid }) {
                 />
               </div>
               <img
-                src={selectedImage}
+                // src={selectedImage}
                 alt="Selected"
                 className="mb-4 w-full h-48 object-cover"
               />
@@ -627,8 +619,7 @@ export default function CompanyInfo({ data, Uid }) {
               </div>
             </div>
           </div>
-        )
-        }
+        )}
       </div>
       {/* Add your custom popups here */}
       {showCancelRequestPopup && (

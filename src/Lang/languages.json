@@ -1,0 +1,701 @@
+{
+  "NavBar Menus": "this is just a comment",
+  "home": {
+    "Eng": "Home",
+    "Amh": "መነሻ",
+    "Oro": "Garaa"
+  },
+
+  "solution": {
+    "Eng": "Solutions",
+    "Amh": "መፍትሄዎች",
+    "Oro": "Furmaata"
+  },
+
+  "about us": {
+    "Eng": "About us",
+    "Amh": "ስለ እኛ",
+    "Oro": "Waa’ee keenya"
+  },
+
+  "blog": {
+    "Eng": "Blog",
+    "Amh": "ብሎግ",
+    "Oro": "Biloogii"
+  },
+
+  "contact": {
+    "Eng": "Contact",
+    "Amh": "መገናኘት",
+    "Oro": "Quunnamuu"
+  },
+
+  "more info": {
+    "Eng": "More Info",
+    "Amh": "ተጨማሪ መረጃ",
+    "Oro": "Odeeffannoo Dabalataa"
+  },
+
+  "log in": {
+    "Eng": "log in",
+    "Amh": "ግባ",
+    "Oro": "seena"
+  },
+
+  "hero para": {
+    "Eng": "Solve All Your Digital Transaction Needs",
+    "Amh": "ሁሉንም የዲጂታል ግብይት ፍላጎቶችዎን ይፍቱ",
+    "Oro": "Fedhii gabaa dijitaalaa keessan hunda furuu"
+  },
+
+  "facilitating": {
+    "Eng": "Facilitating",
+    "Amh": "የተቀላጠፈ",
+    "Oro": "daldala"
+  },
+
+  "e-commerce": {
+    "Eng": "E-commerce",
+    "Amh": "ኢ-ንግድን",
+    "Oro": "elektirooniksii"
+  },
+  "POS as a Service": {
+    "Eng": "E-POS",
+    "Amh": "የፖስ አገልግሎት",
+    "Oro": "POS akka Tajaajilaatti "
+  },
+
+  "in ethiopia and": {
+    "Eng": "IN ETHIOPIA AND BEYOND.",
+    "Amh": "በኢትዮጵያ እና ሌሎችም ሃገሮች ማስፋፋት",
+    "Oro": "Ityoophiyaa fi biyyoota biroo keessatti gahumsa qabu babal’isuu"
+  },
+
+  "demo request": {
+    "Eng": "Demo Request",
+    "Amh": "የማሳያ ጥያቄዎች",
+    "Oro": "Gaaffii Deemoo"
+  },
+
+  "work with us": {
+    "Eng": "WHY WORK",
+    "Amh": "ለምን ከእኛ ጋር ይሰራሉ?",
+    "Oro": "MAALIIF NU WALIIN HOJJETUU?"
+  },
+
+  "our service": {
+    "Eng": "SERVICE WE PROVIDE",
+    "Amh": "የምንሰጠው አገልግሎት",
+    "Oro": "Tajaajila"
+  },
+
+  "we give": {
+    "Eng": "PROVIDE",
+    "Oro": "nuti kenninu"
+  },
+
+  "work with us para": {
+    "Eng": "Addissystems PLC is ERP, Electronic Invoicing and E-POS company that delivers convenient, innovative, safe and secure financial softwares services in Ethiopia by leveraging the latest technology platform in the industry and developing user-oriented products and services.",
+    "Amh": "አዲስ ሲስተምስ ኃ.የተ.የግ.ማህበር ኢአርፒ፣ ኤሌክትሮኒክስ ኢንቮይሲንግ እና ኢ-POS ኩባንያ ሲሆን ምቹ፣ ፈጠራ ያለው፣ ደህንነቱ የተጠበቀ እና ደህንነቱ የተጠበቀ የፋይናንሺያል ሶፍትዌሮችን በኢንዱስትሪው ውስጥ ያለውን ዘመናዊ መድረክ በመጠቀም እና ተጠቃሚ ተኮር ምርቶችን እና አገልግሎቶችን በማልማት በኢትዮጵያ ውስጥ ያቀርባል።",
+    "Oro": "Addissystems PLC dhaabbata ERP, Electronic Invoicing fi E-POS kan ta’ee fi tajaajila sooftiweerii faayinaansii mijataa, kalaqa, nageenya qabuu fi nageenya qabu Itoophiyaa keessatti kan kennu yoo ta’u, waltajjii teeknooloojii ammayyaa indaastiricha keessatti argamu fayyadamuun oomishaalee fi tajaajiloota fayyadamtoota irratti xiyyeeffatan hojjechuudhaani."
+  },
+  "posh1": {
+    "Eng": "Enhance your customer service.",
+    "Amh": "የደንበኛ አገልግሎትዎን ያሳድጉ።",
+    "Oro": "Tajaajila maamiltoota keessanii guddifadhaa."
+  },
+  "Terms and conditions": {
+    "Eng": "Terms and conditions",
+    "Amh": "አተገባበሩና ​​መመሪያው",
+    "Oro": "Haalawwanii fi dambiiwwan"
+  },
+  "learn-more": {
+    "Eng": "learn more",
+    "Amh": "ተጨማሪ እወቅ",
+    "Oro": "caalaatti baradhu"
+  },
+  "pos-para1": {
+    "Eng": "Automate time-consuming procedures, avoid manual entry that is prone to error, and quickly spot and correct problems to keep business operations operating smoothly and customers satisfied.",
+    "Amh": "ጊዜ የሚወስዱ ሂደቶችን በራስ ሰር ማድረግ፣ ለስህተት የተጋለጠ በእጅ መግባትን ያስወግዱ እና ችግሮችን በፍጥነት በመለየት የንግድ ስራዎችን በአግባቡ እንዲሰራ እና ደንበኞች እንዲረኩ ያድርጉ።",
+    "Oro": "Hojimaata yeroo fudhatu ofumaan hojjechuu, harkaan seenuu dogoggoraaf saaxilamu irraa fagaachuu, akkasumas hojiin daldalaa haala gaariin akka hojjetuu fi maamiltoonni akka itti quufan gochuuf rakkoolee dafanii adda baasuu fi sirreessuu."
+  },
+  "pos-h2": {
+    "Eng": "Boost business performance.",
+    "Amh": "የንግድ ሥራ አፈፃፀምን ያሳድጉ!",
+    "Oro": "Raawwii hojii daldalaa guddisuu."
+  },
+  "pos-para2": {
+    "Eng": "With automated supply chain document flows that lighten workloads, businesses may become more agile and speed their time to revenue.",
+    "Amh": " የስራ ጫናን በሚያቃልል የአቅርቦት ሰንሰለት ሰነድ ፍሰቶች፣ንግዶች የበለጠ ቀልጣፋ ሊሆኑ እና ጊዜያቸውን ለገቢ ማፋጠን ይችላሉ።",
+    "Oro": "Dhangala’aa sanadoota dhiyeessii sansalataa ofumaan fe’iinsa hojii salphisuun, daldaltoonni caalaatti socho’uu fi yeroo isaanii gara galii saffisiisuu danda’u."
+  },
+  "POS service": {
+    "Eng": "EPOS as a service",
+    "Amh": "የፖስ አገልግሎት",
+    "Oro": "Tajaajila POSi"
+  },
+  "pos-p1": {
+    "Eng": "Easy Payments With Addis POS services",
+    "Amh": "ቀላል የክፍያ አገልግሎት ከ አዲስ ኢፖስ",
+    "Oro": "Kaffaltii Salphaa Tajaajila Addis POS Waliin"
+  },
+
+  "pos-title": {
+    "Eng": "Easy Payments With Addis POS services",
+    "Amh": "ቀላል የክፍያ አገልግሎት ከ አዲስ ኢፖስ",
+    "Oro": "Kaffaltii Salphaa Tajaajila Addis POS Waliin"
+  },
+  "ADDIS": {
+    "Eng": "ADDIS",
+    "Amh": "የአዲስ ",
+    "Oro": ""
+  },
+  "POS-H1": {
+    "Eng": "  Integration Can ",
+    "Amh": "ጥምርታ",
+    "Oro": "Ida'amuu Danda'a"
+  },
+  "Benefit-POS-H1": {
+    "Eng": "Benefit",
+    "Amh": "ጥቅሞች",
+    "Oro": "Bu'aa"
+  },
+  "POS-system-para": {
+    "Eng": " An electronic Point of Sale (POS) system is a web-based software solution that enables businesses to process transactions, manage inventory, and track sales data electronically. It replaces traditional cash registers and manual record-keeping with a digital platform that streamlines the entire sales process. With an electronic POS system, merchants can accept various payment methods, generate digital receipts and QR code for payment, and gain real-time insights into their business performance.We developed Addis EPOS to streamline transaction process of retail stores, restaurants, hospitality industry, Service-based businesses, convenience stores, supermarkets, E-commerce businesses etc",
+    "Amh": "የፖስ ስርዓት የተለያዩ የዲጂታል ክፍያዎችን ለመቀበል እና ለማስኬድ የሚያስፈልጉትን የሃርድዌር እና ሶፍትዌሮች ጥምረት ያመለክታል።  ሃርድዌሩ የካርድ መቀበያ ማሽንን ሲይዝ ፤ ሶፍትዌሩ ደግሞ ቀሪዎቹን የመክፈያ ዘዴዎች፣ ሂደት እና ሌሎች የተጨማሪ እሴት አገልግሎቶችን ያከናውናል።",
+    "Oro": "Sirni POS jechuun walnyaatinsa haardwaarii fi sooftiweerii kaffaltii dijitaalaa bifa adda addaa fudhachuu fi adeemsisuuf barbaachisan jechuudha. Haardwaariin kun maashinii fudhatama kaardii kan of keessaa qabu yoo ta’u, sooftiweerichi mala kaffaltii hafe, adeemsaafi tajaajiloota gatii dabalataa naannoo biroo ni qabata"
+  },
+  "Benefits to the business": {
+    "Eng": "Benefits to the business",
+    "Amh": "ለንግድ ማህበረሰቡ ያለው",
+    "Oro": "Faayidaa daldalaaf argamsiisu"
+  },
+  "community": {
+    "Eng": "COMMUNITY",
+    "Amh": "ጥቅም",
+    "Oro": "HAWAASA"
+  },
+  "pos-Enhance your": {
+    "Eng": "Enhance your customer service",
+    "Amh": "የደንበኛ አገልግሎትዎን ያቀላጥፋል",
+    "Oro": "Tajaajila maamiltootaa keessan guddifadhaa"
+  },
+  "ERP as a Service": {
+    "Eng": "ERP as a Service",
+    "Amh": "የኢ አር ፒ አገልግሎት",
+    "Oro": "ERP akka Tajaajilaatti"
+  },
+  "m-pos": {
+    "Eng": "M-POS",
+    "Amh": "የኢ አር ፒ አገልግሎት",
+    "Oro": "ERP akka Tajaajilaatti"
+  },
+
+  "ERP-title": {
+    "Eng": "Easy Payments With Addis POS services",
+    "Amh": "ቀላል የክፍያ አገልግሎት በ አዲስ ኢፖስ ",
+    "Oro": "Kaffaltii Salphaa Tajaajila Addis POS Waliin"
+  },
+  "ERP-para": {
+    "Eng": "Enterprise resource planning, or ERP, software enables businesses to control all facets of their operations, including finance, human resources, manufacturing, sales, planning, and supply chain, from a single interface. Accounting, project management, planning, customer relationship management and compliance, procurement, and other business operations can all be integrated and automated with the help of enterprise resource planning software. Business executives can make better decisions thanks to the automation of all internal processes enabled by ERP software solutions, which also give them access to vital real-time data and insights.",
+    "Amh": "የኢንተርፕራይዝ ሪሶርስ ፕላኒንግ ወይም ኢአርፒ ሶፍትዌር የንግድ ድርጅቶች ሁሉንም የስራ እንቅስቃሴዎቻቸውን ማለትም ፋይናንስ፣ የሰው ሃይል፣ ማምረትን፣ ሽያጭ፣ እቅድን እና የአቅርቦት ሰንሰለትን ጨምሮ፣ ከአንድ በይነገጽ እንዲቆጣጠሩ ያስችላቸዋል። የሂሳብ አያያዝ፣ የፕሮጀክት አስተዳደር፣ እቅድ፣ የደንበኞች ግንኙነት አስተዳደር ፣ግዥ እና ሌሎች የንግድ ስራዎችን በሙሉ በኢንተርፕራይዝ ሪሶርስ ፕላኒንግ ሶፍትዌር በመታገዝ ሊቀናጁ እና አውቶሜትድ ሊሆኑ ይችላሉ።ለኢአርፒ ሶፍትዌር  መፍትሄዎች ሁሉንም የውስጥ ሂደቶች አውቶማቲክ በማድረግ ምስጋና ይግባውና ለንግድ ሥራ አስፈፃሚዎች አስፈላጊውን የአሁናዊ መረጃን እና ግንዛቤዎችን በመስጠት የተሻሉ ውሳኔዎችን እንዲወስኑ ያስችላቸዋል። ",
+    "Oro": "Softiweeriin karoorri qabeenya dhaabbilee ykn ERP, dhaabbileen daldalaa faayinaansii, humna namaa, omishaa, gurgurtaa, karooraa fi dhiyeessii dabalatee gama hojii isaanii hunda interfeesii tokko irraa akka to’atan dandeessisa. Herrega, bulchiinsa pirojektii, karoora, bulchiinsa hariiroo maamiltootaa fi walsimannaa, bittaa, fi hojiiwwan daldalaa biroo hundi isaanii gargaarsa sooftiweerii karoora qabeenya dhaabbataatiin walitti makamuu fi ofumaan hojjechuu ni danda’u. Hojii gaggeessitoonni daldalaa murtoo fooyya’aa kennuu kan danda’an adeemsa keessoo hunda furmaata sooftiweerii ERPn dandeessifame ofumaan hojjechuudhaan, kunis daataa fi hubannoo yeroo qabatamaa barbaachisaa ta’e akka argatan kan taasisudha."
+  },
+  "ERP service": {
+    "Eng": "ERP service ",
+    "Amh": " የኢ አር ፒ አገልግሎት",
+    "Oro": "Tajaajila ERP"
+  },
+  "Lower Cost": {
+    "Eng": "Lower Cost",
+    "Amh": "ዝቅተኛ ዋጋ",
+    "Oro": "Baasii Gadi aanaa"
+  },
+
+  "ELECTRONIC": {
+    "Eng": "ELECTRONIC",
+    "Amh": "AA",
+    "Oro": "Baasii Gadi aanaa"
+  },
+
+  "INVOICE": {
+    "Eng": "INVOICE",
+    "Amh": "AA",
+    "Oro": "Baasii Gadi aanaa"
+  },
+
+  "Lower Cost-para": {
+    "Eng": "To save time and money, eliminate manual paper-based operations, connect to all trading partners, and share information in any format through a single connection.",
+    "Amh": " ጊዜን እና ገንዘብን ለመቆጠብ በእጅ የሚሰሩ በወረቀት ላይ የተመሰረቱ ስራዎችን ያስወግዱ ፤ ከሁሉም የንግድ አጋርዎ ጋር ይገናኙ እንዲሁም በማንኛውም  ፎርማት ያለን መረጃ  በአንድ ንክኪ ያጋሩ።",
+    "Oro": "Yeroo fi maallaqa qusachuuf, hojiiwwan waraqaa harkaan hojjetaman dhabamsiisuu, michoota daldalaa hunda waliin wal qunnamsiisuu, fi odeeffannoo bifa kamiinuu karaa walqunnamtii tokkoon qooduu."
+  },
+  "ERP service para": {
+    "Eng": "Use the industry-leading B2B/ERP Service integration to stay competitive, connect with partners fast, and satisfy buyer and vendor connectivity needs.",
+    "Amh": " ተወዳዳሪ ለመሆን፣ ከአጋሮች ጋር በፍጥነት ለመገናኘት እንዲሁም የገዢ እና የሻጭ  ፍላጎቶችን ለማርካት በ ቢ ቱ ቢ/ኢ አር ፒ(B2B/ERP) አገልግሎት የሚመራውን ኢንዱስትሪ ይጠቀሙ።",
+    "Oro": "Dorgommii keessa turuuf, michoota waliin saffisaan wal qunnamuuf, fi fedhii walitti hidhamiinsa bitaa fi gurgurtootaa guutuuf walitti makamuu Tajaajila B2B/ERP industirii keessatti adda duree ta’e fayyadami."
+  },
+  "Manage day-to-day activities easly": {
+    "Eng": "Manage day-to-day activities easly",
+    "Amh": "የዕለት ተዕለት እንቅስቃሴዎችን በቀላሉ ይቆጣጠሩ።",
+    "Oro": "Sochiiwwan guyyaa guyyaa salphaatti bulchuu"
+  },
+  "Cooperate to grow more quickly": {
+    "Eng": "Cooperate to grow more quickly",
+    "Amh": "በፍጥነት ለማደግ ይተባበሩ",
+    "Oro": "Saffisaan guddachuuf tumsaa"
+  },
+  "Electronic Invoice": {
+    "Eng": "Electronic Invoice",
+    "Amh": "ኤሌክትሮኒክ ደረሰኝ ወይም ኢ-ደረሰኝ",
+    "Oro": "Invoice Elektirooniksii"
+  },
+  "Automation": {
+    "Eng": "Automation",
+    "Amh": "አውቶሜሽን",
+    "Oro": "Otoomaatikii"
+  },
+  "Shorter Payment Cycles": {
+    "Eng": "Shorter Payment Cycles",
+    "Amh": "አጭር የክፍያ ሂደቶች",
+    "Oro": "Marsaa Kaffaltii Gabaabaa"
+  },
+  "Increased revenue": {
+    "Eng": "Increased revenue",
+    "Amh": "ገቢ ጨምሯል",
+    "Oro": "Galii dabaluu"
+  },
+  "Increased revenue-para": {
+    "Eng": "Business Intelligence helps businesses to identify new revenue sources and indicate new line of opportunities for growth. ",
+    "Amh": " የቢዝነስ ኢንተለጀንስ ንግዶች አዳዲስ የገቢ ምንጮችን እንዲለዩ እና አዲስ የእድገት እድሎችን እንዲያመለክቱ ይረዳል።",
+    "Oro": "Business Intelligence dhaabbileen daldalaa madda galii haaraa adda baasuu fi sarara carraa guddinaa haaraa akka agarsiisan gargaara."
+  },
+  "Transforms tax compliance": {
+    "Eng": "Transforms tax compliance",
+    "Amh": "የግብር ተገዢነትን ይለውጣል",
+    "Oro": "Ulaagaa gibiraa ni jijjiira"
+  },
+  "Transforms tax compliance-para": {
+    "Eng": "Business Intelligence services can helps tax authority to identify non-compliant taxpayers and take appropriate action.",
+    "Amh": " የቢዝነስ ኢንተለጀንስ አገልግሎቶች የታክስ ባለስልጣን ታዛዥ ያልሆኑ ግብር ከፋዮችን ለመለየት እና ተገቢውን እርምጃ እንዲወስዱ ያግዛል።",
+    "Oro": "Tajaajilli Odeeffannoo Bizinesii abbaa taayitaa gibiraa kaffaltoota gibiraa seera hin eegne adda baasuu fi tarkaanfii barbaachisaa ta’e akka fudhatu gargaaruu danda’a."
+  },
+  "Shorter Payment Cycles-para": {
+    "Eng": "E-invoicing can help shorten payment cycles by making it easier for businesses to track and process invoices. This can help businesses to pay faster and improve their cash flow. ",
+    "Amh": "ኢ-ደረሰኝ የንግድ ድርጅቶች ክፍያዎቻቸውን ለመከታተልና ለማዘጋጀት ቀላል እንዲሆንላቸው በማድረግ የክፍያ ዑደቶችን ለማሳጠር ይረዳል። ይህም የንግድ ድርጅቶች በፍጥነት እንዲከፍሉና የገንዘብ ዝውውራቸውን እንዲያሻሽሉ ሊረዳቸው ይችላል ።",
+    "Oro": "Invooyisiin elektirooniksii dhaabbileen daldalaa invoice hordofuu fi adeemsisuuf salphaa taasisuudhaan marsaa kaffaltii gabaabsuuf gargaaruu danda’a. Kunis daldaltoonni saffisaan akka kaffalan fi maallaqa isaanii akka fooyyessuuf gargaaruu danda’a."
+  },
+  "Automation-para": {
+    "Eng": "E-invoicing can help automate the invoicing process, making it faster and more efficient. This can help businesses save time and money.",
+    "Amh": "ኢ-ደረሰኝ የክፍያ መጠየቂያ ሂደቱን ራስ-ሰር ወይም አውቶሜት በማድረግ ፈጣን እና ቀልጣፋ ያደርገዋል። ይህም የንግድ ድርጅቶች ገንዘባቸውንና ጊዜያቸውን እንዲቆጥቡ ያስችላቸዋል። ",
+    "Oro": "E-invoicing adeemsa invoicing ofumaan hojjechuuf gargaaruu danda’a, kunis saffisaa fi bu’a qabeessa akka ta’u taasisa. Kunis dhaabbileen daldalaa yeroo fi maallaqa akka qusatan gargaaruu danda’a."
+  },
+  "Electronic Invoice-title": {
+    "Eng": " We automate the E-invoicing process, saving businesses time and money",
+    "Amh": "በኢ-ደረሰኝ የክፍያ መጠየቂያ ሂደትን አውቶሜት በማድረግ የንግድ ድርጅትዎን ጊዜ እና ገንዘብ እንቆጥባለን። ",
+    "Oro": "Adeemsa E-invoicing ofumaan hojjenna, yeroo fi maallaqa daldalaa qusanna"
+  },
+  "Business Intelligence": {
+    "Eng": "Business Intelligence",
+    "Amh": "የንግድ ኢንተለጀንስ",
+    "Oro": "Odeeffannoo Daldalaa"
+  },
+  "Business I title": {
+    "Eng": "Easy Payments With Addis POS services",
+    "Amh": "የአዲስ የንግድ ኢንተልጀንሲ አገልግሎት ጥምርታ ጥቅሞች",
+    "Oro": "Kaffaltii Salphaa Tajaajila Addis POS Waliin"
+  },
+  "Business I para1": {
+    "Eng": "Business Intelligence is the application of data analytics techniques and digital technology for the purpose of collecting, storing, and analyzing business data for the purpose of driving business insights and making informed decisions. It is software that ingests business data and presents it in user-friendly views such as reports, dashboards, charts, and graphs. Businesses and organizations have questions and goals. To answer these questions and track performance against these goals, they gather the necessary data, analyze it, and determine which actions to take to reach their goals. On the technical side, raw data is collected from business systems. Data is processed and then stored  ndata warehouses, the cloud, applications, and files. Once it is stored, users can access the data, starting the analysis process to answer business questions. In general, BI services can help businesses to leverage the data contained in electronic invoices to gain insights into their operations and make informed decisions that can improve their  erformance and competitiveness.",
+
+    "Amh": "ቢዝነስ ኢንተልጀንሲ የመረጃ ትንተና ቴክኒኮችን እና የዲጂታል ቴክኖሎጂን በመጠቀም የንግድ ስራ መረጃን በመሰብሰብ ፣ በማከማቸት እና በመተንተን  ግንዛቤዎችን ለማሳደግ እና በመረጃ ላይ የተመሠረተ ውሳኔ ለማድረግ የሚጠቅም ነው። የንግድ መረጃን እንደ ግብአት በመጠቀም ለተጠቃሚ ምቹ ወይም ተስማሚ እይታዎች የሚፈጥሩ እንደ ሪፖርቶች፣ ዳሽቦርዶች፣ ቻርቶቸን እና ግራፎችን የሚያቀርብ ሶፍትዌር ነው። የንግድ ድርጅቶች እና ተቋማት ጥያቄዎች እና ግቦች አሏቸው። እነዚህን ጥያቄዎች ለመመለስ እና የእነዚህን ግቦች አፈፃፀም ለመከታተል የንግድ ተቋማቱ አስፈላጊውን መረጃ ይሰበስባሉ ፣ ይተነትናሉ እንዲሁም ግቦቻቸውን ለማሳካት የትኛውን እርምጃ እንደሚወስዱ ይወስናሉ። ቴክኒካል ከሆነው ሲጀመር ጥሬ መረጃ ወይም ውሂብ ከንግድ ድርጅቱ ስርአቶች ይሰበሰባል።ከዚያም ውሂቡ ወይም መረጃው ተጠናክሮ በመረጃ ማከማቻወች ውስጥ እንደ ክላውድ፣ አፕሊኬሽኖች እና ፋይሎች ውስጥ ይከማቻል። ተከማችቶ ካለቀ በኋላ ተጠቃሚዎች የንግድ ጥያቄዎቻችውን ለመመለስ የትንታኔ ሂደቱን በመጀመር ውሂቡን  ወይም መረጃውን ማግኘት ይችላሉ። በአጠቃላይ የቢዝነስ ኢንተልጀንሲ  አገልግሎቶች የንግድ ድርጅቶች በኢ-ደረሰኞች ውስጥ ያለውን መረጃ በመጠቀም ስለ ንግድ ስራዎቻቸው ግንዛቤን ለማግኘት እና አፈፃፀማቸውን እና ተወዳዳሪነታቸውን የሚያሻሽል በመረጃ ላይ የተመሰረተ ውሳኔ እንዲወስኑ ይረዳቸዋል።",
+    "Oro": "Business Intelligence jechuun tooftaalee xiinxala daataa fi teeknooloojii dijitaalaa kaayyoo daataa daldalaa walitti qabuu, kuusuu fi xiinxaluuf kaayyoo hubannoo daldalaa oofuu fi murtoo odeeffannoo irratti hundaa’e kennuudha. Softiweeriin daataa daldalaa liqimsee ilaalcha fayyadamaadhaaf mijatu kan akka gabaasa, daashboordii, chaartii fi giraafii keessatti dhiyeessudha. Dhaabbileen daldalaa fi dhaabbileen gaaffii fi galma qabu. Gaaffiiwwan kana deebisuufi raawwii hojii galmoota kanaan wal bira qabuun hordofuuf ragaa barbaachisaa ta’e walitti qabuun xiinxaluudhaan galma isaanii bira ga’uuf tarkaanfiiwwan kam akka fudhatan murteessu. Gama teeknikaatiin ammoo daataa raw sirna daldalaa irraa walitti qabama. Deetaan ni adeemsifama sana booda kuusaawwan ndata, duumessa, application, fi faayiloota ni kuufama. Erga kuufamee booda fayyadamtoonni daataa sana argachuu danda’u, adeemsa xiinxala jalqabuun gaaffii daldalaa deebisuuf. Walumaagalatti tajaajilli BI dhaabbileen daldalaa daataa invooyisii elektirooniksii keessatti argamu fayyadamuun hojii isaanii irratti hubannoo akka argatan fi murtoo odeeffannoo irratti hundaa’ee fi ga’umsaa fi dorgommii isaanii fooyyessuu danda’u akka murteessan gargaaruu danda’a."
+  },
+  "Benefits to Tax for NI": {
+    "Eng": "Benefits to Tax ",
+    "Amh": "ለግብር ሰብሳቢወች ያለው ",
+    "Oro": "Faayidaa Gibiraaf"
+  },
+
+  "Mpos head": {
+    "Eng": "M-POS as a Serviece",
+    "Amh": "M-POS",
+    "Oro": "M-POS"
+  },
+
+  "m-poss title": {
+    "Eng": "M-POS",
+    "Amh": "M-POS",
+    "Oro": "M-POS"
+  },
+  "M-pos para1": {
+    "Eng": "M-POS, or Mobile Point of Sale, refers to a system that allows businesses to process transactions, such as sales and payments, using mobile devices like smartphones or tablets. This technology leverages software and hardware to transform mobile devices into portable payment terminals, similar to traditional point of sale (POS) systems found in retail stores. ",
+    "Amh": "M-POS",
+    "Oro": "M-POS"
+  },
+
+  "Benefits of": {
+    "Eng": "Benefits of",
+    "Amh": "M-POS",
+    "Oro": "M-POS"
+  },
+  "benefitM-POS": {
+    "Eng": "M-POS",
+    "Amh": "M-POS",
+    "Oro": "M-POS"
+  },
+  "E-INVOICE": {
+    "Eng": "E-INVOICE",
+    "Amh": "M-POS",
+    "Oro": "M-POS"
+  },
+
+  "Benefits of Supply Chain": {
+    "Eng": "Benefits of Supply Chain",
+    "Amh": "In amahf",
+    "Oro": "Affan Oromi"
+  },
+
+  "Management": {
+    "Eng": "Management",
+    "Amh": "Magement in amh",
+    "Oro": "Management in oromi"
+  },
+
+  "Authorities": {
+    "Eng": "Authorities",
+    "Amh": " ጥቅም",
+    "Oro": "Angawoonni"
+  },
+
+  "User Guide": {
+    "Eng": "User Guide",
+    "Amh": "የተጠቃሚ መመሪያ",
+    "Oro": "Qajeelfama Fayyadamtootaa"
+  },
+  "Help": {
+    "Eng": "Help",
+    "Amh": "እርዳታ",
+    "Oro": "Gargaaruu"
+  },
+
+  "Working Hours": {
+    "Eng": "Working Hours",
+    "Amh": "የስራ ሰዓት",
+    "Oro": "Sa'aatii Hojii"
+  },
+  "Privacy policy": {
+    "Eng": "Privacy policy",
+    "Amh": "የግላዊነት ፖሊሲ",
+    "Oro": "Imaammata dhuunfaa"
+  },
+  "Job Vacancy": {
+    "Eng": "Job Vacancy",
+    "Amh": "የሥራ ማስታወቂያ",
+    "Oro": "Bakka Hojii Duwwaa"
+  },
+  "Monday - Friday": {
+    "Eng": "Monday - Friday",
+    "Amh": "ሰኞ - አርብ",
+    "Oro": "Isniina - Jimaata"
+  },
+
+  "Related info": {
+    "Eng": "Related info",
+    "Amh": "ተያያዝ መረጃወች",
+    "Oro": "Odeeffannoo walqabatee"
+  },
+  "Product and Services": {
+    "Eng": "Product and Services",
+    "Amh": "ምርትና አገልግሎቶች",
+    "Oro": "Omishaa fi Tajaajila"
+  },
+  "Demo request": {
+    "Eng": "demo-request",
+    "Amh": "የማሳያ ጥያቄ",
+    "Oro": "demo-gaaffii jedhu"
+  },
+  "electronic-title": {
+    "Eng": "We automate the E-invoicing process, saving businesses time and money",
+    "Amh": "የኢ-ደረሰኝ ሂደትን አውቶማቲክ በማድረግ የንግድ ድርጅትዎን ጊዜ እና ገንዘብ እንቆጥባለን።",
+    "Oro": "Adeemsa E-invoicing ofumaan hojjenna, yeroo fi maallaqa daldalaa qusanna"
+  },
+  "electronic-para": {
+    "Eng": "E-invoice is a digital version of traditional paper invoice. It is created, processed, transmitted and stored electronically. It streamlines the billing process by automating the creation, delivery and payment of invoices, reducing errors, enhancing efficiency, and prompting quicker payments. An electronic invoice is a digital and efficient way for businesses to send bills to their customers. Instead of relying on traditional paper bills, e-invoicing allows businesses to send invoices directly to their customers via email or other electronic means. ",
+    "Amh": "ኢ-ደረሰኝ ማለት በተለምዶ የምንጠቀምበት የወረቀት ደረሰኝ ዲጅታል ፎርማትነው። ኢ-ደረሰኝ የሚሰራው፣ ሂደቱ የሚከናወነው፣ የሚሰራጨው እንዲሁም የሚከማቸው ኤሌክትሮኒካሊ ነው። ኢ-ደረሰኝ  ራስ ሰር በሆነ መልኩ ደረሰኞችን በመፍጠር፣ በማድረስ እና በመክፈል እንዲሁም ስህተቶችን በመቀነስ፣ ቅልጥፍናን በማሳደግ እና ክፍያዎችን በማፋጠን የሂሳብ አከፋፈል ሂደትን ቀላል ያደርጋል። ኢ-ደረሰኝ የንግድ ድርጅቶች ለደንበኞቻቸው ሂሳቦችን እንዲከፍሉ የሚልኩት ዲጂታል እና ቀልጣፋ መንገድ ነው። በመሆኑም ዘመኑን በማይዋጅ የወረቀት ደረሰኝ ላይ ከመተማመን ይልቅ የንግድ ተቆማት ኢ-ደረሰኞችን በኢሜል ወይም በሌላ የኤሌክትሮኒክስ መንገድ በቀጥታ ለደንበኞቻቸው እንዲልኩ ያስችላቸዋል።",
+    "Oro": "Invooyisiin elektirooniksii jechuun hojii jijjiirraa meeshaalee dhiyeessaa fi bitaa gidduutti bifa elektirooniksiitiin argachuudha. Kaffaltiin ofumaan hojjetamu gahee invoice waraqaa irratti hundaa’e akka nagahee gibiraatti qabu guutummaatti bakka bu’a. Sirna e-invoicing sirrii ta’een baasii odeeffannoo daldalaa baasuu, erguu, kuusuu, argachuu fi kuusuu hir’isuu dandeenya. Qorannoon adda addaa qusannoo guddaa e-invoice kaffaltii waraqaa wajjin wal bira qabamee yoo ilaalamu agarsiisaniiru. Akka Komishiniin Awurooppaa jedhutti, invoice elektirooniksii ergaawwan e-data gurgurtaa meeshaalee ykn kenniinsa tajaajilaa irratti walitti qabaman yoo ta’u, kunis karaa elektirooniksii kan uumamu, kaffaltii kaffalu, ergamu, fudhatamu, kuufamuu fi bulfamuudha jedhamee hiikama. Invooyisiin elektirooniksii sirna kompiitaraa dhaabbata gurgurtaa meeshaalee ykn kenniinsa tajaajilaa irratti lakkoofsa eenyummaa gibiraa qabuu fi kompiitara qaamolee hirmaatan keessatti kuufamuu seera daldala elektirooniksiitiin ta’a."
+  },
+  "about-us subT": {
+    "Eng": "Solve all your digital transaction needs.",
+    "Amh": "ለሁሉም የዲጂታል ግብይት ፍላጎቶችዎ መፍትሄ ያብጁ ።",
+    "Oro": ""
+  },
+  "Who": {
+    "Eng": "Who ",
+    "Amh": "ማን",
+    "Oro": " NUTI "
+  },
+  "WE ARE": {
+    "Eng": "WE ARE ",
+    "Amh": "  ነን",
+    "Oro": "Eenyu DHA"
+  },
+  "learn little about us": {
+    "Eng": "learn little about us",
+    "Amh": "ስለ እኛ ይወቁ ",
+    "Oro": "waa’ee keenya xiqqoo baradhu"
+  },
+  "About the company": {
+    "Eng": "About the company",
+    "Amh": "ስለ ድርጅቱ",
+    "Oro": "Waa'ee dhaabbatichaa"
+  },
+  "About the company para": {
+    "Eng": "Addissystems PLC is ERP, Electronic Invoicing and E-POS company that delivers convenient, innovative, safe and secure financial softwares services in Ethiopia by leveraging the latest technology platform in the industry and developing user-oriented products and services.",
+    "Amh": "አዲስ ሲስተምስ ኃ.የተ.የግ.ማህበር ኢአርፒ፣ ኢ-ደረሰኝ እና ኢ-ፖስ ሶፍትዌሮችን እና መተግበሪያወችን አበልጻጊ ኩባንያ ሲሆን፤ ምርቶቹም ለአጠቃቀም ምቹ፣በ ፈጠራ የታገዙ፣ አስተማማኝ እና ደህንነታቸው የተጠበቀ የፋይናንሺያል ሶፍትዌሮችን በኢንዱስትሪው ውስጥ ያለውን ዘመናዊ መድረክ በመጠቀም እና ተጠቃሚ ተኮር ምርቶችን እና አገልግሎቶችን በማልማት በኢትዮጵያ ውስጥ ያቀርባል። ",
+    "Oro": "Addissystems PLC dhaabbata ERP, Electronic Invoicing fi E-POS kan ta’ee fi tajaajila sooftiweerota faayinaansii mijataa, kalaqa, nageenya qabuu fi nageenya qabu Itoophiyaa keessatti kan kennu yoo ta’u, waltajjii teeknooloojii ammayyaa indaastiricha keessatti argamu fayyadamuun oomishaalee fi tajaajiloota fayyadamtoota irratti xiyyeeffatan hojjechuudhaani."
+  },
+  "POS System": {
+    "Eng": "POS System",
+    "Amh": "የፖስ አገልግሎት",
+    "Oro": "Sirna POS"
+  },
+  "ERP System": {
+    "Eng": "ERP System",
+    "Amh": "የኢ አር ፒ አገልግሎት",
+    "Oro": "Sirna ERP"
+  },
+  "Our Mission and Objective": {
+    "Eng": " Our Mission and Objective",
+    "Amh": "ተልእኮ እና አላማችን",
+    "Oro": "Ergamaa fi Kaayyoo Keenya"
+  },
+  "Our Mission and Objective paragraph": {
+    "Eng": "Facilitate commerce for everyone. Facilitate domestic and cross border trade and enable citizens to enjoy financial and technological benefits through technology",
+    "Amh": " ለሁሉም ሰው ንግድን ምቹ እና ቀላል በማድረግ፤በሀገር ውስጥ እና በውጪ ንግድን በማመቻቸት  ዜጎች የቴክኖሎጂን እና የገንዘብን  ጥቅሞች በቴክኖሎጂ አማካኝነት በአንድ እንዲያገኙ ማስቻል ነው።",
+    "Oro": "Daldala hundaaf haala mijeessuu. Daldala biyya keessaa fi daangaa qaxxaamuraa haala mijeessuun lammiileen teeknooloojiin faayidaa maallaqaa fi teeknooloojii akka argatan taasisuu"
+  },
+  "Our vision": {
+    "Eng": "Our vision",
+    "Amh": "ራዕያችን",
+    "Oro": "Mul'ata keenya"
+  },
+  "Our vision paragraph": {
+    "Eng": "Provide a one-touch end-to-end commercial transaction experience for consumers and businesses in Africa.",
+    "Amh": "በአፍሪካ ውስጥ ላሉ ሸማቾች እና የንግድ ድርጅቶች በአንድ ንክኪ ከጫፍ ጫፍ የሚፈጸም የንግድ ልውውጥ ልምድን ማቅረብ።",
+    "Oro": "Fayyadamtootaa fi dhaabbilee daldalaa Afrikaa keessa jiraniif muuxannoo daldala daldalaa dhuma irraa gara dhumaatti tuqa tokkoon kennuu."
+  },
+  "Core values": {
+    "Eng": "Core values",
+    "Amh": "ዋና ዋና እሴቶች",
+    "Oro": "Gatii ijoo"
+  },
+  "Trust": {
+    "Eng": "Trust",
+    "Amh": "ታማኝነት",
+    "Oro": "Amanuu"
+  },
+  "Responsiveness": {
+    "Eng": "Responsiveness",
+    "Amh": "ምላሽ ሰጪነት",
+    "Oro": "Deebii kennuu"
+  },
+  "Transparency": {
+    "Eng": "Transparency",
+    "Amh": "ግልጽነት",
+    "Oro": "Iftoomina"
+  },
+  "Security": {
+    "Eng": "Security",
+    "Amh": "ደህንነት",
+    "Oro": "Nageenya"
+  },
+  "Creativity and value addition": {
+    "Eng": "Creativity and value addition",
+    "Amh": "ፈጠራ እና እሴት መጨመር",
+    "Oro": "Kalaqaa fi gatii dabaluu"
+  },
+  "Contact us": {
+    "Eng": "Contact us",
+    "Amh": "አግኙን",
+    "Oro": "Nu qunnamaa"
+  },
+  "Solve All Your Digital Transaction Needs.": {
+    "Eng": "Solve All Your Digital Transaction Needs.",
+    "Amh": "ለሁሉም የዲጂታል ግብይት ፍላጎቶችዎ መፍትሄ ያብጁ።",
+    "Oro": "Fedhii Daldala Dijitaalaa Keessan Hunda Furuu."
+  },
+  "Contact-us para": {
+    "Eng": "we will get back to you as soon as possible",
+    "Amh": "መልእክትዎን ያስቀምጡ በተቻለን ፍጥነት እንመልሳለን።",
+    "Oro": "dafnee isin biraan geenya"
+  },
+  "Contact": {
+    "Eng": "Contact",
+    "Amh": " አድራሻችን",
+    "Oro": "Quunnamuu"
+  },
+  "Contact-para": {
+    "Eng": " Facilitating e-commerce in Ethiopia and beyond.",
+    "Amh": " ኢ-ንግድን በኢትዮጵያ እንዲሁም ከኢትዮጵያ ውጪ ማመቻቸት ።",
+    "Oro": "Itiyoophiyaa fi achiin alatti daldala elektirooniksii haala mijeessuu."
+  },
+
+  "Facilitate commerce for Ethiopia and beyond.": {
+    "Eng": "Facilitating e-commerce in Ethiopia and beyond.",
+    "Amh": "ኢ-ንግድን በኢትዮጵያ እንዲሁም ከኢትዮጵያ ውጪ ማመቻቸት ።",
+    "Oro": "Itiyoophiyaa fi achiin alatti daldala elektirooniksii haala mijeessuu."
+  },
+  "moto-paragraph": {
+    "Eng": "Addiss systems facilitates domestic and cross border trade and enable citizens to enjoy financial and business benefits through technology.",
+    "Amh": "የአድስ ሲስተም የሀገር ውስጥ እና የድንበር አቋራጭ ንግድን በማሳለጥ ዜጎች በቴክኖሎጂ የገንዘብ እና የንግድ ጥቅማጥቅሞችን እንዲያገኙ ያስችላል።",
+    "Oro": "Sirni Addis daldala biyya keessaa fi daangaa qaxxaamuraa haala mijeessuun lammiileen karaa teeknooloojiin faayidaa maallaqaa fi daldalaa akka argatan kan taasisudha."
+  },
+  "Learn More About": {
+    "Eng": "Learn More About",
+    "Amh": "ስለ አዲስ ሲስተምስ",
+    "Oro": "Waa'ee Caalaatti Baruuf"
+  },
+  "AddisSystems?": {
+    "Eng": " ADDIS SYSTEMS ",
+    "Amh": "የበለጠ ይወቁ",
+    "Oro": "SIRNA ADDIS"
+  },
+  "Feel free to ask us": {
+    "Eng": "Feel free to ask us",
+    "Amh": "እኛን ለመጠየቅ ነፃነት ይሰማዎ",
+    "Oro": "Bilisa ta'ee nu gaafadhaa"
+  },
+  "See on map": {
+    "Eng": "See on map",
+    "Amh": "ካርታ ላይ ይመልከቱ",
+    "Oro": "Kaartaa irratti ilaalaa"
+  },
+  "Demo Request": {
+    "Eng": " Demo Request",
+    "Amh": "የማሳያ ጥያቄ",
+    "Oro": "Gaaffii Deemoo"
+  },
+  "We’re here to help. Fill in the details below and one of our team members will get back to you shortly.": {
+    "Eng": "We’re here to help. Fill in the details below and one of our team members will get back to you shortly.",
+    "Amh": "እኛ ለመርዳት እዚህ ነን። ዝርዝሩን ከዚህ በታች ይሙሉ እና ከቡድናችን አባላት አንዱ በቅርቡ ወደ እርስዎ ይመለሳል።",
+    "Oro": "Gargaaruuf as jirra. Bal'ina armaan gadii guutaa miseensi garee keenyaa tokko yeroo gabaabaa keessatti isiniif deebi'a."
+  },
+  "Fill the following information": {
+    "Eng": "Fill the following information",
+    "Amh": "የሚከተለውን መረጃ ይሙሉ",
+    "Oro": "Odeeffannoo armaan gadii guutaa"
+  },
+
+  "First Name": {
+    "Eng": "First Name",
+    "Amh": "ስም",
+    "Oro": "Maqaa"
+  },
+
+  "Last Name": {
+    "Eng": "Last Name",
+    "Amh": " የአባት ስም",
+    "Oro": "Maqaa abbaa"
+  },
+  "Phone Number": {
+    "Eng": "Phone Number",
+    "Amh": "ስልክ ቁጥር",
+    "Oro": "Lakkoofsa Bilbilaa"
+  },
+  "Email Address": {
+    "Eng": "Email Address",
+    "Amh": "የ ኢሜል አድራሻ",
+    "Oro": "Teessoo Imeelii"
+  },
+  "Enter Your Position": {
+    "Eng": "Enter Your Position",
+    "Amh": "የስራ ድርሻዎትን ያስገቡ",
+    "Oro": "Ejjennoo Keessan Galmaa"
+  },
+  "TIN NO.": {
+    "Eng": "TIN NO.",
+    "Amh": "ቲን ቁ.",
+    "Oro": "TIN LAKK"
+  },
+  "LICENSE NO.": {
+    "Eng": "LICENSE NO.",
+    "Amh": "የንግድ ፈቃድ ቁ.",
+    "Oro": "Lakk. Hayyama DALDALAA"
+  },
+  "Company Name": {
+    "Eng": "Company Name",
+    "Amh": "የድርጅት ስም",
+    "Oro": "Maqaa Dhaabbataa"
+  },
+  "Country": {
+    "Eng": "Country",
+    "Amh": "ሀገር",
+    "Oro": "Biyya"
+  },
+  "Select Region": {
+    "Eng": " Select Region",
+    "Amh": "ክልል ይምረጡ",
+    "Oro": "Naannoo filadhu"
+  },
+
+  "Addis Ababa": {
+    "Eng": " Addis Ababa",
+    "Amh": "አዲስ አበባ",
+    "Oro": "Addis Ababa"
+  },
+  "Afar": {
+    "Eng": "Afar",
+    "Amh": "አፋር",
+    "Oro": "Affaar"
+  },
+  "Amhara": {
+    "Eng": "Amhara",
+    "Amh": "አማራ",
+    "Oro": "Amaaraa"
+  },
+  "Benishangul-Gumuz": {
+    "Eng": "Benishangul-Gumuz",
+    "Amh": "ቤኒሻንጉል ጉሙዝ",
+    "Oro": "Benishaangul-Gumuz"
+  },
+  "Gambela": {
+    "Eng": "Gambela",
+    "amh": "ጋምቤላ",
+    "Oro": "Gaambelaa"
+  },
+  "Harari": {
+    "Eng": "Harari",
+    "amh": "ሀረሪ",
+    "Oro": "Hararii"
+  },
+  "Oromia": {
+    "Eng": "Oromia",
+    "Amh": "ኦሮሚያ",
+    "Oro": "Oromiyaa"
+  },
+  "Sidama": {
+    "Eng": "Sidama",
+    "Amh": "ሲዳማ",
+    "Oro": "Sidaamaa"
+  },
+  "Somali": {
+    "Eng": "Somali",
+    "Amh": "ሶማሊ",
+    "Oro": "Somaalee"
+  },
+  " Southern Nations, Nationalities, and Peoples' Region": {
+    "Eng": " Southern Nations, Nationalities, and Peoples'Region",
+    "Amh": "የደቡብ ብሔር ብሔረሰቦችና ሕዝቦች ክልል",
+    "Oro": "Saboota, Sablammoota, fi Naannoo Ummatootaa Kibbaa"
+  },
+  "Tigray": {
+    "Eng": "Tigray",
+    "Amh": "ትግራይ",
+    "Oro": "Tigraay"
+  },
+  "Dire Dawa ": {
+    "Eng": "Dire Dawa ",
+    "Amh": "ድሬዳዋ ",
+    "Oro": "Dire Dawaa"
+  }
+}
