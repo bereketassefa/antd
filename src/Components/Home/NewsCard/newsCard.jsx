@@ -26,6 +26,7 @@ import { useToast } from "../../Toast/toastContext";
 import NewSlider from "../../../Components/Home/NewsHolder/NewSlider";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Image } from "antd";
+import LikeCount from "./LikeCount";
 export default function NewsCard({
   account_id,
   myKey,
@@ -426,13 +427,10 @@ export default function NewsCard({
       </div>
 
       <div className="w-full flex flex-col z-10">
-        <div className="flex justify-between items-center p-4 border-b">
-          <span
-            className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
-            onClick={() => setShowLikeInfo(true)}
-          >
-            {likeCount === 0 || likeCount === "0" ? "" : likeCount}
-          </span>
+        <div className="flex justify-between items-center p-4 border-b ">
+         <LikeCount
+         
+         />
           <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
             {comments.postCount === undefined
               ? "Loading..."

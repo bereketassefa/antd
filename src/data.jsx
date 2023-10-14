@@ -296,7 +296,7 @@ export const Chat = [
     description: "Lorem ipsum dolor sit amet....",
     chatData: ChatWithAddisPay,
     status: "connect",
-    productName:""
+    productName: "",
   },
 
   {
@@ -335,6 +335,32 @@ export const Chat = [
     description: "Lorem ipsum dolor sit amet....",
     status: "connected",
     chatData: "",
+  },
+];
+export const Jobs = [
+  {
+    key: 1,
+
+    Name: "Job",
+    Description: "About the Job ",
+    Para: " Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet....  Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet....",
+    position: "Frontend Developer ",
+  },
+  {
+    key: 2,
+
+    Name: "Job",
+    Description: "About the Job ",
+    Para: " Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet....",
+    position: "Backend Developer ",
+  },
+  {
+    key: 3,
+
+    Name: "Job",
+    Description: "About the Job ",
+    Para: " Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet.... Lorem ipsum dolor sit amet....",
+    position: "UI/UX ",
   },
 ];
 export const Message = [
@@ -590,4 +616,3 @@ export const africanCountryCapitalCity = {
   ZM: { name: "Zambia", code: "+260", capital: "Lusaka" },
   ZW: { name: "Zimbabwe", code: "+263", capital: "Harare" },
 };
-

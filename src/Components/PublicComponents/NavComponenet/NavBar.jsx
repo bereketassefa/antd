@@ -4,24 +4,88 @@ import { Link } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
 import { CgMenu, CgClose } from "react-icons/cg";
 import { FiSearch } from "react-icons/fi";
-
-import logo from "../../assets/PuplicImage/addissystems-logo.png";
-
-import icon from "../../assets/PuplicImage/android-chrome-192x192.png";
-import Button from "./Button";
-
-import { useTranslation } from "../../../src/Lang/Translater";
-
+import logo from "../../../assets/PuplicImage/addissystems-logo.png";
+import icon from "../../../assets/PuplicImage/android-chrome-192x192.png";
+import Button from "../Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslation } from "../../../Lang/Translater";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import alternativeProfileblack from "../../../assets/image/alternativeProfile-black.png";
+import alternativeProfile from "../../../assets/image/alternativeProfile.png";
+import SearchCard from "../../Topbar/SearchAllCompo/SearchCard";
+import { useCookies } from "react-cookie";
+import Avatar from "../../../Fields/Avatar/avatar";
 const NavBar = () => {
+  function truncateCompanyName(name) {
+    return name && name.length > 8 ? name.substring(0, 8) + "..." : name;
+  }
+  const [searchInput, setSearchInput] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const { translate, language, setLanguage } = useTranslation();
   const [lang, setLang] = useState([language, "Amh", "Oro"]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
+  // const [cookies] = useCookies(["user"]);
+  const [profilePic, setProfilePic] = useState(null);
+  const [dropDown, setDropDown] = useState(false);
+  const [cookies, removeCookie] = useCookies(["user"]);
+
+  const handleHover = () => {
+    setDropDown(!dropDown);
+  };
+  useEffect(() => {
+    // Check the theme from local storage when the component mounts
+    const theme = localStorage.getItem("theme");
+    setIsDarkTheme(theme === "dark");
+  }, []);
+
+  const handleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
   const closeMenu = () => {
     setMenuOpen(false);
   };
 
+  const handleLogOut = () => {
+    removeCookie(["user"]);
+    window.location.reload(true);
+  };
+
+  const check = cookies?.user;
+  const handleSearch = async () => {
+    if (searchInput.trim() === "") {
+      setSearchResults([]);
+      setShowResults(false);
+      return;
+    }
+
+    try {
+      const url = "https://search.qa.addissystems.et/partially"; // Replace with your actual URL
+      const response = await axios.post(url, {
+        query: searchInput,
+      });
+
+      const formattedResults = response.data.map((item) => {
+        let result = { entityType: item.entityType };
+        if (item.entityType === "party") {
+          result.name = item.party.businessname;
+          result.Uid = item.Uid;
+        } else if (item.entityType === "product") {
+          result.name = item.productName;
+          result.Uid = item.Uid;
+        }
+        return result;
+      });
+
+      setSearchResults(formattedResults);
+      setShowResults(true);
+    } catch (error) {
+      console.error("Error performing search", error);
+    }
+  };
   const languageSwitcher = (index) => {
     const newArray = [...lang];
     newArray[0] = lang[index];
@@ -50,10 +114,24 @@ const NavBar = () => {
     };
   }, [screenWidth]);
 
+  const hadleNavigateProfile = async (e) => {
+    e.preventDefault();
+    try {
+      const url = `${import.meta.env.VITE_FIND_MY_DATA}/${cookies.user._id}`;
+      await axios.get(url);
+      //  console.log(response?.data)
+      //   setProfilePic(response?.data?.account[0]?.profilePicture)
+
+      // console.log(cookies.user._id)
+      window.location.href = `/feed/profile/${cookies.user._id}`;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <nav className=" sticky top-0 z-40 w-full bg-slate-50 px-2 opacity-100 shadow-md ">
-      <div className=" container z-30 mx-auto flex h-16 max-w-7xl items-center justify-between font-medium ">
-        <div className="-ml-1 mt-1 w-[190px] duration-300 hover:scale-[1.02] ">
+    <nav className=" sticky top-0 z-40 w-full bg-slate-50 px-6 opacity-100 shadow-md ">
+      <div className=" container z-30 mx-auto flex h-20 max-w-7xl items-center justify-between font-medium   ">
+        <div className="-ml-1 mt-1 w-[190px] duration-300 hover:scale-[1.02]   ">
           <Link to="/">
             <img
               className="hidden sm:block"
@@ -74,7 +152,7 @@ const NavBar = () => {
             menuOpen
               ? "right-0 opacity-100"
               : "-right-64 opacity-0 sm:-right-80"
-          } mdm: top-0 z-20 h-full w-60 gap-y-4 pl-4 pr-4 pt-20 duration-500 sm:w-80 sm:pr-6 mdm:static mdm:mr-1 mdm:flex mdm:h-fit mdm:w-fit mdm:flex-row mdm:items-center mdm:justify-between mdm:gap-3 mdm:bg-inherit mdm:p-0 mdm:opacity-100 mdm:duration-0`}
+          } mdm:   top-0 z-20 h-full w-60 gap-y-4 pl-4 pr-4 pt-20 duration-500 sm:w-80 sm:pr-6 mdm:static mdm:mr-1 mdm:flex mdm:h-fit mdm:w-fit mdm:flex-row mdm:items-center mdm:justify-between mdm:gap-3 mdm:bg-inherit mdm:p-0 mdm:opacity-100 mdm:duration-0`}
         >
           <li className="hover:text-addispink" onClick={closeMenu}>
             <Link to="/">{translate("home")}</Link>
@@ -153,7 +231,7 @@ const NavBar = () => {
               </li>
             </ul>
           </li>
-          <div className=" flex flex-col items-start gap-y-2 mdm:hidden">
+          <div className=" flex flex-col items-start gap-y-2 mdm:hidden border-2 border-red-700">
             <li className=" group relative flex flex-col items-start mdm:ml-3 mdm:block">
               <span className=" flex items-center text-xs hover:text-addispink">
                 {lang[0]}
@@ -202,18 +280,51 @@ const NavBar = () => {
           </div>
         </ul>
         <div className="flex items-center">
-          <form className="mr-1 mdm:mr-1">
-            <div className="flex cursor-pointer items-center rounded-md border border-addisblue ">
+          <div className=" relative">
+            <div className="dark:bg-[#38434f] flex gap-2 border-[2px]   py-[10px] px-4 items-center rounded-md md:w-[400px]  max-w-[450px] ">
+              <div>
+                <FiSearch className="text-xl text-gray-500 " />
+              </div>
               <input
-                id="search"
-                className="min-w-[100px] max-w-[200px] origin-right overflow-hidden rounded-xl py-2 indent-2 outline-none duration-500 sm:max-w-[250]"
+                className="dark:bg-[#38434f] dark:text-white outline-none text-[17px] w-full bg-transparent"
                 type="text"
-                name="Search"
-                placeholder="search"
+                value={searchInput}
+                placeholder="What are you looking for?"
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                }}
               />
-              <FiSearch className=" mx-2 text-xl " />
             </div>
-          </form>
+            {searchInput && (
+              <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
+                <div className="flex flex-col  ">
+                  {searchResults.map((result, index) => (
+                    <SearchCard
+                      key={index}
+                      id={result.id}
+                      name={result.name}
+                      type={result.type} // This will be either "business" or "product"
+                      image={
+                        result.type === "business"
+                          ? result.profilePicture
+                          : result.imageUrl
+                      } // Pass the appropriate image based on the type
+                    />
+                  ))}
+                </div>
+                <hr className="border-[1px] border-blue-800" />
+                <Link
+                  to={`/Search/All/${searchInput}`}
+                  onClick={() => setSearchInput("")}
+                >
+                  <p className="dark:text-white flex justify-center text-primary ">
+                    See All results
+                  </p>
+                </Link>
+              </div>
+            )}
+          </div>
+
           <div className="hidden items-center gap-x-2 mdm:flex">
             <div className="group relative">
               <span className=" flex min-w-[40px] cursor-default items-center justify-end text-xs hover:text-addispink">
@@ -238,15 +349,77 @@ const NavBar = () => {
                 </li>
               </ul>
             </div>
-            <a href="/login">
-              <Button
-                text={translate("log in")}
-                py={8}
-                width={120}
-                bgHover="hover:bg-addisblue"
-                textHover="text-addispink"
-              />
-            </a>
+            <div>
+              {check ? (
+                <div
+                  className="hidden md:flex items-center jutify-center flex-col "
+                  onClick={handleHover}
+                >
+                  <div className=" flex items-center gap-2">
+                    <Avatar
+                      img={
+                        isDarkTheme
+                          ? alternativeProfileblack
+                          : profilePic
+                          ? profilePic
+                          : alternativeProfile
+                      }
+                    />
+
+                    <div className=" flex items-center gap-2">
+                      <h1
+                        className="dark:text-white text-smallP md:text-midP lg:text-largeP"
+                        // onMouseLeave={handleHover}
+                      >
+                        {truncateCompanyName(cookies?.user.party)}
+                      </h1>
+                      <FontAwesomeIcon
+                        className="dark:text-white"
+                        icon={faCaretDown}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className={
+                      dropDown
+                        ? "rounded-lg dark:bg-[#1b1f23] absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
+                        : "h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg transition ease-in-out delay-150"
+                    }
+                  >
+                    <ul className="flex flex-col w-full h-full items-center justify-center">
+                      <Link onClick={hadleNavigateProfile} className="w-full">
+                        <li className="w-full p-3 items-center justify-start hover:bg-lightPrimaryHover">
+                          <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+                            {" "}
+                            View Profile
+                          </p>
+                        </li>
+                      </Link>
+                      <hr className="w-full border-t border-gray-300 dark:border-gray-700" />{" "}
+                      {/* Added this line */}
+                      <li
+                        className="w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover"
+                        onClick={handleLogOut}
+                      >
+                        <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+                          Sign Out
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              ) : (
+                <Link to="/login">
+                  <Button
+                    text={translate("log in")}
+                    py={8}
+                    width={120}
+                    bgHover="hover:bg-addisblue"
+                    textHover="text-addispink"
+                  />
+                </Link>
+              )}
+            </div>
           </div>
           <button
             className="menu-btn z-40 cursor-pointer text-4xl  text-addispink mdm:hidden "

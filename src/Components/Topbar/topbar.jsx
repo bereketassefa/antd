@@ -209,7 +209,7 @@ export default function Topbar() {
 
   return (
     <>
-      <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg    bg-topbarBg border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center  sticky top-0 h-[95px] ">
+      <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg   bg-slate-50  border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center  sticky top-0 h-[95px] ">
         <div className="flex  w-full md:max-w-[1120px] items-center justify-between ">
           <div className="w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center">
             {isScreenMdOrLarger ? (
@@ -235,7 +235,7 @@ export default function Topbar() {
                     />
                   </div>
                   <input
-                    className="dark:bg-[#38434f] dark:text-white outline-none text-[17px] w-full"
+                    className="dark:bg-[#38434f] dark:text-white outline-none text-[17px] w-full bg-transparent"
                     type="text"
                     value={searchInput}
                     placeholder="What are you looking for?"
@@ -338,7 +338,15 @@ export default function Topbar() {
               onClick={handleHover}
             >
               <div className=" flex items-center gap-2">
-              <Avatar img={isDarkTheme ? alternativeProfileblack : (profilePic ? profilePic : alternativeProfile)} />
+                <Avatar
+                  img={
+                    isDarkTheme
+                      ? alternativeProfileblack
+                      : profilePic
+                      ? profilePic
+                      : alternativeProfile
+                  }
+                />
 
                 <div className=" flex items-center gap-2">
                   <h1
