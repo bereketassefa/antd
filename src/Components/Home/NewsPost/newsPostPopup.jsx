@@ -57,15 +57,13 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     setIsLoading(true);
   
     const formData = new FormData();
-    // console.log('File List:', fileList);
-    // console.log('Description:', description);
-    // console.log('Uid:', cookies?.user?.Uid);
+    
+    // Append Uid and description outside of the loop
+    formData.append("description", description);
+    formData.append("Uid", cookies?.user?.Uid);
     
     fileList.forEach((file) => {
-        // console.log('Appending file:', file.originFileObj);
         formData.append("image", file.originFileObj);
-        formData.append("description",description)
-        formData.append("Uid",cookies?.user?.Uid)
     });
     try {
       const url = `${import.meta.env.VITE_POST_NEWS}`;

@@ -65,7 +65,7 @@ function SearchAll() {
         query: decodedName,
       });
       setData(response.data);
-      // console.log(response.data);
+       console.log(response.data);
     } catch (error) {
       console.error("Error performing search", error.message);
     }
@@ -250,6 +250,7 @@ function SearchAll() {
                   <SearchCardTwo
                     key={party.Uid}
                     title={party.party.businessname}
+                    Uid={party.Uid}
                     // description={/* Description Here */}
                     description={party?.branch[0]?.country ? party?.branch[0]?.country : party?.branch[0]?.city }
                     // image={}

@@ -16,6 +16,7 @@ export default function NewsHolder() {
         const response = await fetch(url);
         const data = await response.json();
         setTimeline(data);
+        // console.log(data);
       } catch (err) {
         setError('Error fetching initial data.');
       } finally {
@@ -96,10 +97,12 @@ return (
       Array.from({ length: 5 }).map((_, index) => <NewsCardSkeleton key={index} />)
     ) : (
       Array.isArray(timeline) ? (
+        
         timeline.map((item, index) => (
+          
           <NewsCard
             key={index}
-            image={Array.isArray(item?.images) ? item?.images : item?.images?.split(',')}
+            image={item.images}
            
             newContent={item?.description}
             profilePic={item?.account?.profilePicture}
