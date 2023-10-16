@@ -12,7 +12,7 @@ import alternativeProfileblack from "../../../assets/image/alternativeProfile-bl
 import newusimage from "../../../assets/image/iphone2.webp";
 
 import { format } from "timeago.js";
-import CommentContainer from "./Comments/commentContainer";
+import CommentContainer from "../NewsCard/Comments/commentContainer";
 import Avatar from "../../../Fields/Avatar/avatar";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -23,7 +23,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useToast } from "../../Toast/toastContext";
-import NewSlider from "../../../Components/Home/NewsHolder/NewSlider";
+import NewSlider from "./NewSlider";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Image } from "antd";
 export default function NewsCard({
@@ -52,8 +52,9 @@ export default function NewsCard({
   const [showDownloadCard, setShowDownloadCard] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [likeCount, setLikeCount] = useState(null);
+  const [likeCount, setLikeCount] = useState(like);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  
 
   const [showText, setShowText] = useState(false);
 
@@ -79,51 +80,59 @@ export default function NewsCard({
   // const [showLikeInfo, setShowLikeInfo] = useState(false);
 
   useEffect(() => {
-    let es; // Declare the EventSource variable
+    setLikeCount(like);
+  }, []);
+  
+  let es; // Shared EventSource reference
+  const fetchLikeCount = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+      const data = await response.json();
+      setLikeCount(data.like);
+    } catch (error) {
+      console.error("Error fetching like count:", error);
+    }
+};
 
-    const connect = () => {
-      es = new EventSource(
-        `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
-      );
+  
+//   useEffect(() => {
+//     es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+//     es.onmessage = (event) => {
+//         const updatedPost = JSON.parse(event.data);
+//         if (updatedPost.id === id) {
+//             setLikeCount(updatedPost.like);
+//             // checkIfLiked(); if you want to
+//         }
+//     };
+//     return () => es.close();
+// }, [id]);
 
-      es.onmessage = (event) => {
-        const updatedPosts = JSON.parse(event.data);
-        const updatedPost = updatedPosts.find((post) => post.id === id);
-        if (updatedPost) {
-          setLikeCount(updatedPost?.like);
-          console.log(updatedPost?.like);
-          checkIfLiked(); // Check if the current user has liked the updated post
-        }
-      };
 
-      es.onmessage = (event) => {
-        const updatedPost = JSON.parse(event.data);
-        if (updatedPost.id === id) {
-          setLikeCount(updatedPost.like);
-          // console.log(updatedPost.like);
-        }
-      };
-    };
+const handleLike = async (e) => {
+  e.preventDefault();
+  setLiked((prevLiked) => !prevLiked); // Optimistic update
 
-    connect(); // Initialize the connection
+  // Close the SSE connection temporarily
+  // if (es) es.close();
 
-    return () => {
-      es.close(); // Close the EventSource connection when the component unmounts
-    };
-  }, [id]);
+  const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user?.Uid}/${id}`;
+  try {
+      const response = await fetch(url, { method: "POST" });
+      if (!response.ok) {
+          throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+       // Update like count based on server's response
+       await fetchLikeCount();
+      // Re-establish the SSE connection
+      // es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+      // setLikeCount(data.newLikeCount);
+  } catch (error) {
+      console.error("There was a problem with the fetch operation:", error.message);
+      setLiked((prevLiked) => !prevLiked); // Revert the optimistic update if there's an error
+  }
+};
 
-  const handleLike = async (e) => {
-    e.preventDefault()
-    // console.log(e);
-   
-      setLiked((prevLiked) => !prevLiked); // Optimistic update
-      const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user?.Uid}/${id}`;
-      console.log(url);
-      await fetch(url, { method: "POST"}).then(response => response.json()).then((data) => {
-        // console.log(data);
-      })
-   
-  };
   
   
   

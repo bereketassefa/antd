@@ -1,133 +1,58 @@
-import  { useEffect, useRef, useState } from 'react';
-import NewsCard from '../NewsCard/newsCard';
+import { useEffect, useRef, useState } from 'react';
 import oopsno from '../../../assets/image/oops-no.png';
-// import { ErrorContext } from '../../Error/ErrorContext';
-
+import NewsCard from './newsCard';
 import { message } from 'antd';
-// import { useCookies } from 'react-cookie';
+
 export default function NewsHolder() {
-  // const { displayError } = useContext(ErrorContext);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [timeline, setTimeline] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  // const [page, setPage] = useState(1); // Start from page 1
+  const [error, setError] = useState(null);
   const elementRef = useRef(null);
-  const [error] = useState(null);
 
-  
-  // const [cookies] = useCookies(['user'])
-
-
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(onIntersection, {
-  //     threshold: 1.0
-  //   });
-
-  //   if (elementRef.current) {
-  //     observer.observe(elementRef.current);
-      
-  //   }
-
-  //   return () => observer.disconnect();
-  // }, [timeline, hasMore]);
-
-
-   
-  
-    // async function fetchMoreTimelines() {
-    //   try {
-    //     setLoading(true);
-  
-    //     serverDownTimer = setTimeout(() => {
-    //       setLoading(false);
-    //     }, 20000);
-  
-    //     // loadingMsgId = message.loading('Loading news...', 0);
-  
-    //     const Url = `${import.meta.env.VITE_GET_ALL_POST_V2}`;
-    //     const response = await axios.get(Url);
-  
-    //     clearTimeout(serverDownTimer);
-  
-
-    //     // if (loadingMsgId) {
-    //     //   loadingMsgId();
-    //     // }
-  
-    //     if(response.status === 200){
-    //       setTimeline(prevTimeline => [...prevTimeline, ...response.data]);
-    //     }
-
-     
-    //     setLoading(false);
-    //     setHasMore(false);
-  
-    //   } catch (error) {
-    //     setLoading(false);
-    //     setHasMore(false);
-  
-     
-  
-    //     if (error.message === "Failed to fetch") {
-    //       setLoading(true);
-    //       console.warn("Network Error: Failed to fetch data.");
-    //     } else {
-    //       console.warn("Error fetching data.");
-    //       setLoading(true);
-    //     }
-    //   }
-    // }
-
-    useEffect(() => {
-      const fetchInitialData = async () => {
-        try {
-          setLoading(true);  // Start loading
-          const url= `${import.meta.env.VITE_WITH_OUT_SSE_GET_TIMELINE}`;
-          const response = await fetch(url);
-          const data = await response.json();
-          // console.log(data);
-          setTimeline(data);  // Update state with fetched data
-        } catch (error) {
-          console.error('Error fetching initial data:', error);
-        } finally {
-          setLoading(false);  // Stop loading
-        }
-      };
-      
-      fetchInitialData();
-    }, []);
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const url = `${import.meta.env.VITE_WITH_OUT_SSE_GET_TIMELINE}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        setTimeline(data);
+      } catch (err) {
+        setError('Error fetching initial data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchInitialData();
+  }, []);
     
 
-    useEffect(() => {
-      const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POST_V2}`);
-      
-      eventSource.onmessage = (event) => {
-        try {
-          const newData = JSON.parse(event.data);
-          setTimeline((prevData) => [newData, ...prevData]);
-          // console.log(newData);
-        } catch (error) {
-          console.error('Error parsing SSE data:', error);
-        }
-      };
-      
-      eventSource.onerror = (error) => {
-        console.error('SSE Error:', error);
-        eventSource.close();
-      };
-      
-      return () => {
-        eventSource.close();
-      };
-    }, []);
+  useEffect(() => {
+    const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POST_V2}`);
     
+    eventSource.onmessage = (event) => {
+      try {
+        const newData = JSON.parse(event.data);
+        setTimeline((prevData) => [newData, ...prevData]);
+      } catch (err) {
+        console.error('Error parsing SSE data:', err);
+      }
+    };
+    
+    eventSource.onerror = (err) => {
+      console.error('SSE Error:', err);
+      // setError('Error receiving live updates.');
+      eventSource.close();
+    };
+    
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+
     
 
-  function onIntersection(entries) {
-    if (entries[0].isIntersecting && hasMore) {
-      // fetchMoreTimelines();
-    }
-  }
+
   if (error) {
     return <div className="flex justify-center items-center h-screen">{error}</div>;
 }
@@ -164,17 +89,10 @@ const NewsCardSkeleton = () => (
   </div>
 );
 
-
-
-if (error) {
-  return <div className="flex justify-center items-center h-screen">{error}</div>;
-}
-// console.log('Rendering with timeline:', timeline);
-
 return (
   <div className='flex flex-col gap-2 w-full max-w-[550px]'>
     {loading ? (
-      // Show 5 skeleton cards while loading
+    
       Array.from({ length: 5 }).map((_, index) => <NewsCardSkeleton key={index} />)
     ) : (
       Array.isArray(timeline) ? (
@@ -182,7 +100,7 @@ return (
           <NewsCard
             key={index}
             image={Array.isArray(item?.images) ? item?.images : item?.images?.split(',')}
-            index={index} 
+           
             newContent={item?.description}
             profilePic={item?.account?.profilePicture}
             timestamp={item?.time}
