@@ -41,7 +41,6 @@ import AddItemsPage from "./Pages/AddProduct/AddItemsPage";
 
 //////// Public imports//////
 
-
 import Layout from "../src/Layouts/PublicLayout/Layout";
 import PublicHome from "../src/Pages/PublicPage/PublicHome";
 
@@ -78,7 +77,12 @@ import JobApply from "../src/Pages/PublicPage/JobApply";
 
 import Vacancy from "../src/Pages/PublicPage/Vacancy";
 import ForTesting from "../src/ForTesting";
-
+import SearchRoutePublic from "./Layouts/PublicLayout/PublicSearch/SearchRoutePublic";
+import SearchAllPublic from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/SearchAllPublic";
+import SearchCompanyPublic from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/SearchCompanyPublic";
+import SearchProductPublic from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/SearchProductPublic";
+import Job from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/Job";
+import PostPublic from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/PostPublic";
 ////////////
 
 function App() {
@@ -93,78 +97,6 @@ function App() {
     <ErrorProvider>
       <ToastProvider>
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/create-password/:id" element={<CreatePssPage />} />
-          <Route path="/ResetPss/:token" element={<ResetPssPage />} />
-          <Route path="/forget-password" element={<ForgotPassPage />} />
-          <Route path="/OTP" element={<OTPpage />} />
-
-          <Route
-            path="/feed"
-            element={cookies.user ? <Primary /> : <Navigate to="/" />}
-          >
-            <Route path="/feed" element={<PageLayout />}>
-              <Route path="/feed/Relations" element={<RelationRoute />}>
-                <Route
-                  path="/feed/Relations/Recommended"
-                  element={<RecomendedRelation />}
-                />
-                <Route
-                  path="/feed/Relations/Requested"
-                  element={<RequestedRelation />}
-                />
-                <Route
-                  path="/feed/Relations/relation"
-                  element={<Relations />}
-                />
-              </Route>
-              <Route index element={<Home />} />
-              <Route path="/feed/notifications" element={<Notification />} />
-              <Route path="/feed/messages" element={<ChatPage />} />
-              <Route path="/feed/products" element={<AddItemsPage />} />
-            </Route>
-            <Route path="/feed/SearchNav/:name" element={<SearchRoute />}>
-              <Route
-                path="/feed/SearchNav/:name/party"
-                element={<SearchCompany />}
-              />
-              <Route path="/feed/SearchNav/:name" element={<SearchAll />} />
-              {/* <Route path="/SearchNav/All" element={<SearchAll />} /> */}
-              <Route
-                path="/feed/SearchNav/:name/Product"
-                element={<SearchProduct />}
-              />
-            </Route>
-
-            <Route path="/feed/settings" element={<Second />}>
-              <Route index element={<General />} />
-              <Route path="/feed/settings/edit" element={<EditProfile />} />
-              <Route
-                path="/feed/settings/NotificationSetting"
-                element={<NotificationSetting />}
-              />
-              <Route path="/feed/settings/Help" element={<Help />} />
-              <Route path="/feed/settings/contact" element={<Contact />} />
-              <Route
-                path="/feed/settings/Privacy"
-                element={<PrivacyPolicy />}
-              />
-            </Route>
-            <Route path="/feed/profile/:id" element={<Profile />}>
-              <Route index element={<About />} />
-              <Route path="/feed/profile/:id/post" element={<Post />} />
-              <Route
-                path="/feed/profile/:id/demand-products"
-                element={<DemandProducts />}
-              />
-              <Route
-                path="/feed/profile/:id/relations"
-                element={<Relations />}
-              />
-              <Route path="/feed/profile/:id/bids" element={<Bids />} />
-            </Route>
-          </Route>
-
           {/* Public Route */}
 
           <Route path="/" element={<Layout />}>
@@ -252,6 +184,100 @@ function App() {
             />
             <Route path="/odootest" element={<ForTesting />} />
             <Route path="*" element={<PageNotFound />} />
+
+            <Route path="Search" element={<SearchRoutePublic />}>
+              <Route
+                path="/Search/All/:searchInput"
+                element={<SearchAllPublic />}
+              />
+              <Route
+                path="/Search/:searchInput/companies"
+                element={<SearchCompanyPublic />}
+              />
+              <Route
+                path="/Search/:searchInput/Product"
+                element={<SearchProductPublic />}
+              />
+              <Route path="/Search/:searchInput/Job" element={<Job />} />
+              <Route
+                path="/Search/:searchInput/Post"
+                element={<PostPublic />}
+              />
+            </Route>
+          </Route>
+
+          {/* Landing Route */}
+
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/create-password/:id" element={<CreatePssPage />} />
+          <Route path="/ResetPss/:token" element={<ResetPssPage />} />
+          <Route path="/forget-password" element={<ForgotPassPage />} />
+          <Route path="/OTP" element={<OTPpage />} />
+
+          <Route
+            path="/feed"
+            element={cookies.user ? <Primary /> : <Navigate to="/" />}
+          >
+            <Route path="/feed" element={<PageLayout />}>
+              <Route path="/feed/Relations" element={<RelationRoute />}>
+                <Route
+                  path="/feed/Relations/Recommended"
+                  element={<RecomendedRelation />}
+                />
+                <Route
+                  path="/feed/Relations/Requested"
+                  element={<RequestedRelation />}
+                />
+                <Route
+                  path="/feed/Relations/relation"
+                  element={<Relations />}
+                />
+              </Route>
+              <Route index element={<Home />} />
+              <Route path="/feed/notifications" element={<Notification />} />
+              <Route path="/feed/messages" element={<ChatPage />} />
+              <Route path="/feed/products" element={<AddItemsPage />} />
+            </Route>
+            <Route path="/feed/SearchNav/:name" element={<SearchRoute />}>
+              <Route
+                path="/feed/SearchNav/:name/party"
+                element={<SearchCompany />}
+              />
+              <Route path="/feed/SearchNav/:name" element={<SearchAll />} />
+
+              <Route
+                path="/feed/SearchNav/:name/Product"
+                element={<SearchProduct />}
+              />
+            </Route>
+
+            <Route path="/feed/settings" element={<Second />}>
+              <Route index element={<General />} />
+              <Route path="/feed/settings/edit" element={<EditProfile />} />
+              <Route
+                path="/feed/settings/NotificationSetting"
+                element={<NotificationSetting />}
+              />
+              <Route path="/feed/settings/Help" element={<Help />} />
+              <Route path="/feed/settings/contact" element={<Contact />} />
+              <Route
+                path="/feed/settings/Privacy"
+                element={<PrivacyPolicy />}
+              />
+            </Route>
+            <Route path="/feed/profile/:id" element={<Profile />}>
+              <Route index element={<About />} />
+              <Route path="/feed/profile/:id/post" element={<Post />} />
+              <Route
+                path="/feed/profile/:id/demand-products"
+                element={<DemandProducts />}
+              />
+              <Route
+                path="/feed/profile/:id/relations"
+                element={<Relations />}
+              />
+              <Route path="/feed/profile/:id/bids" element={<Bids />} />
+            </Route>
           </Route>
         </Routes>
       </ToastProvider>

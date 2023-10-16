@@ -1,21 +1,12 @@
 import React, { useEffect } from "react";
-
 import Hero from "../../Components/PublicComponents/Hero";
-
 import Heading from "../../Components/PublicComponents/Heading";
-
 import posimage from "../../assets/PuplicImage/M-pos webbb.png";
- 
 import erpimage from "../../assets/PuplicImage/ERP3-03.png";
- 
 import invoiceimage from "../../assets/PuplicImage/Addis e-invoice-01.png";
-
 import businessinteligence from "../../assets/PuplicImage/business inteligent.png";
-
 import ServiceBox from "../../Components/PublicComponents/ServiceBox";
-
 import Moto from "../../Components/PublicComponents/Moto";
-
 import Sponsors from "../../Components/PublicComponents/Sponsors";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { SiSpeedtest } from "react-icons/si";
@@ -25,9 +16,7 @@ import { VscServerProcess } from "react-icons/vsc";
 import { BiTime } from "react-icons/bi";
 import { GiUpgrade } from "react-icons/gi";
 import { TbArrowsExchange } from "react-icons/tb";
-
 import LearnMore from "../../Components/PublicComponents/LearnMore";
-
 import { useTranslation } from "../../Lang/Translater";
 import "aos/dist/aos.css";
 
