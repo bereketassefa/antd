@@ -18,7 +18,7 @@ export default function NewsHolder() {
         setTimeline(data);
         // console.log(data);
       } catch (err) {
-        setError('Error fetching initial data.');
+        console.log('Error fetching initial data')
       } finally {
         setLoading(false);
       }

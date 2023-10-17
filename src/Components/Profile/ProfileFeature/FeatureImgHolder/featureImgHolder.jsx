@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ProfileFeature from "../../../../assets/img/ProfileFeature.png";
+import ProfileFeature from "../../../../assets/image/coverpic.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";

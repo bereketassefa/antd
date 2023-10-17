@@ -127,7 +127,7 @@ return (
     <div className="flex justify-between grid-flow-col md:grid-cols-2 items-center p-2">
       <div className="flex gap-[7px]">
         <div>
-          <Avatar img={AccountData?.profilePicture ? AccountData?.profilePicture : alternativeProfile} />
+          <Avatar onClick={hadleNavigateProfile} img={AccountData?.profilePicture ? AccountData?.profilePicture : alternativeProfile} />
         </div>
         <div className="flex flex-col">
           <h1 onClick={hadleNavigateProfile} className="font-bold text-[#000] text-[17px]">{truncateTitle(title).toLowerCase()}</h1>
