@@ -4,7 +4,7 @@ import { product } from "../../../../../../data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faPlus } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from "./ProductCard";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Modal } from "antd";
@@ -15,11 +15,13 @@ function ProductPage() {
   const [cookies] = useCookies(["user"]);
   const isUserIdEqual = cookies.user._id === id;
   const [products, setProducts] = useState([]);
+
+  // console.log(id);
     const [showAddProductModal, setShowAddProductModal] = useState(false);
  const [isModalOpen, setIsModalOpen] = useState(false);
      
      
-  console.log(id);
+  // console.log(id);
   useEffect(() => {
     // Define an async function
     const fetchProducts = async () => {
@@ -28,7 +30,7 @@ function ProductPage() {
         // Replace 'YOUR_SERVER_URL' with your actual server URL
         const response = await axios.get(url);
         setProducts(response.data); // Set fetched data to state
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }

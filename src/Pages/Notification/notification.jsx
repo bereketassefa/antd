@@ -13,24 +13,24 @@ export default function Notification() {
   const [cookies, setCookie, removeCookie] = useCookies(['User']);
 
 
-  useEffect(() => {
-    const fetchNotifications = async () => {
-        try {
-            let response = await fetch(`https://account.qa.addissystems.et/Notification/${cookies?.user._id}`);
-            let data = await response.json();
-            // console.log(data);
-            setNotifications(data);
-        } catch (error) {
-            console.error("Error fetching notifications:", error);
-        }
-    };
+//   useEffect(() => {
+//     const fetchNotifications = async () => {
+//         try {
+//             let response = await fetch(`https://account.qa.addissystems.et/Notification/${cookies?.user._id}`);
+//             let data = await response.json();
+//             // console.log(data);
+//             setNotifications(data);
+//         } catch (error) {
+//             console.error("Error fetching notifications:", error);
+//         }
+//     };
 
-    // fetchNotifications();
-    const Interval= setInterval(() => {
-        fetchNotifications()
-    },1000)
+//     // fetchNotifications();
+//     const Interval= setInterval(() => {
+//         fetchNotifications()
+//     },1000)
     
-}, []);
+// }, []);
 // console.log(notifications)
   return (
     <div className='w-full flex flex-col items-start justify-center mt-4 gap-4 p-2' >

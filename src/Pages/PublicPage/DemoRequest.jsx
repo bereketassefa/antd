@@ -62,6 +62,20 @@ const DemoRequest = () => {
     });
   }, [phoneNumber]);
 
+  const handleLike = async (e) => {
+    e.preventDefault()
+    // console.log(e);
+   
+      // setLiked((prevLiked) => !prevLiked); // Optimistic update
+      const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/addissystemsGetfitget363294/afe34993-1b8a-4c92-a95d-2a55a8c2a993`;
+      console.log(url);
+      await fetch(url, { method: "POST"}).then(response => response.json()).then((data) => {
+        // console.log(data);
+      })
+   
+  };
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "phone") {
@@ -699,7 +713,6 @@ const DemoRequest = () => {
             </div>
           </form>
         </div>
-
         <LearnMore />
       </div>
       <ToastContainer />

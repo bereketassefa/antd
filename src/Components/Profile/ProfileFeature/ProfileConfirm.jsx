@@ -18,7 +18,9 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal }) {
       reader.onload = () => {
         setImage(reader.result);
       };
+     
       reader.readAsDataURL(newImage);
+      console.log(newImage);
     }
   };
   const handleImageDelete = () => {
@@ -34,12 +36,13 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal }) {
       }
       const formData = new FormData();
       formData.append("image", imageFile);
+      // console.log(imageFile)
       const response = await axios.put(`https://account.qa.addissystems.et/profile/update/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Response:", response);
+      // console.log("Response:", response);
       if (response.status === 200) {
         console.log("Profile updated successfully");
         setConfirmProfileModal(false);

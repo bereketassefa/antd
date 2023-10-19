@@ -1,9 +1,10 @@
 import React, { useEffect,useContext, useRef, useState } from 'react';
 import { message } from 'antd';
 import axios from 'axios';
-import NewsCard from '../../../Components/Home/NewsCard/newsCard';
+// import NewsCard from '../../Components/Home/NewsCard/newsCard';
 import { ErrorContext } from '../../../Components/Error/ErrorContext';
 import io from 'socket.io-client';
+import NewsCard from '../../../Components/Home/NewsHolder/newsCard';
 export default function Post(props) {
   // console.log(window.location.pathname.split('/')[3])
    const id =window.location.pathname.split('/')[3]

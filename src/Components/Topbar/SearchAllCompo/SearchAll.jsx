@@ -29,6 +29,7 @@ function SearchAll() {
   const [showAllCompanies, setShowAllCompanies] = useState(false);
   const [hasSliderTouched, setHasSliderTouched] = useState(false);
   const [inputValue, setInputValue] = useState(1);
+  const [data, setData] = useState([]);
   const hadleNavigateProfile = async (e) => {
     e.preventDefault();
     try {
@@ -51,7 +52,7 @@ function SearchAll() {
     container.classList.remove("overflow-y-hidden");
   }
 
-  console.log(name);
+  // console.log(name);
   const decodedName = name
     ? name.includes("%")
       ? decodeURIComponent(name).split(" ")[0]
@@ -63,37 +64,15 @@ function SearchAll() {
       const response = await axios.post(url, {
         query: decodedName,
       });
-
-      const formattedResults = response.data
-        .filter((item) => ["party", "product"].includes(item.entityType))
-        .map((item) => {
-          if (item.entityType === "party") {
-            return {
-              businessname: item.party.businessname,
-              Uid: item.Uid,
-              entityType: item.entityType,
-              // Add more fields for 'party' if needed
-            };
-          } else if (item.entityType === "product") {
-            return {
-              productName: item.productName,
-              productDescription: item.productDescription,
-              imageUrl: item.imageUrl,
-              Uid: item.Uid,
-              entityType: item.entityType,
-              // Add more fields for 'product' if needed
-            };
-          }
-          return null;
-        });
-
-      setSearchCompany(formattedResults);
+      setData(response.data);
+       console.log(response.data);
     } catch (error) {
       console.error("Error performing search", error.message);
     }
   };
 
   useEffect(() => {
+    
     if (decodedName) {
       // Add a check before calling handleSearch
       handleSearch();
@@ -166,16 +145,12 @@ function SearchAll() {
                   : "max-h-[400px] overflow-hidden"
               }`}
             >
-              {(!hasSliderTouched
-                ? Search
-                : DataProducts?.filter(
-                    (item) => item?.ProductPrice <= inputValue
-                  )
-              )?.map((item, index) => {
-                if (!showAllProducts && index >= 5) {
-                  return null; // Skip rendering the remaining products
-                }
-
+           {data
+      .filter((item) => item.entityType === "product")
+      .map((item, index) => {
+        if (!showAllProducts && index >= 5) {
+          return null;
+        }
                 return (
                   <div className="border-[1px]   h-[400px]   ">
                     <div className="flex justify-end ">
@@ -186,7 +161,7 @@ function SearchAll() {
                       >
                         <p>ETB</p>
                         <BiMoney className="text-xl text-white" />
-                        {item.Price}
+                        {item.ProductPrice}
                       </div>
                     </div>
                     <div className="flex flex-col md:flex-row justify-between md:items-center px-4 ">
@@ -206,7 +181,7 @@ function SearchAll() {
                                 onClick={hadleNavigateProfile}
                                 className="dark:text-white font-bold text-[#000]  text-[13px]   mx-1"
                               >
-                                {item?.title?.toLowerCase()}
+                                {item?.companyName?.toLowerCase()}
                               </h2>
                               <di>
                                 <img src={verifiyPNG} alt="" />
@@ -220,7 +195,7 @@ function SearchAll() {
 
                         <div className="flex justify-between">
                           <p className="dark:text-white max-w-[670px] md:w-[670px]  ">
-                            {item.description}
+                            {item.productDescription}
                           </p>
                           <img
                             // src={idphne}
@@ -237,9 +212,9 @@ function SearchAll() {
                         <div className="border-2 rounded-md  w-36  h-10 ">
                           {item.ProductFeature}
                         </div>
-                        <div className="border-2 rounded-md  w-36   h-10 ">
+                        {/* <div className="border-2 rounded-md  w-36   h-10 ">
                           128 GB Storage{" "}
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -268,32 +243,36 @@ function SearchAll() {
                   : "max-h-[200px] overflow-hidden"
               }    `}
             >
-              {Chat.map((index) => (
-                <SearchCardTwo
-                  key={index.title}
-                  title={index.title}
-                  description={index.description}
-                  time={index.time}
-                  image={index.image}
-                  status={index.status}
-                />
-              ))}
-            </div>
-            <hr className="border-[1px]" />
-
-            <div className="flex justify-center items-center">
-              <button
-                className="text-[#3222C6]"
-                onClick={() => setShowHiddenContent2(!showHiddenContent2)}
-              >
-                See All Companies
-              </button>
-            </div>
+             {data
+              .filter((item) => item.entityType === "party")
+              .map((party, index) => {
+                return (
+                  <SearchCardTwo
+                    key={party.Uid}
+                    title={party.party.businessname}
+                    Uid={party.Uid}
+                    // description={/* Description Here */}
+                    description={party?.branch[0]?.country ? party?.branch[0]?.country : party?.branch[0]?.city }
+                    // image={}
+                   
+                  />
+                );
+              })}
+          </div>
+          <hr className="border-[1px]" />
+          <div className="flex justify-center items-center">
+            <button
+              className="text-[#3222C6]"
+              onClick={() => setShowHiddenContent2(!showHiddenContent2)}
+            >
+              See All Companies
+            </button>
           </div>
         </div>
       </div>
     </div>
-  );
-}
+  </div>
+);
+            }
 
 export default SearchAll;

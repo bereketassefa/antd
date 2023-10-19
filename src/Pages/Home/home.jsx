@@ -5,6 +5,7 @@ import { ErrorContext } from '../../Components/Error/ErrorContext';
 import React, { useEffect,useContext, useState } from 'react'
 export default function Home() {
   const { error, showError, hideError } = useContext(ErrorContext);
+  
   return (
     
     <div className=' flex items-start mt-4 '>

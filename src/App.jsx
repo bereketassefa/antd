@@ -73,8 +73,6 @@ import PageNotFound from "../src/Pages/PublicPage/PageNotFound";
 import { features } from "../src/PublicData/data";
 
 import Aos from "aos";
-import AOS from "aos";
-
 import JobApply from "../src/Pages/PublicPage/JobApply";
 
 import Vacancy from "../src/Pages/PublicPage/Vacancy";

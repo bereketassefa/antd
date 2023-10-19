@@ -12,7 +12,7 @@ import alternativeProfileblack from "../../../assets/image/alternativeProfile-bl
 import newusimage from "../../../assets/image/iphone2.webp";
 
 import { format } from "timeago.js";
-import CommentContainer from "./Comments/commentContainer";
+import CommentContainer from "../NewsCard/Comments/commentContainer";
 import Avatar from "../../../Fields/Avatar/avatar";
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -23,10 +23,9 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useToast } from "../../Toast/toastContext";
-import NewSlider from "../../../Components/Home/NewsHolder/NewSlider";
+import NewSlider from "./NewSlider";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Image } from "antd";
-import LikeCount from "./LikeCount";
 export default function NewsCard({
   account_id,
   myKey,
@@ -42,19 +41,6 @@ export default function NewsCard({
   const { showToast } = useToast();
   const downloadCardRef = useRef(null);
 
-  NewsCard.propTypes = {
-    profilePic: PropTypes.string,
-    items: PropTypes.array,
-    companyName: PropTypes.string.isRequired,
-    timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-      .isRequired,
-    newContent: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    like: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    myKey: PropTypes.any.isRequired,
-  };
 
   const [showComments, setShowComments] = useState(false);
   const [cookies] = useCookies(["user"]);
@@ -66,8 +52,9 @@ export default function NewsCard({
   const [showDownloadCard, setShowDownloadCard] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [likeCount, setLikeCount] = useState(null);
+  const [likeCount, setLikeCount] = useState(like);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  
 
   const [showText, setShowText] = useState(false);
 
@@ -93,60 +80,62 @@ export default function NewsCard({
   // const [showLikeInfo, setShowLikeInfo] = useState(false);
 
   useEffect(() => {
-    let es; // Declare the EventSource variable
-
-    const connect = () => {
-      es = new EventSource(
-        `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
-      );
-
-      es.onmessage = (event) => {
-        const updatedPosts = JSON.parse(event.data);
-        const updatedPost = updatedPosts.find((post) => post.id === id);
-        if (updatedPost) {
-          setLikeCount(updatedPost?.like);
-          console.log(updatedPost?.like);
-          checkIfLiked(); // Check if the current user has liked the updated post
-        }
-      };
-
-      es.onmessage = (event) => {
-        const updatedPost = JSON.parse(event.data);
-        if (updatedPost.id === id) {
-          setLikeCount(updatedPost.like);
-          console.log(updatedPost.like);
-        }
-      };
-    };
-
-    connect(); // Initialize the connection
-
-    return () => {
-      es.close(); // Close the EventSource connection when the component unmounts
-    };
-  }, [id]);
-
-  const handleLike = async () => {
+    setLikeCount(like);
+  }, []);
+  
+  let es; // Shared EventSource reference
+  const fetchLikeCount = async () => {
     try {
-      // console.log('in',id)
-      const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${
-        cookies?.user.Uid
-      }/${id}`;
-      const response = await fetch(url, { method: "POST" });
-      const responseData = await response.json();
-      console.log(responseData?.updatedPost?.like);
-      setLikeCount(responseData?.updatedPost?.like);
-      if (!response.ok) {
-        throw new Error(
-          responseData.message || "Failed to like or unlike the post"
-        );
-      }
-
-      setLiked((prevLiked) => !prevLiked);
+      const response = await fetch(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+      const data = await response.json();
+      setLikeCount(data.like);
     } catch (error) {
-      // message.error(`An error occurred: ${error.message}`);
+      console.error("Error fetching like count:", error);
     }
-  };
+};
+
+  
+//   useEffect(() => {
+//     es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+//     es.onmessage = (event) => {
+//         const updatedPost = JSON.parse(event.data);
+//         if (updatedPost.id === id) {
+//             setLikeCount(updatedPost.like);
+//             // checkIfLiked(); if you want to
+//         }
+//     };
+//     return () => es.close();
+// }, [id]);
+
+
+const handleLike = async (e) => {
+  e.preventDefault();
+  setLiked((prevLiked) => !prevLiked); // Optimistic update
+
+  // Close the SSE connection temporarily
+  // if (es) es.close();
+
+  const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user?.Uid}/${id}`;
+  try {
+      const response = await fetch(url, { method: "POST" });
+      if (!response.ok) {
+          throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+       // Update like count based on server's response
+       await fetchLikeCount();
+      // Re-establish the SSE connection
+      // es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+      // setLikeCount(data.newLikeCount);
+  } catch (error) {
+      console.error("There was a problem with the fetch operation:", error.message);
+      setLiked((prevLiked) => !prevLiked); // Revert the optimistic update if there's an error
+  }
+};
+
+  
+  
+  
 
   const checkIfLiked = async () => {
     try {
@@ -177,7 +166,7 @@ export default function NewsCard({
     // Fetch comments when component mounts
     fetchComments();
     checkIfLiked();
-    fetchMoreTimelines();
+    // fetchMoreTimelines();
   }, []);
 
   // Make an API call to fetch comments for the given post ID
@@ -212,6 +201,7 @@ export default function NewsCard({
       console.log(error);
     }
   };
+  // console.log(id)
 
   async function fetchMoreTimelines() {
     const Url = `https://timeline.qa.addissystems.et/time-line/${id}`;
@@ -219,7 +209,7 @@ export default function NewsCard({
     try {
       const response = await axios.get(Url);
       if (response.status === 200) {
-        // console.log(response.data)
+        console.log(response.data)
         setTimeline(response.data);
       }
     } catch (error) {
@@ -315,15 +305,15 @@ export default function NewsCard({
       setShowDownloadCard(false);
     }
   };
-  useEffect(() => {
-    // Attach click event listener
-    document.addEventListener("mousedown", handleClickOutside);
+  // useEffect(() => {
+  //   // Attach click event listener
+  //   document.addEventListener("mousedown", handleClickOutside);
 
-    // Cleanup: Remove event listener
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  //   // Cleanup: Remove event listener
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   const text =
     "In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design";
@@ -390,7 +380,7 @@ export default function NewsCard({
       </div>
       {/* {newContent} */}
       <div className="w-full flex flex-col">
-        <div className="p-2 flex w-full justify-center items-center">
+        <div className="p-2 flex w-full ">
           <p
             id="fullText"
             className={`dark:text-white text-smallP md:text-midP lg:text-largeP ${
@@ -399,9 +389,9 @@ export default function NewsCard({
                 : "  max-w-[300px] md:max-w-[450px] max-h-[45px] overflow-hidden"
             }`}
           >
-            {text.length > 120 && !showText ? text.slice(0, 120) + "..." : text}
+            {newContent.length > 120 && !showText ? newContent.slice(0, 120) + "..." : newContent}
           </p>
-          {!showText && text.length > 120 && (
+          {!showText && newContent.length > 120 && (
             <p
               className={`md:mt-6 text-[15px] ${
                 showText ? "hidden" : "text-blue-900"
@@ -419,7 +409,7 @@ export default function NewsCard({
               width={600}
               height={450}
               src={
-                "https://i.etsystatic.com/12145113/r/il/d6a500/4563365033/il_794xN.4563365033_aa4f.jpg"
+                image
               }
             />
           </Image.PreviewGroup>
@@ -427,10 +417,13 @@ export default function NewsCard({
       </div>
 
       <div className="w-full flex flex-col z-10">
-        <div className="flex justify-between items-center p-4 border-b ">
-         <LikeCount
-         
-         />
+        <div className="flex justify-between items-center p-4 border-b">
+          <span
+            className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
+            onClick={() => setShowLikeInfo(true)}
+          >
+            {likeCount === 0 || likeCount === "0" ? "" : likeCount}
+          </span>
           <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
             {comments.postCount === undefined
               ? "Loading..."
@@ -443,7 +436,7 @@ export default function NewsCard({
         <ul className="flex items-center p-4 gap-4">
           <li className="flex items-center gap-2">
             <FontAwesomeIcon
-              onClick={handleLike}
+              onClick={(e)=> handleLike(e)}
               className={
                 Liked
                   ? "text-largeP md:text-smallT cursor-pointer text-secondary "

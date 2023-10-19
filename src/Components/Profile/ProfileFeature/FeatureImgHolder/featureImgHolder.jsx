@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import ProfileFeature from "../../../../assets/img/ProfileFeature1.png";
+import ProfileFeature from "../../../../assets/image/coverpic.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
 import CompanyPP from "../CompanyInfo/CompanyPP";
 import { Modal } from "antd";
 import { IoClose } from "react-icons/io5";
+import axios from "axios";
 export default function FeatureImgHolder({ data }) {
   const [cookies] = useCookies(["user"]);
   const [isLoading] = useState(false);

@@ -17,7 +17,7 @@ export default function PageLayout() {
         <div
           className="flex justify-center items-center absolute bg-[rgba(0,0,0,0.5)] w-full z-50 min-h-screen"
           style={{
-            left: -216,
+            left: -400,
             top: 0,
             bottom: 0,
             width: "100vw",

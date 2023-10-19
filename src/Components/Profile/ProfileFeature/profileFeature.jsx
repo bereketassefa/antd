@@ -1,5 +1,4 @@
 import React from 'react'
-import pofileFeature1 from '../../../assets/img/ProfileFeature1.png'
 import FeatureImgHolder from './FeatureImgHolder/featureImgHolder'
 import CompanyInfo from './CompanyInfo/companyInfo'
 export default function ProfileFeature({data ,Uid }) {

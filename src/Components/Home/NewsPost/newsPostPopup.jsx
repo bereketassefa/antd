@@ -57,14 +57,20 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     setIsLoading(true);
   
     const formData = new FormData();
-    formData.append("Uid", cookies?.user?.Uid);
+    
+    // Append Uid and description outside of the loop
     formData.append("description", description);
+    formData.append("Uid", cookies?.user?.Uid);
+    
     fileList.forEach((file) => {
-      formData.append("image", file.originFileObj);
+        formData.append("image", file.originFileObj);
     });
-  
     try {
-      const response = await axios.post(import.meta.env.VITE_POST_NEWS, formData);
+      const url = `${import.meta.env.VITE_POST_NEWS}`;
+      // console.log('Sending request to:', url);
+      const response = await axios.post(url, formData);
+      console.log('Response received:', response);
+
       if (response.status === 200) {
         message.success("Upload successful");
         console.log("Data inserted successfully");
@@ -73,13 +79,11 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
         console.error("Unexpected response status:", response.status);
       }
     } catch (error) {
-      if (error.message === "Network Error") {
-        message.error("Network Error: Failed to post.");
-        handleClose();
-      } else {
-        console.error("Error inserting data:", error);
-      }
-      handleClose();
+      console.error("Error inserting data:", error);
+      message.error("Error: Failed to post.");
+      
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -90,7 +94,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
         const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${
           cookies?.user._id
         }`;
-        // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+  
         await axios
           .get(url)
           .then((res) => {

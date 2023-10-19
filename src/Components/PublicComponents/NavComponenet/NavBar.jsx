@@ -15,6 +15,7 @@ import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import SearchCard from "../../Topbar/SearchAllCompo/SearchCard";
 import { useCookies } from "react-cookie";
 import Avatar from "../../../Fields/Avatar/avatar";
+import axios from "axios";
 const NavBar = () => {
   function truncateCompanyName(name) {
     return name && name.length > 8 ? name.substring(0, 8) + "..." : name;
