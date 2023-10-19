@@ -54,8 +54,8 @@ export const AddisPayNews = [
   {
     key: 1,
     image: news1,
-    Title: "News One",
-    news: "  In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a  document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available. ",
+    Title: "Embracing the Digital Wave: The Power of Electronic Invoicing",
+    news: "  In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology. ",
   },
   {
     key: 2,
