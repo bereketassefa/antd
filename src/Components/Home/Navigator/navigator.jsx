@@ -351,7 +351,7 @@ export default function Navigator({ handleAddProduct }) {
           </div>
         </div>
       </div>
-      <div className="max-w-[300px] border-2 h-[350px] mt-8   drop-shadow-xl  bg-white">
+      {/* <div className="max-w-[300px] border-2 h-[350px] mt-8   drop-shadow-xl  bg-white">
         <p className="ml-4 mt-3">Ads</p>
 
         <div className=" py-1 px-4 ">
@@ -378,7 +378,7 @@ export default function Navigator({ handleAddProduct }) {
             />
           </Slider>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
