@@ -36,49 +36,38 @@ function Login() {
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
-    // console.log("hello");
+  
     try {
       if (email === "" || pass === "") {
         setErrMsg("Please enter your credentials");
       } else {
         setLoading(true);
-
-        const apiUrl = `${
-          import.meta.env.VITE_LOGIN_USER_API
-        }/${email}/${pass}`;
-        // console.log(apiUrl);
-        const response = await axios.post(
-          apiUrl,
-          {},
-          
-        );
-        // console.log(response);
+  
+        const apiUrl = `${import.meta.env.VITE_LOGIN_USER_API}/${email}/${pass}`;
+        const response = await axios.post(apiUrl, {});
+  
         if (response.status === 400) {
           setErrMsg("Server not responding!");
-          setLoading(false);
-        } else if (
-          response.status === 200 &&
-          response.data.error === "Invalid password"
-        ) {
+        } else if (response.status === 200 && response.data.error === "Invalid password") {
           setErrMsg("Please enter the correct credentials!");
-          setLoading(false);
-        } else if (response.status === 201) {
-          setLoading(false);
+        } else if (response.data.status === "success") {
+          // Set the user data as a cookie
           let expires = new Date();
           expires.setTime(expires.getTime() + 2 * 60 * 60 * 1000);
-
-          setCookie("user", response.data);
-          // console.log(response.data)
-          setCookie("user", response.data, { path: "/", expires });
-          // Commenting out the setCookie function since it's not defined in the code provided
+          setCookie("user", response.data.user, { path: "/", expires });
+        
           navigate("/feed");
+        }else {
+          setErrMsg("Login Failed");
         }
+        setLoading(false);
       }
     } catch (err) {
       setErrMsg("Login Failed");
       setLoading(false);
     }
   };
+  
 
   // The following useEffect hook is not needed in this component, so we can remove it
   // useEffect(() => {
