@@ -16,9 +16,9 @@ export default function NewsHolder() {
         const response = await fetch(url);
         const data = await response.json();
         setTimeline(data);
-        // console.log(data);
+      //  console.log(data);
       } catch (err) {
-        console.log('Error fetching initial data')
+        console.log('Error fetching initial data' , err)
       } finally {
         setLoading(false);
       }
@@ -35,6 +35,7 @@ export default function NewsHolder() {
       try {
         const newData = JSON.parse(event.data);
         setTimeline((prevData) => [newData, ...prevData]);
+        console.log(newData);
       } catch (err) {
         console.error('Error parsing SSE data:', err);
       }
@@ -109,7 +110,7 @@ return (
             timestamp={item?.time}
             id={item?.id}
             like={item?.like}
-            companyName={item?.party?.party[0]?.party?.businessname}
+            companyName={item?.account?.party}
             account_id={item?.account?._id}
             Uid ={item?.uid}
           />

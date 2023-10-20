@@ -52,7 +52,7 @@ export default function NewsCard({
   const [showDownloadCard, setShowDownloadCard] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [likeCount, setLikeCount] = useState(like);
+  const [likeCount, setLikeCount] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   
 
@@ -84,34 +84,52 @@ export default function NewsCard({
   }, []);
   
   let es; // Shared EventSource reference
-  const fetchLikeCount = async () => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
-      const data = await response.json();
-      setLikeCount(data.like);
-    } catch (error) {
-      console.error("Error fetching like count:", error);
-    }
-};
+//   const fetchLikeCount = async () => {
+//     try {
+//       const response = await fetch(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+//       const data = await response.json();
+//       setLikeCount(data.like);
+//     } catch (error) {
+//       console.error("Error fetching like count:", error);
+//     }
+// };
 
   
-//   useEffect(() => {
-//     es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
-//     es.onmessage = (event) => {
-//         const updatedPost = JSON.parse(event.data);
-//         if (updatedPost.id === id) {
-//             setLikeCount(updatedPost.like);
-//             // checkIfLiked(); if you want to
-//         }
-//     };
-//     return () => es.close();
-// }, [id]);
+useEffect(() => {
+  let es; // Declare the EventSource variable
+
+  const connect = () => {
+    es = new EventSource(
+      `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
+    );
+
+    es.onmessage = (event) => {
+      const updatedPost = JSON.parse(event.data);
+      if (updatedPost.id === id) {
+        setLikeCount(updatedPost.like);
+        console.log(updatedPost.like);
+        checkIfLiked(); // Check if the current user has liked the updated post
+      }
+    };
+    
+  
+    
+  };
+
+  connect(); // Initialize the connection
+
+  return () => {
+    es.close(); // Close the EventSource connection when the component unmounts
+  };
+}, [id]);
+
+
+
 
 
 const handleLike = async (e) => {
   e.preventDefault();
   setLiked((prevLiked) => !prevLiked); // Optimistic update
-
   // Close the SSE connection temporarily
   // if (es) es.close();
 
@@ -123,10 +141,11 @@ const handleLike = async (e) => {
       }
       const data = await response.json();
        // Update like count based on server's response
-       await fetchLikeCount();
+      //  await fetchLikeCount();
       // Re-establish the SSE connection
       // es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
-      // setLikeCount(data.newLikeCount);
+      setLikeCount(data.updatedPost.like);
+      // console.log(data.updatedPost.like)
   } catch (error) {
       console.error("There was a problem with the fetch operation:", error.message);
       setLiked((prevLiked) => !prevLiked); // Revert the optimistic update if there's an error
@@ -305,15 +324,15 @@ const handleLike = async (e) => {
       setShowDownloadCard(false);
     }
   };
-  // useEffect(() => {
-  //   // Attach click event listener
-  //   document.addEventListener("mousedown", handleClickOutside);
+  useEffect(() => {
+    // Attach click event listener
+    document.addEventListener("mousedown", handleClickOutside);
 
-  //   // Cleanup: Remove event listener
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
+    // Cleanup: Remove event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const text =
     "In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design";
@@ -419,6 +438,7 @@ const handleLike = async (e) => {
       <div className="w-full flex flex-col z-10">
         <div className="flex justify-between items-center p-4 border-b">
           <span
+           
             className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
             onClick={() => setShowLikeInfo(true)}
           >
