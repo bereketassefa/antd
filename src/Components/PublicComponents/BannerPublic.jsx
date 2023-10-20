@@ -26,6 +26,7 @@ const BannerPublic = ({ header, subtitle, bannerImage }) => {
         </div>
       </div>
     </header>
+   
   );
 };
 

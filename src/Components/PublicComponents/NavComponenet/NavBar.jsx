@@ -148,6 +148,50 @@ const NavBar = () => {
             />
           </Link>
         </div>
+        <div className=" relative ">
+          <div className="dark:bg-[#38434f] flex gap-2 border-[2px]   py-[10px] px-4 items-center rounded-md md:w-[500px]  max-w-[550px] ">
+            <div>
+              <FiSearch className="text-xl text-gray-500 " />
+            </div>
+            <input
+              className="dark:bg-[#38434f] dark:text-white outline-none text-[17px] w-full bg-transparent"
+              type="text"
+              value={searchInput}
+              placeholder="What are you looking for?"
+              onChange={(e) => {
+                setSearchInput(e.target.value);
+              }}
+            />
+          </div>
+          {searchInput && (
+            <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
+              <div className="flex flex-col  ">
+                {searchResults.map((result, index) => (
+                  <SearchCard
+                    key={index}
+                    id={result.id}
+                    name={result.name}
+                    type={result.type} // This will be either "business" or "product"
+                    image={
+                      result.type === "business"
+                        ? result.profilePicture
+                        : result.imageUrl
+                    } // Pass the appropriate image based on the type
+                  />
+                ))}
+              </div>
+              <hr className="border-[1px] border-blue-800" />
+              <Link
+                to={`/Search/All/${searchInput}`}
+                onClick={() => setSearchInput("")}
+              >
+                <p className="dark:text-white flex justify-center text-primary ">
+                  See All results
+                </p>
+              </Link>
+            </div>
+          )}
+        </div>
         <ul
           className={`fixed flex flex-col items-start bg-white ${
             menuOpen
@@ -155,9 +199,6 @@ const NavBar = () => {
               : "-right-64 opacity-0 sm:-right-80"
           } mdm:   top-0 z-20 h-full w-60 gap-y-4 pl-4 pr-4 pt-20 duration-500 sm:w-80 sm:pr-6 mdm:static mdm:mr-1 mdm:flex mdm:h-fit mdm:w-fit mdm:flex-row mdm:items-center mdm:justify-between mdm:gap-3 mdm:bg-inherit mdm:p-0 mdm:opacity-100 mdm:duration-0`}
         >
-          <li className="hover:text-addispink" onClick={closeMenu}>
-            <Link to="/">{translate("home")}</Link>
-          </li>
           <li className="">
             <div className="group flex flex-col items-start transition-all duration-500 mdm:block ">
               <span className="flex cursor-pointer items-center group-hover:text-addispink">
@@ -280,53 +321,8 @@ const NavBar = () => {
             </p>
           </div>
         </ul>
-        <div className="flex items-center">
-          <div className=" relative">
-            <div className="dark:bg-[#38434f] flex gap-2 border-[2px]   py-[10px] px-4 items-center rounded-md md:w-[400px]  max-w-[450px] ">
-              <div>
-                <FiSearch className="text-xl text-gray-500 " />
-              </div>
-              <input
-                className="dark:bg-[#38434f] dark:text-white outline-none text-[17px] w-full bg-transparent"
-                type="text"
-                value={searchInput}
-                placeholder="What are you looking for?"
-                onChange={(e) => {
-                  setSearchInput(e.target.value);
-                }}
-              />
-            </div>
-            {searchInput && (
-              <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
-                <div className="flex flex-col  ">
-                  {searchResults.map((result, index) => (
-                    <SearchCard
-                      key={index}
-                      id={result.id}
-                      name={result.name}
-                      type={result.type} // This will be either "business" or "product"
-                      image={
-                        result.type === "business"
-                          ? result.profilePicture
-                          : result.imageUrl
-                      } // Pass the appropriate image based on the type
-                    />
-                  ))}
-                </div>
-                <hr className="border-[1px] border-blue-800" />
-                <Link
-                  to={`/Search/All/${searchInput}`}
-                  onClick={() => setSearchInput("")}
-                >
-                  <p className="dark:text-white flex justify-center text-primary ">
-                    See All results
-                  </p>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          <div className="hidden items-center gap-x-2 mdm:flex">
+        <div className="flex items-center  mr-6">
+          <div className="hidden items-center gap-x-2 mdm:flex  mr-2">
             <div className="group relative">
               <span className=" flex min-w-[40px] cursor-default items-center justify-end text-xs hover:text-addispink">
                 {lang[0]}
@@ -383,12 +379,16 @@ const NavBar = () => {
                   <div
                     className={
                       dropDown
-                        ? "rounded-lg dark:bg-[#1b1f23] absolute mt-[65px] w-[208px] drop-shadow-lg bg-topbarBg transition ease-in-out delay-150"
-                        : "h-[0px] overflow-hidden absolute mt-[65px] w-[208px] drop-shadow-lg transition ease-in-out delay-150"
+                        ? "rounded-lg dark:bg-[#1b1f23] absolute mt-[65px] w-[150px]  mr-4 drop-shadow-lg bg-topbarBg transition ease-in-out delay-150 "
+                        : "h-[0px] overflow-hidden absolute mt-[65px] w-[150px] mr-4 drop-shadow-lg transition ease-in-out delay-150 "
                     }
                   >
                     <ul className="flex flex-col w-full h-full items-center justify-center">
-                      <Link onClick={hadleNavigateProfile} className="w-full">
+                      <Link
+                        to="/feed/profile/:id"
+                        onClick={hadleNavigateProfile}
+                        className="w-full"
+                      >
                         <li className="w-full p-3 items-center justify-start hover:bg-lightPrimaryHover">
                           <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
                             {" "}

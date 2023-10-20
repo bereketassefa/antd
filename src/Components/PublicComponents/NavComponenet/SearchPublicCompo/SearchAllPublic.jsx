@@ -93,7 +93,7 @@ function SearchAllPublic() {
   };
 
   return (
-    <div className="   max-w-[780px] md:w-[780px] gap-2 flex-col md:flex-row justify-between bg-white drop-shadow-xl px-2">
+    <div className="   max-w-[780px] md:w-[780px] gap-2 flex-col md:flex-row justify-between items-center bg-white drop-shadow-xl px-2">
       <div className="dark:bg-[#1b1f23] max-w-[780px] md:w-[750px]  ">
         <div className="border-2 rounded-lg ">
           <div
