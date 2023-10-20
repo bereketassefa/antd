@@ -29,12 +29,8 @@ function General() {
   const [newPassError, setNewPassError] = useState("");
   const [confirmPassError, setConfirmPassError] = useState("");
   const [invalid, setInvalidPassword] = useState("");
-<<<<<<< Updated upstream
   const [isModalVisible, setModalVisible] = useState(false);
   const [activesession , setActiveSession] = useState(false);
-=======
-  const [activesession, setActiveSession ]=useState("")
->>>>>>> Stashed changes
 
   // console.log("myNewFontSize:", myNewFontSize);
   console.log("myFontSize:", myFontSize);
@@ -177,16 +173,8 @@ function General() {
   );
   
   return (
-<<<<<<< Updated upstream
     <div className="dark:bg-[#1b1f23] bg-[#F9F7F7]  mt-5 mx-auto p-4">
       <a href="Settings" className="flex justify-start items-center gap-2 pl-2 mt-2">
-=======
-    <div className="bg-[#F9F7F7] max-w-[505px] mt-5 mx-auto p-4">
-      <a
-        href="settings"
-        className="flex justify-start items-center gap-2 pl-2 mt-2"
-      >
->>>>>>> Stashed changes
         <BsArrowLeft
           style={{ fontSize: 16 + myFontSize }}
           className="md:hidden lg:hidden text-[#555555] h-[27px] w-[27px]"

@@ -2,19 +2,22 @@ import { useEffect, useRef, useState } from 'react';
 import oopsno from '../../../assets/image/oops-no.png';
 import NewsCard from './newsCard';
 import { message } from 'antd';
+import axios from 'axios';
 
 export default function NewsHolder() {
   const [loading, setLoading] = useState(true);
   const [timeline, setTimeline] = useState([]);
   const [error, setError] = useState(null);
   const elementRef = useRef(null);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
         const url = `${import.meta.env.VITE_WITH_OUT_SSE_GET_TIMELINE}`;
-        const response = await fetch(url);
-        const data = await response.json();
+        const response = await axios.get(url);
+        const data = response.data;
+
         setTimeline(data);
       //  console.log(data);
       } catch (err) {

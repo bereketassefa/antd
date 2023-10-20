@@ -8,7 +8,7 @@ export default function Home() {
   
   return (
     
-    <div className=' flex items-start mt-4 '>
+    <div className=' flex items-start mt-4 gap-2'>
         {/* feeder  // alwasy visible to see */}
        
         <Feed />

@@ -41,8 +41,12 @@ function SearchCompany() {
       console.error('Error performing search', error.message);
     }
   };
-  useEffect(() => {
+
+  useEffect(()=>{
     handleSearch();
+  })
+  useEffect(() => {
+    
 
     // Assuming DataProducts is available at this point
     if (DataProducts) {
