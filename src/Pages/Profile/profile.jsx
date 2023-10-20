@@ -37,7 +37,7 @@ export default function Profile({dataConnection}) {
              {/* profile feature display */}
              <ProfileFeature  data={data} />
              {/* profile completeness view  */}
-             {/* <ProfileProgress /> */}
+             <ProfileProgress />
         </div>
 
 
