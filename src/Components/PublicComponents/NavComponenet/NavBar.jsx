@@ -28,6 +28,7 @@ const NavBar = () => {
   const [lang, setLang] = useState([language, "Amh", "Oro"]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+const [searchHistory, setSearchHistory] = useState([]);
 
   // const [cookies] = useCookies(["user"]);
   const [profilePic, setProfilePic] = useState(null);
@@ -82,6 +83,7 @@ const NavBar = () => {
       });
 
       setSearchResults(formattedResults);
+      console.log(formattedResults);
       setShowResults(true);
     } catch (error) {
       console.error("Error performing search", error);
@@ -129,6 +131,14 @@ const NavBar = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchInput]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchInput]);
   return (
     <nav className=" sticky top-0 z-40 w-full bg-slate-50 px-6 opacity-100 shadow-md ">
       <div className=" container z-30 mx-auto flex h-20 max-w-7xl items-center justify-between font-medium   ">
@@ -148,10 +158,11 @@ const NavBar = () => {
             />
           </Link>
         </div>
-        <div className=" relative ">
-          <div className="dark:bg-[#38434f] flex gap-2 border-[2px]   py-[10px] px-4 items-center rounded-md md:w-[500px]  max-w-[550px] ">
+      
+        <div className="relative">
+          <div className="dark:bg-[#38434f] flex gap-2 border-[2px] py-[10px] px-4 items-center rounded-md md:w-[500px] max-w-[550px]">
             <div>
-              <FiSearch className="text-xl text-gray-500 " />
+              <FiSearch className="text-xl text-gray-500" />
             </div>
             <input
               className="dark:bg-[#38434f] dark:text-white outline-none text-[17px] w-full bg-transparent"
@@ -165,7 +176,7 @@ const NavBar = () => {
           </div>
           {searchInput && (
             <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
-              <div className="flex flex-col  ">
+              <div className="flex flex-col">
                 {searchResults.map((result, index) => (
                   <SearchCard
                     key={index}
@@ -181,17 +192,15 @@ const NavBar = () => {
                 ))}
               </div>
               <hr className="border-[1px] border-blue-800" />
-              <Link
-                to={`/Search/All/${searchInput}`}
-                onClick={() => setSearchInput("")}
-              >
-                <p className="dark:text-white flex justify-center text-primary ">
+              <Link to={`/Search/All/${searchInput}`}>
+                <p className="dark:text-white flex justify-center text-primary">
                   See All results
                 </p>
               </Link>
             </div>
           )}
         </div>
+
         <ul
           className={`fixed flex flex-col items-start bg-white ${
             menuOpen
