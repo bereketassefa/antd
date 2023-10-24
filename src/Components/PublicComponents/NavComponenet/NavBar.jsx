@@ -27,14 +27,28 @@ const NavBar = () => {
   const { translate, language, setLanguage } = useTranslation();
   const [lang, setLang] = useState([language, "Amh", "Oro"]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showResults, setShowResults] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
-const [searchHistory, setSearchHistory] = useState([]);
+  const [searchHistory, setSearchHistory] = useState([]);
+  const [showAllResults, setShowAllResults] = useState(true);
 
+  const [selectedItem, setSelectedItem] = useState(null);
+  
   // const [cookies] = useCookies(["user"]);
   const [profilePic, setProfilePic] = useState(null);
   const [dropDown, setDropDown] = useState(false);
   const [cookies, removeCookie] = useCookies(["user"]);
 
+    useEffect(() => {
+      // Retrieve search history from localStorage
+      const history = localStorage.getItem("searchHistory");
+      if (history) {
+        setSearchHistory(JSON.parse(history));
+      }
+    }, []);
+
+
+    
   const handleHover = () => {
     setDropDown(!dropDown);
   };
@@ -62,6 +76,15 @@ const [searchHistory, setSearchHistory] = useState([]);
       setSearchResults([]);
       setShowResults(false);
       return;
+
+         setSearchHistory((prevHistory) => {
+           const updatedHistory = [...prevHistory, searchInput];
+           localStorage.setItem(
+             "searchHistory",
+             JSON.stringify(updatedHistory)
+           );
+           return updatedHistory;
+         });
     }
 
     try {
@@ -132,6 +155,8 @@ const [searchHistory, setSearchHistory] = useState([]);
     }
   };
 
+   
+
   useEffect(() => {
     handleSearch();
   }, [searchInput]);
@@ -158,9 +183,9 @@ const [searchHistory, setSearchHistory] = useState([]);
             />
           </Link>
         </div>
-      
+
         <div className="relative">
-          <div className="dark:bg-[#38434f] flex gap-2 border-[2px] py-[10px] px-4 items-center rounded-md md:w-[500px] max-w-[550px]">
+          <div className="dark:bg-[#38434f] flex justify-center gap-2 border-[2px] py-[10px] px-4 items-center rounded-md md:w-[500px] max-w-[550px]">
             <div>
               <FiSearch className="text-xl text-gray-500" />
             </div>
@@ -174,29 +199,65 @@ const [searchHistory, setSearchHistory] = useState([]);
               }}
             />
           </div>
-          {searchInput && (
+          {searchInput && (searchResults.length > 0 || showResults) && (
             <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
               <div className="flex flex-col">
-                {searchResults.map((result, index) => (
-                  <SearchCard
-                    key={index}
-                    id={result.id}
-                    name={result.name}
-                    type={result.type} // This will be either "business" or "product"
-                    image={
-                      result.type === "business"
-                        ? result.profilePicture
-                        : result.imageUrl
-                    } // Pass the appropriate image based on the type
-                  />
-                ))}
+                {showResults
+                  ? // Render all search results
+                    searchResults.map((result, index) => (
+                      <SearchCard
+                        key={index}
+                        id={result.Uid}
+                        name={result.name}
+                        type={
+                          result.entityType === "party" ? "business" : "product"
+                        }
+                        image={
+                          result.entityType === "party"
+                            ? result.profilePicture
+                            : result.imageUrl
+                        }
+                        onClick={() => setSelectedItem(result)}
+                      />
+                    ))
+                  : // Render limited search results
+                    searchResults
+                      .slice(0, 5)
+                      .map((result, index) => (
+                        <SearchCard
+                          key={index}
+                          id={result.Uid}
+                          name={result.name}
+                          type={
+                            result.entityType === "party"
+                              ? "business"
+                              : "product"
+                          }
+                          image={
+                            result.entityType === "party"
+                              ? result.profilePicture
+                              : result.imageUrl
+                          }
+                          onClick={() => setSelectedItem(result)}
+                        />
+                      ))}
               </div>
-              <hr className="border-[1px] border-blue-800" />
-              <Link to={`/Search/All/${searchInput}`}>
-                <p className="dark:text-white flex justify-center text-primary">
-                  See All results
-                </p>
-              </Link>
+              {showResults && (
+                <>
+                  <hr className="border-[1px] border-blue-800" />
+                  <Link to={`/Search/All/${searchInput}`}>
+                    <p
+                      className="dark:text-white flex justify-center text-primary"
+                      onClick={() => {
+                        setShowResults();
+                        setSelectedItem(null);
+                      }}
+                    >
+                      See All results
+                    </p>
+                  </Link>
+                </>
+              )}
             </div>
           )}
         </div>
@@ -282,7 +343,7 @@ const [searchHistory, setSearchHistory] = useState([]);
               </li>
             </ul>
           </li>
-          <div className=" flex flex-col items-start gap-y-2 mdm:hidden border-2 border-red-700">
+          <div className=" flex flex-col items-start gap-y-2 mdm:hidden    ">
             <li className=" group relative flex flex-col items-start mdm:ml-3 mdm:block">
               <span className=" flex items-center text-xs hover:text-addispink">
                 {lang[0]}
