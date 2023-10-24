@@ -46,7 +46,7 @@ const LoginOtp = ({ value, onChange }) => {
         phone: phoneNumber,
         OTP: otpString
       });
-
+console.log(response.data)
       if (response.data.success === true) {
         console.log("OTP verified successfully:", response.data.message);
         const modifiedToken = response.data.token.replace(/\./g, '$').replace(/\//g, '&');

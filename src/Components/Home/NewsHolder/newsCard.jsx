@@ -140,11 +140,7 @@ const handleLike = async (e) => {
           throw new Error("Network response was not ok");
       }
       const data = await response.json();
-       // Update like count based on server's response
-      //  await fetchLikeCount();
-      // Re-establish the SSE connection
-      // es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
-      setLikeCount(data.updatedPost.like);
+      setLikeCount(data?.updatedPost?.like);
       // console.log(data.updatedPost.like)
   } catch (error) {
       console.error("There was a problem with the fetch operation:", error.message);
@@ -169,12 +165,12 @@ const handleLike = async (e) => {
 
       const data = await response.json();
       // console.log(data)
-      if (data.likedPosts.length === 0) {
+      if (data?.likedPosts?.length === 0) {
         setLiked(false);
         return;
       }
 
-      const isLiked = data.likedPosts.some((post) => post.id === id);
+      const isLiked = data?.likedPosts?.some((post) => post.id === id);
       // console.log(isLiked)
       setLiked(isLiked);
     } catch (error) {
@@ -193,7 +189,7 @@ const handleLike = async (e) => {
     try {
       const url = `${import.meta.env.VITE_COUNT_COMMENTS}/${id}`;
       const response = await axios.post(url);
-      setCommentsCounts(response.data); // use response.data instead of response.json()
+      setCommentsCounts(response?.data); // use response.data instead of response.json()
     } catch (error) {
       // console.error("Failed to fetch comments:", error);
     }
@@ -229,7 +225,7 @@ const handleLike = async (e) => {
       const response = await axios.get(Url);
       if (response.status === 200) {
         console.log(response.data)
-        setTimeline(response.data);
+        setTimeline(response?.data);
       }
     } catch (error) {
       // message.error('faild to fetch ')
@@ -254,7 +250,7 @@ const handleLike = async (e) => {
         `https://timeline.qa.addissystems.et/Like/${id}`
       );
       const data = await response.data;
-      setWhoLikedPost(data.users);
+      setWhoLikedPost(data?.users);
       console.log(data.users);
     } catch (error) {
       console.error("Failed to fetch users who liked the post:", error);
@@ -408,9 +404,9 @@ const handleLike = async (e) => {
                 : "  max-w-[300px] md:max-w-[450px] max-h-[45px] overflow-hidden"
             }`}
           >
-            {newContent.length > 120 && !showText ? newContent.slice(0, 120) + "..." : newContent}
+            {newContent?.length > 120 && !showText ? newContent.slice(0, 120) + "..." : newContent}
           </p>
-          {!showText && newContent.length > 120 && (
+          {!showText && newContent?.length > 120 && (
             <p
               className={`md:mt-6 text-[15px] ${
                 showText ? "hidden" : "text-blue-900"
@@ -495,7 +491,7 @@ const handleLike = async (e) => {
             </div>
             <div
               className={`flex-1 overflow-y-auto ${
-                whoLikedPost.length > 6 ? "max-h-60" : ""
+                whoLikedPost?.length > 6 ? "max-h-60" : ""
               }`}
             >
               {whoLikedPost?.map((user) => (

@@ -46,7 +46,6 @@ export default function NewsHolder() {
     
     eventSource.onerror = (err) => {
       console.error('SSE Error:', err);
-      // setError('Error receiving live updates.');
       eventSource.close();
     };
     
@@ -54,7 +53,7 @@ export default function NewsHolder() {
       eventSource.close();
     };
   }, []);
-
+  
     
 
 
@@ -106,7 +105,7 @@ return (
           
           <NewsCard
             key={index}
-            image={item.images}
+            image={item?.images}
            
             newContent={item?.description}
             profilePic={item?.account?.profilePicture}

@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from "react";
-
 import Heading from "../../Components/PublicComponents/Heading";
-
-import BannerPublic from "../../Components/PublicComponents/BannerPublic";
-
-import flag from "../../assets/PuplicImage/1x/ethiopian_flag.svg";
-
+import Banner from "../../Components/PublicComponents/BannerPublic";
+// import flag from "../image/1x/ethiopian_flag.svg";
 import SpinLoadingImg from "../../assets/PuplicImage/spinner.gif";
-
 import Button from "../../Components/PublicComponents/Button";
-
 import LearnMore from "../../Components/PublicComponents/LearnMore";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { BiError } from "react-icons/bi";
 import "react-toastify/dist/ReactToastify.css";
 import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
-
 import { useTranslation } from "../../Lang/Translater";
 import "react-phone-input-2/lib/style.css"; // Import the default styles
 import PhoneInput from "react-phone-input-2";
-
 import { africanCountryCodeMap } from "../../PublicData/data";
 
 const DemoRequest = () => {
@@ -36,7 +28,7 @@ const DemoRequest = () => {
     email: "",
     phone: "",
     city: "",
-    country: "",
+    country: "Ethiopia",
     // service: "POS Service",
     tin_no: "",
     license_no: "",
@@ -53,7 +45,12 @@ const DemoRequest = () => {
   const [LoadingLicenseNumberVerify, setLoadingLicenseNumberVerify] =
     useState(false);
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
+  const handleCountryChange = (event) => {
+    const selectedCountry = event.target.value;
+    const countryCode = africanCountryCodeMap[selectedCountry];
+    setDemoReqForm({ ...demoReqForm, country: selectedCountry });
+    // You can also update the phone number here if needed
+  };
   useEffect(() => {
     // Set the phone field's initial value to phoneNumber when it's available
     setDemoReqForm({
@@ -61,20 +58,6 @@ const DemoRequest = () => {
       phone: phoneNumber
     });
   }, [phoneNumber]);
-
-  const handleLike = async (e) => {
-    e.preventDefault()
-    // console.log(e);
-   
-      // setLiked((prevLiked) => !prevLiked); // Optimistic update
-      const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/addissystemsGetfitget363294/afe34993-1b8a-4c92-a95d-2a55a8c2a993`;
-      console.log(url);
-      await fetch(url, { method: "POST"}).then(response => response.json()).then((data) => {
-        // console.log(data);
-      })
-   
-  };
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -157,7 +140,7 @@ const DemoRequest = () => {
         newErrors.tin_no = "Tin Number must be more than 10 Number";
       } else if (value.length > 13) {
         newErrors.tin_no = "Tin Number cannot less than 13 Number";
-      } else if (value !== tinInfo?.OwnerTIN) {
+      } else if (value !== tinInfo?.OwnerTIN && demoReqForm.country === 'null') {
         newErrors.tin_no =
           "Invalid Tin Number Please check your TIN No. again!";
       } else {
@@ -212,7 +195,6 @@ const DemoRequest = () => {
           .then((response) => {
             // console.log(response)
             if (response.status === 201) {
-              console.log(response.data.token);
               setSpinLoading(false);
               setDemoReqForm(initialValues);
               setIsSubmit(false);
@@ -284,15 +266,14 @@ const DemoRequest = () => {
   //     verifyNumber();
   //   }
   // }, [demoReqForm.license_no]);
-
-  const verifyNumber = async () => {
+ if(demoReqForm.country === 'null'){
+  var verifyNumber = async () => {
     try {
       setLoadingLicenseNumberVerify(true);
       const encodedData = encodeURIComponent(demoReqForm.license_no);
       console.log(encodedData);
 
-      const response = await fetch(
-        `https://party.addispay.et/CheckLicenseNotExist/${encodedData}`,
+      const response = await fetch(`https://party.qa.addissystems.et/CheckLicenseNotExist/${encodedData}`,
         {
           body: {},
           method: "POST",
@@ -327,10 +308,14 @@ const DemoRequest = () => {
       setLoadingLicenseNumberVerify(false);
     }
   };
+ } else {
+  demoReqForm.Businesses = [];
+ }
 
+console.log(demoReqForm.country)
   return (
     <main className="">
-      <BannerPublic header={translate("Demo Request")} />
+      <Banner header={translate("Demo Request")} />
       <Heading
         para={translate(
           "We’re here to help. Fill in the details below and one of our team members will get back to you shortly."
@@ -394,29 +379,11 @@ const DemoRequest = () => {
                       : "flex items-center rounded bg-white pl-2"
                   }
                 >
-                  {/* <div className="h-5">
-                    <img
-                      className="h-full w-7 rounded object-cover"
-                      src={flag}
-                      alt="ethiopian flag"
-                    />{" "}
-                  </div>
-                  <span className="ml-1 text-base">+251</span>
-                  <input
-                    className="rounde w-full py-3 indent-2 outline-none"
-                    type="tel"
-                    name="phone"
-                    placeholder={translate("Phone Number")}
-                    value={demoReqForm.phone}
-                    onChange={handleChange}
-                  /> */}
                   <PhoneInput
-                    country={"et"}
+                    country={'et'} // Set the country code based on the selected country
                     enableAreaCodes={true}
                     value={phoneNumber}
-                    onChange={(value) =>
-                      handleChange({ target: { name: "phone", value } })
-                    }
+                    onChange={(value) => setPhoneNumber(value)}
                     inputProps={{
                       className:
                         "w-full py-3 px-12 rounded outline-none border-none -ml-1 ",
@@ -483,7 +450,41 @@ const DemoRequest = () => {
                 </p>
               </div>
               <div className="flex w-full max-w-[500px] flex-col gap-y-4 sm:w-1/2">
-                <div
+              <div className="flex flex-col">
+                  <select
+                    className={
+                      formErrors.city
+                        ? "rounded border-[1px] border-rose-600 py-3 indent-2 outline-addisblue"
+                        : "rounded py-3 indent-2 outline-addisblue"
+                    }
+                    name="country"
+                    id="country"
+                    value={demoReqForm.country}
+                    onChange={handleCountryChange}
+                  >
+                    <option value="">Select Your Country</option>
+                    {Object.keys(africanCountryCodeMap).map((countryCode) => (
+                      <option
+                        key={countryCode}
+                        value={africanCountryCodeMap[countryCode].name}
+                      >
+                        {africanCountryCodeMap[countryCode].name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <p
+                  className={
+                    formErrors.city
+                      ? "-mb-3 -mt-4 ml-2 text-[11px] text-red-600"
+                      : "-mt-4 ml-2 text-[11px] text-red-600"
+                  }
+                >
+                  {formErrors.city}
+                </p>{" "}
+                {demoReqForm.country === 'null' ? (
+                   <>
+               <div
                   className={
                     formErrors.tin_no
                       ? "flex w-full max-w-[500px] flex-row items-center rounded border-[1px] border-rose-600 bg-white py-3 indent-2 outline-addisblue"
@@ -500,23 +501,6 @@ const DemoRequest = () => {
                     value={demoReqForm.tin_no}
                     onChange={handleChange}
                   />
-                  {/* {(() => {
-        if (IsTinNumberVerify === 1) {
-          return (
-            <span className="pr-2 text-green-600">
-              <AiFillCheckCircle />
-            </span>
-          );
-        } else if (IsTinNumberVerify === 0) {
-          return (
-            <span className="pr-2 text-red-600">
-              <AiFillCloseCircle />
-            </span>
-          );
-        } else {
-          return null;
-        }
-      })()} */}
 
                   {LoadingLicenseNumberVerify ? (
                     <button className="" disabled={true}>
@@ -573,16 +557,7 @@ const DemoRequest = () => {
                     </span>
                   ) : null}
                 </div>
-                {/* <p
-                  className={
-                    formErrors.tin_no
-                      ? "-mb-3 -mt-4 ml-2 text-[11px] text-red-600"
-                      : "-mt-4 ml-2 text-[11px] text-red-600"
-                  }
-                >
-                  {formErrors.tin_no}
-                </p> */}
-                {/* license no. fields end */}
+
                 <div className="w-full bg-white">
                   <input
                     className={
@@ -608,6 +583,85 @@ const DemoRequest = () => {
                 >
                   {formErrors.businessname}
                 </p>
+                   </>
+                ):(
+                  <>
+              <div
+                  className={
+                    formErrors.tin_no
+                      ? "flex w-full max-w-[500px] flex-row items-center rounded border-[1px] border-rose-600 bg-white py-3 indent-2 outline-addisblue"
+                      : "flex w-full max-w-[500px] flex-row  items-center rounded bg-white py-3 indent-2 outline-addisblue"
+                  }
+                >
+                  <input
+                    className={
+                      "flex w-full max-w-[500px] flex-row items-center border-none bg-white px-2 outline-none"
+                    }
+                    type="number"
+                    name="tin_no"
+                    placeholder={translate("TIN NO.")}
+                    value={demoReqForm.tin_no}
+                    onChange={handleChange}
+                  />
+                </div>
+                <p
+                  className={
+                    formErrors.tin_no
+                      ? "-mb-3 -mt-4 ml-2 text-[11px] text-red-600"
+                      : "-mt-4 ml-2 text-[11px] text-red-600"
+                  }
+                >
+                  {formErrors.tin_no}
+                </p>
+                {/* license no. fields start */}
+                <div
+                  className={
+                    formErrors.license_no
+                      ? "flex w-full max-w-[500px] flex-row items-center rounded border-[1px] border-rose-600 bg-white py-3 indent-2 outline-addisblue"
+                      : "flex w-full max-w-[500px] flex-row  items-center rounded bg-white py-3 indent-2 outline-addisblue"
+                  }
+                >
+                  <input
+                    className={
+                      "flex w-full max-w-[500px] flex-row items-center border-none bg-white px-2 outline-none"
+                    }
+                    type="text"
+                    name="license_no"
+                    placeholder={translate("LICENSE NO.")}
+                    value={demoReqForm.license_no}
+                    onChange={handleChange}
+                  />
+                </div>
+             
+
+
+                {/* license no. fields end */}
+                <div className="w-full bg-white">
+                  <input
+                    className={
+                      formErrors.businessname
+                        ? "w-full rounded border-[1px] border-rose-600 bg-white py-3 indent-2 outline-addisblue"
+                        : "w-full rounded py-3 indent-2 outline-addisblue"
+                    }
+                    type="text"
+                    name="businessname"
+                    placeholder={translate("Company Name")}
+                    value={demoReqForm.businessname}
+                    onChange={handleChange}
+                   
+                  />
+                </div>
+                <p
+                  className={
+                    formErrors.businessname
+                      ? "-mb-3 -mt-4 ml-2 text-[11px] text-red-600"
+                      : "-mt-4 ml-2 text-[11px] text-red-600"
+                  }
+                >
+                  {formErrors.businessname}
+                </p></>
+                )}
+
                 {/* <div className="w-full bg-white">
                   <input
                     className={
@@ -624,38 +678,7 @@ const DemoRequest = () => {
 
                   />
                 </div> */}
-                <div className="flex flex-col">
-                  <select
-                    className={
-                      formErrors.city
-                        ? "rounded border-[1px] border-rose-600 py-3 indent-2 outline-addisblue"
-                        : "rounded py-3 indent-2 outline-addisblue"
-                    }
-                    name="country"
-                    id="country"
-                    value={demoReqForm.country}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Your Country</option>
-                    {Object.keys(africanCountryCodeMap).map((countryCode) => (
-                      <option
-                        key={countryCode}
-                        value={africanCountryCodeMap[countryCode].name}
-                      >
-                        {africanCountryCodeMap[countryCode].name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <p
-                  className={
-                    formErrors.city
-                      ? "-mb-3 -mt-4 ml-2 text-[11px] text-red-600"
-                      : "-mt-4 ml-2 text-[11px] text-red-600"
-                  }
-                >
-                  {formErrors.city}
-                </p>{" "}
+                
                 {/* <div className="flex flex-col">
                 
                   <select
@@ -706,13 +729,14 @@ const DemoRequest = () => {
                 bgHover={"hover:bg-addisblue"}
                 textHover={""}
                 width={180}
-                disable={IsLicenseNumberVerify ? 0 : 1}
+                disable={demoReqForm.country === 'null' ? IsLicenseNumberVerify ? 0 : 1 : 0}
                 py={9}
               />
               {/* </Link> */}
             </div>
           </form>
         </div>
+
         <LearnMore />
       </div>
       <ToastContainer />
@@ -721,3 +745,4 @@ const DemoRequest = () => {
 };
 
 export default DemoRequest;
+
