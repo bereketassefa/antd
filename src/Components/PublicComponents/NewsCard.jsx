@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
 import ButtonChevron from "../../Components/PublicComponents/ButtonChevron";
-import BlogModal from "../../Components/PublicComponents/BlogModal";
+import BlogModal from "./BlogNews";
+import { Link } from "react-router-dom";
 
 const NewsCard = ({ Title, news, image }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,15 +16,15 @@ const NewsCard = ({ Title, news, image }) => {
   };
   return (
     <div className="flex flex-col items-center justify-center gap-4 bg-slate-100 md:grid-rows-2 md:flex-row">
-      <Modal
+      {/* <Modal
         centered
         visible={isModalOpen}
         width={900}
         footer={null}
         onCancel={handleCloseModal}
       >
-         <BlogModal/>
-      </Modal>
+        <BlogModal />
+      </Modal> */}
       <div className="  flex flex-col  sm:flex-row gap-2 border-2 pt-4">
         <div>
           <img
@@ -37,9 +38,13 @@ const NewsCard = ({ Title, news, image }) => {
             {Title}
           </h1>
           <p className="flex items-center justify-center text-sm">{news}</p>
-          <div onClick={handleOpenModal} className="mt-4 flex justify-end pr-2">
-            <ButtonChevron text="Read More" onClick={handleOpenModal} />
-          </div>
+          <Link
+            to="blognews"
+            // onClick={handleOpenModal}
+            className="mt-4 flex justify-end pr-2"
+          >
+            <ButtonChevron text="Read More" />
+          </Link>
         </div>
       </div>
     </div>

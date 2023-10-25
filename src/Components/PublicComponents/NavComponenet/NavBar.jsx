@@ -33,22 +33,20 @@ const NavBar = () => {
   const [showAllResults, setShowAllResults] = useState(true);
 
   const [selectedItem, setSelectedItem] = useState(null);
-  
+
   // const [cookies] = useCookies(["user"]);
   const [profilePic, setProfilePic] = useState(null);
   const [dropDown, setDropDown] = useState(false);
   const [cookies, removeCookie] = useCookies(["user"]);
 
-    useEffect(() => {
-      // Retrieve search history from localStorage
-      const history = localStorage.getItem("searchHistory");
-      if (history) {
-        setSearchHistory(JSON.parse(history));
-      }
-    }, []);
+  useEffect(() => {
+    // Retrieve search history from localStorage
+    const history = localStorage.getItem("searchHistory");
+    if (history) {
+      setSearchHistory(JSON.parse(history));
+    }
+  }, []);
 
-
-    
   const handleHover = () => {
     setDropDown(!dropDown);
   };
@@ -77,14 +75,11 @@ const NavBar = () => {
       setShowResults(false);
       return;
 
-         setSearchHistory((prevHistory) => {
-           const updatedHistory = [...prevHistory, searchInput];
-           localStorage.setItem(
-             "searchHistory",
-             JSON.stringify(updatedHistory)
-           );
-           return updatedHistory;
-         });
+      setSearchHistory((prevHistory) => {
+        const updatedHistory = [...prevHistory, searchInput];
+        localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
+        return updatedHistory;
+      });
     }
 
     try {
@@ -154,8 +149,6 @@ const NavBar = () => {
       console.log(error);
     }
   };
-
-   
 
   useEffect(() => {
     handleSearch();
@@ -242,21 +235,30 @@ const NavBar = () => {
                         />
                       ))}
               </div>
-              {showResults && (
+              {showResults === "" ? (
                 <>
+                  <p className="dark:text-white flex justify-center text-primary">
+                    Search results not found!
+                  </p>
                   <hr className="border-[1px] border-blue-800" />
-                  <Link to={`/Search/All/${searchInput}`}>
-                    <p
-                      className="dark:text-white flex justify-center text-primary"
-                      onClick={() => {
-                        setShowResults();
-                        setSelectedItem(null);
-                      }}
-                    >
-                      See All results
-                    </p>
-                  </Link>
                 </>
+              ) : (
+                showResults && (
+                  <>
+                    <hr className="border-[1px] border-blue-800" />
+                    <Link to={`/Search/All/${searchInput}`}>
+                      <p
+                        className="dark:text-white flex justify-center text-primary"
+                        onClick={() => {
+                          setShowResults();
+                          setSelectedItem(null);
+                        }}
+                      >
+                        See All results
+                      </p>
+                    </Link>
+                  </>
+                )
               )}
             </div>
           )}

@@ -14,7 +14,8 @@ import { GiMoneyStack } from "react-icons/gi";
 import { BsShieldLock, BsBuildingFillGear, BsReceipt } from "react-icons/bs";
 import { SlDirections, SlDirection } from "react-icons/sl";
 import { MdGroups2 } from "react-icons/md";
-
+import blogbanner2 from "../assets/PuplicImage/RingTern-Blog-post.jpg";
+import news from "../assets/image/cute-girl-pic (12).jpg";
 import frontendImage from "../../src/assets/PuplicImage/frontend-image.jpg";
 import backendImage from "../assets/PuplicImage/backend-image.jpg";
 
@@ -74,6 +75,60 @@ export const AddisPayNews = [
     image: news4,
     Title: "News Four",
     news: " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a  document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
+  },
+];
+export const AddisPayNews2 = [
+  {
+    key: 1,
+    MainTopic: " Main Topic",
+    subtopic1: "Embracing the Digital",
+    paragraph1:
+      "  In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into In today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why we  ",
+    image1: blogbanner2,
+    paragraph2:
+      " In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why  In today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why we ",
+    Subtopic2: "Subtopic",
+    paragraph3:
+      "In today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why we ",
+    RelatedNews: "Related News",
+  },
+];
+export const AddisPayNews3 = [
+  {
+    key: 1,
+    image2: news,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+  {
+    key: 2,
+    image2: blogbanner2,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+  {
+    key: 3,
+    image2: blogbanner2,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+  {
+    key: 3,
+    image2: blogbanner2,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+  {
+    key: 3,
+    image2: blogbanner2,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+  {
+    key: 3,
+    image2: blogbanner2,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
   },
 ];
 export const areaOfInterest = [
