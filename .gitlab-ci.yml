@@ -12,6 +12,8 @@ build:
   artifacts:
     paths:
       - landingpage.tar
+  only:
+  - master
 
 deploy:
   stage: deploy
