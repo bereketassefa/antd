@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios"; // Import axios for API calls
-import alternativeProfile from "../../../assets/image/alternativeProfile.png";
+// import profile from "../../../assets/image/cute-girl-pic (12).jpg";
 import { useParams } from "react-router-dom";
 
-function ProfileConfirm({ profilePic, setConfirmProfileModal }) {
+function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
   const { id } = useParams();
-  const [image, setImage] = useState(alternativeProfile);
+  const [image, setImage] = useState(clickedImage);
   const [imageFile, setImageFile] = useState(null);
   const handleImageUpload = (event) => {
     const newImage = event.target.files[0];
@@ -65,7 +65,7 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal }) {
         <p>Your new Profile Picture</p>
         <div>
           <img
-            src={image}
+            src={clickedImage}
             alt=""
             className="w-40 h-40 object-cover rounded-full"
           />

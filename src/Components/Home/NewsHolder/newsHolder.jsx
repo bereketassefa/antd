@@ -2,23 +2,26 @@ import { useEffect, useRef, useState } from 'react';
 import oopsno from '../../../assets/image/oops-no.png';
 import NewsCard from './newsCard';
 import { message } from 'antd';
+import axios from 'axios';
 
 export default function NewsHolder() {
   const [loading, setLoading] = useState(true);
   const [timeline, setTimeline] = useState([]);
   const [error, setError] = useState(null);
   const elementRef = useRef(null);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
         const url = `${import.meta.env.VITE_WITH_OUT_SSE_GET_TIMELINE}`;
-        const response = await fetch(url);
-        const data = await response.json();
+        const response = await axios.get(url);
+        const data = response.data;
+
         setTimeline(data);
-        // console.log(data);
+      //  console.log(data);
       } catch (err) {
-        console.log('Error fetching initial data')
+        console.log('Error fetching initial data' , err)
       } finally {
         setLoading(false);
       }
@@ -35,6 +38,7 @@ export default function NewsHolder() {
       try {
         const newData = JSON.parse(event.data);
         setTimeline((prevData) => [newData, ...prevData]);
+        console.log(newData);
       } catch (err) {
         console.error('Error parsing SSE data:', err);
       }
@@ -42,7 +46,6 @@ export default function NewsHolder() {
     
     eventSource.onerror = (err) => {
       console.error('SSE Error:', err);
-      // setError('Error receiving live updates.');
       eventSource.close();
     };
     
@@ -50,7 +53,7 @@ export default function NewsHolder() {
       eventSource.close();
     };
   }, []);
-
+  
     
 
 
@@ -102,14 +105,14 @@ return (
           
           <NewsCard
             key={index}
-            image={item.images}
+            image={item?.images}
            
             newContent={item?.description}
             profilePic={item?.account?.profilePicture}
             timestamp={item?.time}
             id={item?.id}
             like={item?.like}
-            companyName={item?.party?.party[0]?.party?.businessname}
+            companyName={item?.account?.party}
             account_id={item?.account?._id}
             Uid ={item?.uid}
           />

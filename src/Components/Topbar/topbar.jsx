@@ -27,10 +27,12 @@ import { UpSquareTwoTone } from "@ant-design/icons";
 import MessageCard from "../../Components/Chat/MessageCard";
 import { ImAttachment } from "react-icons/im";
 import { BiLogoTelegram } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 export default function Topbar() {
   function truncateCompanyName(name) {
     return name && name.length > 8 ? name.substring(0, 8) + "..." : name;
   }
+  const navigate= useNavigate()
   const [profilePic, setProfilePic] = useState(null);
   const [dropDown, setDropDown] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
@@ -38,7 +40,8 @@ export default function Topbar() {
   const [notificationCount, setNotificationsCount] = useState();
   const [searchInput, setSearchInput] = useState("");
   const isScreenMdOrLarger = useMediaQuery({ minWidth: 768 });
-  const [cookies, removeCookie] = useCookies(["user"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+
   const [showMessageDrop, setShowMessageDrop] = useState(false);
   const [selectedChat, setSelectedChat] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -59,9 +62,13 @@ export default function Topbar() {
   };
 
   const handleLogOut = () => {
-    removeCookie(["user"]);
-    window.location.reload(true);
-  };
+    // Removing the cookie
+    removeCookie("user", { path: '/' });
+
+    // Redirect to login
+    navigate('/login');
+};
+
   const [showResults, setShowResults] = useState(false);
   useEffect(() => {
     console.log("showResults changed:", showResults);

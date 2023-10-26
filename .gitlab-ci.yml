@@ -1,5 +1,5 @@
 variables:
-  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:1.0.0
 
 build:
   stage: build
@@ -38,3 +38,25 @@ deploy:
 
   only:
   - master
+
+
+# deploy:
+#   stage: deploy
+#   image: alpine:latest
+
+#   before_script:
+#     - apk update && apk add openssh-client bash rsync
+    
+
+#   script:
+#     - eval $(ssh-agent -s)
+#     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+#     - mkdir -p ~/.ssh
+#     - echo "${SSH_HOST_KEY1}" > ~/.ssh/known_hosts
+#     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    
+#     - rsync -vv -rz --checksum --delete . root@196.188.237.74:/var/www/html/landingpage/
+
+#   only:
+#   - master
+

@@ -36,6 +36,7 @@ export default function CompanyInfo({ data, Uid }) {
   const [isAccepted, setIsAccepted] = useState(false);
   const [isDeclineLoading, setDeclineLoading] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [clickedImage, setClickedImage] = useState("");
 
   const [mymodalOpen, setMyModalOpen] = useState(false);
   const id = window.location.pathname.split("/")[3];
@@ -69,29 +70,25 @@ export default function CompanyInfo({ data, Uid }) {
       message.error("No file selected");
       return;
     }
-  
+
     // Check file size on client side before uploading
     if (selectedFile.size > 5 * 1024 * 1024) {
       message.error("File size should not exceed 5 MB");
       return;
     }
-  
+
     const formData = new FormData();
     formData.append("profilePicture", selectedFile);
     formData.append("_id", cookies?.user?._id);
-  
+
     try {
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       };
-    const url = `${import.meta.env.VITE_ACCOUNT_UPLOAD_PROFILE}`
-      const response = await axios.post(
-       url,
-        formData,
-        config
-      );
+      const url = `${import.meta.env.VITE_ACCOUNT_UPLOAD_PROFILE}`;
+      const response = await axios.post(url, formData, config);
 
       if (response.status === 200) {
         setSelectedImage(response?.data?.profilePicture);
@@ -103,10 +100,12 @@ export default function CompanyInfo({ data, Uid }) {
       }
     } catch (error) {
       console.error("Error uploading profile picture:", error);
-      message.error(error.response ? error.response.data.error : "An error occurred");
+      message.error(
+        error.response ? error.response.data.error : "An error occurred"
+      );
     }
   };
-  
+
   useEffect(() => {
     let intervalId1, intervalId2, intervalId3;
 
@@ -116,7 +115,7 @@ export default function CompanyInfo({ data, Uid }) {
           console.warn("ID is not available");
           return;
         }
-        const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${id}`
+        const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${id}`;
         const response = await axios.get(url);
 
         if (response.status !== 200) {
@@ -136,7 +135,7 @@ export default function CompanyInfo({ data, Uid }) {
         if (!id) {
           return;
         }
-        const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${id}`
+        const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${id}`;
         await axios
           .get(url)
           .then((res) => {
@@ -176,7 +175,9 @@ export default function CompanyInfo({ data, Uid }) {
     // Set loading to true when fetching starts
 
     try {
-      const url =`${import.meta.env.VITE_CHECK_WHO_IS_THE_SENDER}/${OwnerUid}/${UidData}`;
+      const url = `${
+        import.meta.env.VITE_CHECK_WHO_IS_THE_SENDER
+      }/${OwnerUid}/${UidData}`;
       const response = await fetch(url, {
         method: "GET",
       });
@@ -389,7 +390,7 @@ export default function CompanyInfo({ data, Uid }) {
   // console.log(countData)
   if (isLoading) {
     return (
-      <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem]   ">
+      <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem] ">
         <div className="w-full flex items-end justify-between ">
           <div className="bg-white   p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
             <div className="w-full flex items-center justify-center bg-gray-400 animate-pulse"></div>
@@ -421,13 +422,13 @@ export default function CompanyInfo({ data, Uid }) {
         onCancel={() => setMyModalOpen(false)}
         footer={[]}
       >
-        <CompanyPP />
+        <CompanyPP clickedImage={clickedImage} />
       </Modal>
 
-      <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem] border-2 border-red-600">
+      <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem] ">
         <div className="w-full flex items-end justify-between">
           <div className="bg-white  p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
-            <div className="w-full flex items-center justify-center">
+            <div className="w-full flex items-center justify-center border-2 border-red-800">
               <img
                 className="w-full object-cover h-full flex"
                 src={profilePic ? profilePic : alternativeProfile}
@@ -438,7 +439,9 @@ export default function CompanyInfo({ data, Uid }) {
                   }
                 }}
               />
+              {clickedImage && <img src={clickedImage} alt="Clicked Image" />}
             </div>
+
             <div className="bg-white p-[3px] rounded-full absolute mt-[-0.5rem] mr-[-0.5rem]">
               {data &&
                 data.account &&
@@ -599,7 +602,7 @@ export default function CompanyInfo({ data, Uid }) {
                 />
               </div>
               <img
-                // src={selectedImage}
+                src={selectedImage}
                 alt="Selected"
                 className="mb-4 w-full h-48 object-cover"
               />

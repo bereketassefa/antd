@@ -110,7 +110,7 @@ const Footer = () => {
             <div className="mr-2 grid h-4 w-4 ">
               <BsFillTelephoneFill />
             </div>
-            <Link to="">(+251) 11 68 4243</Link>
+            <Link to="">(+251)116685872</Link>
           </li>
           <li className=" flex w-fit items-center text-base  font-light duration-300 hover:text-addispink">
             <div className="mr-2 grid h-4 w-4 text-lg ">

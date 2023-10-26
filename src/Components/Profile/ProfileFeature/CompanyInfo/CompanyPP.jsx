@@ -8,14 +8,14 @@ import ProfileConfirm from "../ProfileConfirm";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-function CompanyPP({ profilePic, setMyModalOpen }) {
+function CompanyPP({ profilePic, setMyModalOpen, clickedImage }) {
   const [image, setImage] = useState(profile);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingUpdate, setLoadingUpdate] = useState(false);
 
   const [confirmprofilemodal, setConfirmProfileModal] = useState(false);
-  const  {id}  = useParams();
+  const { id } = useParams();
   const handleImageUpload = (event) => {
     setLoadingUpdate(true);
     const newImage = event.target.files[0];
@@ -28,15 +28,17 @@ function CompanyPP({ profilePic, setMyModalOpen }) {
     }
   };
 
-  const handleImageDelete = async() => {
-    setLoading(true)
+  const handleImageDelete = async () => {
+    setLoading(true);
     try {
-      const response = await axios.delete(`https://account.qa.addissystems.et/profile/delete/${id}`);
+      const response = await axios.delete(
+        `https://account.qa.addissystems.et/profile/delete/${id}`
+      );
 
       if (response.status === 200) {
-      setLoading(false)
-      setConfirmProfileModal(false); // Close the modal
-      // console.log('delete success')
+        setLoading(false);
+        setConfirmProfileModal(false); // Close the modal
+        // console.log('delete success')
       }
     } catch (error) {
       console.error("Error deleting profile picture:", error);
@@ -48,14 +50,13 @@ function CompanyPP({ profilePic, setMyModalOpen }) {
     setConfirmProfileModal(false);
   };
 
-
   const handleUpload = () => {
     setConfirmProfileModal(true);
     setMyModalOpen(false);
   };
 
   return (
-    <div >
+    <div>
       <Modal
         visible={confirmprofilemodal}
         onOk={() => setConfirmProfileModal(false)}
@@ -65,6 +66,7 @@ function CompanyPP({ profilePic, setMyModalOpen }) {
         <ProfileConfirm
           profilePic={profilePic}
           setConfirmProfileModal={setConfirmProfileModal}
+          clickedImage={clickedImage}
         />
       </Modal>
       <div className="flex justify-between ">
@@ -75,8 +77,8 @@ function CompanyPP({ profilePic, setMyModalOpen }) {
         <p>Help others recognize you!</p>
         <div>
           <img
-            src={profilePic}
-            alt=""
+            src={clickedImage}
+            alt="Clicked Image"
             className="w-40 h-40 object-cover rounded-full"
           />
         </div>

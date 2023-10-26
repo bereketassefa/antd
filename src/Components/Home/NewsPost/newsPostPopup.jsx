@@ -65,9 +65,13 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     fileList.forEach((file) => {
         formData.append("image", file.originFileObj);
     });
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    
     try {
       const url = `${import.meta.env.VITE_POST_NEWS}`;
-      // console.log('Sending request to:', url);
+      console.log('Sending request to:',formData ,url);
       const response = await axios.post(url, formData);
       console.log('Response received:', response);
 
