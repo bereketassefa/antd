@@ -424,7 +424,7 @@ export default function CompanyInfo({ data, Uid }) {
         <CompanyPP />
       </Modal>
 
-      <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem]">
+      <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem] border-2 border-red-600">
         <div className="w-full flex items-end justify-between">
           <div className="bg-white  p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
             <div className="w-full flex items-center justify-center">

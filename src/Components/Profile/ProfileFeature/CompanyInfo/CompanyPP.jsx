@@ -55,17 +55,19 @@ function CompanyPP({ profilePic, setMyModalOpen }) {
   };
 
   return (
-    <div>
-     
+    <div >
       <Modal
         visible={confirmprofilemodal}
         onOk={() => setConfirmProfileModal(false)}
         onCancel={() => setConfirmProfileModal(false)}
         footer={[]}
       >
-        <ProfileConfirm profilePic={profilePic} setConfirmProfileModal={setConfirmProfileModal} />
+        <ProfileConfirm
+          profilePic={profilePic}
+          setConfirmProfileModal={setConfirmProfileModal}
+        />
       </Modal>
-      <div className="flex justify-between">
+      <div className="flex justify-between ">
         <p>Updating profile</p>
       </div>
       <hr className="border-2 my-2" />
@@ -87,14 +89,17 @@ function CompanyPP({ profilePic, setMyModalOpen }) {
           onClick={handleUpload}
         >
           <MdOutlineFileUpload className="text-xl" />
-         update
-        
+          update
         </button>
         <button
           className="bg-gray-200 px-6 rounded-lg gap-1 flex items-center"
           onClick={handleImageDelete}
         >
-          {loading ? <AiOutlineLoading className="animate-spin" /> : <RiDeleteBin6Line className="text-[15px]" />}
+          {loading ? (
+            <AiOutlineLoading className="animate-spin" />
+          ) : (
+            <RiDeleteBin6Line className="text-[15px]" />
+          )}
           {loading ? "Loading..." : "Delete"}
         </button>
       </div>

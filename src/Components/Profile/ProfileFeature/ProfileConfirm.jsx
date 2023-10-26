@@ -1,24 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios"; // Import axios for API calls
-import profile from "../../../assets/image/cute-girl-pic (12).jpg";
+import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import { useParams } from "react-router-dom";
 
 function ProfileConfirm({ profilePic, setConfirmProfileModal }) {
-
-  const  {id}  = useParams();
-  const [image, setImage] = useState(profile);
+  const { id } = useParams();
+  const [image, setImage] = useState(alternativeProfile);
   const [imageFile, setImageFile] = useState(null);
   const handleImageUpload = (event) => {
     const newImage = event.target.files[0];
     // console.log("Selected image:", newImage); // Log the selected image
-  
+
     if (newImage) {
       setImageFile(newImage); // Save the File object
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result);
       };
-     
+
       reader.readAsDataURL(newImage);
       console.log(newImage);
     }
@@ -37,11 +36,15 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal }) {
       const formData = new FormData();
       formData.append("image", imageFile);
       // console.log(imageFile)
-      const response = await axios.put(`https://account.qa.addissystems.et/profile/update/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(
+        `https://account.qa.addissystems.et/profile/update/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       // console.log("Response:", response);
       if (response.status === 200) {
         console.log("Profile updated successfully");

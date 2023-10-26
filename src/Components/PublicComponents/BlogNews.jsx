@@ -32,7 +32,7 @@ function BlogNews() {
           />
         ))}
       </div>
-      <div className=" grid gap-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 p-3">
+      <div className=" grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 p-3">
         {AddisPayNews3.map((news) => (
           <BlogCaed2
             key={news.key}
