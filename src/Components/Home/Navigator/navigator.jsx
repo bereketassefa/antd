@@ -42,20 +42,16 @@ export default function Navigator({ handleAddProduct }) {
   const handleLinkClick = (link) => {
     setActiveLink(link);
   };
-   ;
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
 
-    const handleOpenModal = () => {
-      setIsModalOpen(true);
-    };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
-    const handleCloseModal = () => {
-      setIsModalOpen(false);
-    };
-
-
-   
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -351,11 +347,11 @@ export default function Navigator({ handleAddProduct }) {
           </div>
         </div>
       </div>
-      <div className="max-w-[300px] border-2 h-[350px] mt-8   drop-shadow-xl  bg-white">
+      <div className=" hidden sm:block max-w-[300px] border-2 h-[350px] mt-8   drop-shadow-xl  bg-white">
         <p className="ml-4 mt-3">Ads</p>
 
         <div className=" py-1 px-4 ">
-          <Slider {...settings}>
+          <Slider dots={false} {...settings}>
             <img
               className="w-[200px] h-[300px]  object-cover"
               src={Aid1}

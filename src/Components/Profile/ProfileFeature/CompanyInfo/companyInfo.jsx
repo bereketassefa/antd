@@ -428,7 +428,7 @@ export default function CompanyInfo({ data, Uid }) {
       <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem] ">
         <div className="w-full flex items-end justify-between">
           <div className="bg-white  p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
-            <div className="w-full flex items-center justify-center border-2 border-red-800">
+            <div className="w-full flex items-center justify-center ">
               <img
                 className="w-full object-cover h-full flex"
                 src={profilePic ? profilePic : alternativeProfile}
