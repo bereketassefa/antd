@@ -599,7 +599,7 @@ export default function CompanyInfo({ data, Uid }) {
                 />
               </div>
               <img
-                // src={selectedImage}
+                src={selectedImage}
                 alt="Selected"
                 className="mb-4 w-full h-48 object-cover"
               />

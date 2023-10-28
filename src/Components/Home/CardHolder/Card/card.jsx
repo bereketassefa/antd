@@ -55,7 +55,7 @@ export default function Card({ android, apple, id, type, title, data }) {
                   <RecommendedRelationCard
                     Uid={items?.account?._id}
                     id={items.Uid}
-                    img={items.img || getFirstWord(items.companyName)}
+                    img={items?.account?.profilePicture}
                     companyName={items?.account?.party}
                   />
                 ) : type === "relations" ? (

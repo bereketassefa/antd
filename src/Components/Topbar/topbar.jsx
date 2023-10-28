@@ -71,7 +71,7 @@ export default function Topbar() {
 
   const [showResults, setShowResults] = useState(false);
   useEffect(() => {
-    console.log("showResults changed:", showResults);
+    // console.log("showResults changed:", showResults);
   }, [showResults]);
 
   const handleSearch = async () => {

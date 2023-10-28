@@ -110,7 +110,7 @@ const DemoRequest = () => {
       }
     }
 
-    if (name === "inputtitle") {
+    if (name === "Position") {
       if (!value) {
         newErrors.inputtitle = "Position is required!";
       } else {
@@ -180,6 +180,7 @@ const DemoRequest = () => {
     } else {
       setSpinLoading(true);
       try {
+       
         axios
           .post(
             "https://party.qa.addissystems.et/Demo_handler",

@@ -93,7 +93,7 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
 
  // Remove the following useEffect block that sets up the SSE connection
  useEffect(() => {
-  console.log(postid);
+  // console.log(postid);
   const fetchComments = async () => {
     try {
       const url = `${import.meta.env.VITE_GET_COMMENT}/${postid}`;
@@ -139,7 +139,7 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
           })
           .catch((error) => {
             console.warn(error);
-            // message.error('Cant find user account')
+            message.error('Cant find user account')
           });
       } catch (error) {
         console.error("Error fetching profile picture:", error);
