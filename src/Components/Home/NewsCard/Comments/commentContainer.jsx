@@ -164,7 +164,7 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
           : "w-full flex flex-col gap-4 p-2 hidden"
       }
     >
-      <div className="flex gap-2 items-center">
+      {/* <div className="flex gap-2 items-center">
        <div className="flex items-center justify-center w-fit">
           <Avatar img={isDarkTheme ? alternativeProfileblack : (profilePic ? profilePic : alternativeProfile)} />
         </div>
@@ -190,21 +190,11 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="w-full flex items-center justify-start">
-        <div className="dark:bg-[#1b1f23] flex p-2 bg-lightBg">
-          <select className="dark:text-white outline-none bg-transparent text-smallP md:text-midP lg:text-largeP">
-            <option className="dark:bg-[#1b1f23] text-smallP md:text-midP lg:text-largeP">
-              Most Recent
-            </option>
-            <option
-              className="dark:bg-[#1b1f23] text-smallP md:text-midP lg:text-largeP"
-              value=""
-            >
-              Yesterday
-            </option>
-          </select>
+        <div className="dark:bg-[#1b1f23] flex p-2">
+         Comments
         </div>
       </div>
 

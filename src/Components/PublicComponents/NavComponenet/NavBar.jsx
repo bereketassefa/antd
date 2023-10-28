@@ -27,12 +27,25 @@ const NavBar = () => {
   const { translate, language, setLanguage } = useTranslation();
   const [lang, setLang] = useState([language, "Amh", "Oro"]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showResults, setShowResults] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
+  const [showAllResults, setShowAllResults] = useState(true);
+
+  const [selectedItem, setSelectedItem] = useState(null);
 
   // const [cookies] = useCookies(["user"]);
   const [profilePic, setProfilePic] = useState(null);
   const [dropDown, setDropDown] = useState(false);
   const [cookies, removeCookie] = useCookies(["user"]);
+
+  useEffect(() => {
+    // Retrieve search history from localStorage
+    const history = localStorage.getItem("searchHistory");
+    if (history) {
+      setSearchHistory(JSON.parse(history));
+    }
+  }, []);
 
   const handleHover = () => {
     setDropDown(!dropDown);
@@ -61,6 +74,12 @@ const NavBar = () => {
       setSearchResults([]);
       setShowResults(false);
       return;
+
+      setSearchHistory((prevHistory) => {
+        const updatedHistory = [...prevHistory, searchInput];
+        localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
+        return updatedHistory;
+      });
     }
 
     try {
@@ -82,6 +101,7 @@ const NavBar = () => {
       });
 
       setSearchResults(formattedResults);
+      // console.log(formattedResults);
       setShowResults(true);
     } catch (error) {
       console.error("Error performing search", error);
@@ -129,10 +149,18 @@ const NavBar = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchInput]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchInput]);
   return (
     <nav className=" sticky top-0 z-40 w-full bg-slate-50 px-6 opacity-100 shadow-md ">
-      <div className=" container z-30 mx-auto flex h-20 max-w-7xl items-center justify-between font-medium   ">
-        <div className="-ml-1 mt-1 w-[190px] duration-300 hover:scale-[1.02]   ">
+      <div className=" container z-30 mx-auto flex h-20 max-w-7xl items-center justify-between font-medium    ">
+        <div className="-ml-1 mt-1 md:w-[190px]  duration-300 hover:scale-[1.02]  ">
           <Link to="/">
             <img
               className="hidden sm:block"
@@ -148,13 +176,14 @@ const NavBar = () => {
             />
           </Link>
         </div>
-        <div className=" relative ">
-          <div className="dark:bg-[#38434f] flex gap-2 border-[2px]   py-[10px] px-4 items-center rounded-md md:w-[500px]  max-w-[550px] ">
+
+        <div className="relative mr-4 sm:mr-0">
+          <div className="dark:bg-[#38434f] flex justify-center gap-2 border-[2px] py-[10px] px-4 items-center rounded-md sm:w-[300px] md:w-[350px]   max-w-[550px]">
             <div>
-              <FiSearch className="text-xl text-gray-500 " />
+              <FiSearch className="text-xl text-gray-500" />
             </div>
             <input
-              className="dark:bg-[#38434f] dark:text-white outline-none text-[17px] w-full bg-transparent"
+              className="dark:bg-[#38434f] dark:text-white outline-none text-[10px] sm:text-[17px] w-full bg-transparent"
               type="text"
               value={searchInput}
               placeholder="What are you looking for?"
@@ -163,37 +192,80 @@ const NavBar = () => {
               }}
             />
           </div>
-          {searchInput && (
+          {searchInput && (searchResults.length > 0 || showResults) && (
             <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
-              <div className="flex flex-col  ">
-                {searchResults.map((result, index) => (
-                  <SearchCard
-                    key={index}
-                    id={result.id}
-                    name={result.name}
-                    type={result.type} // This will be either "business" or "product"
-                    image={
-                      result.type === "business"
-                        ? result.profilePicture
-                        : result.imageUrl
-                    } // Pass the appropriate image based on the type
-                  />
-                ))}
+              <div className="flex flex-col">
+                {showResults
+                  ? // Render all search results
+                    searchResults.map((result, index) => (
+                      <SearchCard
+                        key={index}
+                        id={result.Uid}
+                        name={result.name}
+                        type={
+                          result.entityType === "party" ? "business" : "product"
+                        }
+                        image={
+                          result.entityType === "party"
+                            ? result.profilePicture
+                            : result.imageUrl
+                        }
+                        onClick={() => setSelectedItem(result)}
+                      />
+                    ))
+                  : // Render limited search results
+                    searchResults
+                      .slice(0, 5)
+                      .map((result, index) => (
+                        <SearchCard
+                          key={index}
+                          id={result.Uid}
+                          name={result.name}
+                          type={
+                            result.entityType === "party"
+                              ? "business"
+                              : "product"
+                          }
+                          image={
+                            result.entityType === "party"
+                              ? result.profilePicture
+                              : result.imageUrl
+                          }
+                          onClick={() => setSelectedItem(result)}
+                        />
+                      ))}
               </div>
-              <hr className="border-[1px] border-blue-800" />
-              <Link
-                to={`/Search/All/${searchInput}`}
-                onClick={() => setSearchInput("")}
-              >
-                <p className="dark:text-white flex justify-center text-primary ">
-                  See All results
-                </p>
-              </Link>
+              {showResults === "" ? (
+                <>
+                  <p className="dark:text-white flex justify-center text-primary">
+                    Search results not found!
+                  </p>
+                  <hr className="border-[1px] border-blue-800" />
+                </>
+              ) : (
+                showResults && (
+                  <>
+                    <hr className="border-[1px] border-blue-800" />
+                    <Link to={`/Search/All/${searchInput}`}>
+                      <p
+                        className="dark:text-white flex justify-center text-primary"
+                        onClick={() => {
+                          setShowResults();
+                          setSelectedItem(null);
+                        }}
+                      >
+                        See All results
+                      </p>
+                    </Link>
+                  </>
+                )
+              )}
             </div>
           )}
         </div>
+
         <ul
-          className={`fixed flex flex-col items-start bg-white ${
+          className={`fixed flex   flex-col items-start bg-white ${
             menuOpen
               ? "right-0 opacity-100"
               : "-right-64 opacity-0 sm:-right-80"
@@ -273,7 +345,8 @@ const NavBar = () => {
               </li>
             </ul>
           </li>
-          <div className=" flex flex-col items-start gap-y-2 mdm:hidden border-2 border-red-700">
+          {/* mobile  */}
+          <div className=" flex flex-col items-start gap-y-2 mdm:hidden     ">
             <li className=" group relative flex flex-col items-start mdm:ml-3 mdm:block">
               <span className=" flex items-center text-xs hover:text-addispink">
                 {lang[0]}
@@ -303,16 +376,83 @@ const NavBar = () => {
                 </li>
               </ul>
             </li>
-            <a href="/login" onClick={closeMenu}>
-              <Button
-                text={translate("log in")}
-                py={6}
-                width={120}
-                bgHover="hover:bg-addishover"
-                textHover="text-addispink"
-                id={1}
-              />
-            </a>
+
+            <div>
+              {check ? (
+                <div
+                  className=" mdm:hidden   items-center jutify-center flex-col "
+                  onClick={handleHover}
+                >
+                  <div className=" flex items-center gap-2">
+                    <Avatar
+                      img={
+                        isDarkTheme
+                          ? alternativeProfileblack
+                          : profilePic
+                          ? profilePic
+                          : alternativeProfile
+                      }
+                    />
+
+                    <div className=" flex items-center gap-2">
+                      <h1
+                        className="dark:text-white text-smallP md:text-midP lg:text-largeP"
+                        // onMouseLeave={handleHover}
+                      >
+                        {truncateCompanyName(cookies?.user.party)}
+                      </h1>
+                      <FontAwesomeIcon
+                        className="dark:text-white"
+                        icon={faCaretDown}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className={
+                      dropDown
+                        ? "rounded-lg dark:bg-[#1b1f23] absolute mt-[10px] w-[150px]  mr-4 drop-shadow-lg bg-topbarBg transition ease-in-out delay-150 "
+                        : "h-[0px] overflow-hidden absolute mt-[65px] w-[150px] mr-4 drop-shadow-lg transition ease-in-out delay-150 "
+                    }
+                  >
+                    <ul className="flex flex-col w-full h-full items-center justify-center">
+                      <Link
+                        to="/feed/profile/:id"
+                        onClick={hadleNavigateProfile}
+                        className="w-full"
+                      >
+                        <li className="w-full p-3 items-center justify-start hover:bg-lightPrimaryHover">
+                          <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+                            {" "}
+                            View Profile
+                          </p>
+                        </li>
+                      </Link>
+                      <hr className="w-full border-t border-gray-300 dark:border-gray-700" />{" "}
+                      {/* Added this line */}
+                      <li
+                        className="w-full p-3 items-center justify-start  hover:bg-lightPrimaryHover"
+                        onClick={handleLogOut}
+                      >
+                        <p className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+                          Sign Out
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              ) : (
+                <a href="/login" onClick={closeMenu}>
+                  <Button
+                    text={translate("log in")}
+                    py={6}
+                    width={120}
+                    bgHover="hover:bg-addishover"
+                    textHover="text-addispink"
+                    id={1}
+                  />
+                </a>
+              )}
+            </div>
           </div>
           {/* Mobile Menu Bar Footer - AddisSystems */}
           <div className="absolute bottom-2 right-1/2 block translate-x-1/2 cursor-default text-sm font-normal mdm:hidden">
@@ -321,7 +461,8 @@ const NavBar = () => {
             </p>
           </div>
         </ul>
-        <div className="flex items-center  mr-6">
+
+        <div className="flex items-center ">
           <div className="hidden items-center gap-x-2 mdm:flex  mr-2">
             <div className="group relative">
               <span className=" flex min-w-[40px] cursor-default items-center justify-end text-xs hover:text-addispink">

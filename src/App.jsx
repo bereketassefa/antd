@@ -83,6 +83,8 @@ import SearchCompanyPublic from "./Components/PublicComponents/NavComponenet/Sea
 import SearchProductPublic from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/SearchProductPublic";
 import Job from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/Job";
 import PostPublic from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/PostPublic";
+
+import BlogNews from "../src/Components/PublicComponents/BlogNews";
 ////////////
 
 function App() {
@@ -171,6 +173,8 @@ function App() {
             />
             <Route path="about-us" element={<AboutPublic />} />
             <Route path="blog" element={<Blog />} />
+            <Route path="/blog/blognews" element={<BlogNews />} />
+
             <Route path="contact" element={<ContactPublic />} />
             <Route path="user-guide" element={<UserGuide />} />
             <Route path="faq" element={<Faq />} />

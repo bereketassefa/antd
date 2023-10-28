@@ -10,6 +10,8 @@ import { useCookies } from "react-cookie";
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import alternativeProfileblack from "../../../assets/image/alternativeProfile-black.png";
 import newusimage from "../../../assets/image/iphone2.webp";
+import { IoIosSend } from "react-icons/io";
+import { BsEmojiSmile } from "react-icons/bs";
 import { format } from "timeago.js";
 import CommentContainer from "../NewsCard/Comments/commentContainer";
 import Avatar from "../../../Fields/Avatar/avatar";
@@ -24,6 +26,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useToast } from "../../Toast/toastContext";
 import NewSlider from "./NewSlider";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { BiMessage } from "react-icons/bi";
+import { PiShareFill } from "react-icons/pi";
 import { Image } from "antd";
 export default function NewsCard({
   account_id,
@@ -40,7 +44,6 @@ export default function NewsCard({
   const { showToast } = useToast();
   const downloadCardRef = useRef(null);
 
-
   const [showComments, setShowComments] = useState(false);
   const [cookies] = useCookies(["user"]);
   const [Liked, setLiked] = useState(false);
@@ -53,9 +56,14 @@ export default function NewsCard({
   const [modalOpen, setModalOpen] = useState(false);
   const [likeCount, setLikeCount] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
-  
+  const [commentText, setCommentText] = useState("");
+  const [setComments] = useState([]);
 
   const [showText, setShowText] = useState(false);
+
+  const handleCommentClick = () => {
+    setShowComments(!showComments);
+  };
 
   const handleImageClick = () => {
     setShowText((prevShowText) => !prevShowText);
@@ -93,14 +101,13 @@ export default function NewsCard({
 //     }
 // };
 
-  
-useEffect(() => {
-  let es; // Declare the EventSource variable
+  useEffect(() => {
+    let es; // Declare the EventSource variable
 
-  const connect = () => {
-    es = new EventSource(
-      `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
-    );
+    const connect = () => {
+      es = new EventSource(
+        `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
+      );
 
     es.onmessage = (event) => {
       const updatedPost = JSON.parse(event.data);
@@ -120,12 +127,13 @@ useEffect(() => {
     
   };
 
-  connect(); // Initialize the connection
+    connect(); // Initialize the connection
 
-  return () => {
-    es.close(); // Close the EventSource connection when the component unmounts
-  };
-}, [id]);
+    return () => {
+      es.close(); // Close the EventSource connection when the component unmounts
+    };
+  }, [id]);
+
 
 // const es = useMemo(() => {
 //   return new EventSource(
@@ -171,33 +179,30 @@ useEffect(() => {
 //   };
 // }, [id]);
 
-
-
-
-const handleLike = async (e) => {
-  e.preventDefault();
-  setLiked((prevLiked) => !prevLiked); // Optimistic update
-  // Close the SSE connection temporarily
-  // if (es) es.close();
-
-  const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${cookies?.user?.Uid}/${id}`;
-  try {
+  const handleLike = async (e) => {
+    e.preventDefault();
+    setLiked((prevLiked) => !prevLiked); // Optimistic update
+    // Close the SSE connection temporarily
+    // if (es) es.close();
+    const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${
+      cookies?.user?.Uid
+    }/${id}`;
+    try {
       const response = await fetch(url, { method: "POST" });
       if (!response.ok) {
-          throw new Error("Network response was not ok");
+        throw new Error("Network response was not ok");
       }
       const data = await response.json();
       setLikeCount(data?.updatedPost?.like);
       // console.log(data.updatedPost.like)
-  } catch (error) {
-      console.error("There was a problem with the fetch operation:", error.message);
+    } catch (error) {
+      console.error(
+        "There was a problem with the fetch operation:",
+        error.message
+      );
       setLiked((prevLiked) => !prevLiked); // Revert the optimistic update if there's an error
-  }
-};
-
-  
-  
-  
+    }
+  };
 
   const checkIfLiked = async () => {
     try {
@@ -271,7 +276,7 @@ const handleLike = async (e) => {
     try {
       const response = await axios.get(Url);
       if (response.status === 200) {
-        console.log(response.data)
+        console.log(response.data);
         setTimeline(response?.data);
       }
     } catch (error) {
@@ -377,6 +382,43 @@ const handleLike = async (e) => {
     };
   }, []);
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleCommentSubmit();
+    }
+  };
+  const handleCommentSubmit = async () => {
+    if (!commentText.trim()) return; // Ensure comment is not just whitespace
+
+    try {
+      const url = `${import.meta.env.VITE_COMMENT}`;
+      const response = await axios.post(url, {
+        post_id: id,
+        parent_comment_id: null,
+        user_id: cookies?.user?.Uid.toString(),
+        text: commentText,
+      });
+
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error("Failed to post comment");
+      }
+
+      // Access the new comment object correctly
+      const newComment = response.data.comment;
+
+      // Add the new comment to the existing comments
+      setComments((prevComments) => [
+        ...(Array.isArray(prevComments) ? prevComments : []),
+        newComment,
+      ]);
+
+      // Clear the text input
+      setCommentText("");
+    } catch (error) {
+      console.error("Failed to post comment:", error);
+    }
+  };
+
   const text =
     "In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design";
 
@@ -393,7 +435,7 @@ const handleLike = async (e) => {
                 <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-black"></div>
               ) : (
                 <>
-                  <FontAwesomeIcon icon={faDownload}  className="gap-2"/> Save
+                  <FontAwesomeIcon icon={faDownload} className="gap-2" /> Save
                   <div className="flex items-center gap-1 ml-3">
                     <RiDeleteBinLine /> Delete
                   </div>
@@ -409,7 +451,7 @@ const handleLike = async (e) => {
         </div>
       )}
 
-      <div className="flex items-center justify-between p-3">
+      <div className="flex items-center justify-between p-3 ">
         <div className="flex items-center gap-2">
           <Avatar
             onClick={hadleNavigateProfile}
@@ -441,7 +483,7 @@ const handleLike = async (e) => {
         />
       </div>
       {/* {newContent} */}
-      <div className="w-full flex flex-col">
+      <div className="w-full flex flex-col ">
         <div className="p-2 flex w-full ">
           <p
             id="fullText"
@@ -451,11 +493,13 @@ const handleLike = async (e) => {
                 : "  max-w-[300px] md:max-w-[450px] max-h-[45px] overflow-hidden"
             }`}
           >
-            {newContent?.length > 120 && !showText ? newContent.slice(0, 120) + "..." : newContent}
+            {newContent?.length > 120 && !showText
+              ? newContent.slice(0, 120) + "..."
+              : newContent}
           </p>
           {!showText && newContent?.length > 120 && (
             <p
-              className={`md:mt-6 text-[15px] ${
+              className={`md:mt-6 text-[15px]  ${
                 showText ? "hidden" : "text-blue-900"
               }`}
               onClick={handleToggleText}
@@ -465,70 +509,116 @@ const handleLike = async (e) => {
           )}
         </div>
 
-        <div className="overflow-hidden flex bg-center">
+        <div className="overflow-hidden flex bg-center ">
           <Image.PreviewGroup>
-            <Image
-              width={600}
-              height={450}
-              src={
-                image
-              }
-            />
+            <Image width={600} height={450} src={image} />
           </Image.PreviewGroup>
         </div>
       </div>
 
       <div className="w-full flex flex-col z-10">
-        <div className="flex justify-between items-center p-4 border-b">
-          <span
-           
+        <ul className="flex mx-4 justify-start items-center p-4 md:gap-20   ">
+          <li className="flex items-center gap-2">
+            <FontAwesomeIcon
+              onClick={(e) => handleLike(e)}
+              className={
+                Liked
+                  ? "text-2xl md:text-smallT cursor-pointer text-secondary "
+                  : "text-2xl cursor-pointer md:text-smallT text-gray dark:text-white"
+              }
+              icon={faThumbsUp}
+            />
+            <span
+              className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
+              onClick={() => setShowLikeInfo(true)}
+            >
+              {likeCount === 0 || likeCount === "0" ? "" : likeCount}
+            </span>
+          </li>
+
+          <li className="flex items-center gap-2 cursor-pointer">
+            <FontAwesomeIcon
+              icon={faMessage}
+              onClick={onCommentShow}
+              className="dark:text-white text-largeP md:text-smallT text-gray-400"
+            />
+            <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+              {comments.postCount === undefined
+                ? "Loading..."
+                : comments.postCount === "0"
+                ? ""
+                : `${comments.postCount}  `}
+            </span>
+          </li>
+          <li className="flex items-center gap-2 cursor-pointer">
+            <PiShareFill className="dark:text-white text-largeP md:text-2xl text-[#929292]" />
+          </li>
+        </ul>
+        <hr className=" border-[0.7px]" />
+        <div className="flex gap-2 p-2 items-center  ">
+          {/* <div className="flex items-center justify-center w-fit overf  border-2 border-red-600">
+          <Avatar
+            img={
+              isDarkTheme
+                ? alternativeProfileblack
+                : profilePic
+                ? profilePic
+                : alternativeProfile
+            }
+          />
+        </div> */}
+          <div className="flex items-center justify-between border-2 rounded-lg w-full h-[50px] gap bg-[#fffdfd] p-3">
+            <div>
+              <BsEmojiSmile className="text-xl md:smallT text-[#555555]" />
+            </div>
+            <input
+              type="text"
+              className="dark:bg-[#1b1f23]  m-3 flex w-full h-full outline-none pl-4 text-smallP md:text-midP lg:text-largeP"
+              placeholder="Add a comment ..."
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              onKeyPress={handleKeyPress}
+            />
+
+            <div className="flex gap-4    items-center h-full">
+              <div className="w-2 h-8 flex justify-end border-l-2 border-gray-400  "></div>
+
+              <p>Send</p>
+              <IoIosSend
+                onClick={handleCommentSubmit}
+                className="text-xl md:smallT text-[#555555]"
+              />
+            </div>
+          </div>
+        </div>
+        {/* <div className="flex justify-between items-center p-4 border-b border-2 border-red-900"> */}
+        {/* <span
             className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
             onClick={() => setShowLikeInfo(true)}
           >
             {likeCount === 0 || likeCount === "0" ? "" : likeCount}
-          </span>
-          <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
+          </span> */}
+        {/* <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
             {comments.postCount === undefined
               ? "Loading..."
               : comments.postCount === "0"
               ? ""
               : `${comments.postCount} comments`}
-          </span>
-        </div>
-
-        <ul className="flex items-center p-4 gap-4">
-          <li className="flex items-center gap-2">
-            <FontAwesomeIcon
-              onClick={(e)=> handleLike(e)}
-              className={
-                Liked
-                  ? "text-largeP md:text-smallT cursor-pointer text-secondary "
-                  : "text-largeP cursor-pointer md:text-smallT text-gray dark:text-white"
-              }
-              icon={faThumbsUp}
-            />
-          </li>
-          <li className="flex items-center gap-2 cursor-pointer">
-            <FontAwesomeIcon
-              onClick={onCommentShow}
-              className="dark:text-white text-largeP md:text-smallT text-gray-400"
-              icon={faMessage}
-            />
-          </li>
-        </ul>
+          </span> */}
+        {/* </div> */}
       </div>
 
       {/* Like Info Modal */}
       {showLikeInfo && (
         <div
-          className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 "
           onClick={() => setShowLikeInfo(false)}
         >
           <div
-            className="bg-white p-4 rounded  sm:w-3/4 md:w-1/2 lg:w-1/2  flex flex-col overflow-y-auto"
+            className="bg-white p-4 rounded  sm:w-3/4 md:w-1/2 lg:w-1/2  flex flex-col overflow-y-auto "
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-4 ">
               <img
                 src={logoAddis}
                 alt="Company Logo"
@@ -563,12 +653,14 @@ const handleLike = async (e) => {
         </div>
       )}
 
-      <CommentContainer
-        Uid={Uid}
-        account_id={account_id}
-        postid={id}
-        isOpen={showComments}
-      />
+      {showComments && (
+        <CommentContainer
+          Uid={Uid}
+          account_id={account_id}
+          postid={id}
+          isOpen={showComments}
+        />
+      )}
     </div>
   );
 }

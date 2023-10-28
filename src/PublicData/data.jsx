@@ -14,7 +14,8 @@ import { GiMoneyStack } from "react-icons/gi";
 import { BsShieldLock, BsBuildingFillGear, BsReceipt } from "react-icons/bs";
 import { SlDirections, SlDirection } from "react-icons/sl";
 import { MdGroups2 } from "react-icons/md";
-
+import blogbanner2 from "../assets/PuplicImage/RingTern-Blog-post.jpg";
+import news from "../assets/image/cute-girl-pic (12).jpg";
 import frontendImage from "../../src/assets/PuplicImage/frontend-image.jpg";
 import backendImage from "../assets/PuplicImage/backend-image.jpg";
 
@@ -76,6 +77,60 @@ export const AddisPayNews = [
     news: " In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a  document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
   },
 ];
+export const AddisPayNews2 = [
+  {
+    key: 1,
+    MainTopic: " Main Topic",
+    subtopic1: "Embracing the Digital",
+    paragraph1:
+      "  In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into In today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why we  ",
+    image1: blogbanner2,
+    paragraph2:
+      " In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why  In today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why we ",
+    Subtopic2: "Subtopic",
+    paragraph3:
+      "In today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why weIn today's fast-paced digital world,   this and delve into why we should embrace this transformational technology. In today's fast-paced digital world, the benefits it offers, and delve into why we should embrace this transformational technology.  In today's fast-paced digital world, the benefits it offers, and delve into why we ",
+    RelatedNews: "Related News",
+  },
+];
+export const AddisPayNews3 = [
+  {
+    key: 1,
+    image2: news,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+  {
+    key: 2,
+    image2: blogbanner2,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+  {
+    key: 3,
+    image2: blogbanner2,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+  {
+    key: 3,
+    image2: blogbanner2,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+  {
+    key: 3,
+    image2: blogbanner2,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+  {
+    key: 3,
+    image2: blogbanner2,
+    paragraph4:
+      " In today's fast-paced digital world, the benefits it offers, a . In today's fast-paced digital world, the benefits ",
+  },
+];
 export const areaOfInterest = [
   {
     id: 1,
@@ -117,12 +172,12 @@ export const features = {
         delay: 1,
         title: {
           Eng: " Flexibility ",
-          Amh: "  Amharik",
+          Amh: "ተለዋዋጭነት",
           Oro: "OROO",
         },
         paragraph: {
           Eng: " Electronic POS systems are web-based, allowing merchants to access and manage their business transactions from anywhere with an internet connection. This eliminates the need for physical hardware and enables merchants to process payments on the go, whether at a trade show, pop-up shop, or customer's location",
-          Amh: "Amharik",
+          Amh: "የኢፖስ ስርዓቶች በድር ወይም በኢንተርኔት ላይ የተመሰረተ ስለሆነ ነጋዴዎች ከየትኛውም ቦታ ሆነው የንግድ ልውውጦቻቸውን በኢንተርኔት አማካኝነት እንዲያስተዳድሩ ያስችላቸዋል። ይህም የሃርድዌርን አስፈላጊነት ያስወግዳል እንዲሁም ነጋዴዎች ካሉበት ቦታ ሆነው ፣ ለምሳሌ በንግድ ትርኢት፣ የመንገድ ላይ ሱቆች ወይም ደንበኞች ባሉበት ቦታ የክፍያ ሂደታቸውን እንዲፈጽሙ ያስችላቸዋል።",
           Oro: "This is Afan Oromo Paragraph, So It is Done!",
         },
         icon: <HiOutlineEmojiHappy />,
@@ -131,12 +186,12 @@ export const features = {
         delay: 2,
         title: {
           Eng: "Cost Savings",
-          Amh: "Amharik",
+          Amh: "ወጪን ይቆጥባል ",
           Oro: "Baasii Gadi aanaa",
         },
         paragraph: {
           Eng: "Traditional gadget-based POS systems often require significant upfront investments in hardware and software licenses. In contrast, electronic POS systems typically operate on a subscription-based model, reducing upfront costs and providing merchants with predictable monthly expenses.",
-          Amh: "Amharik",
+          Amh: "ባህላዊው በመሳሪያ ላይ የተመሰረተው የፖስ ስርዓት ብዙ ጊዜ በሃርድዌር እና በሶፍትዌር ፈቃዶች ላይ ከፍተኛ የመነሻ ካፒታል ያስፈልጋቸዋል። በአንጻሩ የኢፖስ ሲስተሞች በተለምዶ የደንበኝነት ምዝገባን መሰረት ባደረገ ሞዴል ይሰራሉ፣ለንግድ መነሻ የሚወጡ ከፍተኛ ወጪዎችን በመቀነስ ለነጋዴዎች ሊገመቱ የሚችሉ ወርሃዊ ክፍያወችን ያስከፍላሉ። ",
           Oro: " OROO",
         },
         icon: <FaMoneyBillWave />,
@@ -145,12 +200,12 @@ export const features = {
         delay: 3,
         title: {
           Eng: "Real time analytics",
-          Amh: "Amharik",
+          Amh: "አሁናዊ/ቅፅበታዊ ትንታኔወች",
           Oro: "Orooo",
         },
         paragraph: {
           Eng: "Electronic POS systems provide merchants with real-time access to sales data, inventory levels, and customer insights. This enables them to make data-driven decisions, identify trends, and optimize their business operations for improved efficiency and profitability.",
-          Amh: "Amharik",
+          Amh: " የኢፖስ ስርዓቶች ለነጋዴዎች የሽያጭ ውሂብ ወይም ዳታ፣የእቃ ዝርዝር ደረጃዎችን እና የደንበኞችን ምልከታ የተመለከተ አሁናዊ መረጃ ይሰጣሉ። ይህም በመረጃ ላይ የተመሰረቱ ውሳኔዎችን እንዲወስኑ፣ አዝማሚያዎችን እንዲለዩ እና የንግድ ሥራቸውን በተሻሻለ ቅልጥፍና እና ትርፋማነት እንዲያሳድጉ ያስችላቸዋል።",
           Oro: " Oroo",
         },
         icon: <MdGroups2 />,
@@ -159,12 +214,12 @@ export const features = {
         delay: 4,
         title: {
           Eng: "Integration capabilities",
-          Amh: "Amharik",
+          Amh: "የመዋሃድ አቅም ወይም ችሎታ",
           Oro: "Oroo",
         },
         paragraph: {
           Eng: "Electronic POS systems often offer integrations with various third-party applications, such as accounting software, CRM systems, and e-commerce platforms. This integration streamlines business processes, eliminates manual data entry, and enhances overall productivity.",
-          Amh: " Amha",
+          Amh: " የኢፖስ ሲስተሞች ብዙ ጊዜ ከተለያዩ የሶስተኛ ወገን አፕሊኬሽኖች ጋር ውህደቶችን ይፈጥራሉ፣ ለምሳሌ ከሂሳብ ሶፍትዌር፣ ሲ አር ኤም ሲስተሞች እና የኢ-ኮሜርስ ፕላት ፎርሞች። ይህም ውህደት የንግድ ሥራ ሂደቶችን ያሳልጣል ዳታን በእጅ መፃፍ ያስወግዳል እንዲሁም በአጠቃላይ ምርታማነትን ያሳድጋል።",
           Oro: " OROOO",
         },
         icon: <SiSpeedtest />,
@@ -173,12 +228,12 @@ export const features = {
         delay: 5,
         title: {
           Eng: "Enhanced security",
-          Amh: "Amharik",
+          Amh: "ከፍተኛ ጥበቃ",
           Oro: "OROO",
         },
         paragraph: {
           Eng: "Electronic POS systems prioritize data security by utilizing encryption and tokenization technologies to protect sensitive customer information. Additionally, cloud-based storage ensures that data is backed up and can be easily restored in case of any hardware failures or disasters.",
-          Amh: "Amharik",
+          Amh: "የኢፖስ ሲስተሞች የደንበኞችን ሚስጥራዊ መረጃዎችን ለመጠበቅ ምስጥራዊ ኮዶችን እና ማስመሰያ ቴክኖሎጂዎችን በመጠቀም ለመረጃ ደህንነት ቅድሚያ ይሰጣሉ። በተጨማሪም በክላውድ ላይ የተመሰረተው የዳታ ማከማቻ የዳታውን ኮፒ ወይም ምትክ በመያዝ እና ማንኛውም አይነት የሃርድዌር ብልሽት ወይም አደጋዎች ሲያጋጥም በቀላሉ ወደነበረበት መመለስ ይችላል።",
           Oro: "Orooo",
         },
         icon: <BsBuildingFillGear />,
@@ -187,12 +242,12 @@ export const features = {
         delay: 6,
         title: {
           Eng: "Improved customer experience",
-          Amh: "Amharik",
+          Amh: "ለተሻሻለ የደንበኞች ልምድ/ተሞኩሮ ",
           Oro: "OROO",
         },
         paragraph: {
           Eng: "With electronic POS systems, merchants can offer a seamless and personalized customer experience. Features like digital receipts, loyalty programs, and customer relationship management tools enable merchants to engage with customers, build relationships, and provide tailored offers and promotions. It also provides faster transaction processing times.",
-          Amh: "Amharik",
+          Amh: "በኢፖስ ስርዓቶች ነጋዴዎች እንከን የለሽ እና የተለዩ የደንበኛ ልምድን ሊሰጡ ይችላሉ። እንደ ዲጂታል ደረሰኞች፣ የደንበኞች የታማኝነት ወይም የሽልማት ፕሮግራሞች እንዲሁም የደንበኛ ግንኙነት መከታተያ ሶፍትዌሮች ለነጋዴዎች ከደንበኞች ጋር እንዲገናኙ፣ ግንኙነታቸውንም እንዲያጠነክሩ እንዲሁም ቅናሾችን እና ማስተዋወቂያዎችን እንዲያቀርቡ ያስችላቸዋል። በተጨማሪም ፈጣን የግብይት ሂደት እንዲኖር ያደርጋል።",
           Oro: "Orooo",
         },
         icon: <BsBuildingFillGear />,
@@ -212,7 +267,7 @@ export const features = {
         },
         paragraph: {
           Eng: "E-invoicing can help reduce costs by eliminating the need for paper invoices, printing, and postage.  ",
-          Amh: "ama።",
+          Amh: "ኢ-ደረሰኝ የወረቀት ደረሰኞችን ሕትመት እንዲሁም ለመላኪያ የሚከፈሉ ክፍያወችን በማስቀረት ወጪን ለመቀነስ ይረዳል።",
           Oro: "oro",
         },
         icon: <GiMoneyStack />,
@@ -221,12 +276,12 @@ export const features = {
         delay: 2,
         title: {
           Eng: "Automation",
-          Amh: "አውቶሜሽን",
+          Amh: "አውቶሜት/ ራስ ሰር መሆኑ",
           Oro: "Otoomaatikii",
         },
         paragraph: {
           Eng: "E-invoicing can help automate the invoicing process, making it faster and more efficient. This can help businesses save time and money. It also helps shorten payment cycles by making it easier for businesses to track and process invoices. This can help businesses to pay faster and improve their cash flow.",
-          Amh: "amha ",
+          Amh: "ኢ-ደረሰኝ የክፍያ መጠየቂያ ሂደቱን ራስ-ሰር ወይም አውቶሜት በማድረግ ፈጣን እና ቀልጣፋ ለማድረግ ያስችላል። ይህም ሁኔታ የንግድ ተቋማት ጊዜ እና ገንዘባቸውን እንዲቆጥቡ ያስችላቸዋል። በተጨማሪም ለንግድ ድርጅቶች የደረሰኞችን ሂደት የሚከታተሉበትን ሁኔታ ቀላል በማድረግ የክፍያ ዑደቶችን ለማሳጠር ይረዳል። ይኸም የንግድ ድርጅቶች ክፍያን ቶሎ እንዲፈጽሙና የገንዘብ ዝውውራቸው እንዲሻሻል ይረዳል።",
           Oro: "oro ",
         },
         icon: <VscServerProcess />,
@@ -235,12 +290,12 @@ export const features = {
         delay: 3,
         title: {
           Eng: "Reconciliation and compliance",
-          Amh: "Amha",
+          Amh: "አስታራቂነት  እና ተገዢነት",
           Oro: "ORO",
         },
         paragraph: {
           Eng: " E-invoicing can help improve account reconciliation by making it easier for businesses to match invoices with payments. This can help reduce errors and improve accuracy. E-invoicing can help enhance compliance by making it easier for businesses to comply with tax and regulatory requirements. This can help businesses avoid penalties and fines.",
-          Amh: " Amh",
+          Amh: " ኢ-የክፍያ መጠየቂያ ደረሰኞችን ከክፍያዎች ጋር በማዛመድ ለንግድ ድርጅቶች የመረጃ ማስታረቅ ስራን ቀላል ለማድረግ እና ለማሻሻል ይረዳል።ይህም ስህተቶችን ለመቀነስ እና ትክክለኛነትን ለማሻሻል ይጠቅማል። ኢ-ደረሰኝ የንግድ ድርጅቶች የታክስ እና የንግድ ህጎችን እንዲያከብሩ በማድረግ ተገዢነትን ለማሻሻል እና ቀላል ለማድረግ ይረዳል። ይህም የንግድ ድርጅቶችን ካላስፈላጊ የቅጣት ክፍያወች ይታደጋል።",
           Oro: "ORO ",
         },
         icon: <BiTime />,
@@ -249,12 +304,12 @@ export const features = {
         delay: 4,
         title: {
           Eng: "Prevention of Errors and Frauds",
-          Amh: "Amha",
+          Amh: "ስህተቶችን እና ማጭበርበርን ለመከላከል",
           Oro: "Oro",
         },
         paragraph: {
           Eng: " E-invoicing can help prevent errors, losses, and fraud by providing businesses with a more secure and reliable invoicing system. This can help businesses avoid financial losses and reputational damage.",
-          Amh: " amha",
+          Amh: " ኢ-ደረሰኝ  ደህንነቱ የተጠበቀ እና አስተማማኝ የክፍያ መጠየቂያ ስርዓት በማቅረብ ስህተቶችን፣ ኪሳራዎችን እንዲሁም ማጭበርበርን ለመከላከል ይረዳል። ይህም የንግድ ድርጅቶች የገንዘብ ኪሳራዎችን እና የንግድ ስያሜን የሚያጠለሹ አደጋወችን እንዲያስወገወዱ ይረዳል።",
           Oro: " ORO ",
         },
         icon: <AiOutlineReconciliation />,
@@ -264,12 +319,12 @@ export const features = {
         delay: 5,
         title: {
           Eng: "Supplier-Customer Relationship",
-          Amh: "AMhar",
+          Amh: "የሻጭ እና ገዚ ግንኙነት",
           Oro: "ORO",
         },
         paragraph: {
           Eng: " E-invoicing can help improve the relationship between suppliers and customers by providing a more efficient and transparent invoicing process. This can help businesses build trust and loyalty with their customers.",
-          Amh: "Amha",
+          Amh: "ኢ-ደረሰኝ ይበልጥ ቀልጣፋ እና ግልፅ የሆነ የክፍያ መጠየቂያ ሂደት በማቅረብ በአቅራቢዎች እና በደንበኞች መካከል ያለውን ግንኙነት ለማሻሻል ይጠቅማል። ይህም የንግድ ድርጅቶች በደንበኞቻቸው እምነት እንዲኖራቸው እና ታማኝነት እንዲገነቡ ያግዛል።",
           Oro: "ORO. ",
         },
         icon: <TbFileInvoice />,
@@ -278,12 +333,12 @@ export const features = {
         delay: 6,
         title: {
           Eng: "Environmental benefit",
-          Amh: " amha",
+          Amh: " ለአካባቢ የሚሰጠው ጥቅም",
           Oro: "oro",
         },
         paragraph: {
           Eng: "E-invoicing It also help reduce the carbon footprint by eliminating the need for paper invoices, printing, and postage. This can help businesses reduce their environmental impact.",
-          Amh: " Amha",
+          Amh: "ኢ-ደረሰኝ የወረቀት ደረሰኞችን ህትመት በማስቀረት የካርበን መጠንን ለመቀነስ ይረዳል። ይህም የንግድ ድርጅቶች በአካባቢ ላይ የሚያሳርፉትን ተጽእኖ እንዲቀንሱ ያግዛል።",
           Oro: " ORO ",
         },
         icon: <FaEnvira />,
@@ -474,12 +529,12 @@ export const features = {
         delay: 1,
         title: {
           Eng: "Mobility and Flexibility",
-          Amh: "Amharik",
+          Amh: "የተንቀሳቃሽ የፖስ ማሽን ጥቅሞች",
           Oro: "OROOO",
         },
         paragraph: {
           Eng: "M-POS systems enable businesses to conduct transactions anywhere, not limited to a fixed physical location. This is particularly advantageous for businesses that operate at events, pop-up shops, outdoor markets, or have a mobile service component.",
-          Amh: "Amharik",
+          Amh: "ተንቀሳቃሽነት እና ተለዋዋጭነት፡ ተንቀሳቃሽ የፖስ ማሽን ስርዓቶች የንግድ ልውውጦች በአንድ አካባቢ ወይም ቦታ ብቻ ሳይወሰኑ በማንኛውም ቦታ ግብይቶች እንዲፈጸሙ ያስችላሉ። ይህም በተለያዩ ፕሮግራሞች ላይ ለሚካሄዱ ንግዶች ማለትም፣ ለመንገድ ላይ ሱቆች፣ ከሱቆች ውጪ ላሉ የገበያ ቦታወችዎች ወይም ተንቀሳቃሽ የንግድ አገልግሎት ለሚሰጡ ነጋዴወች ጠቃሚ ነው።",
           Oro: " ROOOOO",
         },
         icon: <BsReceipt />,
@@ -488,12 +543,12 @@ export const features = {
         delay: 2,
         title: {
           Eng: "Cost-Effective",
-          Amh: "ገቢን ይጨምራል",
+          Amh: "በዋጋ አዋጭ የሆነ",
           Oro: "Galii dabaluu",
         },
         paragraph: {
           Eng: "Setting up a traditional POS system can be expensive due to hardware and software costs. M-POS systems often have a lower upfront investment since they utilize existing mobile devices. This can be especially beneficial for small businesses with budget constraints.",
-          Amh: "Amharik",
+          Amh: "ባህላዊ የፖስ ስርዓትን ማዋቀር በሃርድዌር እና በሶፍትዌር ወጪዎች ምክንያት ውድ ሊሆን ይችላል።ተንቀሳቃሽ የፖስ ማሽን ስርዓቶች ነባር የሞባይል ቀፎወችን ስለሚጠቀሙ ብዙ ጊዜ ዝቅተኛ የመነሻ ካፒታል አላቸው። ይህም በተለይ የበጀት ችግር ላለባቸው አነስተኛ ንግዶች ጠቃሚ ሊሆን ይችላል።",
           Oro: " OROO",
         },
         icon: <GiReceiveMoney />,
@@ -502,12 +557,12 @@ export const features = {
         delay: 3,
         title: {
           Eng: "Convenience",
-          Amh: "Amharik",
+          Amh: "ምቹ መሆኑ",
           Oro: "OROO",
         },
         paragraph: {
           Eng: "M-POS allows for quick and hassle-free transactions. Customers can make purchases or payments using their preferred payment methods, including credit/debit cards, mobile wallets, and contactless payments.",
-          Amh: " Amharik",
+          Amh: " የተንቀሳቃሽ የፖስ ማሽን ፈጣን እና ውጣ ውረድ የሌለው ግብይት እንዲኖር ያደርጋል። ደንበኞች ክሬዲት/ዴቢት ካርዶችን፣ የሞባይል ገንዘቦችን እንዲሁም ከንክኪ ነፃ የሆኑ ክፍያዎችን ጨምሮ በመረጡት የመክፈያ ዘዴ በመጠቀም ግዢ ወይም ክፍያን መፈጸም ይችላሉ።",
           Oro: "OOROOO",
         },
         icon: <AiOutlineAreaChart />,
@@ -516,12 +571,12 @@ export const features = {
         delay: 4,
         title: {
           Eng: "Enhanced Customer Experience",
-          Amh: "Amharik",
+          Amh: "ለተሻሻለ የደንበኛ እርካታ",
           Oro: "ORROOO",
         },
         paragraph: {
           Eng: "M-POS enables businesses to provide a more personalized and efficient customer experience. Staff can engage with customers on the sales floor, answer questions, and complete transactions without customers needing to visit a fixed checkout counter.",
-          Amh: "Amharik ",
+          Amh: "የተንቀሳቃሽ የፖስ ማሽን የንግድ ድርጅቶች በጣም የተለየና እና ቀልጣፋ የደንበኛ ተሞክሮ እንዲያቀርቡ ያስችላቸዋል። ደንበኞች ወደ ቋሚ የሂሳብ መክፈያ ቦታ መሄድ ሳያስፈልጋቸው ሰራተኞች ወይም ሻጮች ከደንበኞች ጋር በሽያጭ ወለል ላይ በመገናኘት ብቻ ጥያቄዎችን መመለስ እና ግብይቶችን ማጠናቀቅ ይችላሉ።",
           Oro: "OROOO",
         },
         icon: <SlDirection />,
@@ -530,12 +585,12 @@ export const features = {
         delay: 5,
         title: {
           Eng: "Scalability",
-          Amh: "Amharik",
+          Amh: "በቀላሉ መሻሻል መቻሉ",
           Oro: "ORROO",
         },
         paragraph: {
           Eng: "As your business grows, it's relatively easy to scale up the use of M-POS devices. Adding more devices to accommodate higher transaction volumes is often simpler than expanding a traditional POS setup.",
-          Amh: "Amharik",
+          Amh: "የንግድ ድርጅትዎ እያደገ ሲሄድ የተንቀሳቃሽ የፖስ ማሽን መሳሪያዎችን አጠቃቀም ማሳደግ በአንጻራዊነት ቀላል ነው። ከፍተኛ የግብይት መጠኖችን ለማስተናገድ ተጨማሪ መሣሪያዎችን መጨመር ብዙውን ጊዜ ባህላዊውን የፖስ ማሽን መዋቅር ከማስፋፋት የበለጠ ቀላል ነው።",
           Oro: "ORROOO",
         },
         icon: <BsShieldLock />,
@@ -544,12 +599,12 @@ export const features = {
         delay: 6,
         title: {
           Eng: "Speed and Efficiency",
-          Amh: "Amharik",
+          Amh: "ፍጥነት እና ውጤታማነት",
           Oro: "ORROO",
         },
         paragraph: {
           Eng: "M-POS systems can expedite the checkout process, resulting in shorter wait times for customers. This can lead to increased customer satisfaction and potentially more sales. Overall, M-POS systems offer businesses a convenient and versatile way to process payments and manage transactions, providing benefits that align well with the evolving demands of modern commerce. ",
-          Amh: "Amharik",
+          Amh: "ተንቀሳቃሽ የፖስ አገልግሎቶች የግብይት ሂደትን በማፋጠን ደንበኞች  በአጭር ጊዜ ውስጥ ግብይትን እንዲፈፅሙ ያስችላል። ይህም ሁኔታ የደንበኞችን እርካታ ይጨምራል እንዲሁም የበለጠ ሽያጭ እንዲኖር ያስችላል።",
           Oro: "ORROOO",
         },
         icon: <BsShieldLock />,
@@ -558,12 +613,12 @@ export const features = {
         delay: 7,
         title: {
           Eng: "Supply Chain Management",
-          Amh: "Amharik",
+          Amh: " የአቅርቦት ሰንሰለት አስተዳደር",
           Oro: "ORROO",
         },
         paragraph: {
           Eng: "Supply Chain Management (SCM) refers to the process of planning, implementing, and controlling the flow of goods, services, information, and finances from the point of origin to the point of consumption. It involves the coordination and optimization of various activities, including sourcing, procurement, production, distribution, and logistics, with the goal of achieving efficiency, cost-effectiveness, and customer satisfaction throughout the entire supply chain.",
-          Amh: "Amharik",
+          Amh: " የአቅርቦት ሰንሰለት አስተዳደር የዕቃዎችን፣ የአገልግሎቶችን፣ የመረጃ እና የፋይናንስ ፍሰትን ከመነሻ ጀምሮ እስከ ፍጆታ ድረስ የማቀድ፣ የመተግበር እና የመቆጣጠር ሂደትን ያመለክታል።በጠቅላላው የአቅርቦት ሰንሰለት ቅልጥፍናን፣ ወጪ ቆጣቢነትን እና የደንበኞችን እርካታ ለማሳካት ያለመ ግብ በመያዝ አቅርቦትን፣ ግዢን፣ ምርትን፣ ስርጭትን እና ሎጂስቲክስን ጨምሮ የተለያዩ ተግባራትን ማስተባበርን እና ማመቻቸትን ያካትታል።",
           Oro: "ORROOO",
         },
         icon: <BsShieldLock />,
@@ -574,12 +629,12 @@ export const features = {
         delay: 1,
         title: {
           Eng: "Cost Reduction",
-          Amh: "Amharik",
+          Amh: "ወጪን መቀነስ",
           Oro: "ORO",
         },
         paragraph: {
           Eng: "Effective supply chain management can lead to cost reductions through streamlined processes, optimized inventory levels, and efficient use of resources. This can result in savings for both the company and its customers.",
-          Amh: "Amharik",
+          Amh: "ውጤታማ የአቅርቦት ሰንሰለት አስተዳደር በተሳለጠ ሂደቶቹ አማካኝነት የምርቶችን ደረጃ ያሻሽላል እንዲሁም ሀብትን በስርአት በመጠቀም ለንግድ ድርጅቶች እና ለደንበኞቹ አላስፈላጊ ወጪን ይቀንሳል። ",
           Oro: "OROOO",
         },
         icon: <MdEnhancedEncryption />,
@@ -588,12 +643,12 @@ export const features = {
         delay: 2,
         title: {
           Eng: "Improved Efficiency",
-          Amh: "Amharik",
+          Amh: "የተሻሻለ ቅልጥፍና",
           Oro: " OROO",
         },
         paragraph: {
           Eng: "Proper coordination and integration of supply chain activities enhance overall operational efficiency. This includes faster order processing, reduced lead times, and minimized bottlenecks, resulting in smoother operations.",
-          Amh: "Amharik",
+          Amh: "የአቅርቦት ሰንሰለት ተግባራትን በትክክል ማስተባበር እና ማቀናጀት አጠቃላይ የአሠራር ቅልጥፍናን ያሳድጋል። ከነዚህም ውስጥ የደንበኞች ትዕዛዝ ሂደትን ያፋጥናል፣ ምርት ለማምረት የሚወስደውን ጊዜ ይቀንሳል እንዲሁም የምርት መዘግየት ያስቀራል።",
           Oro: "OROOO",
         },
         icon: <SlDirections />,
@@ -602,12 +657,12 @@ export const features = {
         delay: 3,
         title: {
           Eng: "Enhanced Customer Satisfaction",
-          Amh: "Amharik",
+          Amh: "ለተሻሻለ የደንበኛ እርካታ",
           Oro: "OROOO",
         },
         paragraph: {
           Eng: "A well-managed supply chain ensures that products are available when and where they are needed, leading to improved customer satisfaction. Accurate demand forecasting and responsive inventory management contribute to meeting customer demands promptly.",
-          Amh: "Amharik።",
+          Amh: "በጥሩ ሁኔታ የሚተዳደር የአቅርቦት ሰንሰለት ምርቶች በሚፈለጉበት ጊዜ እና ቦታ መኖራቸውን ያረጋግጣል፣ ይህም የተሻሻለ የደንበኛ እርካታን ያመጣል። ትክክለኛ የፍላጎት ትንበያ እና የንግድ ሥራ ክምችትን በብቃት ለማስተዳደር በፍላጎት፣ በአቅርቦት እና በውስጥ ኦፕሬሽን ለውጦች ላይ ፈጣን ምላሽን በመስጠት የደንበኞችን ፍላጎት በፍጥነት ለማሟላት አስተዋፅዖ ያደርጋል።",
           Oro: "ORROOO.",
         },
         icon: <GiUpgrade />,
@@ -616,12 +671,12 @@ export const features = {
         delay: 4,
         title: {
           Eng: "Risk Mitigation",
-          Amh: "Amharik",
+          Amh: "አደጋ ወይም ስጋትን ይቀንሳል ",
           Oro: "ORooou",
         },
         paragraph: {
           Eng: "Supply chain management allows for better risk assessment and mitigation strategies. Diversification of suppliers, contingency planning, and real-time monitoring help mitigate disruptions caused by factors like natural disasters, economic changes, or geopolitical events.",
-          Amh: "Amharik",
+          Amh: " የአቅርቦት ሰንሰለት አስተዳደር የተሻለ የስጋት ግምገማ እና ስጋቶችን ለመቀነስ የሚረዱ ስልቶች እንዲኖሩ ያደርጋል። የአቅራቢዎች ልዩነት ወይም ከበርካታ አቅራቢዎች እቃን ወይም አገልግሎቶችን መቀበል፣ለድንገተኛ አደጋዎች የሚያዘጋጁ እቅዶች መኖር እና አሁናዊ ክትትል ማድረግ በተፈጥሮ አደጋዎች፣ በኢኮኖሚ ለውጦች ወይም በጂኦፖለቲካዊ ክስተቶች ምክንያት የሚፈጠሩ መስተጓጎሎችን ለመቀነስ ይረዳል።",
           Oro: "OROOO",
         },
         icon: <MdOutlineSentimentVerySatisfied />,
@@ -630,12 +685,12 @@ export const features = {
         delay: 5,
         title: {
           Eng: "Strategic Competitive Advantage",
-          Amh: "Amharik",
+          Amh: "ስትራቴጂካዊ የውድድር ጥቅም",
           Oro: "OROOO",
         },
         paragraph: {
           Eng: "An efficiently managed supply chain can provide a significant competitive advantage. Companies with responsive and flexible supply chains can quickly adapt to market changes, introduce new products, and meet evolving customer preferences.",
-          Amh: "Amharik",
+          Amh: "በብቃት የሚተዳደር የአቅርቦት ሰንሰለት ከፍተኛ የውድድር ጥቅምን ይሰጣል። በደንበኞች ፍላጎት እና በገቢያ ሁኔታዎች ላይ በሚደረጉ ለውጦች የንግድ ድርጅቶች ፈጣን እና ውጤታማ ምላሽ የመስጠት ችሎታ እንዲሁም ተለዋዋጭ የአቅርቦት ሰንሰለት ያላቸው ኩባንያዎች ከገበያ ለውጦች ጋር በፍጥነት በመላመድ፣ አዳዲስ ምርቶችን ማስተዋወቅ እና የደንበኛ ምርጫዎችን ማሟላት ይችላሉ።",
           Oro: "OROOO",
         },
         icon: <FaBusinessTime />,

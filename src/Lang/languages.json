@@ -162,7 +162,7 @@
   },
   "POS-system-para": {
     "Eng": " An electronic Point of Sale (POS) system is a web-based software solution that enables businesses to process transactions, manage inventory, and track sales data electronically. It replaces traditional cash registers and manual record-keeping with a digital platform that streamlines the entire sales process. With an electronic POS system, merchants can accept various payment methods, generate digital receipts and QR code for payment, and gain real-time insights into their business performance.We developed Addis EPOS to streamline transaction process of retail stores, restaurants, hospitality industry, Service-based businesses, convenience stores, supermarkets, E-commerce businesses etc",
-    "Amh": "የፖስ ስርዓት የተለያዩ የዲጂታል ክፍያዎችን ለመቀበል እና ለማስኬድ የሚያስፈልጉትን የሃርድዌር እና ሶፍትዌሮች ጥምረት ያመለክታል።  ሃርድዌሩ የካርድ መቀበያ ማሽንን ሲይዝ ፤ ሶፍትዌሩ ደግሞ ቀሪዎቹን የመክፈያ ዘዴዎች፣ ሂደት እና ሌሎች የተጨማሪ እሴት አገልግሎቶችን ያከናውናል።",
+    "Amh": "አጠቃላይ የሽያጭ ሂደቱን ያሳልጣል። ነጋዴዎች በኢፖስ ሲስተም አማካኝነት ከተለያዩ የመክፈያ መንገዶች ክፍያን መቀበል፣ ዲጂታል ደረሰኞችን እና ኪው አር ኮድን ለክፍያ ማመንጨት እንዲሁም ስለ ንግድ ስራቸው እንቅስቃሴ አሁናዊና ትክክለኛ ግንዛቤዎችን ማግኘት ይችላሉ። የችርቻሮ መደብሮችን፣ ሬስቶራንቶችን፣ የመስተንግዶ ኢንደስትሪወችን፣ አገልግሎት ሰጪ ድርጅቶችን፣ሱቆችን፣ ሱፐርማርኬቶችን፣ ኢ-ኮሜርስ ንግዶችን እና የመሳሰሉትን የንግድ ተቋማት የንግድ ልውውጥ ሂደት ለማቀላጠፍ አዲስ ኢፖስን አዘጋጅተናል።",
     "Oro": "Sirni POS jechuun walnyaatinsa haardwaarii fi sooftiweerii kaffaltii dijitaalaa bifa adda addaa fudhachuu fi adeemsisuuf barbaachisan jechuudha. Haardwaariin kun maashinii fudhatama kaardii kan of keessaa qabu yoo ta’u, sooftiweerichi mala kaffaltii hafe, adeemsaafi tajaajiloota gatii dabalataa naannoo biroo ni qabata"
   },
   "Benefits to the business": {
@@ -324,12 +324,12 @@
 
   "m-poss title": {
     "Eng": "M-POS",
-    "Amh": "M-POS",
+    "Amh": "M-birr",
     "Oro": "M-POS"
   },
   "M-pos para1": {
     "Eng": "M-POS, or Mobile Point of Sale, refers to a system that allows businesses to process transactions, such as sales and payments, using mobile devices like smartphones or tablets. This technology leverages software and hardware to transform mobile devices into portable payment terminals, similar to traditional point of sale (POS) systems found in retail stores. ",
-    "Amh": "M-POS",
+    "Amh": "ኤም ፖስ ወይም ተንቀሳቃሽ የፖስ ማሽን የግብይት ሂደቶችን ማለትም እንደ ሽያጭ እና ክፍያዎች ስማርትፎኖችን ወይም ታብሌቶችን በመጠቀም የንግድ ድርጅቶች የንግድ ስራቸውን እንዲከውኑ የሚያስችል ስርዓትን ነው። ይህ ቴክኖሎጂ ሶፍትዌሮችን እና ሃርድዌሮችን በመጠቀም ተንቀሳቃሽ ስልኮችን ወደ ተንቀሳቃሽ የክፍያ ተርሚናሎች ቀይሯቸዋል፣ ልክ በችርቻሮ መደብሮች ውስጥ እንደሚገኙት ባህላዊ የፖስ ስርአቶች።",
     "Oro": "M-POS"
   },
 

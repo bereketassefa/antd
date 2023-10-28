@@ -106,13 +106,14 @@ const Blog = () => {
           <Heading head="Latest" headtwo="News" />
         </div>
 
-        <div className=" my-16 grid grid-cols-2 gap-6  px-2 md:grid-cols-2 ">
+        <div className=" my-16 grid grid-cols-1 gap-6  px-2 md:grid-cols-2   ">
           {AddisPayNews.map((news) => (
             <NewsCard
               key={news.key}
               Title={news.Title}
               news={news.news}
               image={news.image}
+         
             />
           ))}
         </div>
