@@ -518,7 +518,7 @@ export default function NewsCard({
             </span>
           </li>
           <li className="flex items-center gap-2 cursor-pointer">
-            <PiShareFill className="dark:text-white text-largeP md:text-2xl text-[#929292]" />
+            {/* <PiShareFill className="dark:text-white text-largeP md:text-2xl text-[#929292]" /> */}
           </li>
         </ul>
         <hr className=" border-[0.7px]" />
