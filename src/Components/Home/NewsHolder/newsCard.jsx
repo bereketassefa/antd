@@ -29,6 +29,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { BiMessage } from "react-icons/bi";
 import { PiShareFill } from "react-icons/pi";
 import { Image } from "antd";
+import { Link } from "react-router-dom";
 export default function NewsCard({
   account_id,
   myKey,
@@ -371,7 +372,7 @@ export default function NewsCard({
     "In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design";
 
   return (
-    <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative">
+    <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative  ">
       {showDownloadCard && (
         <div
           ref={downloadCardRef}
@@ -399,7 +400,7 @@ export default function NewsCard({
         </div>
       )}
 
-      <div className="flex items-center justify-between p-3 ">
+      <div className="flex items-center justify-between p-3  ">
         <div className="flex items-center gap-2">
           <Avatar
             onClick={hadleNavigateProfile}
@@ -411,7 +412,7 @@ export default function NewsCard({
                 : alternativeProfile
             }
           />
-          <div className="flex flex-col gap-1">
+          <Link to="" className="flex flex-col gap-1">
             <h1
               onClick={hadleNavigateProfile}
               className="dark:text-white font-bold flex items-center gap-2 text-xs md:text-xs lg:text-xs"
@@ -422,7 +423,7 @@ export default function NewsCard({
             <span className="text-smallP md:text-midP text-gray-400 dark:text-white">
               {format(timestamp)}
             </span>
-          </div>
+          </Link>
         </div>
         <FontAwesomeIcon
           className="dark:text-white"
@@ -448,7 +449,7 @@ export default function NewsCard({
           {!showText && newContent?.length > 120 && (
             <p
               className={`md:mt-6 text-[15px]  ${
-                showText ? "hidden" : "text-blue-900"
+                showText ? "hidden" : "text-gray-500"
               }`}
               onClick={handleToggleText}
             >
@@ -457,15 +458,20 @@ export default function NewsCard({
           )}
         </div>
 
-        <div className="overflow-hidden flex bg-center ">
+        <div className="overflow-hidden flex bg-center  ">
           <Image.PreviewGroup>
-            <Image width={600} height={450} src={image} />
+            <Image
+              width={600}
+              height={430}
+              src={image}
+              className="object-cover"
+            />
           </Image.PreviewGroup>
         </div>
       </div>
 
-      <div className="w-full flex flex-col z-10">
-        <ul className="flex mx-4 justify-start items-center p-4 md:gap-20   ">
+      <div className="w-full flex flex-col z-10  ">
+        <ul className="flex  justify-center mx-4 md:justify-start items-center p-4 gap-14 md:gap-20 ">
           <li className="flex items-center gap-2">
             <FontAwesomeIcon
               onClick={(e) => handleLike(e)}
@@ -528,14 +534,13 @@ export default function NewsCard({
               onKeyPress={handleKeyPress}
             />
 
-            <div className="flex gap-4    items-center h-full">
+            <div
+              className="flex gap-4    items-center h-full"
+              onClick={handleCommentSubmit}
+            >
               <div className="w-2 h-8 flex justify-end border-l-2 border-gray-400  "></div>
-
-              <p>Send</p>
-              <IoIosSend
-                onClick={handleCommentSubmit}
-                className="text-xl md:smallT text-[#555555]"
-              />
+              Send
+              <IoIosSend className="text-xl md:smallT text-[#555555]" />
             </div>
           </div>
         </div>

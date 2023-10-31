@@ -55,25 +55,25 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
       return;
     }
     setIsLoading(true);
-  
+
     const formData = new FormData();
-    
+
     // Append Uid and description outside of the loop
     formData.append("description", description);
     formData.append("Uid", cookies?.user?.Uid);
-    
+
     fileList.forEach((file) => {
-        formData.append("image", file.originFileObj);
+      formData.append("image", file.originFileObj);
     });
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
-    
+
     try {
       const url = `${import.meta.env.VITE_POST_NEWS}`;
-      console.log('Sending request to:',formData ,url);
+      console.log("Sending request to:", formData, url);
       const response = await axios.post(url, formData);
-      console.log('Response received:', response);
+      console.log("Response received:", response);
 
       if (response.status === 200) {
         message.success("Upload successful");
@@ -85,12 +85,11 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     } catch (error) {
       console.error("Error inserting data:", error);
       message.error("Error: Failed to post.");
-      
     } finally {
       setIsLoading(false);
     }
   };
-  
+
   useEffect(() => {
     const fetchAccountDataForProfile = async () => {
       try {
@@ -98,7 +97,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
         const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${
           cookies?.user._id
         }`;
-  
+
         await axios
           .get(url)
           .then((res) => {
@@ -151,7 +150,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
         }}
         width={800}
       >
-        <div className="dark:bg-[#1b1f23] w-full md:p-4 flex flex-col gap-4">
+        <div className="dark:bg-[#1b1f23] w-full md:p-4 flex flex-col gap-4 ">
           <div className="flex gap-2 items-center">
             <Avatar img={profile ? profile : alternativeProfile} />
             <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP font-bold">
@@ -169,9 +168,11 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
 
           <div className=" w-full p-2 pb-0">
             <ul className="w-full flex items-center justify-center md:justify-start gap-4">
-              <ImgCrop  rotationSlider modalOk={<div className="custom-ok">Ok</div>}  >
+              <ImgCrop
+                rotationSlider
+                modalOk={<div className="custom-ok">Ok</div>}
+              >
                 <Upload
-                
                   listType="picture-card"
                   maxCount={5}
                   fileList={fileList}

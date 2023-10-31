@@ -443,6 +443,16 @@ export const Requested = [
     time: "34",
   },
 ];
+export const Rplay = [
+  {
+    key: 1,
+    companyName: "Addis Pay",
+    image: bt,
+    // replays: "Africa Hote",
+    // time: "34",
+    comment: "Africa HoteAfrica HoteAfrica HoteAfrica Hote",
+  },
+];
 export const Recomend = [
   {
     key: 1,

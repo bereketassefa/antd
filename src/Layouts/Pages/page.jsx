@@ -50,7 +50,7 @@ export default function PageLayout() {
           </div>
         </div>
       )} */}
-      <div className="w-full flex items-start justify-start px-2 md:px-0 mt-2 gap-2">
+      <div className="w-full flex items-start justify-start md:px-2 md:gap-2 mt-2 ">
         <Navigator handleAddProduct={handleShowModal} />
         <div className="min-h-screen w-full mt-4">
           <Outlet />

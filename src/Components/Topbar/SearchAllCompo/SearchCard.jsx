@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
-import axios from 'axios';
-import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
-const SearchCard = ({ setShowResults,name, image, type, ProUid }) => {
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+const SearchCard = ({ setShowResults, name, image, type, ProUid }) => {
   const navigate = useNavigate();
   const handleNavigation = () => {
     // console.log("handleNavigation called");
@@ -11,10 +11,12 @@ const SearchCard = ({ setShowResults,name, image, type, ProUid }) => {
     setShowResults(false);
     console.log("setShowResults called");
   };
-  
+
   const displayableName = name.toLowerCase();
   const truncatedName =
-    displayableName.length > 16 ? `${displayableName.slice(0, 20)}..` : displayableName;
+    displayableName.length > 16
+      ? `${displayableName.slice(0, 20)}..`
+      : displayableName;
 
   return (
     <div className="gap-4 ">
@@ -26,7 +28,7 @@ const SearchCard = ({ setShowResults,name, image, type, ProUid }) => {
         />
         <h2
           onClick={handleNavigation}
-          className="dark:text-white font-bold text-[#000] text-center text-[17px]"
+          className="dark:text-white text-[13px]  text-[#000] text-center sm:text-[17px]"
         >
           {truncatedName}
         </h2>
@@ -36,4 +38,3 @@ const SearchCard = ({ setShowResults,name, image, type, ProUid }) => {
 };
 
 export default SearchCard;
-

@@ -12,7 +12,7 @@ const Hero = () => {
 
   return (
     <header className=" bg-[#454262] px-4 ">
-      <div className=" banner mx-auto flex max-h-[900px] min-h-[800px] max-w-7xl flex-col-reverse items-center justify-center  overflow-hidden py-10 sm:justify-end  sm:gap-y-4 md:max-h-[800px] md:min-h-[667px] md:flex-row md:justify-between md:gap-0 md:py-0 ">
+      <div className=" banner mx-auto flex max-h-[900px] min-h-[800px] max-w-7xl flex-col-reverse items-center justify-center  overflow-hidden py-10 sm:justify-end  sm:gap-y-4 md:max-h-[800px] md:min-h-[667px]  lg:h-screen md:flex-row md:justify-between md:gap-0 md:py-0 ">
         <div
           data-aos="fade-up"
           className=" w-full border-addispink px-8 text-center  sm:px-24 md:w-1/2 md:px-0 md:text-left"
