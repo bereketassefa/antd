@@ -60,7 +60,9 @@ export default function NewsCard({
   const [setComments] = useState([]);
 
   const [showText, setShowText] = useState(false);
-
+  const headers = {
+    'x-auth-token': `${import.meta.env.VITE_TOKEN_TIMELINE}`
+  }
   const handleCommentClick = () => {
     setShowComments(!showComments);
   };
@@ -135,49 +137,7 @@ export default function NewsCard({
   }, [id]);
 
 
-// const es = useMemo(() => {
-//   return new EventSource(
-//     `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
-//   );
-// }, [id]);
 
-
-
-// useEffect(() => {
-//   let es; // Declare the EventSource variable
-//   let retryCount = 0; // Keep track of reconnection attempts
-//   const maxRetries = 5; // Set a limit for reconnection attempts
-
-//   const connect = () => {
-//       es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
-
-//       es.onmessage = (event) => {
-//           const updatedPost = JSON.parse(event.data);
-//           if (updatedPost.id === id) {
-//               setLikeCount(updatedPost.like);
-//           }
-//       };
-
-//       es.onerror = (errorEvent) => {
-//           if (es.readyState === EventSource.CLOSED) {
-//               console.error("SSE connection closed by server or a network error occurred.");
-//               if (retryCount < maxRetries) {
-//                   console.log(`Reconnecting... Attempt ${retryCount + 1} of ${maxRetries}`);
-//                   setTimeout(connect, 50000); // Try to reconnect after 5 seconds
-//                   retryCount++;
-//               } else {
-//                   console.error("Max retries reached. Stopping reconnection attempts.");
-//               }
-//           }
-//       };
-//   };
-
-//   connect(); // Initialize the connection
-
-//   return () => {
-//       es.close(); // Close the EventSource connection when the component unmounts
-//   };
-// }, [id]);
 
   const handleLike = async (e) => {
     e.preventDefault();
@@ -188,7 +148,7 @@ export default function NewsCard({
       cookies?.user?.Uid
     }/${id}`;
     try {
-      const response = await fetch(url, { method: "POST" });
+      const response = await fetch(url, { method: "POST", headers:headers});
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -209,7 +169,7 @@ export default function NewsCard({
       const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${
         cookies?.user?.Uid
       }`;
-      const response = await fetch(url, { method: "GET" });
+      const response = await fetch(url, { method: "GET", headers:headers });
 
       if (!response.ok) {
         throw new Error("Request failed");
@@ -239,8 +199,9 @@ export default function NewsCard({
   // Make an API call to fetch comments for the given post ID
   async function fetchComments() {
     try {
+      
       const url = `${import.meta.env.VITE_COUNT_COMMENTS}/${id}`;
-      const response = await axios.post(url);
+      const response = await axios.post(url,{},{headers:headers});
       setCommentsCounts(response?.data); // use response.data instead of response.json()
     } catch (error) {
       // console.error("Failed to fetch comments:", error);
@@ -299,7 +260,7 @@ export default function NewsCard({
   const fetchUsersWhoLikedPost = async () => {
     try {
       const response = await axios.post(
-        `https://timeline.qa.addissystems.et/Like/${id}`
+        `https://timeline.qa.addissystems.et/Like/${id}`,{}, {headers:headers}
       );
       const data = await response.data;
       setWhoLikedPost(data?.users);
@@ -397,7 +358,7 @@ export default function NewsCard({
         parent_comment_id: null,
         user_id: cookies?.user?.Uid.toString(),
         text: commentText,
-      });
+      },{headers:headers});
 
       if (response.status !== 200 && response.status !== 201) {
         throw new Error("Failed to post comment");
@@ -544,7 +505,7 @@ export default function NewsCard({
             />
             <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
               {comments.postCount === undefined
-                ? "Loading..."
+                ? ""
                 : comments.postCount === "0"
                 ? ""
                 : `${comments.postCount}  `}

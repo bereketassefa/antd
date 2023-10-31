@@ -46,9 +46,9 @@ export default function Card({ android, apple, id, type, title, data }) {
                 ) : type === "relationReq" ? (
                   <RequestCard
                     Uid={items?.account?.Uid}
-                    id={items.account?._id}
+                    id={items?.account?._id}
                     connectionsid={items?.connections?.id}
-                    img={items.img}
+                    img={items?.profilePicture}
                     companyName={items?.account?.party}
                   />
                 ) : type === "relationRecom" ? (

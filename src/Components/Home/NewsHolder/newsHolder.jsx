@@ -16,12 +16,16 @@ export default function NewsHolder() {
 useEffect(() => {
     forceUpdate({});
 }, [timeline]);
+const headers = {
+  'x-auth-token': `${import.meta.env.VITE_TOKEN_TIMELINE}`
+}
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
         const url = `${import.meta.env.VITE_WITH_OUT_SSE_GET_TIMELINE}`;
-        const response = await axios.get(url);
+        const response = await axios.get(url, {headers: headers});
+
         const data = response.data;
 
         setTimeline(data);
@@ -38,13 +42,15 @@ useEffect(() => {
     
 
   useEffect(() => {
+    
     const eventSource = new EventSource(`${import.meta.env.VITE_GET_ALL_POST_V2}`);
     
     eventSource.onmessage = (event) => {
       try {
         const newData = JSON.parse(event.data);
-        setTimeline((prevData) => [newData, ...prevData]);
-        console.log(newData);
+        console.log("Received data:", newData);
+        setTimeline([newData]);
+        // console.log(newData);
       } catch (err) {
         console.error('Error parsing SSE data:', err);
       }
@@ -116,7 +122,7 @@ return (
             profilePic={item?.account?.profilePicture}
             timestamp={item?.time}
             id={item?.id}
-            like={item?.like}
+            like={item?.likeResult}
             companyName={item?.account?.party}
             account_id={item?.account?._id}
             Uid ={item?.uid}

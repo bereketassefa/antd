@@ -9,12 +9,14 @@ export default function Post(props) {
   // console.log(window.location.pathname.split('/')[3])
    const id =window.location.pathname.split('/')[3]
 
-console.log(id)
+// console.log(id)
 
      // You can call your fetchMoreTimeliness function here,
      // or update the state directly if the new data is provided
     
- 
+     const headers = {
+      'x-auth-token': `${import.meta.env.VITE_TOKEN_TIMELINE}`
+    }
 
 // console.log(id)
   const { displayError } = useContext(ErrorContext);
@@ -27,11 +29,11 @@ console.log(id)
     try {
       setLoading(true);
       const Url = `${import.meta.env.VITE_GET_MY_DATA}/${id}`;
-      const response = await axios.get(Url);
+      const response = await axios.get(Url ,{ headers:headers});
   
       if (response.status === 200) {
         setTimeline(response?.data);
-       console.log(response.data)
+      //  console.log(response.data)
       }
     } catch (error) {
       console.warn('Failed to fetch');
