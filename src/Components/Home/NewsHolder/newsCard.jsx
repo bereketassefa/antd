@@ -29,7 +29,11 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { BiMessage } from "react-icons/bi";
 import { PiShareFill } from "react-icons/pi";
 import { Image } from "antd";
+
 import { Link } from "react-router-dom";
+import { BiSolidLike } from "react-icons/bi";
+import LikeCard from "../../../Components/Home/NewsPost/LikeCard";
+import { LikePosts } from "../../../data";
 export default function NewsCard({
   account_id,
   myKey,
@@ -43,6 +47,7 @@ export default function NewsCard({
   Uid,
 }) {
   const { showToast } = useToast();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const downloadCardRef = useRef(null);
   const [showComments, setShowComments] = useState(false);
   const [cookies] = useCookies(["user"]);
@@ -379,6 +384,15 @@ export default function NewsCard({
     }
   };
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const text =
     "In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design";
 
@@ -582,10 +596,10 @@ export default function NewsCard({
           onClick={() => setShowLikeInfo(false)}
         >
           <div
-            className="bg-white p-4 rounded  sm:w-3/4 md:w-1/2 lg:w-1/2  flex flex-col overflow-y-auto "
+            className="bg-white p-4 rounded   flex  flex-col overflow-y-auto "
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center mb-4 ">
+            {/* <div className="flex items-center mb-4 ">
               <img
                 src={logoAddis}
                 alt="Company Logo"
@@ -615,6 +629,31 @@ export default function NewsCard({
                   </span>
                 </div>
               ))}
+            </div> */}
+            <div className=" w-[400px] flex flex-col gap-2 ">
+              <div className="flex gap-3  items-center">
+                <FontAwesomeIcon
+                  icon={faThumbsUp}
+                  className="text-secondary text-xl"
+                />
+                <div className="flex justify-center items-center">
+                  {" "}
+                  <p className="font-bold ">Likes</p>
+                  {/* <p className="text-[14px]">(1212)</p> */}
+                </div>
+              </div>
+              <hr className="border-[1px] border-gray-200" />
+              <div className="mt-3 flex flex-col gap-8  ">
+                {LikePosts?.map((Like) => (
+                  <LikeCard
+                    // key={key.key}
+                    companyName={Like.companyName}
+                    date={Like.date}
+                    image={Like.image}
+                    icon={Like.icon}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
