@@ -13,7 +13,7 @@ export default function Details() {
 
     const {id} =useParams()
   const onClick = (e) => {
-    console.log('click ', e);
+    // console.log('click ', e);
     setCurrent(e.key);
   };
   const items = [

@@ -24,7 +24,9 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
   const showWarningModal = () => {
     setWarningVisible(true);
   };
-
+  const headers = {
+    "x-auth-token": `${import.meta.env.VITE_TOKEN_TIMELINE}`,
+  };
   const closeWarningModal = () => {
     setWarningVisible(false);
   };
@@ -66,20 +68,20 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
       formData.append("image", file.originFileObj);
     });
     for (let [key, value] of formData.entries()) {
-      console.log(key, value);
+      // console.log(key, value);
     }
 
     try {
       const url = `${import.meta.env.VITE_POST_NEWS}`;
-      console.log("Sending request to:", formData, url);
-      const response = await axios.post(url, formData);
+      // console.log('Sending request to:',formData ,url);
+      const response = await axios.post(url, formData, { headers: headers });
       console.log("Response received:", response);
       if (response.statusCode === 400) {
         message.error("File size should not exceed 5 MB");
       }
       if (response.status === 200) {
         message.success("Upload successful");
-        console.log("Data inserted successfully");
+        // console.log("Data inserted successfully");
         handleClose();
       } else {
         console.error("Unexpected response status:", response.status);

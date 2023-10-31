@@ -22,24 +22,10 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
   const [showDeleteOption, setShowDeleteOption] = useState(false);
   const [refreshComments, setRefreshComments] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const headers = {
+    'x-auth-token': `${import.meta.env.VITE_TOKEN_TIMELINE}`
+  }
   const [totalComments, setTotalComments] = useState(0);
-
-  const fetchComments = async () => {
-    try {
-      const url = `${import.meta.env.VITE_GET_COMMENT}/${postid}`;
-      const response = await axios.get(url);
-      const data = response.data;
-      if (Array.isArray(data) && data.length > 0) {
-        setComments(data);
-        setTotalComments(data.length); // Set the total number of comments
-      } else {
-        console.warn("Received empty or invalid comment data");
-      }
-    } catch (error) {
-      console.error("Failed to fetch comments:", error);
-    }
-  };
-
   useEffect(() => {
     // Check the theme from local storage when the component mounts
     const theme = localStorage.getItem('theme');
@@ -50,7 +36,7 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
   
     try {
       const url = `${import.meta.env.VITE_COMMENT}`;
-      const response = await axios.post(url, {
+      const response = await axios.post(url,headers, {
         post_id: postid,
         parent_comment_id: null,
         user_id: cookies?.user?.Uid.toString(),
@@ -114,7 +100,7 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
   const fetchComments = async () => {
     try {
       const url = `${import.meta.env.VITE_GET_COMMENT}/${postid}`;
-      const response = await axios.get(url);
+      const response = await axios.get(url,{headers:headers});
       const data = response.data;
       // console.log(data)
       if (Array.isArray(data) && data.length > 0) {

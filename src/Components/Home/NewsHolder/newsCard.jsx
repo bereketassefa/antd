@@ -44,7 +44,6 @@ export default function NewsCard({
 }) {
   const { showToast } = useToast();
   const downloadCardRef = useRef(null);
-
   const [showComments, setShowComments] = useState(false);
   const [cookies] = useCookies(["user"]);
   const [Liked, setLiked] = useState(false);
@@ -61,7 +60,9 @@ export default function NewsCard({
   const [setComments] = useState([]);
 
   const [showText, setShowText] = useState(false);
-
+  const headers = {
+    "x-auth-token": `${import.meta.env.VITE_TOKEN_TIMELINE}`,
+  };
   const handleCommentClick = () => {
     setShowComments(!showComments);
   };
@@ -90,95 +91,47 @@ export default function NewsCard({
   useEffect(() => {
     setLikeCount(like);
   }, []);
-  
+
   // Shared EventSource reference
-//   const fetchLikeCount = async () => {
-//     try {
-//       const response = await fetch(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
-//       const data = await response.json();
-//       setLikeCount(data.like);
-//     } catch (error) {
-//       console.error("Error fetching like count:", error);
-//     }
-// };
+  //   const fetchLikeCount = async () => {
+  //     try {
+  //       const response = await fetch(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+  //       const data = await response.json();
+  //       setLikeCount(data.like);
+  //     } catch (error) {
+  //       console.error("Error fetching like count:", error);
+  //     }
+  // };
 
-  useEffect(() => {
-    let es; // Declare the EventSource variable
+  // useEffect(() => {
+  //   let es; // Declare the EventSource variable
 
-    const connect = () => {
-      es = new EventSource(
-        `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
-      );
+  //   const connect = () => {
+  //     es = new EventSource(
+  //       `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
+  //     );
 
-    es.onmessage = (event) => {
-      const updatedPost = JSON.parse(event.data);
-      if (updatedPost.id === id) {
-        setLikeCount(updatedPost.like);
-        // console.log(updatedPost.like);
-        // checkIfLiked(); // Check if the current user has liked the updated post
-      }
-    };
-    es.onerror = (errorEvent) => {
-      // Handle the error here
-      // For example, you can try to reconnect after a delay or show a message to the user
-      setTimeout(connect, 5000);  // Try to reconnect after 5 seconds
-    };
-    
-  
-    
-  };
+  //     es.onmessage = (event) => {
+  //       const updatedPost = JSON.parse(event.data);
+  //       if (updatedPost.id === id) {
+  //         setLikeCount(updatedPost.like);
+  //         // console.log(updatedPost.like);
+  //         // checkIfLiked(); // Check if the current user has liked the updated post
+  //       }
+  //     };
+  //     es.onerror = (errorEvent) => {
+  //       // Handle the error here
+  //       // For example, you can try to reconnect after a delay or show a message to the user
+  //       setTimeout(connect, 5000); // Try to reconnect after 5 seconds
+  //     };
+  //   };
 
-    connect(); // Initialize the connection
+  //   connect(); // Initialize the connection
 
-    return () => {
-      es.close(); // Close the EventSource connection when the component unmounts
-    };
-  }, [id]);
-
-
-// const es = useMemo(() => {
-//   return new EventSource(
-//     `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
-//   );
-// }, [id]);
-
-
-
-// useEffect(() => {
-//   let es; // Declare the EventSource variable
-//   let retryCount = 0; // Keep track of reconnection attempts
-//   const maxRetries = 5; // Set a limit for reconnection attempts
-
-//   const connect = () => {
-//       es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
-
-//       es.onmessage = (event) => {
-//           const updatedPost = JSON.parse(event.data);
-//           if (updatedPost.id === id) {
-//               setLikeCount(updatedPost.like);
-//           }
-//       };
-
-//       es.onerror = (errorEvent) => {
-//           if (es.readyState === EventSource.CLOSED) {
-//               console.error("SSE connection closed by server or a network error occurred.");
-//               if (retryCount < maxRetries) {
-//                   console.log(`Reconnecting... Attempt ${retryCount + 1} of ${maxRetries}`);
-//                   setTimeout(connect, 50000); // Try to reconnect after 5 seconds
-//                   retryCount++;
-//               } else {
-//                   console.error("Max retries reached. Stopping reconnection attempts.");
-//               }
-//           }
-//       };
-//   };
-
-//   connect(); // Initialize the connection
-
-//   return () => {
-//       es.close(); // Close the EventSource connection when the component unmounts
-//   };
-// }, [id]);
+  //   return () => {
+  //     es.close(); // Close the EventSource connection when the component unmounts
+  //   };
+  // }, [id]);
 
   const handleLike = async (e) => {
     e.preventDefault();
@@ -189,7 +142,7 @@ export default function NewsCard({
       cookies?.user?.Uid
     }/${id}`;
     try {
-      const response = await fetch(url, { method: "POST" });
+      const response = await fetch(url, { method: "POST", headers: headers });
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -210,7 +163,7 @@ export default function NewsCard({
       const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${
         cookies?.user?.Uid
       }`;
-      const response = await fetch(url, { method: "GET" });
+      const response = await fetch(url, { method: "GET", headers: headers });
 
       if (!response.ok) {
         throw new Error("Request failed");
@@ -241,7 +194,7 @@ export default function NewsCard({
   async function fetchComments() {
     try {
       const url = `${import.meta.env.VITE_COUNT_COMMENTS}/${id}`;
-      const response = await axios.post(url);
+      const response = await axios.post(url, {}, { headers: headers });
       setCommentsCounts(response?.data); // use response.data instead of response.json()
     } catch (error) {
       // console.error("Failed to fetch comments:", error);
@@ -300,7 +253,9 @@ export default function NewsCard({
   const fetchUsersWhoLikedPost = async () => {
     try {
       const response = await axios.post(
-        `https://timeline.qa.addissystems.et/Like/${id}`
+        `https://timeline.qa.addissystems.et/Like/${id}`,
+        {},
+        { headers: headers }
       );
       const data = await response.data;
       setWhoLikedPost(data?.users);
@@ -393,12 +348,16 @@ export default function NewsCard({
 
     try {
       const url = `${import.meta.env.VITE_COMMENT}`;
-      const response = await axios.post(url, {
-        post_id: id,
-        parent_comment_id: null,
-        user_id: cookies?.user?.Uid.toString(),
-        text: commentText,
-      });
+      const response = await axios.post(
+        url,
+        {
+          post_id: id,
+          parent_comment_id: null,
+          user_id: cookies?.user?.Uid.toString(),
+          text: commentText,
+        },
+        { headers: headers }
+      );
 
       if (response.status !== 200 && response.status !== 201) {
         throw new Error("Failed to post comment");
@@ -438,7 +397,7 @@ export default function NewsCard({
                 <>
                   <FontAwesomeIcon icon={faDownload} className="gap-2" /> Save
                   <div className="flex items-center gap-1 ml-3">
-                    <RiDeleteBinLine /> Delete
+                    {/* <RiDeleteBinLine /> Delete */}
                   </div>
                 </>
               )}
@@ -512,18 +471,21 @@ export default function NewsCard({
 
         <div className="overflow-hidden flex bg-center  ">
           <Image.PreviewGroup>
-            <Image
-              width={600}
-              height={430}
-              src={image}
-              className="object-cover"
-            />
+            {image.map((image, index) => (
+              <Image
+                key={index}
+                width={600}
+                height={430}
+                src={image}
+                className="object-cover"
+              />
+            ))}
           </Image.PreviewGroup>
         </div>
       </div>
 
       <div className="w-full flex flex-col z-10  ">
-        <ul className="flex  justify-center mx-4 md:justify-start items-center p-4 gap-14 md:gap-20 ">
+        <ul className="flex   mx-4 md:justify-start items-center p-4 gap-14 md:gap-20 ">
           <li className="flex items-center gap-2">
             <FontAwesomeIcon
               onClick={(e) => handleLike(e)}
@@ -550,14 +512,14 @@ export default function NewsCard({
             />
             <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
               {comments.postCount === undefined
-                ? "Loading..."
+                ? ""
                 : comments.postCount === "0"
                 ? ""
                 : `${comments.postCount}  `}
             </span>
           </li>
           <li className="flex items-center gap-2 cursor-pointer">
-            <PiShareFill className="dark:text-white text-largeP md:text-2xl text-[#929292]" />
+            {/* <PiShareFill className="dark:text-white text-largeP md:text-2xl text-[#929292]" /> */}
           </li>
         </ul>
         <hr className=" border-[0.7px]" />

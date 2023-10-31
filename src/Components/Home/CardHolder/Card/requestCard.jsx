@@ -25,6 +25,8 @@ function truncateCompanyName(name) {
 }
   
 
+
+
 const handleAcceptClick = async () => {
   setLoadingAccept(true);
   try {
@@ -43,14 +45,13 @@ const handleAcceptClick = async () => {
   }
 };
 
-
 const handleCancelClick = async () => {
   setLoadingCancel(true);
   try {
     
     // Artificially delay the operation by 6 seconds
    
-    // console.log(connectionsid)
+    // 
     const url = `${import.meta.env.VITE_CANCEL_THE_RELATION}/${connectionsid}`;
     const response = await fetch(url, { method: "DELETE" });
     if (!response.ok) throw new Error("Request failed");
@@ -114,7 +115,7 @@ const handleCancelClick = async () => {
     <div className="flex items-center justify-between" key={id}>
       <div className="flex gap-2 items-center">
       <Avatar onClick={hadleNavigateProfile} img={profilePic?profilePic:alternativeProfile} />
-        <h1 className="text-smallP md:text-midP lg:text-largeP">{truncateCompanyName(companyName)?.toLowerCase()}</h1>
+        <h1 onClick={hadleNavigateProfile} className="text-smallP md:text-midP lg:text-largeP">{truncateCompanyName(companyName)?.toLowerCase()}</h1>
       </div>
 
       <div className="flex gap-2">

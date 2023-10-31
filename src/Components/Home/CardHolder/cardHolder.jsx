@@ -43,7 +43,7 @@ export default function CardHolder() {
     try {
       setLoading(true);
       const url = `${import.meta.env.VITE_GET_PRODUCT_BY_UID}/${
-        cookies?.user.Uid
+        cookies?.user?.Uid
       }`;
       axios.get(url).then((res) => {
         setProduct(res.data);
