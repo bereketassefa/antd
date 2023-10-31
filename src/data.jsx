@@ -2,6 +2,7 @@ import bt from "./assets/image/BT.png";
 import BRhotel from "./assets/image/BRUHWAY-HOTEL.png";
 import bbm from "./assets/image/bbm-.png";
 import star from "./assets/image/STARTIMES.png";
+import { BsPersonPlusFill } from "react-icons/bs";
 import iphone13 from "./assets/image/cute-girl-pic (12).jpg";
 import iphone12 from "./assets/image/iphone2.webp";
 import iphone14 from "./assets/image/10-20AK6_phoneFront.png";
@@ -451,6 +452,32 @@ export const Rplay = [
     // replays: "Africa Hote",
     // time: "34",
     comment: "Africa HoteAfrica HoteAfrica HoteAfrica Hote",
+  },
+];
+export const LikePosts = [
+  {
+    key: 1,
+    companyName: "Addis Pay",
+    image: bt,
+
+    date: "Joined August 2022",
+    icon: <BsPersonPlusFill />,
+  },
+  {
+    key: 1,
+    companyName: "Addis Pay",
+    image: bt,
+
+    date: "Joined August 2022",
+    icon: <BsPersonPlusFill />,
+  },
+  {
+    key: 1,
+    companyName: "Addis Pay",
+    image: bt,
+
+    date: "Joined August 2022",
+    icon: <BsPersonPlusFill />,
   },
 ];
 export const Recomend = [

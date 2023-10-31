@@ -14,7 +14,6 @@ import { TiArrowForwardOutline } from "react-icons/ti";
 import PropTypes from "prop-types";
 import { Message, Rplay } from "../../../../data";
 import RplayCard from "../../CardHolder/RplayCard";
-
 export default function CommentCard({
   account_id,
   id,
@@ -278,9 +277,9 @@ export default function CommentCard({
       <div className={showReplays ? "flex flex-col gap-2 ml-[45px]" : "hidden"}>
         {Rplay?.map((Rplay) => (
           <RplayCard
-            key={Rplay.comment_id}
-            companyName={Rplay.companyName}
-            time={Rplay.time}
+            key={Rplay?.comment_id}
+            companyName={Rplay?.companyName}
+            time={Rplay?.time}
             comment={Rplay.comment}
             replays={Rplay.replays}
             Uid={Rplay.Uid}

@@ -25,8 +25,8 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     setWarningVisible(true);
   };
   const headers = {
-    'x-auth-token': `${import.meta.env.VITE_TOKEN_TIMELINE}`
-  }
+    "x-auth-token": `${import.meta.env.VITE_TOKEN_TIMELINE}`,
+  };
   const closeWarningModal = () => {
     setWarningVisible(false);
   };
@@ -74,11 +74,11 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     try {
       const url = `${import.meta.env.VITE_POST_NEWS}`;
       // console.log('Sending request to:',formData ,url);
-      const response = await axios.post(url, formData ,{headers:headers});
-      console.log('Response received:', response);
-        if(response.statusCode === 400) {
-          message.error("File size should not exceed 5 MB")
-        }
+      const response = await axios.post(url, formData, { headers: headers });
+      console.log("Response received:", response);
+      if (response.statusCode === 400) {
+        message.error("File size should not exceed 5 MB");
+      }
       if (response.status === 200) {
         message.success("Upload successful");
         // console.log("Data inserted successfully");
@@ -89,7 +89,6 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     } catch (error) {
       console.error("Error inserting data:", error);
       message.error("Error: Failed to post .");
-      
     } finally {
       setIsLoading(false);
     }
@@ -168,7 +167,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
               placeholder="Write something here ..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-            />          
+            />
           </div>
 
           <div className=" w-full p-2 pb-0">

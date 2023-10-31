@@ -29,7 +29,11 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { BiMessage } from "react-icons/bi";
 import { PiShareFill } from "react-icons/pi";
 import { Image } from "antd";
+
 import { Link } from "react-router-dom";
+import { BiSolidLike } from "react-icons/bi";
+import LikeCard from "../../../Components/Home/NewsPost/LikeCard";
+import { LikePosts } from "../../../data";
 export default function NewsCard({
   account_id,
   myKey,
@@ -43,8 +47,8 @@ export default function NewsCard({
   Uid,
 }) {
   const { showToast } = useToast();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const downloadCardRef = useRef(null);
-
   const [showComments, setShowComments] = useState(false);
   const [cookies] = useCookies(["user"]);
   const [Liked, setLiked] = useState(false);
@@ -62,8 +66,8 @@ export default function NewsCard({
 
   const [showText, setShowText] = useState(false);
   const headers = {
-    'x-auth-token': `${import.meta.env.VITE_TOKEN_TIMELINE}`
-  }
+    "x-auth-token": `${import.meta.env.VITE_TOKEN_TIMELINE}`,
+  };
   const handleCommentClick = () => {
     setShowComments(!showComments);
   };
@@ -92,17 +96,17 @@ export default function NewsCard({
   useEffect(() => {
     setLikeCount(like);
   }, []);
-  
+
   // Shared EventSource reference
-//   const fetchLikeCount = async () => {
-//     try {
-//       const response = await fetch(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
-//       const data = await response.json();
-//       setLikeCount(data.like);
-//     } catch (error) {
-//       console.error("Error fetching like count:", error);
-//     }
-// };
+  //   const fetchLikeCount = async () => {
+  //     try {
+  //       const response = await fetch(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+  //       const data = await response.json();
+  //       setLikeCount(data.like);
+  //     } catch (error) {
+  //       console.error("Error fetching like count:", error);
+  //     }
+  // };
 
   // useEffect(() => {
   //   let es; // Declare the EventSource variable
@@ -137,8 +141,27 @@ export default function NewsCard({
   //   };
   // }, [id]);
 
+  //     es.onmessage = (event) => {
+  //       const updatedPost = JSON.parse(event.data);
+  //       if (updatedPost.id === id) {
+  //         setLikeCount(updatedPost.like);
+  //         // console.log(updatedPost.like);
+  //         // checkIfLiked(); // Check if the current user has liked the updated post
+  //       }
+  //     };
+  //     es.onerror = (errorEvent) => {
+  //       // Handle the error here
+  //       // For example, you can try to reconnect after a delay or show a message to the user
+  //       setTimeout(connect, 5000); // Try to reconnect after 5 seconds
+  //     };
+  //   };
 
+  //   connect(); // Initialize the connection
 
+  //   return () => {
+  //     es.close(); // Close the EventSource connection when the component unmounts
+  //   };
+  // }, [id]);
 
   const handleLike = async (e) => {
     e.preventDefault();
@@ -149,7 +172,7 @@ export default function NewsCard({
       cookies?.user?.Uid
     }/${id}`;
     try {
-      const response = await fetch(url, { method: "POST", headers:headers});
+      const response = await fetch(url, { method: "POST", headers: headers });
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -170,7 +193,7 @@ export default function NewsCard({
       const url = `${import.meta.env.VITE_CHECK_LIKED_UNLIKED}/${
         cookies?.user?.Uid
       }`;
-      const response = await fetch(url, { method: "GET", headers:headers });
+      const response = await fetch(url, { method: "GET", headers: headers });
 
       if (!response.ok) {
         throw new Error("Request failed");
@@ -200,9 +223,8 @@ export default function NewsCard({
   // Make an API call to fetch comments for the given post ID
   async function fetchComments() {
     try {
-      
       const url = `${import.meta.env.VITE_COUNT_COMMENTS}/${id}`;
-      const response = await axios.post(url,{},{headers:headers});
+      const response = await axios.post(url, {}, { headers: headers });
       setCommentsCounts(response?.data); // use response.data instead of response.json()
     } catch (error) {
       // console.error("Failed to fetch comments:", error);
@@ -261,7 +283,9 @@ export default function NewsCard({
   const fetchUsersWhoLikedPost = async () => {
     try {
       const response = await axios.post(
-        `https://timeline.qa.addissystems.et/Like/${id}`,{}, {headers:headers}
+        `https://timeline.qa.addissystems.et/Like/${id}`,
+        {},
+        { headers: headers }
       );
       const data = await response.data;
       setWhoLikedPost(data?.users);
@@ -354,12 +378,16 @@ export default function NewsCard({
 
     try {
       const url = `${import.meta.env.VITE_COMMENT}`;
-      const response = await axios.post(url, {
-        post_id: id,
-        parent_comment_id: null,
-        user_id: cookies?.user?.Uid.toString(),
-        text: commentText,
-      },{headers:headers});
+      const response = await axios.post(
+        url,
+        {
+          post_id: id,
+          parent_comment_id: null,
+          user_id: cookies?.user?.Uid.toString(),
+          text: commentText,
+        },
+        { headers: headers }
+      );
 
       if (response.status !== 200 && response.status !== 201) {
         throw new Error("Failed to post comment");
@@ -381,6 +409,15 @@ export default function NewsCard({
     }
   };
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const text =
     "In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design";
 
@@ -399,7 +436,7 @@ export default function NewsCard({
                 <>
                   <FontAwesomeIcon icon={faDownload} className="gap-2" /> Save
                   <div className="flex items-center gap-1 ml-3">
-                    <RiDeleteBinLine /> Delete
+                    {/* <RiDeleteBinLine /> Delete */}
                   </div>
                 </>
               )}
@@ -473,18 +510,21 @@ export default function NewsCard({
 
         <div className="overflow-hidden flex bg-center  ">
           <Image.PreviewGroup>
-            <Image
-              width={600}
-              height={430}
-              src={image}
-              className="object-cover"
-            />
+            {image.map((image, index) => (
+              <Image
+                key={index}
+                width={600}
+                height={380}
+                src={image}
+                className="object-cover"
+              />
+            ))}
           </Image.PreviewGroup>
         </div>
       </div>
 
       <div className="w-full flex flex-col z-10  ">
-        <ul className="flex  justify-center mx-4 md:justify-start items-center p-4 gap-14 md:gap-20 ">
+        <ul className="flex   mx-4 md:justify-start items-center p-4 gap-14 md:gap-20 ">
           <li className="flex items-center gap-2">
             <FontAwesomeIcon
               onClick={(e) => handleLike(e)}
@@ -581,10 +621,10 @@ export default function NewsCard({
           onClick={() => setShowLikeInfo(false)}
         >
           <div
-            className="bg-white p-4 rounded  sm:w-3/4 md:w-1/2 lg:w-1/2  flex flex-col overflow-y-auto "
+            className="bg-white p-4 rounded   flex  flex-col overflow-y-auto "
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center mb-4 ">
+            {/* <div className="flex items-center mb-4 ">
               <img
                 src={logoAddis}
                 alt="Company Logo"
@@ -614,6 +654,31 @@ export default function NewsCard({
                   </span>
                 </div>
               ))}
+            </div> */}
+            <div className=" w-[400px] flex flex-col gap-2 ">
+              <div className="flex gap-3  items-center">
+                <FontAwesomeIcon
+                  icon={faThumbsUp}
+                  className="text-secondary text-xl"
+                />
+                <div className="flex justify-center items-center">
+                  {" "}
+                  <p className="font-bold ">Likes</p>
+                  {/* <p className="text-[14px]">(1212)</p> */}
+                </div>
+              </div>
+              <hr className="border-[1px] border-gray-200" />
+              <div className="mt-3 flex flex-col gap-8  ">
+                {LikePosts?.map((Like) => (
+                  <LikeCard
+                    // key={key.key}
+                    companyName={Like.companyName}
+                    date={Like.date}
+                    image={Like.image}
+                    icon={Like.icon}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
