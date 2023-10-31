@@ -1,47 +1,46 @@
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { faUserPlus,faCheck  } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useState } from 'react'
 import Avatar from '../../../../Fields/Avatar/avatar'
+import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
 export default function RecommendedRelationCard({id , img, companyName,Uid}) {
   function truncateCompanyName(name) {
     return name && name.length > 8 ? name.substring(0, 8) + '...' : name;
   }
   const navigate= useNavigate()
     const [cookies, setCookie, removeCookie] = useCookies(['User']);
-    
+    const [loadingSend, setLoadingSend] = useState(false);
+    const [isSuccessful, setIsSuccessful] = useState(false);
+    const OwnerUid= cookies?.user?.Uid
     const handleRequestConectionlClick = async () => {
+      setLoadingSend(true)
       try {
-        // Get node2 value from cookies
-        const node2Value = cookies?.user.Uid
-    
-        // Specify your node1 value (assuming it's a variable in this scope)
-      
-        const url = `${import.meta.env.VITE_SEND_CONNECTION}`
-        // Make the POST request
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
+        const url = `${import.meta.env.VITE_SEND_CONNECION}`;
+        const res = await axios.post(
+          url,
+          {
+            node1: OwnerUid.toString(),
+            node2: id.toString(),
           },
-          body: JSON.stringify({ node1: id, node2: node2Value })
-        });
-    
-        console.log(response);
-    
-        if (!response.ok) {
-          throw new Error("Request failed");
-        }
-    
-        const data = await response.json();
-        console.log(data);
-    
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+       setLoadingSend(false)
+       setIsSuccessful(true);
       } catch (error) {
-        console.error(error);
+        setLoadingSend(false)
+        console.error(
+          "Error in handleRequestConectionlClick:",
+          error.response ? error.response.data : error.message
+        );
       }
     };
-    
   const hadleNavigateProfile = async(e)=>{
     e.preventDefault();
     navigate(`/feed/profile/${Uid}`)
@@ -63,18 +62,23 @@ export default function RecommendedRelationCard({id , img, companyName,Uid}) {
     }
     return (
         <div className='flex items-center justify-between' key={id}>
-            <div className='flex gap-2 items-center'>
-            {
-                    img 
-                    ? <Avatar  img={img} />
-                    : <div onClick={hadleNavigateProfile} className="avatar-placeholder">{getFirstLetter(companyName)}</div>
-                }
-                <h1 className='text-smallP md:text-midP lg:text-largeP' >{truncateCompanyName(companyName)}</h1>
+            <div onClick={hadleNavigateProfile} className='flex gap-2 items-center'>
+        <Avatar onClick={hadleNavigateProfile}  img={img? img : alternativeProfile } />
+         
+                
+                <h1 className='text-smallP md:text-midP lg:text-largeP' >{truncateCompanyName(companyName).toLowerCase()}</h1>
             </div>
 
             <div className='flex gap-2'>
-                <FontAwesomeIcon   onClick={handleRequestConectionlClick} icon={faUserPlus} className='text-largeP md:text-smallT text-secondary' />                    
-            </div>
-        </div>
-    )
+        {loadingSend ? (
+         <div className="spinner"></div>
+         // Display a loading text (or spinner) while loading
+        ) : isSuccessful ? (
+          <FontAwesomeIcon icon={faCheck} className='text-largeP md:text-smallT text-success' />  // Display check icon on success
+        ) : (
+          <FontAwesomeIcon onClick={handleRequestConectionlClick} icon={faUserPlus} className='text-largeP md:text-smallT text-secondary' />
+        )}
+      </div>
+    </div>
+  );
 }

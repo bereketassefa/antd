@@ -66,7 +66,7 @@ export default function RelationCard({id , img, companyName}) {
                     <Avatar onClick={hadleNavigateProfile} img={profilePic?profilePic:alternativeProfile} />
     
                 
-                <h1 onClick={hadleNavigateProfile} className='dark:text-white text-smallP md:text-midP lg:text-largeP' >{truncateCompanyName(companyName)}</h1>
+                <h1 onClick={hadleNavigateProfile} className='dark:text-white text-smallP md:text-midP lg:text-largeP' >{truncateCompanyName(companyName).toLowerCase()}</h1>
             </div>
         </div>
     )

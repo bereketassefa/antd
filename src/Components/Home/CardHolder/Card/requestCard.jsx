@@ -3,7 +3,6 @@ import Avatar from '../../../../Fields/Avatar/avatar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faClose } from '@fortawesome/free-solid-svg-icons'
 import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
-import './scss/avatar.scss'
 import { useCookies } from 'react-cookie'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,8 +14,10 @@ const [profilePic, setProfilePic]= useState(null)
 const [loadingAccept, setLoadingAccept] = useState(false); // Add loading state for Accept
 const [loadingCancel, setLoadingCancel] = useState(false);
 function truncateCompanyName(name) {
-  return name && name.length > 8 ? name.substring(0, 8) + '...' : name;
+  if (!name) return "";
+  return name.length > 8 ? name.substring(0, 8) + '...' : name;
 }
+
   
   function getFirstLetter(str) {
     if (!str) return "";
@@ -113,7 +114,7 @@ const handleCancelClick = async () => {
     <div className="flex items-center justify-between" key={id}>
       <div className="flex gap-2 items-center">
       <Avatar onClick={hadleNavigateProfile} img={profilePic?profilePic:alternativeProfile} />
-        <h1 className="text-smallP md:text-midP lg:text-largeP">{truncateCompanyName(companyName)}</h1>
+        <h1 className="text-smallP md:text-midP lg:text-largeP">{truncateCompanyName(companyName)?.toLowerCase()}</h1>
       </div>
 
       <div className="flex gap-2">

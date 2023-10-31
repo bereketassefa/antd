@@ -11,6 +11,12 @@ export default function NewsHolder() {
   const elementRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [, forceUpdate] = useState();
+
+useEffect(() => {
+    forceUpdate({});
+}, [timeline]);
+
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -104,9 +110,8 @@ return (
         timeline.map((item, index) => (
           
           <NewsCard
-            key={index}
+            key={index?.id}
             image={item?.images}
-           
             newContent={item?.description}
             profilePic={item?.account?.profilePicture}
             timestamp={item?.time}
@@ -121,6 +126,4 @@ return (
     )}
     <div ref={elementRef}></div>
   </div>
-);
-
-}
+);}

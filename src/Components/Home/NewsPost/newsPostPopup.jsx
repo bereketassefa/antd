@@ -74,7 +74,9 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
       console.log("Sending request to:", formData, url);
       const response = await axios.post(url, formData);
       console.log("Response received:", response);
-
+      if (response.statusCode === 400) {
+        message.error("File size should not exceed 5 MB");
+      }
       if (response.status === 200) {
         message.success("Upload successful");
         console.log("Data inserted successfully");
@@ -84,7 +86,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
       }
     } catch (error) {
       console.error("Error inserting data:", error);
-      message.error("Error: Failed to post.");
+      message.error("Error: Failed to post .");
     } finally {
       setIsLoading(false);
     }

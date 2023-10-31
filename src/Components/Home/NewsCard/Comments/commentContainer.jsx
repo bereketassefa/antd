@@ -6,19 +6,19 @@ import profilePlaceHolder from "../../../../assets/logo/newCompanyPlaceHolder.pn
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faSmile } from "@fortawesome/free-regular-svg-icons";
 import CommentCard from "./commentCard";
-import { IoIosSend } from "react-icons/io";
-import { BsEmojiSmile } from "react-icons/bs";
+import { IoMdSend } from "react-icons/io";
 import alternativeProfile from "../../../../assets/image/alternativeProfile.png";
 import alternativeProfileblack from "../../../../assets/image/alternativeProfile-black.png";
 import { message } from "antd";
 import { identifier } from "stylis";
 export default function CommentContainer({ account_id, postid, isOpen }) {
+  const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [visibleComments, setVisibleComments] = useState(2);
   const [showSeeMore, setShowSeeMore] = useState(true);
   const [cookies] = useCookies(["User"]);
   const [profilePic, setProfilePic] = useState(null);
-  const [comments, setComments] = useState([]);
+
   const [showDeleteOption, setShowDeleteOption] = useState(false);
   const [refreshComments, setRefreshComments] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -42,12 +42,12 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
 
   useEffect(() => {
     // Check the theme from local storage when the component mounts
-    const theme = localStorage.getItem("theme");
-    setIsDarkTheme(theme === "dark");
+    const theme = localStorage.getItem('theme');
+    setIsDarkTheme(theme === 'dark');
   }, []);
   const handleCommentSubmit = async () => {
     if (!commentText.trim()) return; // Ensure comment is not just whitespace
-
+  
     try {
       const url = `${import.meta.env.VITE_COMMENT}`;
       const response = await axios.post(url, {
@@ -56,38 +56,33 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
         user_id: cookies?.user?.Uid.toString(),
         text: commentText,
       });
-
+  
       if (response.status !== 200 && response.status !== 201) {
         throw new Error("Failed to post comment");
       }
-
+  
       // Access the new comment object correctly
       const newComment = response.data.comment;
-
+  
       // Add the new comment to the existing comments
-      setComments((prevComments) => [
-        ...(Array.isArray(prevComments) ? prevComments : []),
-        newComment,
-      ]);
-
+      setComments((prevComments) => [...(Array.isArray(prevComments) ? prevComments : []), newComment]);
+  
       // Clear the text input
       setCommentText("");
     } catch (error) {
       console.error("Failed to post comment:", error);
     }
   };
-
+  
   const handleCommentDelete = (deletedCommentId) => {
     setComments((prevComments) => {
       // Ensure prevComments is an array, then filter out the deleted comment
-      return Array.isArray(prevComments)
-        ? prevComments.filter(
-            (comment) => comment.comment_id !== deletedCommentId
-          )
+      return Array.isArray(prevComments) 
+        ? prevComments.filter(comment => comment.comment_id !== deletedCommentId)
         : [];
     });
   };
-
+  
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleCommentSubmit();
@@ -113,34 +108,36 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
   //   fetchComments();
   // }, [id, refreshComments]);
 
-  // Remove the following useEffect block that sets up the SSE connection
-  useEffect(() => {
-    console.log(postid);
-    const fetchComments = async () => {
-      try {
-        const url = `${import.meta.env.VITE_GET_COMMENT}/${postid}`;
-        const response = await axios.get(url);
-        const data = response.data;
-        // console.log(data)
-        if (Array.isArray(data) && data.length > 0) {
-          setComments(data);
-        } else {
-          console.warn("Received empty or invalid comment data");
-        }
-      } catch (error) {
-        console.error("Failed to fetch comments:", error);
+ // Remove the following useEffect block that sets up the SSE connection
+ useEffect(() => {
+  // console.log(postid);
+  const fetchComments = async () => {
+    try {
+      const url = `${import.meta.env.VITE_GET_COMMENT}/${postid}`;
+      const response = await axios.get(url);
+      const data = response.data;
+      // console.log(data)
+      if (Array.isArray(data) && data.length > 0) {
+        setComments(data);
+      } else {
+        console.warn("Received empty or invalid comment data");
       }
-    };
-    fetchComments();
-    // Set up an interval to fetch comments every 5000ms (5 seconds)
-    //  const intervalId = setInterval(fetchComments, 5000);
+    } catch (error) {
+      console.error("Failed to fetch comments:", error);
+    }
+  };
+  fetchComments();
+ // Set up an interval to fetch comments every 5000ms (5 seconds)
+//  const intervalId = setInterval(fetchComments, 5000);
 
-    // Cleanup: clear the interval when the component is unmounted
-    //  return () => {
-    //    clearInterval(intervalId);
-    //  };
-  }, [postid, refreshComments]);
+ // Cleanup: clear the interval when the component is unmounted
+//  return () => {
+//    clearInterval(intervalId);
+//  };
+}, [postid, refreshComments]);
 
+
+  
   // console.log(id)
   useEffect(() => {
     const fetchAccountDataForProfile = async () => {
@@ -148,7 +145,7 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
         const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${
           cookies?.user?._id
         }`;
-
+      
         await axios
           .get(url)
           .then((res) => {
@@ -159,7 +156,7 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
           })
           .catch((error) => {
             console.warn(error);
-            // message.error('Cant find user account')
+            message.error('Cant find user account')
           });
       } catch (error) {
         console.error("Error fetching profile picture:", error);
@@ -172,23 +169,53 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
   const toggleDeleteOption = () => {
     setShowDeleteOption(!showDeleteOption);
   };
-  // useEffect(() => {
-  //   // console.log("Updated comments state:", comments);
-  // }, [comments]);
-
+  useEffect(() => {
+    // console.log("Updated comments state:", comments);
+  }, [comments]);
+  
   return (
     <div
       className={
         isOpen
           ? "w-full flex flex-col gap-4 p-2 "
-          : "w-full sm:flex flex-col gap-4 p-2 hidden"
+          : "w-full flex flex-col gap-4 p-2 hidden"
       }
     >
-      <div className="dark:bg-[#1b1f23] flex p-2  text-[#555555] font-bold">
-        Comments
+      {/* <div className="flex gap-2 items-center">
+       <div className="flex items-center justify-center w-fit">
+          <Avatar img={isDarkTheme ? alternativeProfileblack : (profilePic ? profilePic : alternativeProfile)} />
+        </div>
+
+        <div className="flex flex-col items-end justify-center border border-primary w-full h-[45px] rounded-[5px]">
+          <input
+            type="text"
+            className="dark:bg-[#1b1f23]  flex w-full h-full outline-none pl-3 text-smallP md:text-midP lg:text-largeP"
+            placeholder="Add a comment ..."
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+          <div className="absolute pr-4 flex gap-2">
+            <IoMdSend onClick={handleCommentSubmit} className="text-largeP md:smallT text-primary" />
+            <FontAwesomeIcon
+              icon={faSmile}
+              className="text-largeP md:smallT text-primary"
+            />
+            <FontAwesomeIcon
+              icon={faImage}
+              className="text-largeP md:smallT text-primary"
+            />
+          </div>
+        </div>
+      </div> */}
+
+      <div className="w-full flex items-center justify-start">
+        <div className="dark:bg-[#1b1f23] flex p-2">
+         Comments
+        </div>
       </div>
 
-      <div className=" w-full flex flex-col gap-4   ">
+      <div className=" w-full flex flex-col gap-4">
         {Array.isArray(comments) && comments.length > 0
           ? comments.slice(0, visibleComments).map((item) => {
               return (

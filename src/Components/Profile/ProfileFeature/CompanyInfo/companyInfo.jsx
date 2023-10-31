@@ -155,7 +155,7 @@ export default function CompanyInfo({ data, Uid }) {
     // Set intervals
     intervalId1 = setInterval(fetchData, 1000); // Runs every 1 second
     intervalId2 = setInterval(fetchAccountDataForProfile, 1000); // Runs every 1 second
-    intervalId3 = setInterval(handlecheckWhoisSender, 1000); // Runs every 1 second
+    intervalId3 = setInterval(handlecheckWhoisSender, 3000); // Runs every 1 second
 
     // Clear intervals when component unmounts
     return () => {

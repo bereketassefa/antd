@@ -30,6 +30,7 @@ export default function Profile({dataConnection}) {
     fetchData();
   },  [cookies?.user?._id, id]);
 
+  const check= id===cookies?.user._id
 
   return (
     <div className=' w-full flex flex-col gap-2 mt-2'>
@@ -37,7 +38,12 @@ export default function Profile({dataConnection}) {
              {/* profile feature display */}
              <ProfileFeature  data={data} />
              {/* profile completeness view  */}
-             {/* <ProfileProgress /> */}
+             {
+  check && <ProfileProgress />
+} 
+
+
+           
         </div>
 
 

@@ -64,7 +64,7 @@ export default function CardHolder() {
       }`;
       const res = await axios.get(url);
       if (res.data.status === 404) {
-        console.log("No data found for the provided Uid");
+        // console.log("No data found for the provided Uid");
       }
 
       setDataSource(res.data);
@@ -93,7 +93,7 @@ export default function CardHolder() {
     axios
       .post(import.meta.env.VITE_GET_RECOMMENDATION, { Uid: cookies?.user.Uid })
       .then((res) => {
-        // console.log("Recommendation response:", res.data); // Log the response
+      //  console.log("Recommendation response:", res.data); // Log the response
         // Check if the data is an array, if not, set it to an empty array
         const recommendationData = Array.isArray(res.data) ? res.data : [];
         setRecommendation(recommendationData);

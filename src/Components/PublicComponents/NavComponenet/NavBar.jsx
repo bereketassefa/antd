@@ -101,7 +101,7 @@ const NavBar = () => {
       });
 
       setSearchResults(formattedResults);
-      console.log(formattedResults);
+      // console.log(formattedResults);
       setShowResults(true);
     } catch (error) {
       console.error("Error performing search", error);

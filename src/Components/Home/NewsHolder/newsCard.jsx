@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { message } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import alternativeProfileblack from "../../../assets/image/alternativeProfile-black.png";
@@ -90,17 +90,17 @@ export default function NewsCard({
   useEffect(() => {
     setLikeCount(like);
   }, []);
-
-  let es; // Shared EventSource reference
-  //   const fetchLikeCount = async () => {
-  //     try {
-  //       const response = await fetch(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
-  //       const data = await response.json();
-  //       setLikeCount(data.like);
-  //     } catch (error) {
-  //       console.error("Error fetching like count:", error);
-  //     }
-  // };
+  
+  // Shared EventSource reference
+//   const fetchLikeCount = async () => {
+//     try {
+//       const response = await fetch(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+//       const data = await response.json();
+//       setLikeCount(data.like);
+//     } catch (error) {
+//       console.error("Error fetching like count:", error);
+//     }
+// };
 
   useEffect(() => {
     let es; // Declare the EventSource variable
@@ -110,15 +110,23 @@ export default function NewsCard({
         `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
       );
 
-      es.onmessage = (event) => {
-        const updatedPost = JSON.parse(event.data);
-        if (updatedPost.id === id) {
-          setLikeCount(updatedPost.like);
-          console.log(updatedPost.like);
-          checkIfLiked(); // Check if the current user has liked the updated post
-        }
-      };
+    es.onmessage = (event) => {
+      const updatedPost = JSON.parse(event.data);
+      if (updatedPost.id === id) {
+        setLikeCount(updatedPost.like);
+        // console.log(updatedPost.like);
+        // checkIfLiked(); // Check if the current user has liked the updated post
+      }
     };
+    es.onerror = (errorEvent) => {
+      // Handle the error here
+      // For example, you can try to reconnect after a delay or show a message to the user
+      setTimeout(connect, 5000);  // Try to reconnect after 5 seconds
+    };
+    
+  
+    
+  };
 
     connect(); // Initialize the connection
 
@@ -127,12 +135,56 @@ export default function NewsCard({
     };
   }, [id]);
 
+
+// const es = useMemo(() => {
+//   return new EventSource(
+//     `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
+//   );
+// }, [id]);
+
+
+
+// useEffect(() => {
+//   let es; // Declare the EventSource variable
+//   let retryCount = 0; // Keep track of reconnection attempts
+//   const maxRetries = 5; // Set a limit for reconnection attempts
+
+//   const connect = () => {
+//       es = new EventSource(`${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`);
+
+//       es.onmessage = (event) => {
+//           const updatedPost = JSON.parse(event.data);
+//           if (updatedPost.id === id) {
+//               setLikeCount(updatedPost.like);
+//           }
+//       };
+
+//       es.onerror = (errorEvent) => {
+//           if (es.readyState === EventSource.CLOSED) {
+//               console.error("SSE connection closed by server or a network error occurred.");
+//               if (retryCount < maxRetries) {
+//                   console.log(`Reconnecting... Attempt ${retryCount + 1} of ${maxRetries}`);
+//                   setTimeout(connect, 50000); // Try to reconnect after 5 seconds
+//                   retryCount++;
+//               } else {
+//                   console.error("Max retries reached. Stopping reconnection attempts.");
+//               }
+//           }
+//       };
+//   };
+
+//   connect(); // Initialize the connection
+
+//   return () => {
+//       es.close(); // Close the EventSource connection when the component unmounts
+//   };
+// }, [id]);
+
   const handleLike = async (e) => {
     e.preventDefault();
     setLiked((prevLiked) => !prevLiked); // Optimistic update
     // Close the SSE connection temporarily
     // if (es) es.close();
-
     const url = `${import.meta.env.VITE_LIKE_DISLIKE_POST}/${
       cookies?.user?.Uid
     }/${id}`;
@@ -342,7 +394,7 @@ export default function NewsCard({
     try {
       const url = `${import.meta.env.VITE_COMMENT}`;
       const response = await axios.post(url, {
-        post_id: postid,
+        post_id: id,
         parent_comment_id: null,
         user_id: cookies?.user?.Uid.toString(),
         text: commentText,
