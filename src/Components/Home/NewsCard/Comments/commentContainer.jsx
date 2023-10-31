@@ -25,6 +25,7 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
   const headers = {
     'x-auth-token': `${import.meta.env.VITE_TOKEN_TIMELINE}`
   }
+  const [totalComments, setTotalComments] = useState(0);
   useEffect(() => {
     // Check the theme from local storage when the component mounts
     const theme = localStorage.getItem('theme');
@@ -216,6 +217,7 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
                   postId={item?.post_id}
                   account_id={account_id}
                   user_id={item?.user_id}
+                  nuberofcomment={12}
                   comment_id={item?.comment_id}
                   onCommentDelete={handleCommentDelete}
                 />
@@ -223,10 +225,10 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
             })
           : null}
 
-        {showSeeMore && (
-          <div className=" w-full flex items-center justify-center">
+        {totalComments > 0 ? (
+          <div className="w-full flex items-center justify-center">
             <p
-              className=" text-primary font-bold text-smallP md:text-midP lg:text-largeP underline underline-offset-2 cursor-pointer"
+              className="font-bold text-smallP md:text-midP lg:text-largeP cursor-pointer"
               onClick={() => {
                 setVisibleComments(visibleComments + 2);
                 if (visibleComments + 2 >= comments.length) {
@@ -234,10 +236,15 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
                 }
               }}
             >
-              See More
+              <div className="flex flex-col justify-center items-center">
+                <p className="text-[#555555] font-bold">Load comments</p>
+                <p className="text-[12px] text-[#A7A7A7]">
+                  {totalComments} more comment{totalComments > 1 ? "s" : ""}
+                </p>
+              </div>
             </p>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

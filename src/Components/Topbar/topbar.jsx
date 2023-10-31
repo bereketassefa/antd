@@ -32,7 +32,7 @@ export default function Topbar() {
   function truncateCompanyName(name) {
     return name && name.length > 8 ? name.substring(0, 8) + "..." : name;
   }
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState(null);
   const [dropDown, setDropDown] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
@@ -48,8 +48,8 @@ export default function Topbar() {
 
   useEffect(() => {
     // Check the theme from local storage when the component mounts
-    const theme = localStorage.getItem('theme');
-    setIsDarkTheme(theme === 'dark');
+    const theme = localStorage.getItem("theme");
+    setIsDarkTheme(theme === "dark");
   }, []);
   const handleHover = () => {
     setDropDown(!dropDown);
@@ -63,11 +63,11 @@ export default function Topbar() {
 
   const handleLogOut = () => {
     // Removing the cookie
-    removeCookie("user", { path: '/' });
+    removeCookie("user", { path: "/" });
 
     // Redirect to login
-    navigate('/login');
-};
+    navigate("/login");
+  };
 
   const [showResults, setShowResults] = useState(false);
   useEffect(() => {
@@ -216,8 +216,8 @@ export default function Topbar() {
 
   return (
     <>
-      <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg   bg-slate-50  border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center  sticky top-0 h-[95px] ">
-        <div className="flex  w-full md:max-w-[1120px] items-center justify-between ">
+      <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg   bg-slate-50  border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center  sticky top-0 md:h-[95px] ">
+        <div className="flex  w-full md:max-w-[1120px] items-center justify-center  md:gap-16 gap-10">
           <div className="w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center">
             {isScreenMdOrLarger ? (
               <Link to={"/feed"}>
@@ -226,7 +226,11 @@ export default function Topbar() {
               </Link>
             ) : (
               <Link to={"/feed"}>
-                <img src={logos} alt="" className="w-full" />
+                <img
+                  src={logos}
+                  alt=""
+                  className="w-full h-[30px] sm:h-[30px] "
+                />
               </Link>
             )}
           </div>
@@ -234,15 +238,15 @@ export default function Topbar() {
             <div className="flex gap-[20px] items-center ">
               {/* search bar */}
               <div className=" relative">
-                <div className="dark:bg-[#38434f] flex gap-2 border-[2px]   py-[10px] px-4 items-center rounded-md md:w-[500px]  max-w-[500px] ">
+                <div className="dark:bg-[#38434f] flex justify-center gap-2 sm:border-[2px] py-[5px] bg-slate-200  sm:bg-white sm:py-[10px] sm:px-6 items-center rounded-md sm:max-w-[400px] md:w-[500px]   lg:max-w-[550px] ">
                   <div>
                     <FontAwesomeIcon
                       icon={faSearch}
-                      className="text-xl text-gray-500 "
+                      className="text-xl  text-gray-500 flex justify-start "
                     />
                   </div>
                   <input
-                    className="dark:bg-[#38434f] dark:text-white outline-none text-[17px] w-full bg-transparent"
+                    className="dark:bg-[#38434f] dark:text-white outline-none   text-[12px] sm:text-[17px] w-full bg-transparent"
                     type="text"
                     value={searchInput}
                     placeholder="What are you looking for?"
@@ -252,7 +256,7 @@ export default function Topbar() {
                   />
                 </div>
                 {searchInput && (
-                  <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
+                  <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1  translate-y-[1px]">
                     <div className="flex flex-col  ">
                       {searchResults.map((result, index) => (
                         <SearchCard
@@ -273,7 +277,7 @@ export default function Topbar() {
                       to={`/feed/SearchNav/${searchInput}`}
                       onClick={() => setSearchInput("")}
                     >
-                      <p className="dark:text-white flex justify-center text-primary ">
+                      <p className="dark:text-white text-[12px] flex justify-center text-primary ">
                         See All results
                       </p>
                     </Link>
@@ -287,7 +291,7 @@ export default function Topbar() {
                 <Badge count={notificationCount}>
                   <FontAwesomeIcon
                     icon={faBell}
-                    className="dark:text-white text-[24px]"
+                    className="dark:text-white text-[23px]"
                   />
                 </Badge>
               </Link>
