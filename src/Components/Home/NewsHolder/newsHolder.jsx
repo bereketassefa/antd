@@ -31,7 +31,7 @@ const headers = {
         setTimeline(data);
       //  console.log(data);
       } catch (err) {
-        console.log('Error fetching initial data' , err)
+        console.warn('Error fetching initial data' )
       } finally {
         setLoading(false);
       }
@@ -48,7 +48,7 @@ const headers = {
     eventSource.onmessage = (event) => {
       try {
         const newData = JSON.parse(event.data);
-        console.log("Received data:", newData);
+        // console.log("Received data:", newData);
         setTimeline([newData]);
         // console.log(newData);
       } catch (err) {
