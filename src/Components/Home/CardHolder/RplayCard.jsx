@@ -2,14 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import Avatar from "../../../Fields/Avatar/avatar";
 import { useCookies } from "react-cookie";
-import { IoIosSend } from "react-icons/io";
-import { BsEmojiSmile } from "react-icons/bs";
+import { format } from "timeago.js";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import Verifide from "../../../assets/logo/verified.png";
 import { TiArrowForwardOutline } from "react-icons/ti";
-const RplayCard = ({ companyName, time, comment, replays, img }) => {
+const RplayCard = ({comment_id,post_id, companyName, time, comment, replays, img }) => {
   const deleteCardRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [commentText, setCommentText] = useState("");
@@ -17,17 +16,29 @@ const RplayCard = ({ companyName, time, comment, replays, img }) => {
   const [showDeleteOption, setShowDeleteOption] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   const [cookies] = useCookies("user");
+  const [comments,setComments] =useState([])
+
+  const headers = {
+    "x-auth-token": `${import.meta.env.VITE_TOKEN_TIMELINE}`,
+  };
   const handleCommentSubmit = async () => {
     if (!commentText.trim()) return; // Ensure comment is not just whitespace
 
     try {
-      const url = `${import.meta.env.VITE_COMMENT}`;
-      const response = await axios.post(url, {
-        post_id: postid,
-        parent_comment_id: null,
-        user_id: cookies?.user?.Uid.toString(),
-        text: commentText,
-      });
+      const url = `${import.meta.env.VITE_COMMENT_Replies}`;
+      const response = await axios.post(
+        url,
+        {
+          post_id: post_id,
+          replies_comments_id: comment_id,
+          user_id: cookies?.user?.Uid.toString(),
+          text: commentText,
+        },
+        {
+          headers: headers,
+        }
+      );
+      
 
       if (response.status !== 200 && response.status !== 201) {
         throw new Error("Failed to post comment");
@@ -57,7 +68,7 @@ const RplayCard = ({ companyName, time, comment, replays, img }) => {
   const maxLength = 40;
 
   let truncatedComment = comment;
-  if (!showFullComment && comment.length > maxLength) {
+  if (!showFullComment && comment?.length > maxLength) {
     truncatedComment = comment.slice(0, maxLength) + "...";
   }
   const handleSeeMoreClick = () => {
@@ -103,7 +114,7 @@ const RplayCard = ({ companyName, time, comment, replays, img }) => {
                 className="relative flex justify-center items-center gap-2"
               >
                 <span className="dark:text-white text-smallP md:text-midP text-gray-500 ">
-                  {time} 7:30 am
+                  {format(time)}
                 </span>
                 <BsThreeDots
                   // onClick={toggleDeleteOption}
@@ -134,45 +145,20 @@ const RplayCard = ({ companyName, time, comment, replays, img }) => {
               } `}
             >
               <p>{comment}</p>
-              {truncatedComment}
-              {!showFullComment && (
+              
+              {/* {!showFullComment && (
                 <span
                   className="text-gray-500 cursor-pointer"
                   onClick={handleSeeMoreClick}
                 >
                   ...see more
                 </span>
-              )}
+              )} */}
             </p>
           </div>
         </div>
       </div>
-      <p className="flex justify-center  text-sm text-[#A7A7A7]">
-        Load more replies <span>( 11 more )</span>
-      </p>
-      <div className="flex items-center justify-between border-2 rounded-lg w-full h-[50px] gap bg-[#fffdfd] p-3">
-        <div>
-          <BsEmojiSmile className="text-xl md:smallT text-[#555555]" />
-        </div>
-        <input
-          type="text"
-          className="dark:bg-[#1b1f23]  m-3 flex w-full h-full outline-none pl-4 text-smallP md:text-midP lg:text-largeP"
-          placeholder="Add a comment ..."
-          value={commentText}
-          onChange={(e) => setCommentText(e.target.value)}
-          onKeyPress={handleKeyPress}
-        />
-
-        <div className="flex gap-4    items-center h-full">
-          <div className="w-2 h-8 flex justify-end border-l-2 border-gray-400"></div>
-
-          <p>Send</p>
-          <IoIosSend
-            onClick={handleCommentSubmit}
-            className="text-xl md:smallT text-[#555555]"
-          />
-        </div>
-      </div>
+  
     </div>
   );
 };
