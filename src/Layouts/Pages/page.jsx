@@ -13,45 +13,8 @@ export default function PageLayout() {
   }
   return (
     <div className="w-full p-0 m-0 flex flex-col max-w-full items-center sticky top-[75px]">
-      {/* {showAddProductModal && (
-        <div
-          className="flex justify-center items-center absolute bg-[rgba(0,0,0,0.5)] w-full z-50 min-h-screen"
-          style={{
-            left: -400,
-            top: 0,
-            bottom: 0,
-            width: "100vw",
-            height: "100%",
-          }}
-        >
-          <div
-            className="fixed flex h-screen w-full justify-center items-center"
-            style={{
-              left: 0,
-              top: 20,
-              bottom: 0,
-              width: "100vw",
-              height: "100%",
-            }}
-          >
-            <div className="w-[700px] bg-white rounded-md p-6">
-              <div
-                className="flex justify-end right-0"
-                onClick={() => setShowAddProductModal(false)}
-              >
-                <FontAwesomeIcon
-                  icon={faClose}
-                  className="text-white bg-[#B71A62] text-2xl"
-                />
-              </div>
-
-              <AddItemsPage handleModal={handleShowModal} />
-            </div>
-          </div>
-        </div>
-      )} */}
       <div className="w-full flex items-start justify-start md:px-2 md:gap-2 mt-2 ">
-        <Navigator handleAddProduct={handleShowModal} />
+        <Navigator />
         <div className="min-h-screen w-full mt-4">
           <Outlet />
         </div>

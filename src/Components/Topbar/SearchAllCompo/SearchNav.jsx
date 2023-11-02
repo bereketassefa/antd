@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BsWalletFill } from "react-icons/bs";
 import { AiFillHome, AiFillCloud } from "react-icons/ai";
 function SearchNav() {
@@ -10,8 +10,6 @@ function SearchNav() {
   };
 
   const { name } = useParams();
-
-
 
   return (
     <div className="dark:bg-[#1b1f23]  sticky top-[105px] rounded-md     mt-4h-[60px] md:h-[200px] text-[#000000] bg-white drop-shadow-xl  ">
@@ -28,7 +26,7 @@ function SearchNav() {
             cursor-pointer w-full flex items-center gap-3 "
           >
             <BsWalletFill
-              className={`${
+              className={`text-primary ${
                 activeLink === "All" ? "text-[#3222C6]" : "text-gray-700"
               }text-2xl`}
             />
@@ -38,7 +36,9 @@ function SearchNav() {
         <Link
           to={`/feed/SearchNav/${name}/party`}
           className={`${
-            activeLink === "Company" ? "text-[#3222C6] " : "text-gray-700 dark:text-white"
+            activeLink === "Company"
+              ? "text-[#3222C6] "
+              : "text-gray-700 dark:text-white"
           } `}
           onClick={() => handleLinkClick("Company")}
         >
@@ -48,7 +48,7 @@ function SearchNav() {
             }cursor-pointer w-full flex items-center gap-3 `}
           >
             <AiFillHome
-              className={` ${
+              className={`text-primary  ${
                 activeLink === "Company" ? "text-[#3222C6]" : "text-gray-700"
               }text-2xl`}
             />
@@ -70,7 +70,7 @@ function SearchNav() {
             }cursor-pointer w-full flex items-center gap-3`}
           >
             <AiFillCloud
-              className={`${
+              className={`text-primary ${
                 activeLink === "Demand Product"
                   ? "text-[#3222C6]"
                   : "text-gray-700"

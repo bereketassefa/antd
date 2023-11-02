@@ -87,9 +87,7 @@ export default function Navigator({ handleAddProduct }) {
                 >
                   <GoHome
                     style={{ fontSize: 16 + myFontSize }}
-                    className={` ${
-                      activeLink === "Home" ? "text-[#3222C6]" : "text-gray-700"
-                    }  text-2xl `}
+                    className="text-primary text-2xl "
                   />
                   <p
                     style={{ fontSize: 16 + myFontSize }}
@@ -199,12 +197,8 @@ export default function Navigator({ handleAddProduct }) {
                 <li className="dark:text-white cursor-pointer w-full flex items-center gap-2">
                   <PiUsersThreeBold
                     style={{ fontSize: 16 + myFontSize }}
-                    className={` ${
-                      activeLink === "Relations"
-                        ? "text-[#3222C6]"
-                        : "text-gray-600"
-                    } text-largeP md:text-smallT dark:text-white `}
-                  />{" "}
+                    className="text-primary  text-largeP md:text-smallT dark:text-white "
+                  />
                   <p
                     style={{ fontSize: 16 + myFontSize }}
                     className={`${
@@ -230,11 +224,7 @@ export default function Navigator({ handleAddProduct }) {
                 >
                   <AiOutlineMessage
                     style={{ fontSize: 16 + myFontSize }}
-                    className={` ${
-                      activeLink === "Message"
-                        ? "text-[#3222C6]"
-                        : "text-gray-600"
-                    } text-[28px]  dark:text-white`}
+                    className="text-[28px]  dark:text-white text-primary "
                   />{" "}
                   <p
                     style={{ fontSize: 16 + myFontSize }}
@@ -256,11 +246,7 @@ export default function Navigator({ handleAddProduct }) {
                 <li className="dark:text-white cursor-pointer w-full flex items-center gap-2">
                   <IoAddCircleOutline
                     style={{ fontSize: 16 + myFontSize }}
-                    className={` ${
-                      activeLink === "Add Product"
-                        ? "text-[#3222C6]"
-                        : "text-gray-600"
-                    }   text-xl md:text-2xl lg:text-2xl dark:text-white `}
+                    className="text-primary    text-xl md:text-2xl lg:text-2xl dark:text-white "
                   />
                   <p
                     style={{ fontSize: 16 + myFontSize }}
@@ -324,13 +310,9 @@ export default function Navigator({ handleAddProduct }) {
                 >
                   <AiOutlineSetting
                     style={{ fontSize: 16 + myFontSize }}
-                    className={` ${
-                      activeLink === "Setting"
-                        ? "text-[#3222C6]"
-                        : "text-gray-600"
-                    } text-largeP md:text-smallT dark:text-white `}
+                    className="text-primary  text-largeP md:text-smallT dark:text-white "
                     icon={faGear}
-                  />{" "}
+                  />
                   <p
                     style={{ fontSize: 16 + myFontSize }}
                     className={`  ${
@@ -348,7 +330,7 @@ export default function Navigator({ handleAddProduct }) {
         </div>
       </div>
       <div className=" hidden md:block max-w-[300px] border-2 h-[350px] mt-8   drop-shadow-xl  bg-white">
-        <p className="ml-4 mt-3">Ads</p>
+        <p className="ml-4 mt-3 text-primary ">Ads</p>
 
         <div className=" py-1 px-4 ">
           <Slider dots={false} {...settings}>

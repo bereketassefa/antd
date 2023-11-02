@@ -178,7 +178,7 @@ const NavBar = () => {
         </div>
 
         <div className="relative mr-4 sm:mr-0">
-          <div className="dark:bg-[#38434f] flex justify-center gap-2 border-[2px] py-[10px] px-4 items-center rounded-md sm:w-[300px] md:w-[350px]   max-w-[550px]">
+          <div className="dark:bg-[#38434f] flex justify-center gap-2 border-[2px] py-[10px] px-4 items-center rounded-md sm:w-[300px] md:w-[400px]   max-w-[550px]">
             <div>
               <FiSearch className="text-xl text-gray-500" />
             </div>
@@ -193,7 +193,7 @@ const NavBar = () => {
             />
           </div>
           {searchInput && (searchResults.length > 0 || showResults) && (
-            <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1 border-[2px] border-blue-800 translate-y-[1px]">
+            <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1  translate-y-[1px]">
               <div className="flex flex-col">
                 {showResults
                   ? // Render all search results

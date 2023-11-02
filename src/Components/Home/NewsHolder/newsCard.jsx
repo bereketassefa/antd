@@ -630,7 +630,7 @@ export default function NewsCard({
                 </div>
               ))}
             </div> */}
-            <div className=" w-[400px] flex flex-col gap-2 ">
+            <div className=" md:w-[400px] max-w-[400px] flex flex-col gap-2 ">
               <div className="flex gap-3  items-center">
                 <FontAwesomeIcon
                   icon={faThumbsUp}
