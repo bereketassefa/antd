@@ -50,7 +50,7 @@ const Setting = () => {
               } py-2 px-6 flex items-center  gap-2 `}
             >
               <BsFillXDiamondFill
-                className={`${
+                className={` text-primary ${
                   activeLink === "General" ? "dark:text-white" : "text-gray-700"
                 }
                 } h-5 w-5 `}
@@ -72,7 +72,7 @@ const Setting = () => {
               } py-2 px-6 flex items-center  gap-2 `}
             >
               <BsFillPersonFill
-                className={`${
+                className={` text-primary ${
                   activeLink === "Edit Profile"
                     ? "text-[#3222C6]  "
                     : "text-[#555555]"
@@ -96,7 +96,7 @@ const Setting = () => {
               } py-2 px-6 flex items-center  gap-2 `}
             >
               <AiFillSetting
-                className={`${
+                className={` text-primary ${
                   activeLink === "Notification Setting"
                     ? "text-[#3222C6] "
                     : "text-[#555555]"
@@ -118,7 +118,7 @@ const Setting = () => {
               } py-2 px-6 flex items-center  gap-2 `}
             >
               <IoMdHelpCircle
-                className={` ${
+                className={`text-primary  ${
                   activeLink === "Help" ? "text-[#3222C6] " : "text-[#555555]"
                 } h-6 w-6 `}
               />
@@ -138,7 +138,7 @@ const Setting = () => {
               } py-2 px-6 flex items-center  gap-2 `}
             >
               <RiContactsBook2Line
-                className={` ${
+                className={`text-primary  ${
                   activeLink === "Contact"
                     ? "text-[#3222C6] "
                     : "text-[#555555]"
@@ -162,7 +162,7 @@ const Setting = () => {
               } py-2 px-6 flex items-center  gap-2 `}
             >
               <TbShieldLockFilled
-                className={`${
+                className={`text-primary ${
                   activeLink === "Privacy Policy"
                     ? "text-[#3222C6] "
                     : "text-[#555555]"

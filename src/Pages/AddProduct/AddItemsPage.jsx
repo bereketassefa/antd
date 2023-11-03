@@ -22,11 +22,11 @@ function AddItemsPage({ handleModal }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = {};
- if (hsnNo.trim() === "") {
-   validationErrors.hsnNo = "HSN Number is required.";
- } else if (!/^\d+$/.test(hsnNo)) {
-   validationErrors.hsnNo = "HSN Number must be a numeric value.";
- }
+    if (hsnNo.trim() === "") {
+      validationErrors.hsnNo = "HSN Number is required.";
+    } else if (!/^\d+$/.test(hsnNo)) {
+      validationErrors.hsnNo = "HSN Number must be a numeric value.";
+    }
     if (productName.trim() === "") {
       validationErrors.productName = "Product Name is required.";
     }
@@ -93,7 +93,7 @@ function AddItemsPage({ handleModal }) {
     const file = e.target.files[0];
     setProductImage(file);
   };
-  
+
   return (
     <div className="dark:bg-[#1b1f23]      ">
       <p className="dark:text-white text-2xl font-bold">Add Product</p>
@@ -192,6 +192,11 @@ function AddItemsPage({ handleModal }) {
               className="bg-[#FFF] outline-none bg-transparent w-full"
               value={feature}
               onChange={(e) => setFeature(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleAddFeature();
+                }
+              }}
               required
             />
 
@@ -266,10 +271,11 @@ function AddItemsPage({ handleModal }) {
           </div>
         </div>
 
-        <div className="flex justify-end items-center ">
+        <div className="flex justify-end items-center">
           <button
             type="submit"
             className="w-[101px] rounded-lg h-[40px] text-white text-xl font-bold bg-[#433C83]"
+            onClick={handleSubmit}
           >
             Save
           </button>

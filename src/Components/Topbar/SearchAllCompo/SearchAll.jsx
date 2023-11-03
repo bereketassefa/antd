@@ -65,14 +65,13 @@ function SearchAll() {
         query: decodedName,
       });
       setData(response.data);
-       console.log(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error performing search", error.message);
     }
   };
 
   useEffect(() => {
-    
     if (decodedName) {
       // Add a check before calling handleSearch
       handleSearch();
@@ -145,81 +144,83 @@ function SearchAll() {
                   : "max-h-[400px] overflow-hidden"
               }`}
             >
-           {data
-      .filter((item) => item.entityType === "product")
-      .map((item, index) => {
-        if (!showAllProducts && index >= 5) {
-          return null;
-        }
-                return (
-                  <div className="border-[1px]   h-[400px]   ">
-                    <div className="flex justify-end ">
-                      <p className=" text-[#3222C6]  font-bold">Price</p>
-                      <div
-                        dir="rtl"
-                        className="bg-[#3222C6] w-36 h-10 flex gap-2 items-center rounded-bl-[40px] text-white"
-                      >
-                        <p>ETB</p>
-                        <BiMoney className="text-xl text-white" />
-                        {item.ProductPrice}
+              {data
+                .filter((item) => item.entityType === "product")
+                .map((item, index) => {
+                  if (!showAllProducts && index >= 5) {
+                    return null;
+                  }
+                  return (
+                    <div className="border-[1px]   h-[400px]   ">
+                      <div className="flex justify-end ">
+                        <p className=" text-[#3222C6]  font-bold">Price</p>
+                        <div
+                          dir="rtl"
+                          className="bg-[#3222C6] w-36 h-10 flex gap-2 items-center rounded-bl-[40px] text-white"
+                        >
+                          <p>ETB</p>
+                          <BiMoney className="text-xl text-white" />
+                          {item.ProductPrice}
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex flex-col md:flex-row justify-between md:items-center px-4 ">
-                      <div className="justify-start flex flex-col lg:justify-center gap-2  mt-4">
-                        <div className="flex  justify-start items-center">
-                          <Avatar
-                            onClick={hadleNavigateProfile}
-                            img={
-                              item.profilePicture
-                                ? item.profilePicture
-                                : alternativeProfile
-                            }
-                          />
-                          <div className="">
-                            <div className="flex">
-                              <h2
-                                onClick={hadleNavigateProfile}
-                                className="dark:text-white font-bold text-[#000]  text-[13px]   mx-1"
-                              >
-                                {item?.companyName?.toLowerCase()}
-                              </h2>
-                              <di>
-                                <img src={verifiyPNG} alt="" />
-                              </di>
+                      <div className="flex flex-col md:flex-row justify-between md:items-center px-4 ">
+                        <div className="justify-start flex flex-col lg:justify-center gap-2  mt-4">
+                          <div className="flex  justify-start items-center">
+                            <Avatar
+                              onClick={hadleNavigateProfile}
+                              img={
+                                item.profilePicture
+                                  ? item.profilePicture
+                                  : alternativeProfile
+                              }
+                            />
+                            <div className="">
+                              <div className="flex">
+                                <h2
+                                  onClick={hadleNavigateProfile}
+                                  className="dark:text-white font-bold text-[#000]  text-[13px]   mx-1"
+                                >
+                                  {item?.companyName?.toLowerCase()}
+                                </h2>
+                                <di>
+                                  <img src={verifiyPNG} alt="" />
+                                </di>
+                              </div>
+                              <p className="dark:text-white pl-3 flex font-bold ">
+                                {item.productName}
+                              </p>
                             </div>
-                            <p className="dark:text-white pl-3 flex font-bold ">
-                              {item.productName}
+                          </div>
+
+                          <div className="flex justify-between">
+                            <p className="dark:text-white max-w-[670px] md:w-[670px]  ">
+                              {item.productDescription}
                             </p>
+                            <img
+                              // src={idphne}
+                              // alt=""
+                              src={
+                                item.imageUrl ? item.imageUrl : noproductimage
+                              }
+                              className="w-36 h-40 rouded-2 object-cover rounded-lg"
+                            ></img>
                           </div>
                         </div>
-
-                        <div className="flex justify-between">
-                          <p className="dark:text-white max-w-[670px] md:w-[670px]  ">
-                            {item.productDescription}
-                          </p>
-                          <img
-                            // src={idphne}
-                            // alt=""
-                            src={item.imageUrl ? item.imageUrl : noproductimage}
-                            className="w-36 h-40 rouded-2 object-cover rounded-lg"
-                          ></img>
-                        </div>
                       </div>
-                    </div>
-                    <div className="dark:text-white flex flex-col ml-10  ">
-                      <p>Feature </p>
-                      <div className=" flex flex-col md:flex-row gap-1 md:gap-5 mt-4">
-                        <div className="border-2 rounded-md  w-36  h-10 ">
-                          {item.ProductFeature}
-                        </div>
-                        {/* <div className="border-2 rounded-md  w-36   h-10 ">
+                      <div className="dark:text-white flex flex-col ml-10  ">
+                        <p>Feature </p>
+                        <div className=" flex flex-col md:flex-row gap-1 md:gap-5 mt-4">
+                          <div className="border-2 rounded-md  w-36  h-10 ">
+                            {item.ProductFeature}
+                          </div>
+                          {/* <div className="border-2 rounded-md  w-36   h-10 ">
                           128 GB Storage{" "}
                         </div> */}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
             <hr className="border-[1px]" />
             <div className="   flex justify-center items-center">
@@ -243,36 +244,39 @@ function SearchAll() {
                   : "max-h-[200px] overflow-hidden"
               }    `}
             >
-             {data
-              .filter((item) => item.entityType === "party")
-              .map((party, index) => {
-                return (
-                  <SearchCardTwo
-                    key={party.Uid}
-                    title={party.party.businessname}
-                    Uid={party.Uid}
-                    // description={/* Description Here */}
-                    description={party?.branch[0]?.country ? party?.branch[0]?.country : party?.branch[0]?.city }
-                    // image={}
-                   
-                  />
-                );
-              })}
-          </div>
-          <hr className="border-[1px]" />
-          <div className="flex justify-center items-center">
-            <button
-              className="text-[#3222C6]"
-              onClick={() => setShowHiddenContent2(!showHiddenContent2)}
-            >
-              See All Companies
-            </button>
+              {data
+                .filter((item) => item.entityType === "party")
+                .map((party, index) => {
+                  return (
+                    <SearchCardTwo
+                      key={party.Uid}
+                      title={party.party.businessname}
+                      Uid={party.Uid}
+                      // description={/* Description Here */}
+                      description={
+                        party?.branch[0]?.country
+                          ? party?.branch[0]?.country
+                          : party?.branch[0]?.city
+                      }
+                      // image={}
+                    />
+                  );
+                })}
+            </div>
+            <hr className="border-[1px]" />
+            <div className="flex justify-center items-center">
+              <button
+                className="text-[#3222C6]"
+                onClick={() => setShowHiddenContent2(!showHiddenContent2)}
+              >
+                See All Companies
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-);
-            }
+  );
+}
 
 export default SearchAll;

@@ -7,7 +7,8 @@ import { AiFillEye } from "react-icons/ai";
 import Britness from "./Britness";
 import { ThemeContext } from "../../theme/ThemeContext";
 import FontSize from "./FontSize";
-import { useCookies } from 'react-cookie'
+import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 function General() {
   const { myFontSize, increaseFontSize, decreaseFontSize } =
@@ -21,7 +22,7 @@ function General() {
 
   const [changePassDropped, setChangePassDropped] = useState(true);
   const [languageDroped, setLanguageDroped] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(['User']);
+  const [cookies, setCookie, removeCookie] = useCookies(["User"]);
   const [currentPass, setCurrentPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
@@ -30,7 +31,7 @@ function General() {
   const [confirmPassError, setConfirmPassError] = useState("");
   const [invalid, setInvalidPassword] = useState("");
   const [isModalVisible, setModalVisible] = useState(false);
-  const [activesession , setActiveSession] = useState(false);
+  const [activesession, setActiveSession] = useState(false);
 
   // console.log("myNewFontSize:", myNewFontSize);
   console.log("myFontSize:", myFontSize);
@@ -40,45 +41,42 @@ function General() {
   };
   const validateInputs = () => {
     let isValid = true;
-    
-    
+
     if (!currentPass) {
-      setPasswordError('Current password is required.');
+      setPasswordError("Current password is required.");
       isValid = false;
     } else {
-      setPasswordError('');
+      setPasswordError("");
     }
-    
+
     if (!newPass) {
-      setNewPassError('New password is required.');
+      setNewPassError("New password is required.");
       isValid = false;
     } else {
-      setNewPassError('');
+      setNewPassError("");
     }
-    
+
     if (!confirmPass) {
-      setConfirmPassError('Please confirm your new password.');
+      setConfirmPassError("Please confirm your new password.");
       isValid = false;
     } else if (newPass !== confirmPass) {
-      setConfirmPassError('Passwords do not match.');
+      setConfirmPassError("Passwords do not match.");
       isValid = false;
     } else {
-      setConfirmPassError('');
+      setConfirmPassError("");
     }
-  
+
     return isValid;
-  }
-  
+  };
 
   const handleSubmitClick = (event) => {
-    
     event.preventDefault();
     if (validateInputs()) {
       setModalVisible(true);
     }
-  }
+  };
 
-  const handleLogin =async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     // Check if new password and confirm password are the same
@@ -86,34 +84,38 @@ function General() {
       setConfirmPassError("Passwords do not match");
       return;
     }
-  
+
     // Get _id from cookies
-    const _id =cookies.user._id
-    console.log(_id)
-    
+    const _id = cookies.user._id;
+    console.log(_id);
+
     try {
-      const response = await fetch(`http://localhost:8010/change-Password/${_id}`, {
-        method: 'PATCH', // or POST depending on how your backend is set up
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          password: newPass,
-          oldPassword: currentPass
-        })
-      });
-  
+      const response = await fetch(
+        `http://localhost:8010/change-Password/${_id}`,
+        {
+          method: "PATCH", // or POST depending on how your backend is set up
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            password: newPass,
+            oldPassword: currentPass,
+          }),
+        }
+      );
+
       const data = await response.json();
-  
+
       if (data.success) {
         setCurrentPass("");
-      setNewPass("");
-      setConfirmPass("");
-      setModalVisible(false); // Close the modal on success
-    
-        console.log(data)
+        setNewPass("");
+        setConfirmPass("");
+        setModalVisible(false); // Close the modal on success
+
+        console.log(data);
         // Handle success - maybe redirect the user or show a success message
-      }  if (data.success === false) {
+      }
+      if (data.success === false) {
         setConfirmPassError("incorrect old password");
         return;
       }
@@ -128,7 +130,7 @@ function General() {
       newPassError === "" &&
       confirmPassError === ""
     ) {
-       setInvalidPassword("Password is Invalid");
+      setInvalidPassword("Password is Invalid");
     }
   };
   const ConfirmationModal = ({ onClose, onConfirm }) => (
@@ -157,12 +159,20 @@ function General() {
           </div>
           <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-              <button onClick={onConfirm} type="button" className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+              <button
+                onClick={onConfirm}
+                type="button"
+                className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+              >
                 Yes
               </button>
             </span>
             <span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-              <button onClick={onClose} type="button" className="mt-3 w-full inline-flex justify-center rounded-md border px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:mt-0 sm:w-auto sm:text-sm sm:leading-5">
+              <button
+                onClick={onClose}
+                type="button"
+                className="mt-3 w-full inline-flex justify-center rounded-md border px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:mt-0 sm:w-auto sm:text-sm sm:leading-5"
+              >
                 Cancel
               </button>
             </span>
@@ -171,18 +181,24 @@ function General() {
       </div>
     </div>
   );
-  
+
   return (
     <div className="dark:bg-[#1b1f23] bg-[#F9F7F7]  mt-5 mx-auto p-4">
-      <a href="Settings" className="flex justify-start items-center gap-2 pl-2 mt-2">
+      <Link
+        to="/feed"
+        className="flex justify-start items-center gap-2 pl-2 mt-2"
+      >
         <BsArrowLeft
           style={{ fontSize: 16 + myFontSize }}
-          className="md:hidden lg:hidden text-[#555555] h-[27px] w-[27px]"
+          className=" lg:hidden text-[#555555] h-[27px] w-[27px]"
         />
-        <h1 style={{ fontSize: 16 + myFontSize }} className={`dark:text-white font-bold `}>
+        <h1
+          style={{ fontSize: 16 + myFontSize }}
+          className={`dark:text-white font-bold `}
+        >
           Select Theme
         </h1>
-      </a>
+      </Link>
       <p
         style={{ fontSize: 16 + myFontSize }}
         className="dark:text-white flex justify-start pl-2"
@@ -225,7 +241,12 @@ function General() {
       </div>
       {changePassDropped && (
         <form onSubmit={handleLogin}>
-          {isModalVisible && <ConfirmationModal onClose={() => setModalVisible(false)} onConfirm={handleLogin} />}
+          {isModalVisible && (
+            <ConfirmationModal
+              onClose={() => setModalVisible(false)}
+              onConfirm={handleLogin}
+            />
+          )}
           <div className="grid gap-3 max-w-[472px] mx-auto px-2">
             <div
               className={`border-[2px] rounded-[3px] flex items-center gap-[10px] px-[10px] py-[10px] ${
@@ -326,7 +347,14 @@ function General() {
             )}
 
             <div className="flex justify-center lg:justify-end md:justify-end my-12">
-            <button onClick={handleSubmitClick} type="button" style={{ fontSize: 16 }} className="px-4 py-2 text-lg w-[100px] font-medium text-white bg-[#D71A62] hover:bg-blue-600">Save</button>
+              <button
+                onClick={handleSubmitClick}
+                type="button"
+                style={{ fontSize: 16 }}
+                className="px-4 py-2 text-lg w-[100px] font-medium text-white bg-[#D71A62] hover:bg-blue-600"
+              >
+                Save
+              </button>
             </div>
           </div>
         </form>

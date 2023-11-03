@@ -217,12 +217,12 @@ export default function Topbar() {
   return (
     <>
       <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg   bg-slate-50  border-1 border-[rgba(0, 0, 0, 0.10)] p-3 flex items-center justify-center  sticky top-0 md:h-[95px] ">
-        <div className="flex  w-full md:max-w-[1120px] items-center justify-center  md:gap-16 gap-10">
+        <div className="flex  w-full md:max-w-[1120px] items-center justify-center  md:gap-44 gap-14 mr-12 sm:mr-0 ">
           <div className="w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center">
             {isScreenMdOrLarger ? (
               <Link to={"/feed"}>
                 {" "}
-                <img src={logo} alt="" className="w-full" />
+                <img src={logo} alt="" className="w-full " />
               </Link>
             ) : (
               <Link to={"/feed"}>
@@ -238,7 +238,7 @@ export default function Topbar() {
             <div className="flex gap-[20px] items-center ">
               {/* search bar */}
               <div className=" relative">
-                <div className="dark:bg-[#38434f] flex justify-center gap-2 sm:border-[2px] py-[5px] bg-slate-200  sm:bg-white sm:py-[10px] sm:px-6 items-center rounded-md sm:max-w-[400px] md:w-[500px]   lg:max-w-[550px] ">
+                <div className="dark:bg-[#38434f] flex   sm:justify-center gap-2 sm:border-[2px] py-[5px] bg-slate-200  sm:bg-white sm:py-[10px] sm:px-6 items-center rounded-md sm:max-w-[400px] md:w-[500px]   lg:max-w-[550px] ">
                   <div>
                     <FontAwesomeIcon
                       icon={faSearch}
@@ -246,7 +246,7 @@ export default function Topbar() {
                     />
                   </div>
                   <input
-                    className="dark:bg-[#38434f] dark:text-white outline-none   text-[12px] sm:text-[17px] w-full bg-transparent"
+                    className="dark:bg-[#38434f] dark:text-white outline-none   pr-6 sm:mr text-[12px] sm:text-[17px] w-full bg-transparent"
                     type="text"
                     value={searchInput}
                     placeholder="What are you looking for?"
