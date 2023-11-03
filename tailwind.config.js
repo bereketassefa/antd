@@ -38,6 +38,8 @@ export default {
         ssm: "440px",
         mmd: "900px",
         mdm: "1080px",
+        'max-sm': {'max': '640px'},
+        'lg-sm': {'min': '640px', 'max': '1023px'},
       },
 
       ///////// Public animation /////
@@ -48,6 +50,13 @@ export default {
         updown2: "updown1 3s ease-in-out infinite",
         updown3: "updown1 4s ease-in-out infinite",
       },
+
+      ///// Adding custom shaodw /////
+
+      boxShadow: {
+        'nav-shadow': '0 69px 6px -1px rgba(0, 0, 0, 0.1)'
+      },
+      
       //// Public Keyframes////
 
       keyframes: {
