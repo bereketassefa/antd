@@ -206,42 +206,8 @@ const DemoRequest = () => {
                   position: toast.POSITION.BOTTOM_RIGHT,
                 }
               );
-              // const pathurl = `https://admin.addissystems.et/create-password/${response.data.token}`;
-              // axios
-              //   .post(
-              //     "https://email.addispay.et/api/v1/account_create",
-              //     {
-              //       email: demoReqForm.email,
-              //       path: pathurl,
-              //     }
-              //   )
-              //   .then((res) => {
-              //     if (res.data === "success") {
-              //       setSpinLoading(false);
-              //       setDemoReqForm(initialValues);
-              //       setIsSubmit(false);
-              //       setIsTinNumberVerify(false);
-              //       toast.success(
-              //         "Account has been created successfully. Password Creation link has been sent to your email. check your inbox for the link.",
-              //         {
-              //           position: toast.POSITION.BOTTOM_RIGHT,
-
-              //         }
-              //       );
-              //     } else {
-              //       setSpinLoading(false);
-              //       setIsSubmit(false);
-              //       toast.error(res.data.meg, {
-              //         position: toast.POSITION.BOTTOM_RIGHT,
-              //         icon: <BiError className="text-2xl text-red-600" />,
-              //       });
-              //     }
-              //   });
+             
             }
-            // else if (
-            //   response.status === 200 ||
-            //   response.statusText === "OK"
-            // )
             else {
               setSpinLoading(false);
               setIsSubmit(false);
