@@ -439,7 +439,7 @@ export default function CompanyInfo({ data, Uid }) {
                   }
                 }}
               />
-              {clickedImage && <img src={clickedImage} alt="Clicked Image" />}
+              {clickedImage && <img src={clickedImage} />}
             </div>
 
             <div className="bg-white p-[3px] rounded-full absolute mt-[-0.5rem] mr-[-0.5rem]">
