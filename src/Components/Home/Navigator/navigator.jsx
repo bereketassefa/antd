@@ -70,7 +70,7 @@ export default function Navigator({ handleAddProduct }) {
           footer={null}
           onCancel={handleCloseModal}
         >
-          <AddItemsPage />
+          <AddItemsPage handleModal={() => setIsModalOpen(false)} />
         </Modal>
 
         <div className="w-full">

@@ -62,7 +62,7 @@ export default function NewsCard({
   const [likeCount, setLikeCount] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const [,setComments] = useState([]);
+  const [, setComments] = useState([]);
   const commentInputRef = useRef(null);
 
   const [showText, setShowText] = useState(false);
@@ -109,38 +109,38 @@ export default function NewsCard({
   //     }
   // };
 
-  // useEffect(() => {
-  //   let es; // Declare the EventSource variable
+  useEffect(() => {
+    let es; // Declare the EventSource variable
 
-  //   const connect = () => {
-  //     es = new EventSource(
-  //       `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
-  //     );
+    const connect = () => {
+      es = new EventSource(
+        `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
+      );
 
-  //   es.onmessage = (event) => {
-  //     const updatedPost = JSON.parse(event.data);
-  //     if (updatedPost.id === id) {
-  //       setLikeCount(updatedPost.like);
-  //       // console.log(updatedPost.like);
-  //       // checkIfLiked(); // Check if the current user has liked the updated post
-  //     }
-  //   };
-  //   es.onerror = (errorEvent) => {
-  //     // Handle the error here
-  //     // For example, you can try to reconnect after a delay or show a message to the user
-  //     setTimeout(connect, 5000);  // Try to reconnect after 5 seconds
-  //   };
+    es.onmessage = (event) => {
+      const updatedPost = JSON.parse(event.data);
+      if (updatedPost.id === id) {
+        setLikeCount(updatedPost.like);
+        // console.log(updatedPost.like);
+        // checkIfLiked(); // Check if the current user has liked the updated post
+      }
+    };
+    es.onerror = (errorEvent) => {
+      // Handle the error here
+      // For example, you can try to reconnect after a delay or show a message to the user
+      setTimeout(connect, 5000);  // Try to reconnect after 5 seconds
+    };
     
   
     
-  // };
+  };
 
-  //   connect(); // Initialize the connection
+    connect(); // Initialize the connection
 
-  //   return () => {
-  //     es.close(); // Close the EventSource connection when the component unmounts
-  //   };
-  // }, [id]);
+    return () => {
+      es.close(); // Close the EventSource connection when the component unmounts
+    };
+  }, [id]);
 
   //     es.onmessage = (event) => {
   //       const updatedPost = JSON.parse(event.data);
@@ -397,7 +397,7 @@ export default function NewsCard({
 
       // Access the new comment object correctly
       const newComment = response.data.comment;
-      fetchComments()
+      fetchComments();
       // Add the new comment to the existing comments
       setComments((prevComments) => [
         ...(Array.isArray(prevComments) ? prevComments : []),
@@ -444,7 +444,6 @@ export default function NewsCard({
               )}
             </button>
           </div>
-        
         </div>
       )}
 
@@ -596,7 +595,6 @@ export default function NewsCard({
             </div>
           </div>
         </div>
-      
       </div>
 
       {/* Like Info Modal */}

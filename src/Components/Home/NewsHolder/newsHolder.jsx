@@ -40,7 +40,6 @@ export default function NewsHolder() {
     fetchInitialData();
   }, []);
 
-
   useEffect(() => {
     const eventSource = new EventSource(
       `${import.meta.env.VITE_GET_ALL_POST_V2}`
@@ -50,7 +49,7 @@ export default function NewsHolder() {
       try {
         const newData = JSON.parse(event.data);
         // Append the new data to the existing timeline
-        setTimeline(prevTimeline => [ newData,  ...prevTimeline]);
+        setTimeline((prevTimeline) => [newData, ...prevTimeline]);
       } catch (err) {
         console.error("Error parsing SSE data:", err);
       }
@@ -65,7 +64,6 @@ export default function NewsHolder() {
       eventSource.close();
     };
   }, []);
-
 
   if (error) {
     return (
