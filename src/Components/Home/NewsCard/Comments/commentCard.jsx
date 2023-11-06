@@ -14,8 +14,12 @@ import { TiArrowForwardOutline } from "react-icons/ti";
 import PropTypes from "prop-types";
 import { Message, Rplay } from "../../../../data";
 import RplayCard from "../../CardHolder/RplayCard";
+import { IoIosSend } from "react-icons/io";
+import { BsEmojiSmile } from "react-icons/bs";
+import { format } from "timeago.js";
 export default function CommentCard({
   account_id,
+  postId,
   id,
   img,
   companyName,
@@ -42,17 +46,20 @@ export default function CommentCard({
     replays: PropTypes.array,
     props: PropTypes.object,
   };
-
+  const headers = {
+    'x-auth-token': `${import.meta.env.VITE_TOKEN_TIMELINE}`
+  }
+  
   const [cookies] = useCookies(["user"]);
   const [showReplays, setShowReplays] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
   const [showDeleteOption, setShowDeleteOption] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showFullComment, setShowFullComment] = useState(false);
-
+const [replies, setCommentsreplies]= useState([])
   const [divHeight, setDivHeight] = useState("auto");
   const commentCardRef = useRef(null);
-
+  const [commentText, setCommentText] = useState("");
   const navigate = useNavigate();
   const deleteCardRef = useRef(null);
   const onShowReplay = () => {
@@ -70,19 +77,84 @@ export default function CommentCard({
 
     try {
       navigate(`/feed/profile/${id}`);
-
-      // console.log(cookies.user._id)
-      // window.location.href = `/feed/profile/${Uid}`;
     } catch (error) {
       console.log(error);
     }
   };
 
+  const [text, setText] = useState('');
+
+  useEffect(() => {
+    if (text === '') {
+      FetchReplayComments();
+    }
+  }, [text]);
+  const handleCommentSubmit = async () => {
+    if (!commentText.trim()) return; // Ensure comment is not just whitespace
+
+    try {
+      const url = `${import.meta.env.VITE_COMMENT_Replies}`;
+      const response = await axios.post(
+        url,
+        {
+          post_id: postId,
+          replies_comments_id: comment_id,
+          user_id: cookies?.user?.Uid.toString(),
+          text: commentText,
+        },
+        {
+          headers: headers,
+        }
+      );
+      
+
+      if (response.status !== 200 && response.status !== 201) {
+        throw new Error("Failed to post comment");
+      }
+
+      // Access the new comment object correctly
+      const newReply = response.data;
+        console.log(newReply)
+    // Add the new comment to the existing comments
+    // setCommentsreplies((prevReplies) => [
+    //   ...prevReplies,
+    //   newReply,
+    // ]);
+
+      // Clear the text input
+      setCommentText("");
+      FetchReplayComments()
+    } catch (error) {
+      console.error("Failed to post comment:", error);
+    }
+  };
+
+  useEffect(() => {
+    FetchReplayComments();
+}, []);
+    const FetchReplayComments = async () => {
+      try {
+        const url = `${import.meta.env.VITE_COMMENTS__FETCH_REPLIES}/${postId}/${comment_id}`;
+        const replies = await axios.get(url, { headers: headers });
+        if (Array.isArray(replies.data.replies)) {
+          setCommentsreplies(replies.data.replies);
+
+          // console.log(replies.data)
+        } else {
+          console.error("Expected an array but received:", replies.data);
+        }
+      } catch (error) {
+        console.error("Error fetch replies comments data:", error);
+      }
+    };
+   
+  
+
   useEffect(() => {
     const fetchAccountDataForProfile = async () => {
       try {
         const url = `${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${id}`;
-        // const url= `http://localhost:8010/account/${cookies?.user._id}`;
+      
         await axios
           .get(url)
           .then((res) => {
@@ -122,10 +194,10 @@ export default function CommentCard({
 
     try {
       const url = `${import.meta.env.VITE_DELETE_COMMENT_API}/${comment_id}`;
-      console.log("API URL:", url);
+      // console.log("API URL:", url);
 
-      const response = await axios.delete(url);
-      console.log("API Response:", response);
+      const response = await axios.delete(url,{headers:headers});
+      // console.log("API Response:", response);
       if (response.status === 200) {
         console.log("Calling onCommentDelete with comment_id:", comment_id);
         onCommentDelete(comment_id);
@@ -146,21 +218,11 @@ export default function CommentCard({
     }
   };
 
-  // useEffect(() => {
-  //   // console.log("Comment ID:", id);
-  //   // console.log("User ID from cookies:", cookies.user._id);
-  // }, [props]);
-
-  // console.log('deleteCardRef.current:', deleteCardRef.current);
-  // console.log('showDeleteOption:', showDeleteOption);
-  // const check = Uid === cookies?.user?.Uid
-  // console.log('check:', check);
-  // console.log('post Uid:', Uid);
 
   const maxLength = 40;
 
   let truncatedComment = comment;
-  if (!showFullComment && comment.length > maxLength) {
+  if (!showFullComment && comment?.length > maxLength) {
     truncatedComment = comment.slice(0, maxLength) + "...";
   }
   const handleSeeMoreClick = () => {
@@ -175,10 +237,23 @@ export default function CommentCard({
     }
   };
 
+  
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleCommentSubmit();
+    }
+  };
+
   const onShowReplays = () => {
     setShowReplays(!showReplays);
   };
 
+
+  useEffect(()=>{
+    const FetchCountNoOfReplies= async()=>{
+
+    }
+  })
   return (
     <>
       <div>
@@ -197,7 +272,7 @@ export default function CommentCard({
               <Link to="" className="flex  justify-center items-center gap-2">
                 <h1
                   onClick={hadleNavigateProfile}
-                  className="dark:text-white text-smallP md:text-midP lg:text-largeP font-bold"
+                  className="dark:text-white text-smallP md:text-midP lg:text-largeP "
                 >
                   {companyName}
                 </h1>
@@ -213,7 +288,7 @@ export default function CommentCard({
                   className="relative flex justify-center items-center gap-2"
                 >
                   <span className="dark:text-white text-smallP md:text-midP text-gray-500 ">
-                    {time} 7:30 am
+                   {format(time)}
                   </span>
                   <BsThreeDots
                     onClick={toggleDeleteOption}
@@ -244,7 +319,7 @@ export default function CommentCard({
                 } `}
               >
                 {truncatedComment}
-                {!showFullComment && comment.length > maxLength && (
+                {!showFullComment && comment?.length > maxLength && (
                   <span
                     className="text-primary cursor-pointer"
                     onClick={handleSeeMoreClick}
@@ -263,7 +338,7 @@ export default function CommentCard({
                   onClick={onShowReplays}
                 >
                   Replay
-                  <span>{replays?.length}</span>
+                  {/* <span>{replays?.length}</span> */}
                   <TiArrowForwardOutline />
                 </p>
               </div>
@@ -275,19 +350,49 @@ export default function CommentCard({
         </p>
       </div>
       <div className={showReplays ? "flex flex-col gap-2 ml-[45px]" : "hidden"}>
-        {Rplay?.map((Rplay) => (
+        {replies?.map((Rplay) => (
           <RplayCard
             key={Rplay?.comment_id}
-            companyName={Rplay?.companyName}
+            companyName={Rplay?.account?.party}
             time={Rplay?.time}
-            comment={Rplay.comment}
-            replays={Rplay.replays}
-            Uid={Rplay.Uid}
-            user_id={Rplay.user_id}
-            comment_id={Rplay.Rplay_id}
+            comment={Rplay?.text}
+            replays={Rplay?.replays}
+            Uid={Rplay?.Uid}
+            user_id={Rplay?.user_id}
+            comment_id={comment_id}
+            post_id={postId}
+            
           />
         ))}
+           <p className="flex justify-center  text-sm text-[#A7A7A7]">
+        Load more replies <span>( 11 more )</span>
+      </p>
+      <div className="flex items-center justify-between border-2 rounded-lg w-full h-[50px] gap bg-[#fffdfd] p-3">
+        <div>
+          <BsEmojiSmile className="text-xl md:smallT text-[#555555]" />
+        </div>
+        <input
+         type="text"
+         value={commentText} 
+          className="dark:bg-[#1b1f23]  m-3 flex w-full h-full outline-none pl-4 text-smallP md:text-midP lg:text-largeP"
+          placeholder="Add a comment ..."
+         
+          onChange={(e) => setCommentText(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
+
+        <div className="flex gap-4    items-center h-full">
+          <div className="w-2 h-8 flex justify-end border-l-2 border-gray-400"></div>
+
+          <p>Send</p>
+          <IoIosSend
+            onClick={handleCommentSubmit}
+            className="text-xl md:smallT text-[#555555]"
+          />
+        </div>
       </div>
+      </div>
+   
     </>
   );
 }

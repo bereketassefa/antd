@@ -75,7 +75,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
       const url = `${import.meta.env.VITE_POST_NEWS}`;
       // console.log('Sending request to:',formData ,url);
       const response = await axios.post(url, formData, { headers: headers });
-      console.log("Response received:", response);
+      // console.log("Response received:", response);
       if (response.statusCode === 400) {
         message.error("File size should not exceed 5 MB");
       }

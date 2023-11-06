@@ -62,7 +62,8 @@ export default function NewsCard({
   const [likeCount, setLikeCount] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const [setComments] = useState([]);
+  const [, setComments] = useState([]);
+  const commentInputRef = useRef(null);
 
   const [showText, setShowText] = useState(false);
   const headers = {
@@ -108,13 +109,35 @@ export default function NewsCard({
   //     }
   // };
 
-  // useEffect(() => {
-  //   let es; // Declare the EventSource variable
+  useEffect(() => {
+    let es; // Declare the EventSource variable
 
-  //   const connect = () => {
-  //     es = new EventSource(
-  //       `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
-  //     );
+    const connect = () => {
+      es = new EventSource(
+        `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
+      );
+
+      es.onmessage = (event) => {
+        const updatedPost = JSON.parse(event.data);
+        if (updatedPost.id === id) {
+          setLikeCount(updatedPost.like);
+          // console.log(updatedPost.like);
+          // checkIfLiked(); // Check if the current user has liked the updated post
+        }
+      };
+      es.onerror = (errorEvent) => {
+        // Handle the error here
+        // For example, you can try to reconnect after a delay or show a message to the user
+        setTimeout(connect, 5000); // Try to reconnect after 5 seconds
+      };
+    };
+
+    connect(); // Initialize the connection
+
+    return () => {
+      es.close(); // Close the EventSource connection when the component unmounts
+    };
+  }, [id]);
 
   //     es.onmessage = (event) => {
   //       const updatedPost = JSON.parse(event.data);
@@ -235,7 +258,7 @@ export default function NewsCard({
     try {
       const response = await axios.get(Url);
       if (response.status === 200) {
-        console.log(response.data);
+        // console.log(response.data);
         setTimeline(response?.data);
       }
     } catch (error) {
@@ -264,7 +287,7 @@ export default function NewsCard({
       );
       const data = await response.data;
       setWhoLikedPost(data?.users);
-      console.log(data.users);
+      // console.log(data.users);
     } catch (error) {
       console.error("Failed to fetch users who liked the post:", error);
     }
@@ -345,6 +368,7 @@ export default function NewsCard({
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
+      commentInputRef.current.blur(); // Blur the input field
       handleCommentSubmit();
     }
   };
@@ -370,7 +394,7 @@ export default function NewsCard({
 
       // Access the new comment object correctly
       const newComment = response.data.comment;
-
+      fetchComments();
       // Add the new comment to the existing comments
       setComments((prevComments) => [
         ...(Array.isArray(prevComments) ? prevComments : []),
@@ -417,11 +441,6 @@ export default function NewsCard({
               )}
             </button>
           </div>
-          {/* <div>
-            <button onClick={handleBookmark} className="text-sm">
-              {isBookmarked ? "Remove Bookmark" : "Save as Bookmark"}
-            </button>
-          </div> */}
         </div>
       )}
 
@@ -485,13 +504,13 @@ export default function NewsCard({
 
         <div className="overflow-hidden flex bg-center  ">
           <Image.PreviewGroup>
-            {image.map((image, index) => (
+            {image?.map((image, index) => (
               <Image
                 key={index}
-                width={600}
-                height={430}
+                width={550}
+                height={360}
                 src={image}
-                className="object-cover"
+                // className="object-cover"
               />
             ))}
           </Image.PreviewGroup>
@@ -554,6 +573,7 @@ export default function NewsCard({
               <BsEmojiSmile className="text-xl md:smallT text-[#555555]" />
             </div>
             <input
+              ref={commentInputRef}
               type="text"
               className="dark:bg-[#1b1f23]  m-3 flex w-full h-full outline-none pl-4 text-smallP md:text-midP lg:text-largeP"
               placeholder="Add a comment ..."
@@ -572,21 +592,6 @@ export default function NewsCard({
             </div>
           </div>
         </div>
-        {/* <div className="flex justify-between items-center p-4 border-b border-2 border-red-900"> */}
-        {/* <span
-            className="dark:text-white text-smallP md:text-midP lg:text-largeP cursor-pointer"
-            onClick={() => setShowLikeInfo(true)}
-          >
-            {likeCount === 0 || likeCount === "0" ? "" : likeCount}
-          </span> */}
-        {/* <span className="dark:text-white text-smallP md:text-midP lg:text-largeP">
-            {comments.postCount === undefined
-              ? "Loading..."
-              : comments.postCount === "0"
-              ? ""
-              : `${comments.postCount} comments`}
-          </span> */}
-        {/* </div> */}
       </div>
 
       {/* Like Info Modal */}
@@ -661,6 +666,7 @@ export default function NewsCard({
 
       {showComments && (
         <CommentContainer
+          LikeCount={comments?.postCount}
           Uid={Uid}
           account_id={account_id}
           postid={id}

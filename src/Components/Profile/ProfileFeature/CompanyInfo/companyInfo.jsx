@@ -422,13 +422,15 @@ export default function CompanyInfo({ data, Uid }) {
         onCancel={() => setMyModalOpen(false)}
         footer={[]}
       >
-        <CompanyPP clickedImage={clickedImage} />
+        <CompanyPP
+          clickedImage={profilePic ? profilePic : alternativeProfile}
+        />
       </Modal>
 
       <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem] ">
         <div className="w-full flex items-end justify-between">
           <div className="bg-white  p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
-            <div className="w-full flex items-center justify-center ">
+            <div className="w-full flex items-center justify-center  ">
               <img
                 className="w-full object-cover h-full flex"
                 src={profilePic ? profilePic : alternativeProfile}
@@ -439,7 +441,7 @@ export default function CompanyInfo({ data, Uid }) {
                   }
                 }}
               />
-              {clickedImage && <img src={clickedImage} alt="Clicked Image" />}
+              {/* {clickedImage && <img src={clickedImage} alt="Clicked Image" />} */}
             </div>
 
             <div className="bg-white p-[3px] rounded-full absolute mt-[-0.5rem] mr-[-0.5rem]">
@@ -447,7 +449,7 @@ export default function CompanyInfo({ data, Uid }) {
                 data.account &&
                 data.account[0] &&
                 data.account[0]._id === cookies?.user?._id && (
-                  <div className="bg-secondary w-fit p-2 rounded-full flex cursor-pointer">
+                  <div className="bg-secondary w-fit p-2 rounded-full flex cursor-pointer border-2 border-red-800">
                     <FontAwesomeIcon
                       icon={faPencil}
                       onClick={() =>
@@ -593,7 +595,7 @@ export default function CompanyInfo({ data, Uid }) {
           ) : null}
         </div>
         {isModalOpen && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4 ">
             <div className="bg-white p-2 rounded-lg">
               <div className=" flex justify-end  mb-1">
                 <IoClose

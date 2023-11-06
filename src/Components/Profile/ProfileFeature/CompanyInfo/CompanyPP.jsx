@@ -67,6 +67,7 @@ function CompanyPP({ profilePic, setMyModalOpen, clickedImage }) {
           profilePic={profilePic}
           setConfirmProfileModal={setConfirmProfileModal}
           clickedImage={clickedImage}
+          id={id}
         />
       </Modal>
       <div className="flex justify-between ">

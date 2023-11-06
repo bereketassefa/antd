@@ -28,10 +28,10 @@ export default function NewsHolder() {
 
         const data = response.data;
 
-        setTimeline(data);
+        setTimeline(response.data.slice(0, 10));
         //  console.log(data);
       } catch (err) {
-        console.log("Error fetching initial data", err);
+        console.warn("Error fetching initial data");
       } finally {
         setLoading(false);
       }
@@ -48,9 +48,8 @@ export default function NewsHolder() {
     eventSource.onmessage = (event) => {
       try {
         const newData = JSON.parse(event.data);
-        console.log("Received data:", newData);
-        setTimeline([newData]);
-        // console.log(newData);
+        // Append the new data to the existing timeline
+        setTimeline((prevTimeline) => [newData, ...prevTimeline]);
       } catch (err) {
         console.error("Error parsing SSE data:", err);
       }

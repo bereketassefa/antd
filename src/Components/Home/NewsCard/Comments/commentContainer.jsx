@@ -11,7 +11,7 @@ import alternativeProfile from "../../../../assets/image/alternativeProfile.png"
 import alternativeProfileblack from "../../../../assets/image/alternativeProfile-black.png";
 import { message } from "antd";
 import { identifier } from "stylis";
-export default function CommentContainer({ account_id, postid, isOpen }) {
+export default function CommentContainer({ LikeCount,account_id, postid, isOpen }) {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [visibleComments, setVisibleComments] = useState(2);
@@ -163,45 +163,18 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
     <div
       className={
         isOpen
-          ? "w-full flex flex-col gap-4 p-2 "
-          : "w-full flex flex-col gap-4 p-2 hidden"
+          ? "w-full flex flex-col  p-2 "
+          : "w-full flex flex-col  p-2 hidden"
       }
     >
-      {/* <div className="flex gap-2 items-center">
-       <div className="flex items-center justify-center w-fit">
-          <Avatar img={isDarkTheme ? alternativeProfileblack : (profilePic ? profilePic : alternativeProfile)} />
-        </div>
-
-        <div className="flex flex-col items-end justify-center border border-primary w-full h-[45px] rounded-[5px]">
-          <input
-            type="text"
-            className="dark:bg-[#1b1f23]  flex w-full h-full outline-none pl-3 text-smallP md:text-midP lg:text-largeP"
-            placeholder="Add a comment ..."
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
-            onKeyPress={handleKeyPress}
-          />
-          <div className="absolute pr-4 flex gap-2">
-            <IoMdSend onClick={handleCommentSubmit} className="text-largeP md:smallT text-primary" />
-            <FontAwesomeIcon
-              icon={faSmile}
-              className="text-largeP md:smallT text-primary"
-            />
-            <FontAwesomeIcon
-              icon={faImage}
-              className="text-largeP md:smallT text-primary"
-            />
-          </div>
-        </div>
-      </div> */}
-
+    
       <div className="w-full flex items-center justify-start">
         <div className="dark:bg-[#1b1f23] flex p-2">
          Comments
         </div>
       </div>
 
-      <div className=" w-full flex flex-col gap-4">
+      <div className=" w-full gap-2 flex flex-col ">
         {Array.isArray(comments) && comments.length > 0
           ? comments.slice(0, visibleComments).map((item) => {
               return (
@@ -210,9 +183,10 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
                   img={item?.account?.profilePicture || alternativeProfile}
                   companyName={item?.party?.party[0]?.party?.businessname}
                   id={item?.account?._id}
-                  time={item?.DateCreated}
+                  time={item?.time}
                   comment={item?.text}
                   likes={item?.likes}
+                 
                   replays={item?.repays}
                   postId={item?.post_id}
                   account_id={account_id}
@@ -224,27 +198,26 @@ export default function CommentContainer({ account_id, postid, isOpen }) {
               );
             })
           : null}
-
-        {totalComments > 0 ? (
-          <div className="w-full flex items-center justify-center">
-            <p
-              className="font-bold text-smallP md:text-midP lg:text-largeP cursor-pointer"
-              onClick={() => {
-                setVisibleComments(visibleComments + 2);
-                if (visibleComments + 2 >= comments.length) {
-                  setShowSeeMore(false);
-                }
-              }}
-            >
-              <div className="flex flex-col justify-center items-center">
-                <p className="text-[#555555] font-bold">Load comments</p>
-                <p className="text-[12px] text-[#A7A7A7]">
-                  {totalComments} more comment{totalComments > 1 ? "s" : ""}
-                </p>
-              </div>
-            </p>
-          </div>
-        ) : null}
+{LikeCount > 2 ? (
+  <div className="w-full flex items-center justify-center">
+    <p
+      className="font-bold text-smallP md:text-midP lg:text-largeP cursor-pointer"
+      onClick={() => {
+        setVisibleComments(visibleComments + 2);
+        if (visibleComments + 2 >= LikeCount) {
+          setShowSeeMore(false);
+        }
+      }}
+    >
+      <div className="flex flex-col justify-center items-center">
+        <p className="text-[#555555] font-bold">Load comments</p>
+        <p className="text-[12px] text-[#A7A7A7]">
+        {LikeCount - 2} more comment{LikeCount > 1 ? "s" : ""}
+        </p>
+      </div>
+    </p>
+  </div>
+) : null}
       </div>
     </div>
   );
