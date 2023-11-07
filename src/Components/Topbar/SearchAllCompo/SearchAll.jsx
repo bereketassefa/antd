@@ -193,7 +193,7 @@ function SearchAll() {
                           </div>
 
                           <div className="flex justify-between">
-                            <p className="dark:text-white max-w-[670px] md:w-[670px]  ">
+                            <p className="dark:text-white max-w-[670px] md:w-[575px] ">
                               {item.productDescription}
                             </p>
                             <img
