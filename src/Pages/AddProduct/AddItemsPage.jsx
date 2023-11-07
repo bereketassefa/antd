@@ -75,10 +75,15 @@ console.log(formData)
       {
         message.error("Product image is large!");
       }
+      if(response.status ===401 )
+      {
+        message.error("File format is not allowed. Only JPEG and PNG are allowed!");
+      }
     } catch (error) {
-      console.log(error);
-      // message.error("Failed to add product. Please try again.");
-      // handleModal()
+      console.error("Error:", error);
+      message.error(
+        error.response ? error.response.data.error : "An error occurred"
+      );
     }
   };
 

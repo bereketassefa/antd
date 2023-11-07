@@ -79,7 +79,7 @@ function CompanyPP({ profilePic, setMyModalOpen, clickedImage }) {
         <div>
           <img
             src={clickedImage}
-            alt="Clicked Image"
+            // alt="Clicked Image"
             className="w-40 h-40 object-cover rounded-full"
           />
         </div>

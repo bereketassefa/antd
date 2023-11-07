@@ -24,7 +24,7 @@ function ResetPass({ setModalOpen }) {
 
   const handleReset = async (e) => {
     setLoading(true);
-    console.log("Loading state after setting to true:", loading);
+    // console.log("Loading state after setting to true:", loading);
     
     e.preventDefault();
    
@@ -42,7 +42,7 @@ function ResetPass({ setModalOpen }) {
       if (response.data) {
         // setModalOpen(true);
         message.success("Password Reset successfully");
-        Navigate('/'); // Redirect to login page or wherever you want
+        Navigate('/login'); // Redirect to login page or wherever you want
       }
     } catch (error) {
       console.error("Error resetting password:", error);

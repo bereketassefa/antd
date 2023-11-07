@@ -18,9 +18,9 @@ function CreatePass() {
   const [isChecked, setIsChecked] = useState(false);
   const [showPass1, setShowPass1] = useState(false);
   const [showPass2, setShowPass2] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (e) => {
-
+    setLoading(true);
     e.preventDefault();
     if (pass1 !== pass2) {
       // You can display an error message here.
@@ -50,12 +50,15 @@ function CreatePass() {
         message.success('Password Successfully Created!');
         // Redirect the user to the homepage.
         window.location.href = '/';
+        setLoading(false);
       } else {
         message.error("Error creating password. Please try again.");
+        setLoading(false);
       }
     } catch (error) {
       // console.error("Error creating password:", error);
       message.error("There was an error. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -204,6 +207,7 @@ function CreatePass() {
             !pass1 || !isChecked ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={!pass1 || !isChecked}
+          isLoading={loading}
         />
         <div className="ml-5">
             <Helppra />
