@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function ForgotPass() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [formErrors, setFormErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (value) => {
@@ -18,6 +19,7 @@ function ForgotPass() {
   };
 
   const handleSend = async () => {
+    setLoading(true);
     try {
    
       const response = await axios.post('https://account.qa.addissystems.et/account/login/forgot', {
@@ -27,9 +29,11 @@ function ForgotPass() {
       if (response.data) {
      
         navigate('/OTP', { state: { phoneNumber: phoneNumber } });
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error sending OTP:", error);
+      setLoading(false);
     }
   };
 
@@ -64,6 +68,7 @@ function ForgotPass() {
           text={"Send"}
           bgColor={"bg-[#d71a62]"}
           onClick={handleSend}
+          isLoading={loading}
         />
         <div className="ml-5">
           <Helppra />

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { message } from "antd";
 
 function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
   const { id } = useParams();
@@ -72,13 +73,23 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
           },
         }
       );
-
+      if(response.status ===401){
+        message.error('File size should not exceed 5 MB')
+      }
+      if(response.status === 402){
+        message.error("File format is not allowed");
+      }
       if (response.status === 200) {
         console.log("Profile updated successfully");
         setConfirmProfileModal(false);
       }
+      
+
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error("Error uploading profile picture:", error);
+      message.error(
+        error.response ? error.response.data.error : "An error occurred"
+      );
     }
   };
 

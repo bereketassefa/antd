@@ -46,15 +46,15 @@ const LoginOtp = ({ value, onChange }) => {
         phone: phoneNumber,
         OTP: otpString
       });
-console.log(response.data)
+// console.log(response.data)
       if (response.data.success === true) {
-        console.log("OTP verified successfully:", response.data.message);
+        // console.log("OTP verified successfully:", response.data.message);
         const modifiedToken = response.data.token.replace(/\./g, '$').replace(/\//g, '&');
 
         navigate(`/ResetPss/${modifiedToken}`); // <-- Navigate to ResetPss with the token
       } else {
         message.error('Incorrect OTP');
-        console.error(response.data.message);
+        // console.error(response.data.message);
       }
     } catch (error) {
       message.error('Incorrect OTP');

@@ -94,7 +94,14 @@ export default function CompanyInfo({ data, Uid }) {
         setSelectedImage(response?.data?.profilePicture);
         message.success("Profile updated successfully");
         closeModal();
-      } else {
+      }
+      if(response.status ===400){
+        message.error('File size should not exceed 5 MB')
+      }
+      if(response.status === 401){
+        message.error("File format is not allowed");
+      }
+      else {
         // Handle other status codes here if needed
         message.error("An unexpected error occurred");
       }

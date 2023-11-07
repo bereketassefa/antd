@@ -42,7 +42,7 @@ function ResetPass({ setModalOpen }) {
       if (response.data) {
         // setModalOpen(true);
         message.success("Password Reset successfully");
-        Navigate('/'); // Redirect to login page or wherever you want
+        Navigate('/login'); // Redirect to login page or wherever you want
       }
     } catch (error) {
       console.error("Error resetting password:", error);
