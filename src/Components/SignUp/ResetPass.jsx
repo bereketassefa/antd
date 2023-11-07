@@ -24,7 +24,7 @@ function ResetPass({ setModalOpen }) {
 
   const handleReset = async (e) => {
     setLoading(true);
-    console.log("Loading state after setting to true:", loading);
+    // console.log("Loading state after setting to true:", loading);
     
     e.preventDefault();
    
