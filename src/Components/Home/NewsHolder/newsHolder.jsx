@@ -29,9 +29,9 @@ export default function NewsHolder() {
         const data = response.data;
 
         setTimeline(response.data.slice(0, 10));
-      //  console.log(data);
+        //  console.log(data);
       } catch (err) {
-        console.warn('Error fetching initial data' )
+        console.warn("Error fetching initial data");
       } finally {
         setLoading(false);
       }
@@ -102,33 +102,29 @@ export default function NewsHolder() {
     </div>
   );
 
-
-
-return (
-  <div className='flex flex-col gap-2 w-full max-w-[550px]'>
-    {loading ? (
-    
-      Array.from({ length: 5 }).map((_, index) => <NewsCardSkeleton key={index} />)
-    ) : (
-      Array.isArray(timeline) ? (
-        
-        timeline.map((item, index) => (
-          
-          <NewsCard
-            key={index?.id}
-            image={item?.images}
-            newContent={item?.description}
-            profilePic={item?.account?.profilePicture}
-            timestamp={item?.time}
-            id={item?.id}
-            like={item?.like}
-            companyName={item?.account?.party}
-            account_id={item?.account?._id}
-            Uid ={item?.uid}
-          />
-        ))
-      ) :null
-    )}
-    <div ref={elementRef}></div>
-  </div>
-);}
+  return (
+    <div className="flex flex-col gap-2 w-full max-w-[550px]">
+      {loading
+        ? Array.from({ length: 5 }).map((_, index) => (
+            <NewsCardSkeleton key={index} />
+          ))
+        : Array.isArray(timeline)
+        ? timeline.map((item, index) => (
+            <NewsCard
+              key={index?.id}
+              image={item?.images}
+              newContent={item?.description}
+              profilePic={item?.account?.profilePicture}
+              timestamp={item?.time}
+              id={item?.id}
+              like={item?.like}
+              companyName={item?.account?.party}
+              account_id={item?.account?._id}
+              Uid={item?.uid}
+            />
+          ))
+        : null}
+      <div ref={elementRef}></div>
+    </div>
+  );
+}

@@ -17,10 +17,9 @@ function ProductPage() {
   const [products, setProducts] = useState([]);
 
   // console.log(id);
-    const [showAddProductModal, setShowAddProductModal] = useState(false);
- const [isModalOpen, setIsModalOpen] = useState(false);
-     
-     
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // console.log(id);
   useEffect(() => {
     // Define an async function
@@ -39,13 +38,13 @@ function ProductPage() {
     fetchProducts();
   }, [id]);
 
-   const handleOpenModal = () => {
-     setIsModalOpen(true);
-   };
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
 
-   const handleCloseModal = () => {
-     setIsModalOpen(false);
-   };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div>
       <Modal
@@ -82,7 +81,7 @@ function ProductPage() {
               </div>
             ),
             children: (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 overflow-y-scroll max-h-[430px] scrole-overflow  items-center justify-center gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 overflow-y-scroll max-h-[430px] scrole-overflow  items-center justify-center gap-3 ">
                 {products.map((product) => (
                   <ProductCard
                     key={product.key}

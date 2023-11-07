@@ -117,23 +117,20 @@ export default function NewsCard({
         `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
       );
 
-    es.onmessage = (event) => {
-      const updatedPost = JSON.parse(event.data);
-      if (updatedPost.id === id) {
-        setLikeCount(updatedPost.like);
-        // console.log(updatedPost.like);
-        // checkIfLiked(); // Check if the current user has liked the updated post
-      }
+      es.onmessage = (event) => {
+        const updatedPost = JSON.parse(event.data);
+        if (updatedPost.id === id) {
+          setLikeCount(updatedPost.like);
+          // console.log(updatedPost.like);
+          // checkIfLiked(); // Check if the current user has liked the updated post
+        }
+      };
+      es.onerror = (errorEvent) => {
+        // Handle the error here
+        // For example, you can try to reconnect after a delay or show a message to the user
+        setTimeout(connect, 5000); // Try to reconnect after 5 seconds
+      };
     };
-    es.onerror = (errorEvent) => {
-      // Handle the error here
-      // For example, you can try to reconnect after a delay or show a message to the user
-      setTimeout(connect, 5000);  // Try to reconnect after 5 seconds
-    };
-    
-  
-    
-  };
 
     connect(); // Initialize the connection
 
@@ -590,7 +587,7 @@ export default function NewsCard({
               onClick={handleCommentSubmit}
             >
               <div className="w-2 h-8 flex justify-end border-l-2 border-gray-400  "></div>
-              Send
+              <button> Send</button>
               <IoIosSend className="text-xl md:smallT text-[#555555]" />
             </div>
           </div>
@@ -607,7 +604,6 @@ export default function NewsCard({
             className="bg-white p-4 rounded   flex  flex-col overflow-y-auto "
             onClick={(e) => e.stopPropagation()}
           >
-          
             <div className=" w-[400px] flex flex-col gap-2 ">
               <div className="flex gap-3  items-center">
                 <FontAwesomeIcon
@@ -624,7 +620,6 @@ export default function NewsCard({
               <div className="mt-3 flex flex-col gap-8  ">
                 {LikePosts?.map((Like) => (
                   <LikeCard
-                    // key={key.key}
                     companyName={Like.companyName}
                     date={Like.date}
                     image={Like.image}
