@@ -9,10 +9,12 @@ import CompanyPP from "../CompanyInfo/CompanyPP";
 import { Modal } from "antd";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
-import ProfileBannerIMG from "./ProfileBannerIMG";
+import ProfileBaneer from "../../ProfileFeature/FeatureImgHolder/ProfileBaneer";
 export default function FeatureImgHolder({ data }) {
   const [cookies] = useCookies(["user"]);
   const [isLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
   const [isPModalOpen, setisPModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setisSecondModalOpen] = useState(false);
@@ -23,10 +25,11 @@ export default function FeatureImgHolder({ data }) {
     setIsModalClose(false);
   };
 
-  const handleModalChangeClick = () => {
-    setIsImgModalOpen(false);
-    document.getElementById("profileImageInput").click();
-  };
+  // const handleModalChangeClick = () => {
+  //   setIsOpen(true);
+  //   setIsImgModalOpen(true);
+  //   document.getElementById("profileImageInput").click();
+  // };
 
   if (isLoading) {
     return (
@@ -42,6 +45,10 @@ export default function FeatureImgHolder({ data }) {
     );
   }
   // ...
+
+  const handleModalChangeClick = () => {
+    setIsOpen(true);
+  };
 
   const handleUploadClick = async () => {
     setIsModalOpen(true);
@@ -91,64 +98,28 @@ export default function FeatureImgHolder({ data }) {
         <CompanyPP />
       </Modal>
 
-      <div className="w-full flex justify-end  ">
-        <img
-          src={ProfileFeature}
-          alt=""
-          className="h-[100px] w-full md:h-[150px]  "
-          onClick={() => setIsModalOpen(true)}
-        />
+      {isOpen && (
+        <Modal
+          centered
+          visible={isOpen}
+          onOk={() => setIsOpen(false)}
+          onCancel={() => setIsOpen(false)}
+          width={800}
+        >
+          <ProfileBaneer />
+        </Modal>
+      )}
 
-        {isSecondModalOpen && (
-          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
-            <Modal
-              visible={isimgModalOPen}
-              onOk={() => setIsImgModalOpen(false)} // Close the modal
-              onCancel={() => setIsImgModalOpen(false)} // Close the modal
-            >
-              <ProfileBannerIMG />
-            </Modal>
-            <div className="bg-white p-2 rounded-lg">
-              <div className="flex justify-end mb-1">
-                <IoClose
-                  className="text-red-700 text-xl"
-                  onClick={() => setisSecondModalOpen(false)} // Added close function here
-                />
-              </div>
-              <img
-                src={ProfileFeature}
-                alt="Selected"
-                className="mb-4 w-full h-48 object-cover"
-              />
-              <div className="flex justify-end gap-4">
-                <button
-                  onClick={handleUploadClick}
-                  className="bg-blue-500 text-white py-1 px-4 rounded flex justify-center items-center gap-2"
-                >
-                  <MdOutlineFileUpload className="text-2xl" />
-                  Upload
-                </button>
-                <button
-                  onClick={handleModalChangeClick}
-                  className="bg-gray-300 py-1 px-4 rounded flex justify-center items-center gap-2"
-                >
-                  <RiDeleteBinLine className="text-xl" />
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
+      <div className="w-full flex justify-end   ">
         {data &&
           data.account &&
           data.account[0] &&
           data.account[0]._id === cookies.user._id && (
-            <div className="absolute   border-2 border-red-800  ">
+            <div className="absolute border-2 border-red-800">
               <FontAwesomeIcon
                 icon={faEdit}
                 className="text-white p-2 cursor-pointer"
-                onClick={() => setisSecondModalOpen(true)}
+                onClick={setIsOpen}
               />
             </div>
           )}
