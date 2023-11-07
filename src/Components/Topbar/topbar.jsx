@@ -46,6 +46,24 @@ export default function Topbar() {
   const [selectedChat, setSelectedChat] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
+  const handleSelectItem = (selectedItem) => {
+    // Handle the selected item here
+    console.log("Selected item:", selectedItem);
+
+    // Clear only the search results
+    setSearchResults([]);
+  };
+
+  const handleSearchInputChange = (e) => {
+    const inputValue = e.target.value;
+    setSearchInput(inputValue);
+
+    // Perform search logic here and update searchResults state accordingly
+    // For simplicity, let's assume searchResults is an array of objects with `id`, `name`, `type`, and `imageUrl` properties
+    const results = performSearch(inputValue);
+    setSearchResults(results);
+  };
+
   useEffect(() => {
     // Check the theme from local storage when the component mounts
     const theme = localStorage.getItem("theme");
@@ -237,50 +255,85 @@ export default function Topbar() {
           <div className="flex gap-[1rem] items-center ">
             <div className="flex gap-[20px] items-center ">
               {/* search bar */}
-              <div className=" relative">
-                <div className="dark:bg-[#38434f] flex   sm:justify-center gap-2 sm:border-[2px] py-[5px] bg-slate-200  sm:bg-white sm:py-[10px] sm:px-6 items-center rounded-md sm:max-w-[400px] md:w-[500px]   lg:max-w-[550px] ">
+
+              <div className="relative">
+                <div className="flex sm:justify-center gap-2 sm:border-[2px] py-[5px] bg-slate-200 sm:bg-white sm:py-[10px] sm:px-6 items-center rounded-md sm:max-w-[400px] md:w-[500px] lg:max-w-[550px]">
                   <div>
                     <FontAwesomeIcon
                       icon={faSearch}
-                      className="text-xl  text-gray-500 flex justify-start "
+                      className="text-xl text-gray-500 flex justify-start"
                     />
                   </div>
                   <input
-                    className="dark:bg-[#38434f] dark:text-white outline-none   pr-6 sm:mr text-[12px] sm:text-[17px] w-full bg-transparent"
+                    className="outline-none pr-6 sm:mr text-[12px] sm:text-[17px] w-full bg-transparent"
                     type="text"
                     value={searchInput}
                     placeholder="What are you looking for?"
-                    onChange={(e) => {
-                      setSearchInput(e.target.value);
-                    }}
+                    onChange={handleSearchInputChange}
                   />
                 </div>
-                {searchInput && (
-                  <div className="dark:bg-[#38434f] dark:text-white absolute bg-white w-full p-1  translate-y-[1px]">
-                    <div className="flex flex-col  ">
+                {/* {searchInput && (
+                  <div className="absolute bg-white w-full p-1 translate-y-[1px]">
+                    <div className="flex flex-col">
                       {searchResults.map((result, index) => (
                         <SearchCard
                           key={index}
                           id={result.id}
                           name={result.name}
-                          type={result.type} // This will be either "business" or "product"
+                          type={result.type}
                           image={
                             result.type === "business"
                               ? result.profilePicture
                               : result.imageUrl
-                          } // Pass the appropriate image based on the type
+                          }
+                          onSelect={handleSelectItem}
                         />
                       ))}
                     </div>
+
                     <hr className="border-[1px] border-blue-800" />
                     <Link
                       to={`/feed/SearchNav/${searchInput}`}
                       onClick={() => setSearchInput("")}
                     >
-                      <p className="dark:text-white text-[12px] flex justify-center text-primary ">
+                      <p className="text-[12px] sm:text-[16px] flex justify-center text-primary">
                         See All results
                       </p>
                     </Link>
+                  </div>
+                )} */}
+                {searchInput && (
+                  <div className="absolute bg-white w-full p-1 translate-y-[1px]">
+                    <div className="flex flex-col">
+                      {searchResults.map((result, index) => (
+                        <SearchCard
+                          key={index}
+                          id={result.id}
+                          name={result.name}
+                          type={result.type}
+                          image={
+                            result.type === "business"
+                              ? result.profilePicture
+                              : result.imageUrl
+                          }
+                          onSelect={handleSelectItem}
+                        />
+                      ))}
+                    </div>
+
+                    {searchResults.length > 0 && (
+                      <>
+                        <hr className="border-[1px] border-blue-800" />
+                        <Link
+                          to={`/feed/SearchNav/${searchInput}`}
+                          onClick={() => setSearchInput("")}
+                        >
+                          <p className="text-[12px] sm:text-[16px] flex justify-center text-primary">
+                            See All results
+                          </p>
+                        </Link>
+                      </>
+                    )}
                   </div>
                 )}
               </div>

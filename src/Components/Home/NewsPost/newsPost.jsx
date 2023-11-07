@@ -8,6 +8,7 @@ import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import alternativeProfileblack from "../../../assets/image/alternativeProfile-black.png";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
 export default function NewsPost() {
   const [isPosting, setIsPosting] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
@@ -79,12 +80,12 @@ export default function NewsPost() {
                 onClick={onModalOpen}
                 icon={faImage}
               />{" "}
-              <p
+              <Link
                 onClick={onModalOpen}
                 className="dark:text-white text-smallP md:text-midP lg:text-largeP"
               >
                 Image
-              </p>
+              </Link>
             </li>
             {/* <li className='flex items-center gap-2'>
                         <FontAwesomeIcon className='text-secondary text-smallT' icon={faVideo}/> <p className='dark:text-white text-smallP md:text-midP lg:text-largeP'>Video</p>
