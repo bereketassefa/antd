@@ -115,11 +115,11 @@ export default function FeatureImgHolder({ data }) {
           data.account &&
           data.account[0] &&
           data.account[0]._id === cookies.user._id && (
-            <div className="absolute border-2 border-red-800">
+            <div className="absolute  ">
               <FontAwesomeIcon
                 icon={faEdit}
                 className="text-white p-2 cursor-pointer"
-                onClick={setIsOpen}
+                // onClick={() => setisSecondModalOpen(true)}
               />
             </div>
           )}

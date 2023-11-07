@@ -117,20 +117,23 @@ export default function NewsCard({
         `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
       );
 
-      es.onmessage = (event) => {
-        const updatedPost = JSON.parse(event.data);
-        if (updatedPost.id === id) {
-          setLikeCount(updatedPost.like);
-          // console.log(updatedPost.like);
-          // checkIfLiked(); // Check if the current user has liked the updated post
-        }
-      };
-      es.onerror = (errorEvent) => {
-        // Handle the error here
-        // For example, you can try to reconnect after a delay or show a message to the user
-        setTimeout(connect, 5000); // Try to reconnect after 5 seconds
-      };
+    es.onmessage = (event) => {
+      const updatedPost = JSON.parse(event.data);
+      if (updatedPost.id === id) {
+        setLikeCount(updatedPost.like);
+        // console.log(updatedPost.like);
+        // checkIfLiked(); // Check if the current user has liked the updated post
+      }
     };
+    es.onerror = (errorEvent) => {
+      // Handle the error here
+      // For example, you can try to reconnect after a delay or show a message to the user
+      setTimeout(connect, 5000);  // Try to reconnect after 5 seconds
+    };
+    
+  
+    
+  };
 
     connect(); // Initialize the connection
 
@@ -604,38 +607,8 @@ export default function NewsCard({
             className="bg-white p-4 rounded   flex  flex-col overflow-y-auto "
             onClick={(e) => e.stopPropagation()}
           >
-            {/* <div className="flex items-center mb-4 ">
-              <img
-                src={logoAddis}
-                alt="Company Logo"
-                className="w-6 h-6 self-center ml-3"
-              />
-              <h3 className="text-center ml-7">company who liked this</h3>
-            </div>
-            <div
-              className={`flex-1 overflow-y-auto ${
-                whoLikedPost?.length > 6 ? "max-h-60" : ""
-              }`}
-            >
-              {whoLikedPost?.map((user) => (
-                <div key={user?.uid} className="flex items-center mb-2">
-                  <Avatar
-                    className="h-8 w-8"
-                    img={
-                      user?.account?.profilePicture
-                        ? user?.account?.profilePicture
-                        : alternativeProfile
-                    }
-                  />
-                  <span className="ml-4 text-sm">
-                    {user?.account?.party?.length > 19
-                      ? `${user?.account?.party.slice(0, 19).toLowerCase()}...`
-                      : user?.account?.party}
-                  </span>
-                </div>
-              ))}
-            </div> */}
-            <div className=" md:w-[400px] max-w-[400px] flex flex-col gap-2 ">
+          
+            <div className=" w-[400px] flex flex-col gap-2 ">
               <div className="flex gap-3  items-center">
                 <FontAwesomeIcon
                   icon={faThumbsUp}

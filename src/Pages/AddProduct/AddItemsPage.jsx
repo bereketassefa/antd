@@ -65,15 +65,20 @@ function AddItemsPage({ handleModal }) {
           "Content-Type": "multipart/form-data",
         },
       });
-
+console.log(formData)
       if (response.status === 200) {
         console.log("Data inserted successfully");
         message.success("Product added successfully!");
-        handleModal();
+        handleModal()
+      }
+      if(response.status ===413 )
+      {
+        message.error("Product image is large!");
       }
     } catch (error) {
       console.log(error);
-      message.error("Failed to add product. Please try again.");
+      // message.error("Failed to add product. Please try again.");
+      // handleModal()
     }
   };
 
