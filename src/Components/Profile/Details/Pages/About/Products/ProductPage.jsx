@@ -8,8 +8,8 @@ import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Modal } from "antd";
-
 import AddItemsPage from "../../../../../../Pages/AddProduct/AddItemsPage";
+
 function ProductPage() {
   const { id } = useParams(); // Destructure id from useParams
   const [cookies] = useCookies(["user"]);

@@ -172,28 +172,28 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
 
           <div className=" w-full p-2 pb-0">
             <ul className="w-full flex items-center justify-center md:justify-start gap-4">
-              <ImgCrop
+              {/* <ImgCrop
                 rotationSlider
                 modalOk={<div className="custom-ok">Ok</div>}
+              > */}
+              <Upload
+                listType="picture-card"
+                maxCount={5}
+                fileList={fileList}
+                onChange={onChange}
+                onPreview={onPreview}
               >
-                <Upload
-                  listType="picture-card"
-                  maxCount={5}
-                  fileList={fileList}
-                  onChange={onChange}
-                  onPreview={onPreview}
-                >
-                  {fileList.length < 5 && (
-                    <p>
-                      <FontAwesomeIcon
-                        className="dark:text-white text-secondary text-smallT"
-                        icon={faImage}
-                      />{" "}
-                      <p className="dark:text-white text-smallP">Image</p>
-                    </p>
-                  )}
-                </Upload>
-              </ImgCrop>
+                {fileList.length < 5 && (
+                  <p>
+                    <FontAwesomeIcon
+                      className="dark:text-white text-secondary text-smallT"
+                      icon={faImage}
+                    />{" "}
+                    <p className="dark:text-white text-smallP">Image</p>
+                  </p>
+                )}
+              </Upload>
+              {/* </ImgCrop> */}
               {/* Other upload options (video and document) */}
             </ul>
           </div>

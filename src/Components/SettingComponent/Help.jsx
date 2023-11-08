@@ -16,7 +16,7 @@ function Help() {
       </a>
       <p className="text-[15px] font-normal">
         Lorem ipsum dolor sit amet consectetur. Aliquam in ullamcorper plac erat
-        enim.  
+        enim.
       </p>
       <a href="#" className="font-semibold text-[#3222C6] text-[18px]">
         Close your account

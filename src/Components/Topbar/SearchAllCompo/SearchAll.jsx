@@ -238,7 +238,7 @@ function SearchAll() {
 
           <div className="border-2 rounded-lg m-2  ">
             <div
-              className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 items-center justify-center gap-6    ${
+              className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 items-center justify-center gap-6 ${
                 showHiddenContent2
                   ? " h-auto overflow-hidden"
                   : "max-h-[200px] overflow-hidden"
