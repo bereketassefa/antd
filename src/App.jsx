@@ -189,8 +189,26 @@ function App() {
             <Route path="/odootest" element={<ForTesting />} />
             <Route path="*" element={<PageNotFound />} />
 
-          
-          
+            <Route path="Search" element={<SearchRoutePublic />}>
+              <Route
+                path="/Search/All/:searchInput"
+                element={<SearchAllPublic />}
+              />
+              <Route
+                path="/Search/:searchInput/companies"
+                element={<SearchCompanyPublic />}
+              />
+              <Route
+                path="/Search/:searchInput/Product"
+                element={<SearchProductPublic />}
+              />
+              <Route path="/Search/:searchInput/Job" element={<Job />} />
+              <Route
+                path="/Search/:searchInput/Post"
+                element={<PostPublic />}
+              />
+            </Route>
+          </Route>
 
           {/* Landing Route */}
 
