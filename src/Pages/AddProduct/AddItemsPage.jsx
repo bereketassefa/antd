@@ -80,7 +80,7 @@ console.log(formData)
         message.error("File format is not allowed. Only JPEG and PNG are allowed!");
       }
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
       message.error(
         error.response ? error.response.data.error : "An error occurred"
       );

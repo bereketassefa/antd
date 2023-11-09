@@ -88,10 +88,10 @@ function General() {
     // Get _id from cookies
     const _id = cookies.user._id;
     console.log(_id);
-
+   const url= `${import.meta.env.VITE_CHANGE_PASSWORD}`
     try {
       const response = await fetch(
-        `http://localhost:8010/change-Password/${_id}`,
+        `${url}/${_id}`,
         {
           method: "PATCH", // or POST depending on how your backend is set up
           headers: {

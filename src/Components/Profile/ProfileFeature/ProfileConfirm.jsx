@@ -57,6 +57,7 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
 
   const handleImageConfirm = async () => {
     try {
+      const url= `${import.meta.env.UPDATE_PROFILE_IMAGE}`
       if (!imageFile) {
         console.error("No image selected");
         return;
@@ -65,7 +66,7 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
       formData.append("image", imageFile);
 
       const response = await axios.put(
-        `https://account.qa.addissystems.et/profile/update/${id}`,
+        `${url}/${id}`,
         formData,
         {
           headers: {
@@ -73,6 +74,7 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
           },
         }
       );
+     
       if(response.status ===401){
         message.error('File size should not exceed 5 MB')
       }

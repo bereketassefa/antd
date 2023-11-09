@@ -18,11 +18,12 @@ function ForgotPass() {
 
   };
 
+const url = `${import.meta.env.VITE_FORGET_PASSWORD}`
   const handleSend = async () => {
     setLoading(true);
     try {
    
-      const response = await axios.post('https://account.qa.addissystems.et/account/login/forgot', {
+      const response = await axios.post(url, {
         phone: phoneNumber
       });
 

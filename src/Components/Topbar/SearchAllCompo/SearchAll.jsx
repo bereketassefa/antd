@@ -60,12 +60,12 @@ function SearchAll() {
     : "";
   const handleSearch = async () => {
     try {
-      const url = "https://search.qa.addissystems.et/partially";
+      const url= import.meta.env.VITE_SEARCH_PARTIALLY
       const response = await axios.post(url, {
         query: decodedName,
       });
       setData(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error("Error performing search", error.message);
     }
@@ -193,7 +193,7 @@ function SearchAll() {
                           </div>
 
                           <div className="flex justify-between">
-                            <p className="dark:text-white max-w-[670px] md:w-[670px]  ">
+                            <p className="dark:text-white max-w-[670px] md:w-[575px] ">
                               {item.productDescription}
                             </p>
                             <img

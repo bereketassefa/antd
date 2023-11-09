@@ -20,7 +20,7 @@ function SearchCompany() {
 
   const handleSearch = async () => {
     try {
-      const url = 'https://search.qa.addissystems.et/partially';
+      const url= import.meta.env.VITE_SEARCH_PARTIALLY
       const response = await axios.post(url, {
         query: decodedName,
       });
@@ -52,7 +52,7 @@ function SearchCompany() {
     if (DataProducts) {
       DataProducts.forEach(async (item) => {
         try {
-          const url = `https://connection.qa.addissystems.et/connection/get/${cookies?.user?.Uid}/${item.Uid}`;
+          const url= `${import.meta.VITE_CHECK_WHO_IS_THE_SENDER}/${cookies?.user?.Uid}/${item.Uid}`
           const response = await axios.get(url);
           if (response.data.sender.Uid === cookies?.user?.Uid) {
             setConnectionStatus(prevStatus => ({ ...prevStatus, [item.Uid]: 'Pending' }));

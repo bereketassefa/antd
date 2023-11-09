@@ -55,13 +55,14 @@ export default function FeatureImgHolder({ data }) {
     formData.append("_id", cookies?.user?._id);
 
     try {
+      const url = `${import.meta.env. VITE_ACCOUNT_UPLOAD_PROFILE}`
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       };
       const response = await axios.post(
-        "https://account.qa.addissystems.et/profile/uploads",
+       url,
         formData,
         config
       );
