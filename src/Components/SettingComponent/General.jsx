@@ -7,7 +7,7 @@ import { AiFillEye } from "react-icons/ai";
 import Britness from "./Britness";
 import { ThemeContext } from "../../theme/ThemeContext";
 import FontSize from "./FontSize";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 function General() {
@@ -34,8 +34,8 @@ function General() {
   const [activesession, setActiveSession] = useState(false);
 
   // console.log("myNewFontSize:", myNewFontSize);
-  console.log("myFontSize:", myFontSize);
-
+  // console.log("myFontSize:", myFontSize);
+const navigate = useNavigate();
   const toggleMode = () => {
     setIsDarkMode(!isDarkMode);
   };
@@ -111,8 +111,8 @@ function General() {
         setNewPass("");
         setConfirmPass("");
         setModalVisible(false); // Close the modal on success
-
-        console.log(data);
+ navigate("/login");
+        // console.log(data);
         // Handle success - maybe redirect the user or show a success message
       }
       if (data.success === false) {
