@@ -130,11 +130,7 @@ export default function NewsCard({
       // For example, you can try to reconnect after a delay or show a message to the user
       setTimeout(connect, 5000);  // Try to reconnect after 5 seconds
     };
-    
-  
-    
   };
-
     connect(); // Initialize the connection
 
     return () => {

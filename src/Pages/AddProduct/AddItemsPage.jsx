@@ -65,19 +65,19 @@ function AddItemsPage({ handleModal }) {
           "Content-Type": "multipart/form-data",
         },
       });
-console.log(formData)
+      console.log(formData);
       if (response.status === 200) {
         console.log("Data inserted successfully");
         message.success("Product added successfully!");
-        handleModal()
+        handleModal();
       }
-      if(response.status ===413 )
-      {
+      if (response.status === 413) {
         message.error("Product image is large!");
       }
-      if(response.status ===401 )
-      {
-        message.error("File format is not allowed. Only JPEG and PNG are allowed!");
+      if (response.status === 401) {
+        message.error(
+          "File format is not allowed. Only JPEG and PNG are allowed!"
+        );
       }
     } catch (error) {
       // console.error("Error:", error);
@@ -164,7 +164,7 @@ console.log(formData)
                   />
                 ) : (
                   <div className="flex    justify-center items-center ">
-                    <BiSolidImageAlt className=" text-[#555555]  w-20 h-20   rounded-lg" />
+                    <BiSolidImageAlt className=" text-[#3222C6]  w-20 h-20   rounded-lg" />
                   </div>
                 )}
                 <input
@@ -178,7 +178,7 @@ console.log(formData)
                   required
                 />
               </div>
-              <div className="mt-2 rounded-md py-1 text-white flex items-center justify-center bg-[#A7A7A7]">
+              <div className="mt-2 rounded-md py-1 text-white flex items-center justify-center bg-[#3222C6]">
                 <label htmlFor="productImage" className="cursor-pointer">
                   Upload
                 </label>
@@ -284,7 +284,7 @@ console.log(formData)
         <div className="flex justify-end items-center">
           <button
             type="submit"
-            className="w-[101px] rounded-lg h-[40px] text-white text-xl font-bold bg-[#433C83]"
+            className="w-[101px] rounded-lg h-[40px] text-white text-xl font-bold bg-[#3222C6]"
             onClick={handleSubmit}
           >
             Save

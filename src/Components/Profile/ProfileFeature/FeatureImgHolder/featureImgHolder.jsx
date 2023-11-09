@@ -15,7 +15,7 @@ export default function FeatureImgHolder({ data }) {
   const [isLoading] = useState(false);
   const [isPModalOpen, setisPModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSecondModalOpen, setisSecondModalOpen] = useState(false);
+  const [isProfiledModalOpen, setisProfiledModalOpen] = useState(false);
   const [isModalClose, setIsModalClose] = useState(false);
   const [isimgModalOPen, setIsImgModalOpen] = useState(false);
 
@@ -24,7 +24,7 @@ export default function FeatureImgHolder({ data }) {
   };
 
   const handleModalChangeClick = () => {
-    setIsImgModalOpen(false);
+    setIsImgModalOpen(true);
     document.getElementById("profileImageInput").click();
   };
 
@@ -44,7 +44,6 @@ export default function FeatureImgHolder({ data }) {
   // ...
 
   const handleUploadClick = async () => {
-    setIsModalOpen(true);
     if (!selectedFile) {
       message.error("No file selected");
       return;
@@ -68,10 +67,8 @@ export default function FeatureImgHolder({ data }) {
       );
       if (response.status === 200) {
         setSelectedImage(response?.data?.profilePicture);
-        // console.log(response.data.profilePicture);
         message.success("Profile picture uploaded successfully");
-        closeModal();
-        setIsimgModalOpen(true); // Open the modal after successful upload
+        setIsImgModalOpen(false); // Close the upload modal
       }
     } catch (error) {
       console.error("Error uploading profile picture:", error);
@@ -79,7 +76,10 @@ export default function FeatureImgHolder({ data }) {
     }
   };
 
-  // ...
+  const handleDeleteClick = async () => {
+    // Perform the delete image logic here
+    // You can make an API call to delete the image from the server
+  };
 
   return (
     <div className="w-full flex justify-start ">
@@ -93,27 +93,28 @@ export default function FeatureImgHolder({ data }) {
       </Modal>
 
       <div className="w-full flex justify-end  ">
-        <img
+        {/* <img
           src={ProfileFeature}
           alt=""
           className="h-[100px] w-full md:h-[150px]  "
           onClick={() => setIsModalOpen(true)}
-        />
+        /> */}
 
-        {isSecondModalOpen && (
+        <Modal
+          visible={isimgModalOPen}
+          onOk={() => setIsImgModalOpen(false)} // Close the modal
+          onCancel={() => setIsImgModalOpen(false)} // Close the modal
+        >
+          <ProfileBannerIMG image={ProfileFeature} />
+        </Modal>
+
+        {isProfiledModalOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
-            <Modal
-              visible={isimgModalOPen}
-              onOk={() => setIsImgModalOpen(false)} // Close the modal
-              onCancel={() => setIsImgModalOpen(false)} // Close the modal
-            >
-              <ProfileBannerIMG />
-            </Modal>
             <div className="bg-white p-2 rounded-lg">
               <div className="flex justify-end mb-1">
                 <IoClose
                   className="text-red-700 text-xl"
-                  onClick={() => setisSecondModalOpen(false)} // Added close function here
+                  onClick={() => setisProfiledModalOpen(false)} // Added close function here
                 />
               </div>
               <img
@@ -123,14 +124,14 @@ export default function FeatureImgHolder({ data }) {
               />
               <div className="flex justify-end gap-4">
                 <button
-                  onClick={handleUploadClick}
+                  onClick={handleModalChangeClick}
                   className="bg-blue-500 text-white py-1 px-4 rounded flex justify-center items-center gap-2"
                 >
                   <MdOutlineFileUpload className="text-2xl" />
                   Upload
                 </button>
                 <button
-                  onClick={handleModalChangeClick}
+                  onClick={handleDeleteClick}
                   className="bg-gray-300 py-1 px-4 rounded flex justify-center items-center gap-2"
                 >
                   <RiDeleteBinLine className="text-xl" />
@@ -149,7 +150,7 @@ export default function FeatureImgHolder({ data }) {
               <FontAwesomeIcon
                 icon={faEdit}
                 className="text-white p-2 cursor-pointer"
-                // onClick={() => setisSecondModalOpen(true)}
+                onClick={() => setisProfiledModalOpen(true)}
               />
             </div>
           )}

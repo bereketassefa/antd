@@ -1,8 +1,18 @@
 import React, { useState } from "react";
-import ProfileFeature from "../../../../assets/image/coverpic.png";
+// import ProfileFeature from "../../../../assets/image/coverpic.png";
 
-function ProfileBannerIMG() {
+function ProfileBannerIMG({ image }) {
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+
+  // const handleConfirm = () => {
+  //   setIsConfirmed(true);
+  //   setIsVisible(false);
+  // };
+
+  const handleDiscard = () => {
+    setIsVisible(false);
+  };
 
   const handleConfirm = () => {
     // Perform actions when confirm button is clicked
@@ -11,9 +21,9 @@ function ProfileBannerIMG() {
     onClose();
   };
 
-  const handleDiscard = () => {
-    onClose();
-  };
+  // const handleDiscard = () => {
+  //   onClose();
+  // };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
@@ -22,7 +32,7 @@ function ProfileBannerIMG() {
           <p className=" font-bold">Confirm Your over</p>
         </div>
         <img
-          src={ProfileFeature}
+          src={image}
           alt="Selected"
           className="mb-4 w-full h-48 object-cover"
         />

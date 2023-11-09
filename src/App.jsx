@@ -39,27 +39,16 @@ import AddItemsPage from "./Pages/AddProduct/AddItemsPage";
 
 // import Message from "./Pages/Message/Message";
 
-//////// Public imports//////
-
-
-import Aos from "aos";
-
-////////////
 
 function App() {
   const [cookies] = useCookies(["user"]);
   // Public Route
-  useEffect(() => {
-    Aos.init({
-      duration: 1000,
-    });
-  }, []);
+
   return (
     <ErrorProvider>
       <ToastProvider>
         <Routes>
           {/* Public Route */}
-
 
           {/* Landing Route */}
 

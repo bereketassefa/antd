@@ -140,14 +140,14 @@ const EditProfile = () => {
               htmlFor="overview"
               className="block mb-2 text-lg font-medium text-gray-700"
             >
-              <p style={{ fontSize: 16 + myFontSize }}>Overview</p>
+              <p style={{ fontSize: 16 + myFontSize }}>Company Description</p>
             </label>
 
             <input
               type="text"
               id="overview"
               name="overview"
-              placeholder="Eg: Lorem ipsum dolor sit amet consectetur."
+              placeholder="type here.."
               value={formData.overview}
               onChange={handleChange}
               className={` py-3   pl-4   outline-none rounded border-2 border-[#3222C6] max-w-[650px] md:w-[650px]   ${
@@ -240,7 +240,7 @@ const EditProfile = () => {
               type="url"
               id="website"
               name="website"
-              placeholder="Eg: www.helloWorld.com"
+              placeholder=" Type here Eg: www.helloWorld.com"
               value={formData.website}
               onChange={handleChange}
               className={` py-3 pl-4  outline-none rounded border-2 border-[#3222C6] max-w-[650px]  md:w-[650px] ${
