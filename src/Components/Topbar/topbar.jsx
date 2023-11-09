@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import logos from "../../assets/logo/addisLogoS.png";
+
+import logos from "../../assets/image/bizify spot phone logo-16.png";
 import { Message } from "../../data";
-import logo from "../../assets/logo/addisLogo.png";
+
+import logo from "../../assets/image/final logo-04.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AiOutlineMessage, AiFillMessage } from "react-icons/ai";
 import {
@@ -244,11 +246,7 @@ export default function Topbar() {
               </Link>
             ) : (
               <Link to={"/feed"}>
-                <img
-                  src={logos}
-                  alt=""
-                  className="w-full h-[30px] sm:h-[30px] "
-                />
+                <img src={logos} alt="" className="w-full  " />
               </Link>
             )}
           </div>
