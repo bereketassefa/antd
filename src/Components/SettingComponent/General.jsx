@@ -91,7 +91,7 @@ function General() {
 
     try {
       const response = await fetch(
-        `http://localhost:8010/change-Password/${_id}`,
+        `https://account.qa.addissystems.et/change-Password/${_id}`,
         {
           method: "PATCH", // or POST depending on how your backend is set up
           headers: {
