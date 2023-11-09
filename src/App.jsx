@@ -41,50 +41,9 @@ import AddItemsPage from "./Pages/AddProduct/AddItemsPage";
 
 //////// Public imports//////
 
-import Layout from "../src/Layouts/PublicLayout/Layout";
-import PublicHome from "../src/Pages/PublicPage/PublicHome";
-
-import Service from "../src/Pages/PublicPage/Service";
-import posHero from "../src/assets/PuplicImage/M-pos webbb.png";
-
-import erpHero from "../src/assets/PuplicImage/ERP-image.png";
-
-import invoiceimage from "../src/assets/PuplicImage/Addis e-invoice-01.png";
-
-import businessinteligence from "../src/assets/PuplicImage/business inteligent.png";
-
-import AboutPublic from "./Pages/PublicPage/AboutPublic";
-
-import Blog from "../src/Pages/PublicPage/Blog";
-import ContactPublic from "./Pages/PublicPage/ContactPublic";
-
-import UserGuide from "../src/Pages/PublicPage/UserGuide";
-
-import Faq from "../src/Pages/PublicPage/Faq";
-
-import HelpPublic from "./Pages/PublicPage/HelpPublic";
-
-import DemoRequest from "../src/Pages/PublicPage/DemoRequest";
-
-import Submitted from "../src/Pages/PublicPage/Submitted";
-
-import PageNotFound from "../src/Pages/PublicPage/PageNotFound";
-
-import { features } from "../src/PublicData/data";
 
 import Aos from "aos";
-import JobApply from "../src/Pages/PublicPage/JobApply";
 
-import Vacancy from "../src/Pages/PublicPage/Vacancy";
-import ForTesting from "../src/ForTesting";
-import SearchRoutePublic from "./Layouts/PublicLayout/PublicSearch/SearchRoutePublic";
-import SearchAllPublic from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/SearchAllPublic";
-import SearchCompanyPublic from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/SearchCompanyPublic";
-import SearchProductPublic from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/SearchProductPublic";
-import Job from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/Job";
-import PostPublic from "./Components/PublicComponents/NavComponenet/SearchPublicCompo/PostPublic";
-
-import BlogNews from "../src/Components/PublicComponents/BlogNews";
 ////////////
 
 function App() {
@@ -101,114 +60,6 @@ function App() {
         <Routes>
           {/* Public Route */}
 
-          <Route path="/" element={<Layout />}>
-            <Route index element={<PublicHome />} />
-            <Route
-              path="pos-service"
-              element={
-                <Service
-                  heading={"POS service"}
-                  title={"pos-title"}
-                  paragraph={"POS-system-para"}
-                  featureData1={features.posFeature.feature}
-                  bannerImage={posHero}
-                />
-              }
-            />
-
-            <Route
-              path="erp-service"
-              element={
-                <Service
-                  heading={"ERP as a Service"}
-                  title={"ERP-title"}
-                  paragraph={"ERP-para"}
-                  featureData1={features.posFeature.feature}
-                  bannerImage={erpHero}
-                />
-              }
-            />
-
-            <Route
-              path="electronic-invoice"
-              element={
-                <Service
-                  heading={"Electronic Invoice"}
-                  title={"electronic-title"}
-                  paragraph={"electronic-para"}
-                  featureData1={features.electronicInvoice.feature}
-                  bannerImage={invoiceimage}
-                />
-              }
-            />
-
-            <Route
-              path="business-intelligence"
-              element={
-                <Service
-                  heading={"Business Intelligence"}
-                  title={"Business I title"}
-                  paragraph={"Business I para1"}
-                  featureData1={
-                    features.businessIntelligence.featureToBusinessCommunity
-                  }
-                  featureData2={features.businessIntelligence.featureToAuthor}
-                  bannerImage={businessinteligence}
-                />
-              }
-            />
-
-            <Route // M-POSS
-              path="m-pos"
-              element={
-                <Service
-                  heading={"Mpos head"}
-                  title={"m-poss title"}
-                  paragraph={"M-pos para1"}
-                  featureData1={features.mpos.benefitOfMPOS}
-                  featureData2={features.mpos.benefitToManagement}
-                  bannerImage={businessinteligence}
-                />
-              }
-            />
-            <Route path="about-us" element={<AboutPublic />} />
-            <Route path="blog" element={<Blog />} />
-            <Route path="/blog/blognews" element={<BlogNews />} />
-
-            <Route path="contact" element={<ContactPublic />} />
-            <Route path="user-guide" element={<UserGuide />} />
-            <Route path="faq" element={<Faq />} />
-            <Route path="help" element={<HelpPublic />} />
-            <Route path="demo-request" element={<DemoRequest />} />
-            <Route path="demo-request/submitted" element={<Submitted />} />
-            <Route path="vacancy" element={<Vacancy />} />
-            <Route
-              path="vacancy-apply/:id/:jobposition"
-              element={<JobApply />}
-            />
-            <Route path="/odootest" element={<ForTesting />} />
-            <Route path="*" element={<PageNotFound />} />
-
-            <Route path="Search" element={<SearchRoutePublic />}>
-              <Route
-                path="/Search/All/:searchInput"
-                element={<SearchAllPublic />}
-              />
-              <Route
-                path="/Search/:searchInput/companies"
-                element={<SearchCompanyPublic />}
-              />
-              <Route
-                path="/Search/:searchInput/Product"
-                element={<SearchProductPublic />}
-              />
-              <Route path="/Search/:searchInput/Job" element={<Job />} />
-              <Route
-                path="/Search/:searchInput/Post"
-                element={<PostPublic />}
-              />
-            </Route>
-          </Route>
 
           {/* Landing Route */}
 
