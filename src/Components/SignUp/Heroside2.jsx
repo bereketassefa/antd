@@ -31,7 +31,7 @@ function Heroside2() {
           </div>
 
           <div
-            className="  mx-4 flex flex-col gap-16 bg-[url('/images/staf.jpg')] w-full  sm:h-[500px] lg:h-[700px]  object-cover bg-cover bg-center bg-opacity-5"
+            className="  mx-4 flex flex-col gap-16 bg-[url('/images/staf.jpg')] w-full  sm:h-[500px] lg:h-[750px]  object-cover bg-cover bg-center bg-opacity-5"
             style={{ backgroundImage: `url(${staf})` }}
           >
             <div className="flex  justify-center items-center">

@@ -11,33 +11,32 @@ function Heroside() {
     <div className="hidden lg:block lg:w-1/2 bg-[#3222C6] h-screen">
       <div className="items-center flex-col justify-start overflow-hidden">
         <div className=" flex flex-col gap-4">
-          <div className="mx-10 my-4 ">
-            <p className="text-white">What we offer</p>
-            <img className="w-ful" src={line} alt="image" />
-
-            <div className="flex  mt-4">
-              <img
-                className="w-[50px] h-[50px] object-contain"
-                src={image}
-                alt="image"
-              />
-
-              <div className="flex-col">
-                <h1 className="  mb-3 text-white font-sans not-italic font-bold leading-none text-[20px]">
-                  PRFILE CUSTOMIZATION
-                </h1>
-                <p className="text-white font-sans not-italic font-normal leading-none">
-                  Create a unique business profile that showcases <br /> your
-                  brand and skills
-                </p>
-              </div>
-            </div>
-          </div>
-
           <div
-            className="  mx-4 flex flex-col gap-16 bg-[url('/images/staf.jpg')] w-full  sm:h-[500px] lg:h-[700px]  object-cover bg-cover bg-center bg-opacity-[10%]"
+            className="  mx-4 flex flex-col gap-16 bg-[url('/images/staf.jpg')] w-full h-[400px]   sm:h-[745px]  object-cover bg-cover bg-center bg-opacity-[10%]"
             style={{ backgroundImage: `url(${staf})` }}
           >
+            <div className="mx-10 my-2 ">
+              <p className="text-white text-[20px] font-bold">What we offer</p>
+              <img className="w-ful" src={line} alt="image" />
+
+              <div className="flex  mt-3">
+                <img
+                  className="w-[50px] h-[50px] object-contain"
+                  src={image}
+                  alt="image"
+                />
+
+                <div className="flex-col">
+                  <h1 className="  mb-3 text-white font-sans not-italic font-bold leading-none ">
+                    PRFILE CUSTOMIZATION
+                  </h1>
+                  <p className="text-white font-sans not-italic font-normal leading-none">
+                    Create a unique business profile that showcases <br /> your
+                    brand and skills
+                  </p>
+                </div>
+              </div>
+            </div>
             <div className="flex  justify-center items-center">
               <img
                 className="p-[2px] w-[50px] h-[50px] object-contain"
