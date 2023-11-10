@@ -36,7 +36,11 @@ function General() {
 
   // console.log("myNewFontSize:", myNewFontSize);
   // console.log("myFontSize:", myFontSize);
+<<<<<<< HEAD
 
+=======
+const navigate = useNavigate();
+>>>>>>> b0b13d3b38d51c8740fcb4bcdd5879bf0ac144ab
   const toggleMode = () => {
     setIsDarkMode(!isDarkMode);
   };
@@ -92,7 +96,11 @@ function General() {
    const url= `${import.meta.env.VITE_CHANGE_PASSWORD}`
     try {
       const response = await fetch(
+<<<<<<< HEAD
         `${url}/${_id}`,
+=======
+        `https://account.qa.addissystems.et/change-Password/${_id}`,
+>>>>>>> b0b13d3b38d51c8740fcb4bcdd5879bf0ac144ab
         {
           method: "PATCH", // or POST depending on how your backend is set up
           headers: {
