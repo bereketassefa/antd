@@ -4,14 +4,12 @@ import { AiOutlineMessage, AiOutlineSetting } from "react-icons/ai";
 import { PiUsersThreeBold } from "react-icons/pi";
 import { GoHome } from "react-icons/go";
 
-import Aid1 from "../../../assets/image/End to End Experience new-01.png";
-
-import Aid2 from "../../../assets/image/Frame 4 new.jpg";
-
-import Aid3 from "../../../assets/image/new post addispay-01.jpg";
-import Aid4 from "../../../assets/image/epr png-01.png";
-import Aid5 from "../../../assets/image/addispay.jpg";
-import Aid6 from "../../../assets/image/Build Trust_instagram.jpg";
+import Aid1 from "../../../assets/image/Add new1.png";
+import Aid2 from "../../../assets/image/Add new2.png";
+import Aid3 from "../../../assets/image/Addnew3.png";
+import Aid4 from "../../../assets/image/Add new4.png";
+import Aid5 from "../../../assets/image/Add new5.jpg";
+import Aid6 from "../../../assets/image/Add new6.jpg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -58,7 +56,7 @@ export default function Navigator({ handleAddProduct }) {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 3000,
   };
 
   return (
@@ -330,38 +328,38 @@ export default function Navigator({ handleAddProduct }) {
           </div>
         </div>
       </div>
-      <div className=" hidden md:block max-w-[300px] border-2 h-[350px] mt-8   drop-shadow-xl  bg-white">
+      <div className=" hidden md:block max-w-[300px] border-2 h-[300px] mt-8   drop-shadow-xl  bg-white">
         <p className="ml-4 mt-3 text-primary ">Ads</p>
 
         <div className=" py-1 px-4 ">
           <Slider dots={false} {...settings}>
             <img
-              className="w-[200px] h-[300px]  object-cover"
+              className="w-[200px] h-[250px]   object-fill"
               src={Aid1}
               alt="Slide 1"
             />
             <img
-              className="w-[200px] h-[300px]  object-cover"
+              className="w-[200px] h-[250px] object-fill"
               src={Aid2}
               alt="Slide 2"
             />
             <img
-              className="w-[200px] h-[300px]  object-cover"
+              className="w-[200px] h-[250px]  object-fill"
               src={Aid3}
               alt="Slide 3"
             />
             <img
-              className="w-[200px] h-[300px] object-cover"
+              className="w-[200px] h-[250px] object-fill"
               src={Aid4}
               alt="Slide 3"
             />
             <img
-              className="w-[200px] h-[300px] object-cover"
+              className="w-[200px] h-[250px] object-fill "
               src={Aid5}
               alt="Slide 3"
             />
             <img
-              className="w-[200px] h-[300px] object-cover"
+              className="w-[200px] h-[250px] object-fill"
               src={Aid6}
               alt="Slide 3"
             />

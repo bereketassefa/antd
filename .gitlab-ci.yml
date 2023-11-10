@@ -34,7 +34,7 @@ deploy:
     - docker container rm -f landingpage
     - docker run -d --name landingpage $CONTAINER_RELEASE_IMAGE
     - docker cp landingpage:/var/www/html/. ./build/
-    - rsync -vv -rz --checksum --delete ./build/ $server:/var/www/html/landingpage/
+    - rsync -vv -rz --checksum --delete ./build/ $server:/var/www/html/bizfyspot/
 
   only:
   - master

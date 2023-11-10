@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import logos from "../../assets/logo/addisLogoS.png";
+
+import logos from "../../assets/image/bizify spot phone logo-16.png";
 import { Message } from "../../data";
-import logo from "../../assets/logo/addisLogo.png";
+
+import logo from "../../assets/image/final logo-04.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AiOutlineMessage, AiFillMessage } from "react-icons/ai";
 import {
@@ -39,6 +41,7 @@ export default function Topbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationCount, setNotificationsCount] = useState();
   const [searchInput, setSearchInput] = useState("");
+
   const isScreenMdOrLarger = useMediaQuery({ minWidth: 768 });
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
@@ -87,43 +90,13 @@ export default function Topbar() {
     navigate("/login");
   };
 
+  const handleSearch = () => {
+    // Perform search logic here based on the searchInput state
+  };
   const [showResults, setShowResults] = useState(false);
   useEffect(() => {
     // console.log("showResults changed:", showResults);
   }, [showResults]);
-
-  const handleSearch = async () => {
-    if (searchInput.trim() === "") {
-      setSearchResults([]);
-      setShowResults(false);
-      return;
-    }
-
-    try {
-      const url = "https://search.qa.addissystems.et/partially"; // Replace with your actual URL
-      const response = await axios.post(url, {
-        query: searchInput,
-      });
-
-      const formattedResults = response.data.map((item) => {
-        let result = { entityType: item.entityType };
-        if (item.entityType === "party") {
-          result.name = item.party.businessname;
-          result.Uid = item.Uid;
-        } else if (item.entityType === "product") {
-          result.name = item.productName;
-          result.Uid = item.Uid;
-        }
-        return result;
-      });
-
-      setSearchResults(formattedResults);
-      setShowResults(true);
-    } catch (error) {
-      console.error("Error performing search", error);
-    }
-  };
-
   useEffect(() => {
     handleSearch();
   }, [searchInput]);
@@ -244,11 +217,7 @@ export default function Topbar() {
               </Link>
             ) : (
               <Link to={"/feed"}>
-                <img
-                  src={logos}
-                  alt=""
-                  className="w-full h-[30px] sm:h-[30px] "
-                />
+                <img src={logos} alt="" className="w-full  " />
               </Link>
             )}
           </div>
@@ -272,36 +241,7 @@ export default function Topbar() {
                     onChange={handleSearchInputChange}
                   />
                 </div>
-                {/* {searchInput && (
-                  <div className="absolute bg-white w-full p-1 translate-y-[1px]">
-                    <div className="flex flex-col">
-                      {searchResults.map((result, index) => (
-                        <SearchCard
-                          key={index}
-                          id={result.id}
-                          name={result.name}
-                          type={result.type}
-                          image={
-                            result.type === "business"
-                              ? result.profilePicture
-                              : result.imageUrl
-                          }
-                          onSelect={handleSelectItem}
-                        />
-                      ))}
-                    </div>
 
-                    <hr className="border-[1px] border-blue-800" />
-                    <Link
-                      to={`/feed/SearchNav/${searchInput}`}
-                      onClick={() => setSearchInput("")}
-                    >
-                      <p className="text-[12px] sm:text-[16px] flex justify-center text-primary">
-                        See All results
-                      </p>
-                    </Link>
-                  </div>
-                )} */}
                 {searchInput && (
                   <div className="absolute bg-white w-full p-1 translate-y-[1px]">
                     <div className="flex flex-col">
@@ -338,8 +278,6 @@ export default function Topbar() {
                 )}
               </div>
 
-              {/* <SearchRoute  /> */}
-              {/* notification */}
               <Link to={"/feed/notifications"}>
                 <Badge count={notificationCount}>
                   <FontAwesomeIcon

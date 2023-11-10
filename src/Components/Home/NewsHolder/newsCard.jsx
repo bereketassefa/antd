@@ -109,34 +109,34 @@ export default function NewsCard({
   //     }
   // };
 
-  useEffect(() => {
-    let es; // Declare the EventSource variable
+  // useEffect(() => {
+  //   let es; // Declare the EventSource variable
 
-    const connect = () => {
-      es = new EventSource(
-        `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
-      );
+  //   const connect = () => {
+  //     es = new EventSource(
+  //       `${import.meta.env.VITE_GET_THE_DATA_OF_TIMELINE_BY_ID}/${id}`
+  //     );
 
-    es.onmessage = (event) => {
-      const updatedPost = JSON.parse(event.data);
-      if (updatedPost.id === id) {
-        setLikeCount(updatedPost.like);
-        // console.log(updatedPost.like);
-        // checkIfLiked(); // Check if the current user has liked the updated post
-      }
-    };
-    es.onerror = (errorEvent) => {
-      // Handle the error here
-      // For example, you can try to reconnect after a delay or show a message to the user
-      setTimeout(connect, 5000);  // Try to reconnect after 5 seconds
-    };
-  };
-    connect(); // Initialize the connection
+  //   es.onmessage = (event) => {
+  //     const updatedPost = JSON.parse(event.data);
+  //     if (updatedPost.id === id) {
+  //       setLikeCount(updatedPost.like);
+  //       // console.log(updatedPost.like);
+  //       // checkIfLiked(); // Check if the current user has liked the updated post
+  //     }
+  //   };
+  //   es.onerror = (errorEvent) => {
+  //     // Handle the error here
+  //     // For example, you can try to reconnect after a delay or show a message to the user
+  //     setTimeout(connect, 5000);  // Try to reconnect after 5 seconds
+  //   };
+  // };
+  //   connect(); // Initialize the connection
 
-    return () => {
-      es.close(); // Close the EventSource connection when the component unmounts
-    };
-  }, [id]);
+  //   return () => {
+  //     es.close(); // Close the EventSource connection when the component unmounts
+  //   };
+  // }, [id]);
 
   //     es.onmessage = (event) => {
   //       const updatedPost = JSON.parse(event.data);
@@ -510,7 +510,7 @@ export default function NewsCard({
                 width={550}
                 height={360}
                 src={image}
-                // className="object-cover"
+                className="object-cover"
               />
             ))}
           </Image.PreviewGroup>
