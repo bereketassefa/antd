@@ -4,14 +4,12 @@ import { AiOutlineMessage, AiOutlineSetting } from "react-icons/ai";
 import { PiUsersThreeBold } from "react-icons/pi";
 import { GoHome } from "react-icons/go";
 
-import Aid1 from "../../../assets/image/End to End Experience new-01.png";
-
-import Aid2 from "../../../assets/image/Frame 4 new.jpg";
-
-import Aid3 from "../../../assets/image/new post addispay-01.jpg";
-import Aid4 from "../../../assets/image/epr png-01.png";
-import Aid5 from "../../../assets/image/addispay.jpg";
-import Aid6 from "../../../assets/image/Build Trust_instagram.jpg";
+import Aid1 from "../../../assets/image/Add new1.png";
+import Aid2 from "../../../assets/image/Add new2.png";
+import Aid3 from "../../../assets/image/Addnew3.png";
+import Aid4 from "../../../assets/image/Add new4.png";
+import Aid5 from "../../../assets/image/Add new5.jpg";
+import Aid6 from "../../../assets/image/Add new6.jpg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
