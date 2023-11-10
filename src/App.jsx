@@ -52,7 +52,7 @@ function App() {
 
           {/* Landing Route */}
 
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage />} />
           <Route path="/create-password/:id" element={<CreatePssPage />} />
           <Route path="/ResetPss/:token" element={<ResetPssPage />} />
           <Route path="/forget-password" element={<ForgotPassPage />} />

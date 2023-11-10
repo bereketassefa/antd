@@ -112,7 +112,7 @@ function General() {
         setNewPass("");
         setConfirmPass("");
         setModalVisible(false); // Close the modal on success
-        navigate("/login");
+        navigate("/");
         // console.log(data);
         // Handle success - maybe redirect the user or show a success message
       }
