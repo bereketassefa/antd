@@ -5,16 +5,12 @@ import cheng from "../../assets/image/channel.png";
 import db from "../../assets/image/opprtunities.png";
 import staf from "../../assets/image/bgheroside1.png";
 import line from "../../assets/image/line.png";
-
-function Heroside() {
+function Heroside2() {
   return (
-    <div className="hidden lg:block lg:w-1/2 bg-[#3222C6] h-screen">
+    <div className="hidden lg:block lg:w-1/2 bg-[#3222C6] h-[800px]">
       <div className="items-center flex-col justify-start overflow-hidden">
         <div className=" flex flex-col gap-4">
           <div className="mx-10 my-4 ">
-            <p className="text-white">What we offer</p>
-            <img className="w-ful" src={line} alt="image" />
-
             <div className="flex  mt-4">
               <img
                 className="w-[50px] h-[50px] object-contain"
@@ -35,7 +31,7 @@ function Heroside() {
           </div>
 
           <div
-            className="  mx-4 flex flex-col gap-16 bg-[url('/images/staf.jpg')] w-full  sm:h-[500px] lg:h-[700px]  object-cover bg-cover bg-center bg-opacity-[10%]"
+            className="  mx-4 flex flex-col gap-16 bg-[url('/images/staf.jpg')] w-full  sm:h-[500px] lg:h-[700px]  object-cover bg-cover bg-center bg-opacity-5"
             style={{ backgroundImage: `url(${staf})` }}
           >
             <div className="flex  justify-center items-center">
@@ -102,4 +98,4 @@ function Heroside() {
   );
 }
 
-export default Heroside;
+export default Heroside2;

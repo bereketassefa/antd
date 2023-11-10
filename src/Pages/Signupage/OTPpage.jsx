@@ -1,16 +1,16 @@
 import React from "react";
 import Heroside from "../../Components/SignUp/Heroside";
-import logo from "../../assets/image/addissystems-logo.png";
+import logo from "../../assets/image/final logo-04.png";
 import dotTopBackground from "../../assets/image/dot2for web.jpg";
 import dotTopMobBackground from "../../assets/image/dot1formob.jpg";
 import dotBottomBackground from "../../assets/image/dot1forweb.jpg";
 import dotBottomMobBackground from "../../assets/image/dot2formob.jpg";
-import LoginOtP from '../../Components/SignUp/LoginOtp'
+import LoginOtP from "../../Components/SignUp/LoginOtp";
 
 function OTPpage() {
   return (
-    <div>
-      <div className=" flex max-w-screen-2xl mx-auto  justify-evenly h-screen  ">
+    <div className="h-screen">
+      <div className=" flex max-w-screen    ">
         {/* Login Box  */}
         <div className="  w-full md:w-1/2  flex-col justify-between ">
           <div className=" flex justify-between">
