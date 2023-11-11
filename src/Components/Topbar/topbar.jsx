@@ -56,16 +56,54 @@ export default function Topbar() {
     setSearchResults([]);
   };
 
-  const handleSearchInputChange = (e) => {
-    const inputValue = e.target.value;
-    setSearchInput(inputValue);
+  // const handleSearchInputChange = (e) => {
+  //   const inputValue = e.target.value;
+  //   setSearchInput(inputValue);
 
-    // Perform search logic here and update searchResults state accordingly
-    // For simplicity, let's assume searchResults is an array of objects with `id`, `name`, `type`, and `imageUrl` properties
-    const results = performSearch(inputValue);
-    setSearchResults(results);
+  //   // Perform search logic here and update searchResults state accordingly
+  //   // For simplicity, let's assume searchResults is an array of objects with `id`, `name`, `type`, and `imageUrl` properties
+  //   const results = performSearch(inputValue);
+  //   setSearchResults(results);
+  // };
+
+  const handleSearch = async () => {
+    if (searchInput.trim() === "") {
+      setSearchResults([]);
+
+      return;
+
+      setSearchHistory((prevHistory) => {
+        const updatedHistory = [...prevHistory, searchInput];
+        localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
+        return updatedHistory;
+      });
+    }
+
+    try {
+      const url = "https://search.qa.addissystems.et/partially"; // Replace with your actual URL
+      const response = await axios.post(url, {
+        query: searchInput,
+      });
+
+      const formattedResults = response.data.map((item) => {
+        let result = { entityType: item.entityType };
+        if (item.entityType === "party") {
+          result.name = item.party.businessname;
+          result.Uid = item.Uid;
+        } else if (item.entityType === "product") {
+          result.name = item.productName;
+          result.Uid = item.Uid;
+        }
+        return result;
+      });
+
+      setSearchResults(formattedResults);
+      // console.log(formattedResults);
+      setShowResults(true);
+    } catch (error) {
+      console.error("Error performing search", error);
+    }
   };
-
   useEffect(() => {
     // Check the theme from local storage when the component mounts
     const theme = localStorage.getItem("theme");
@@ -89,13 +127,6 @@ export default function Topbar() {
     navigate("/login");
   };
 
-  const handleSearch = () => {
-    // Perform search logic here based on the searchInput state
-  };
-  const [showResults, setShowResults] = useState(false);
-  useEffect(() => {
-    // console.log("showResults changed:", showResults);
-  }, [showResults]);
   useEffect(() => {
     handleSearch();
   }, [searchInput]);
@@ -237,7 +268,9 @@ export default function Topbar() {
                     type="text"
                     value={searchInput}
                     placeholder="What are you looking for?"
-                    onChange={handleSearchInputChange}
+                    onChange={(e) => {
+                      setSearchInput(e.target.value);
+                    }}
                   />
                 </div>
 
