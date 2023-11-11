@@ -48,7 +48,6 @@ export default function Topbar() {
   const [showMessageDrop, setShowMessageDrop] = useState(false);
   const [selectedChat, setSelectedChat] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
-
   const handleSelectItem = (selectedItem) => {
     // Handle the selected item here
     console.log("Selected item:", selectedItem);

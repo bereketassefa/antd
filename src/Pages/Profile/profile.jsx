@@ -41,9 +41,6 @@ export default function Profile({dataConnection}) {
              {
   check && <ProfileProgress />
 } 
-
-
-           
         </div>
 
 

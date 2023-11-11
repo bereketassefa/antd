@@ -507,7 +507,7 @@ export default function NewsCard({
             {image?.map((image, index) => (
               <Image
                 key={index}
-                width={550}
+                width={800}
                 height={360}
                 src={image}
                 className="object-cover"

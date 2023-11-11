@@ -88,7 +88,7 @@ export default function Post(props) {
      timeline && timeline?.timelines && timeline?.timelines.map((item, index) => (
         <NewsCard
         key={item?.id}
-          image={item?.image}
+          image={item?.images}
           newContent={item?.description}
           timestamp={item?.time}
           id={item?.id}

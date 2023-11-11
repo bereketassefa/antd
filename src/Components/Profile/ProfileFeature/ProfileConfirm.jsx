@@ -57,7 +57,7 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
 
   const handleImageConfirm = async () => {
     try {
-      const url= `${import.meta.env.UPDATE_PROFILE_IMAGE}`
+      const url= `${import.meta.env.VITE_UPDATE_PROFILE_IMAGE}`
       if (!imageFile) {
         console.error("No image selected");
         return;
