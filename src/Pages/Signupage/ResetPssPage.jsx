@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import Heroside from "../../Components/SignUp/Heroside";
-import logo from "../../assets/image/addissystems-logo.png";
+import logo from "../../assets/image/final logo-04.png";
 import dotTopBackground from "../../assets/image/dot2for web.jpg";
 import dotTopMobBackground from "../../assets/image/dot1formob.jpg";
 import dotBottomBackground from "../../assets/image/dot1forweb.jpg";
@@ -14,7 +14,7 @@ function ResetPssPage() {
     setModalOpen(true);
   };
   return (
-    <div>
+    <div className=" h-screen ">
       <Modal
         open={modalOpen}
         onOk={() => setModalOpen(false)}
@@ -24,7 +24,7 @@ function ResetPssPage() {
         <ResetConfirm />
       </Modal>
       <div>
-        <div className=" flex max-w-screen-2xl mx-auto  justify-evenly h-screen  ">
+        <div className=" flex max-w-screen  ">
           {/* Login Box  */}
           <div className="  w-full md:w-1/2  flex-col justify-between ">
             <div className=" flex justify-between">

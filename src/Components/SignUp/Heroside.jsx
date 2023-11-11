@@ -1,118 +1,209 @@
+// import React from "react";
+// import image from "../../assets/image/profile.png";
+// import search from "../../assets/image/handsheck.png";
+// import cheng from "../../assets/image/channel.png";
+// import db from "../../assets/image/opprtunities.png";
+// import staf from "../../assets/image/bgheroside1.png";
+// import line from "../../assets/image/line.png";
+
+// function Heroside() {
+//   return (
+//     <div className="hidden lg:block lg:w-1/2 bg-[#3222C6] h-screen">
+//       <div className="items-center flex-col justify-start overflow-hidden">
+//         <div className=" flex flex-col gap-4">
+//           <div
+//             className="  mx-4 flex flex-col gap-16 bg-[url('/images/staf.jpg')] w-full h-[400px]   sm:h-[745px]  object-cover bg-cover bg-center bg-opacity-[10%]"
+//            style={{
+//               backgroundImage: linear-gradient(rgba(50, 34, 198, 0.7), rgba(50, 34, 198, 0.7)), url(${staf}),
+//             }}
+//           >
+//             <div className="mx-10 my-2 ">
+//               <p className="text-white text-[20px] font-bold">What we offer</p>
+//               <img className="w-ful" src={line} alt="image" />
+
+//               <div className="flex  mt-3">
+//                 <img
+//                   className="w-[50px] h-[50px] object-contain"
+//                   src={image}
+//                   alt="image"
+//                 />
+
+//                 <div className="flex-col">
+//                   <h1 className="  mb-3 text-white font-sans not-italic font-bold leading-none ">
+//                     PRFILE CUSTOMIZATION
+//                   </h1>
+//                   <p className="text-white font-sans not-italic font-normal leading-none">
+//                     Create a unique business profile that showcases <br /> your
+//                     brand and skills
+//                   </p>
+//                 </div>
+//               </div>
+//             </div>
+//             <div className="flex  justify-center items-center">
+//               <img
+//                 className="p-[2px] w-[50px] h-[50px] object-contain"
+//                 src={search}
+//                 alt="image"
+//               />
+
+//               <div className="flex-col ">
+//                 <h1 className=" mb-3 text-white font-sans not-italic font-bold leading-none text-[20px]">
+//                   ENGAGE AND CONNECT
+//                 </h1>
+//                 <p className="text-white font-sans not-italic font-normal leading-none">
+//                   Interact, share insights, and connect
+//                   <br /> With B2B professionals. Engage in discussions, <br />
+//                   showcase expertise, and expand your network.
+//                 </p>
+//               </div>
+//             </div>
+//             <div>
+//               <div className="flex items-center">
+//                 <img
+//                   className="p-[2px] w-[50px] h-[50px] object-contain"
+//                   src={cheng}
+//                   alt="image"
+//                 />
+
+//                 <div className="flex-col">
+//                   <h1 className="  mb-3 text-white font-sans not-italic font-bold leading-none text-[20px]">
+//                     TARGET ADVERTISEMENT
+//                   </h1>
+//                   <p className="text-white font-sans not-italic font-normal leading-none">
+//                     Reach your target audience with precision targeting. <br />
+//                     Promote your products and services to drive your business
+//                     forward.
+//                   </p>
+//                 </div>
+//               </div>
+//             </div>
+//             <div className="flex  justify-center items-center">
+//               <img
+//                 className=" object-contain w-[50px] h-[50px]"
+//                 src={db}
+//                 alt="image"
+//               />
+
+//               <div className="flex-col">
+//                 <h1 className="  mb-3 text-white font-sans not-italic font-bold leading-none text-[20px]">
+//                   BUSINESS OPPORTUNITIES
+//                 </h1>
+//                 <p className="text-white font-sans not-italic font-normal leading-none">
+//                   Discover new opportunities to elevate your business.
+//                   partnerships, <br />
+//                   Unlock growth potential through ventures, <br />
+//                   and collaborations.
+//                 </p>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Heroside;
+
 import React from "react";
-import image from "../../assets/image/ampol.png";
-import image2 from "../../assets/image/arrow2.png";
-import search from "../../assets/image/serch1.1.png";
-import cheng from "../../assets/image/arrow2.2.png";
-import db from "../../assets/image/db2.png";
-import Arrow3 from "../../assets/image/arrow3.png";
-import staf from "../../assets/image/landin page login 3.png";
+import image from "../../assets/image/profile.png";
+import search from "../../assets/image/handsheck.png";
+import cheng from "../../assets/image/channel.png";
+import db from "../../assets/image/opprtunities.png";
+import staf from "../../assets/image/bgheroside1.png";
+import line from "../../assets/image/line.png";
+
 function Heroside() {
   return (
-    <div className=" hidden lg:block lg:w-1/2  ">
-      <div className="items-center flex-col justify-center  overflow-hidden ">
-        <div>
-          <div className="flex justify-center mt-4 ">
-            <div className="w-[55px] h-[55px]  m-2  ">
-              <img
-                className="  w-[50px] h-[50px] object-contain"
-                src={image}
-                alt="image "
-              />
-            </div>
-            <div className="flex-col">
-              <h1 className=" text-[#3222C6] font-sans not-italic font-bold leading-none text-[20px] ">
-                THINKING
-              </h1>
-              <p className="text-[#3222C6] font-sans not-italic font-normal leading-none ">
-                Here we wish to develop a systems <br /> understanding of what{" "}
-                we are dealing with.
-              </p>
-            </div>
-          </div>
-          <div className=" flex justify-center items-center  ">
-            <div className="w-[130px] h-130[px] rotate-[109deg]  ">
-              <img
-                className="w-[130px] h-[130] rotate-[-111.221deg] object-contain"
-                src={image2}
-                alt="image "
-              />
-            </div>
-            <div className="w-[55px] h-[55px]  m-2 ">
-              <img
-                className=" p-[2px]   w-[50px] h-[50px] object-contain"
-                src={search}
-                alt="image "
-              />
-            </div>
-            <div className="flex-col">
-              <h1 className=" text-[#3222C6] font-sans not-italic font-bold leading-none text-[20px] ">
-                ENQUIRY
-              </h1>
-              <p className="text-[#3222C6] font-sans not-italic font-normal leading-none ">
-                Here we want to look into the <br /> workings of the current
-                system <br />
-                and map it out
-              </p>
-            </div>
-          </div>
+    <div className="hidden lg:block lg:w-1/2 bg-[#3222C6] h-screen">
+      <div className="items-center flex-col justify-start overflow-hidden">
+        <div className=" flex flex-col gap-4">
+          <div
+            className="mx-4 flex flex-col gap-16 bg-[url('/images/staf.jpg')] w-full h-[400px] sm:h-[745px] object-cover bg-cover bg-center"
+            style={{
+              backgroundImage: `linear-gradient(rgba(50, 34, 198, 0.9), rgba(50, 34, 198, 0.9)), url(${staf})`,
+            }}
+          >
+            <div className="mx-10 my-2 ">
+              <p className="text-white text-[20px] font-bold">What we offer</p>
+              <img className="w-ful" src={line} alt="image" />
 
-          <div>
-            <div className="flex justify-center items-center ">
-              <div className="w-[55px] h-[55px] m-2 ">
+              <div className="flex  mt-3">
                 <img
-                  className="p-[2px]   w-[50px] h-[50px] object-contain "
-                  src={cheng}
-                  alt="image "
+                  className="w-[50px] h-[50px] object-contain"
+                  src={image}
+                  alt="image"
                 />
+
+                <div className="flex-col">
+                  <h1 className="  mb-3 text-white font-sans not-italic font-bold leading-none ">
+                    PROFILE CUSTOMIZATION
+                  </h1>
+                  <p className="text-white font-sans not-italic font-normal leading-none">
+                    Create a unique business profile that showcases <br /> your
+                    brand and skills
+                  </p>
+                </div>
               </div>
-              <div className="flex-col">
-                <h1 className=" text-[#3222C6] font-sans not-italic font-bold leading-none text-[20px] ">
-                  CHANGE
+            </div>
+            <div className="flex  justify-center items-center">
+              <img
+                className="p-[2px] w-[50px] h-[50px] object-contain"
+                src={search}
+                alt="image"
+              />
+
+              <div className="flex-col ">
+                <h1 className=" mb-3 text-white font-sans not-italic font-bold leading-none text-[20px]">
+                  ENGAGE AND CONNECT
                 </h1>
-                <p className="text-[#3222C6] font-sans not-italic font-normal leading-none ">
-                  Now we want to start to look at the <br /> transition and
-                  places to intervene
+                <p className="text-white font-sans not-italic font-normal leading-none">
+                  Interact, share insights, and connect
+                  <br /> With B2B professionals. Engage in discussions, <br />
+                  showcase expertise, and expand your network.
                 </p>
               </div>
-              <div className="w-[130px] h-[130px] rotate-[109deg]">
+            </div>
+            <div>
+              <div className="flex items-center">
                 <img
-                  className="w-[150px] h-[150] rotate-[-108.569deg] object-contain"
-                  src={Arrow3}
-                  alt="image "
+                  className="p-[2px] w-[50px] h-[50px] object-contain"
+                  src={cheng}
+                  alt="image"
                 />
+
+                <div className="flex-col">
+                  <h1 className="  mb-3 text-white font-sans not-italic font-bold leading-none text-[20px]">
+                    TARGET ADVERTISEMENT
+                  </h1>
+                  <p className="text-white font-sans not-italic font-normal leading-none">
+                    Reach your target audience with precision targeting. <br />
+                    Promote your products and services to drive your business
+                    forward.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex  justify-center items-center">
+              <img
+                className=" object-contain w-[50px] h-[50px]"
+                src={db}
+                alt="image"
+              />
+
+              <div className="flex-col">
+                <h1 className="  mb-3 text-white font-sans not-italic font-bold leading-none text-[20px]">
+                  BUSINESS OPPORTUNITIES
+                </h1>
+                <p className="text-white font-sans not-italic font-normal leading-none">
+                  Discover new opportunities to elevate your business.
+                  partnerships, <br />
+                  Unlock growth potential through ventures, <br />
+                  and collaborations.
+                </p>
               </div>
             </div>
           </div>
-
-          <div className="flex justify-center items-center">
-            <div className="w-[130px] h-130[px] rotate-[109deg]">
-              <img
-                className="w-[130px] h-[130] rotate-[-111.221deg] object-contain"
-                src={image2}
-                alt="image "
-              />
-            </div>
-            <div className="w-[55px] h-[55px] m-2  ">
-              <img
-                className="bg-slate-100  object-contain w-[50px] h-[50px]    "
-                src={db}
-                alt="image "
-              />
-            </div>
-            <div className="flex-col">
-              <h1 className=" text-[#3222C6] font-sans not-italic font-bold leading-none text-[20px] ">
-                DESIGN
-              </h1>
-              <p className="text-[#3222C6] font-sans not-italic font-normal leading-none ">
-                Now think about how to <br />  design and develop <br />{" "}
-               a new platform
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="-mt-20 -ml-6 ">
-          <img src={staf} alt="image" className="object-contain  w-[360px]" />
         </div>
       </div>
     </div>

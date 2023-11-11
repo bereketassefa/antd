@@ -9,7 +9,6 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 
 function Login() {
-  
   const [showPass, setShowPass] = useState(true);
   const [email, setEmail] = useState("");
   const [showEmail, setShowEmail] = useState(false);
@@ -48,11 +47,7 @@ function Login() {
           import.meta.env.VITE_LOGIN_USER_API
         }/${email}/${pass}`;
         // console.log(apiUrl);
-        const response = await axios.post(
-          apiUrl,
-          {},
-          
-        );
+        const response = await axios.post(apiUrl, {});
         // console.log(response);
         if (response.status === 400) {
           setErrMsg("Server not responding!");
@@ -90,7 +85,7 @@ function Login() {
   // In Button.js
 
   return (
-    <div className=" z-50 w-full">
+    <div className=" z-50 w-full  p-4 rounded-lg">
       <Heading Title={"Welcome Back!!"} text={"Please Login to your Account"} />
       {errMsg && (
         <div className="bg-[#d71a62] text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out transform animate-slideIn flex items-center">
