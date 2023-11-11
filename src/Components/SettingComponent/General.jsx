@@ -7,12 +7,13 @@ import { AiFillEye } from "react-icons/ai";
 import Britness from "./Britness";
 import { ThemeContext } from "../../theme/ThemeContext";
 import FontSize from "./FontSize";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 function General() {
   const { myFontSize, increaseFontSize, decreaseFontSize } =
     useContext(ThemeContext);
+    const navigate = useNavigate();
   const [fontSize, setFontSize] = useState(16); // Initial font size of 16px
 
   const [showPass1, setShowPass1] = useState(false);
@@ -34,8 +35,7 @@ function General() {
   const [activesession, setActiveSession] = useState(false);
 
   // console.log("myNewFontSize:", myNewFontSize);
-  console.log("myFontSize:", myFontSize);
-
+  // console.log("myFontSize:", myFontSize);
   const toggleMode = () => {
     setIsDarkMode(!isDarkMode);
   };
@@ -87,11 +87,10 @@ function General() {
 
     // Get _id from cookies
     const _id = cookies.user._id;
-    console.log(_id);
-
+   const url= `${import.meta.env.VITE_CHANGE_PASSWORD}`
     try {
       const response = await fetch(
-        `http://localhost:8010/change-Password/${_id}`,
+        `${url}/${_id}`,
         {
           method: "PATCH", // or POST depending on how your backend is set up
           headers: {
@@ -111,8 +110,8 @@ function General() {
         setNewPass("");
         setConfirmPass("");
         setModalVisible(false); // Close the modal on success
-
-        console.log(data);
+        navigate("/");
+        // console.log(data);
         // Handle success - maybe redirect the user or show a success message
       }
       if (data.success === false) {

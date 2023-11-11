@@ -49,7 +49,7 @@ function CreatePass() {
       if (response.status === 200) {
         message.success('Password Successfully Created!');
         // Redirect the user to the homepage.
-        window.location.href = '/';
+        window.location.href = '/login';
         setLoading(false);
       } else {
         message.error("Error creating password. Please try again.");
@@ -204,9 +204,9 @@ function CreatePass() {
           type="submit"
           text={"submit"}
           bgColor={`bg-[#d71a62] ${
-            !pass1 || !isChecked ? "opacity-50 cursor-not-allowed" : ""
+            !pass1 && !isChecked ? "opacity-50 cursor-not-allowed" : ""
           }`}
-          disabled={!pass1 || !isChecked}
+          disabled={!pass1 && !isChecked}
           isLoading={loading}
         />
         <div className="ml-5">

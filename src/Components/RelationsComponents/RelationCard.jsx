@@ -10,10 +10,6 @@ const RelationCard = ({ _id,profilePic,companyName, title, image }) => {
     try {
         const url =`${import.meta.env.VITE_FIND_MY_DATA}/${_id}`
          await axios.get(url);
-        //  console.log(response?.data)
-        //   setProfilePic(response?.data?.account[0]?.profilePicture)
-
-        // console.log(cookies.user._id)
         window.location.href = `/feed/profile/${_id}`;
         
     } catch (error) {

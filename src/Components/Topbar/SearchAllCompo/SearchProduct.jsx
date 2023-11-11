@@ -27,7 +27,7 @@ function SearchProduct() {
   };
   const handleSearch = async () => {
     try {
-      const url = "https://search.qa.addissystems.et/partially";
+      const url= import.meta.env.VITE_SEARCH_PARTIALLY
       const response = await axios.post(url, {
         query: decodedName,
       });

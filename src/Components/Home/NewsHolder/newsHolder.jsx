@@ -31,6 +31,9 @@ export default function NewsHolder() {
         setTimeline(response.data.slice(0, 10));
         //  console.log(data);
       } catch (err) {
+        const url = `${import.meta.env.VITE_WITH_OUT_SSE_GET_TIMELINE}`;
+        const response = await axios.get(url, { headers: headers });
+        setTimeline(response.data.slice(0, 10));
         console.warn("Error fetching initial data");
       } finally {
         setLoading(false);

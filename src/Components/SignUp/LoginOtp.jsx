@@ -40,10 +40,10 @@ const LoginOtp = ({ value, onChange }) => {
     setLoading(true);
     try {
      
-  
+      const url= `${import.meta.env.VITE_OTP_VERIFY}`
       const otpString = otp.join("");
 
-      const response = await axios.post('https://account.qa.addissystems.et/account/mobile/otp-verify', {
+      const response = await axios.post(url, {
         phone: phoneNumber,
         OTP: otpString
       });

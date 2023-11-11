@@ -101,10 +101,10 @@ export default function CompanyInfo({ data, Uid }) {
       if(response.status === 401){
         message.error("File format is not allowed");
       }
-      else {
-        // Handle other status codes here if needed
-        message.error("An unexpected error occurred");
-      }
+      // else {
+      //   // Handle other status codes here if needed
+      //   message.error("An unexpected error occurred");
+      // }
     } catch (error) {
       console.error("Error uploading profile picture:", error);
       message.error(
@@ -195,7 +195,7 @@ export default function CompanyInfo({ data, Uid }) {
       setIsLoading(false);
       setIsDataLoaded(true);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       // setIsDataFetched(false);
     } finally {
       setButtonLoading(false); // Set loading to false when fetching is done

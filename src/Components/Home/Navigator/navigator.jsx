@@ -210,7 +210,7 @@ export default function Navigator({ handleAddProduct }) {
                   </p>
                 </li>
               </Link>
-              <Link
+              {/* <Link
                 to="/feed/messages"
                 className={`${
                   activeLink === "Message" ? "text-[#3222C6] " : "text-gray-600"
@@ -232,7 +232,7 @@ export default function Navigator({ handleAddProduct }) {
                     Message
                   </p>
                 </li>
-              </Link>
+              </Link> */}
               <Link
                 to=" "
                 className={`${

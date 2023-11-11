@@ -36,8 +36,8 @@ function ResetPass({ setModalOpen }) {
     }
 
     try {
-     
-      const response = await axios.post(`https://account.qa.addissystems.et/reset-Password/${pass1}/${originalToken}`);
+     const url= `${import.meta.env.VITE_RESET_PASSWORD}/${pass1}/${originalToken}`
+      const response = await axios.post(url);
 
       if (response.data) {
         // setModalOpen(true);

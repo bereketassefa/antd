@@ -31,8 +31,9 @@ function CompanyPP({ profilePic, setMyModalOpen, clickedImage }) {
   const handleImageDelete = async () => {
     setLoading(true);
     try {
+      const url = `${import.meta.env.VITE_DELETE_PROFILE}`
       const response = await axios.delete(
-        `https://account.qa.addissystems.et/profile/delete/${id}`
+        `${url}/${id}`
       );
 
       if (response.status === 200) {

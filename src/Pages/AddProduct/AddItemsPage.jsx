@@ -80,7 +80,7 @@ function AddItemsPage({ handleModal }) {
         );
       }
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
       message.error(
         error.response ? error.response.data.error : "An error occurred"
       );

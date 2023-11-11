@@ -71,8 +71,6 @@ const handleCancelClick = async () => {
     const fetchAccountDataForProfile = async () => {
         try {
             const url =`${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${id}`
-
-            // const url= `http://localhost:8010/account/${cookies?.user._id}`;
             await axios.get(url)
             .then((res)=>{
                 // console.log(res)
@@ -99,16 +97,6 @@ const handleCancelClick = async () => {
     e.preventDefault();
     navigate(`/feed/profile/${id}`)
 
-    // try {
-    //     const response = await axios.get(`http://localhost:8013/find-my-data/${Uid}`);
-
-    //       console.log(response.data)
-    //     // console.log(cookies.user._id)
-    //     window.location.href = `/feed/profile/${Uid}`;
-         
-    // } catch (error) {
-    //     console.log(error);
-    // }
 }
 
   return (
