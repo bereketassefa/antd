@@ -86,7 +86,7 @@ export default function Topbar() {
     removeCookie("user", { path: "/" });
 
     // Redirect to login
-    navigate("/login");
+    navigate("/");
   };
 
   const handleSearch = () => {
