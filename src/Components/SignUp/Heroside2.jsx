@@ -7,11 +7,11 @@ import staf from "../../assets/image/bgheroside1.png";
 import line from "../../assets/image/line.png";
 function Heroside2() {
   return (
-    <div className="hidden lg:block lg:w-1/2 bg-[#3222C6] h-[800px]">
+    <div className="hidden lg:block lg:w-1/2   h-auto ">
       <div className="items-center flex-col justify-start overflow-hidden">
         <div className=" flex flex-col gap-4">
           <div className="mx-10 my-4 ">
-            <div className="flex  mt-4">
+            <div className="flex  mt-4 gap-3">
               <img
                 className="w-[50px] h-[50px] object-contain"
                 src={image}
@@ -31,10 +31,12 @@ function Heroside2() {
           </div>
 
           <div
-            className="  mx-4 flex flex-col gap-16 bg-[url('/images/staf.jpg')] w-full  sm:h-[500px] lg:h-[750px]  object-cover bg-cover bg-center bg-opacity-5"
-            style={{ backgroundImage: `url(${staf})` }}
+            className="  mx-4 flex flex-col gap-16 bg-[url('/images/staf.jpg')] w-full  sm:h-[500px] lg:h-[605px]  object-cover bg-cover bg-center bg-opacity-5"
+            style={{
+              backgroundImage: `linear-gradient(rgba(50, 34, 198, 0.8), rgba(50, 34, 198, 0.8)), url(${staf})`,
+            }}
           >
-            <div className="flex  justify-center items-center">
+            <div className="flex gap-3 justify-center items-center">
               <img
                 className="p-[2px] w-[50px] h-[50px] object-contain"
                 src={search}
@@ -53,7 +55,7 @@ function Heroside2() {
               </div>
             </div>
             <div>
-              <div className="flex items-center">
+              <div className="flex  gap-3 items-center">
                 <img
                   className="p-[2px] w-[50px] h-[50px] object-contain"
                   src={cheng}
@@ -72,7 +74,7 @@ function Heroside2() {
                 </div>
               </div>
             </div>
-            <div className="flex  justify-center items-center">
+            <div className="flex gap-3 justify-center items-center">
               <img
                 className=" object-contain w-[50px] h-[50px]"
                 src={db}

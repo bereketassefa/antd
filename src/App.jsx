@@ -36,9 +36,9 @@ import { ToastProvider } from "./Components/Toast/toastContext";
 import ChatPage from "./Components/Chat/ChatPage";
 import OTPpage from "./Pages/Signupage/OTPpage";
 import AddItemsPage from "./Pages/AddProduct/AddItemsPage";
+// import HeroPage from "./Layouts/HeroPage";
 
 // import Message from "./Pages/Message/Message";
-
 
 function App() {
   const [cookies] = useCookies(["user"]);
@@ -52,6 +52,7 @@ function App() {
 
           {/* Landing Route */}
 
+          {/* <Route path="/" element={<HeroPage />} /> */}
           <Route path="/" element={<LoginPage />} />
           <Route path="/create-password/:id" element={<CreatePssPage />} />
           <Route path="/ResetPss/:token" element={<ResetPssPage />} />
