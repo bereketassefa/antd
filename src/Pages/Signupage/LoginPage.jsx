@@ -6,11 +6,11 @@ import Heroside2 from "../../Components/SignUp/Heroside2";
 
 function LoginPage() {
   return (
-    <div className=" bg-[#3222C6] h-screen ">
-      <div className=" flex max-w-full    ">
+    <div className=" bg-[#3222C6] h-screen  ">
+      <div className=" flex justify-center items-center w-full     ">
         {/* Login Box  */}
         <div className=" mx-auto">
-          <div className=" lg:max-w-[600px] md:max-w-[700px]  h-[600px] mt-16    sm:px-0 bg-white  border-2  rounded-3xl">
+          <div className=" lg:max-w-[600px] md:max-w-[700px]  sm:px-0 bg-white  border-2  rounded-3xl">
             <div className=" flex  justify-start ">
               <div className="w-[215px] mt-4 mb">
                 <img className="hidden lg:block w-full" src={logo} alt="" />
@@ -26,7 +26,7 @@ function LoginPage() {
               <Login />
             </div>
           </div>
-          {/* <p className="  flex justify-center text-white mt-8  text-3xl">
+          {/* <p className=" h-[300] flex justify-center text-white mt-8  text-3xl">
             YOUR NEXT BIG <br />
             OPPORTUNITY AWAITS!
           </p> */}
