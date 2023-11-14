@@ -701,6 +701,7 @@ export default function NewsCard({
         </div>
       )}
 
+
       {showComments && (
         <CommentContainer
           LikeCount={comments?.postCount}
@@ -708,6 +709,7 @@ export default function NewsCard({
           account_id={account_id}
           postid={id}
           isOpen={showComments}
+          fetchComments={fetchComments}
         />
       )}
     </div>

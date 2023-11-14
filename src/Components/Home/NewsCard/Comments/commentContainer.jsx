@@ -16,6 +16,7 @@ export default function CommentContainer({
   account_id,
   postid,
   isOpen,
+  fetchComments
 }) {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
@@ -77,6 +78,7 @@ export default function CommentContainer({
           )
         : [];
     });
+    fetchComments()
   };
 
   const handleKeyPress = (event) => {
