@@ -50,7 +50,7 @@ export default function Topbar() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const handleSelectItem = (selectedItem) => {
     // Handle the selected item here
-    console.log("Selected item:", selectedItem);
+    // console.log("Selected item:", selectedItem);
 
     // Clear only the search results
     setSearchResults([]);
@@ -124,7 +124,7 @@ export default function Topbar() {
     removeCookie("user", { path: "/" });
 
     // Redirect to login
-    navigate("/login");
+    navigate("/");
   };
 
   useEffect(() => {

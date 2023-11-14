@@ -7,15 +7,17 @@ import { Modal } from "antd";
 import ProfileConfirm from "../ProfileConfirm";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 function CompanyPP({ profilePic, setMyModalOpen, clickedImage }) {
   const [image, setImage] = useState(profile);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingUpdate, setLoadingUpdate] = useState(false);
-
+  const [cookies] = useCookies(["user"]);
   const [confirmprofilemodal, setConfirmProfileModal] = useState(false);
   const { id } = useParams();
+  const token = cookies?.user.token;
   const handleImageUpload = (event) => {
     setLoadingUpdate(true);
     const newImage = event.target.files[0];
@@ -33,7 +35,7 @@ function CompanyPP({ profilePic, setMyModalOpen, clickedImage }) {
     try {
       const url = `${import.meta.env.VITE_DELETE_PROFILE}`
       const response = await axios.delete(
-        `${url}/${id}`
+        `${url}/${token}`
       );
 
       if (response.status === 200) {
