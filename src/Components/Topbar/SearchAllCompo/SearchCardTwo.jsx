@@ -8,6 +8,7 @@ import {
 } from "react-icons/bi";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import { Link } from "react-router-dom";
  
 const SearchCardTwo = ({ title, image, time, description, status,Uid }) => {
 const [cookies] = useCookies(['user'])
@@ -84,17 +85,22 @@ const handleRequestConectionlClick = async () => {
         },
       }
     );
-     console.log(res);
+    setIsLoading(false); 
+    checkTheStatus()
+    //  console.log(res);
   } catch (error) {
     setIsLoading(false);  
     console.error(
       "Error in handleRequestConectionlClick:",
-      error.response ? error.response.data : error.message
+      // error.response ? error.response.data : error.message
     );
   }
 };
 
-useEffect(() => {
+useEffect(()=>{
+  checkTheStatus()
+},[])
+
   async function checkTheStatus() {
     setIsLoadingData(true);  // Start data loading
 
@@ -111,9 +117,34 @@ useEffect(() => {
       setIsLoadingData(false);  // End data loading
     }
   }
+  const handleCancelClick = async () => {
+    try {
+      const url = `${import.meta.env.VITE_CANCEL_THE_RELATION}/${
+        res[0]?.relation?.properties?.id
+      }`;
+      // console.log(    res[0].relation?.properties?.id)
+      const response = await fetch(url, {
+        method: "DELETE", // Or the appropriate HTTP method for your API
+      });
 
-  checkTheStatus();
-}, []);
+      if (!response.ok) {
+        return; // Handle non-successful response
+      }
+
+      await response.json();
+      handlecheckWhoisSender();
+      FetchCountRetation();
+      //   console.log(data); // Process the response data if needed
+
+      return true; // This will close the modal
+    } catch (error) {
+      console.error(error); // Handle the error, e.g., show an error message
+    }
+
+    // Handle cancel click logic here
+  };
+
+
 const ButtonSkeleton = () => (
   <div className="bg-white shadow-md rounded-lg py-3 w-[120px] animate-pulse">
     <p className="text-sm text-gray-300 flex justify-center items-center gap-1">
@@ -130,7 +161,11 @@ return (
           <Avatar onClick={hadleNavigateProfile} img={AccountData?.profilePicture ? AccountData?.profilePicture : alternativeProfile} />
         </div>
         <div className="flex flex-col">
-          <h1 onClick={hadleNavigateProfile} className="font-bold text-[#000] text-[17px]">{truncateTitle(title).toLowerCase()}</h1>
+          <h1 onClick={hadleNavigateProfile} className="font-bold text-[#000] text-[17px]">
+            <Link>
+             {truncateTitle(title).toLowerCase()}
+            </Link>
+           </h1>
           <p className="text-[13px] text-[#00000075]">{time}</p>
           {!checkUid && (
             <p className="text-[13px] text-[#00000075]">you</p>
@@ -143,10 +178,16 @@ return (
             {checkUid && (!res || res.length === 0) && (
               <div className="bg-secondary rounded-lg py-3 w-[120px]">
                 <p onClick={handleRequestConectionlClick} className="text-sm text-white flex justify-center items-center gap-1">
-                  <BiSolidUserPlus className="text-white text-lg" />
-                  Connect
-                </p>
-              </div>
+                {isLoading ? ( // Show loading indicator for the Connect button
+                      <span className="animate-spin h-4 w-4 border-t-2 border-b-2 border-white"></span>
+                    ) : (
+                      <>
+                        <BiSolidUserPlus className="text-white text-lg" />
+                        <Link>Connect</Link>
+                      </>
+                    )}
+                  </p>
+                </div>
             )}
             {res && res[0]?.relation?.properties?.status === 'Accepted' && (
               <div className="bg-primary rounded-lg py-3 w-[120px]">
