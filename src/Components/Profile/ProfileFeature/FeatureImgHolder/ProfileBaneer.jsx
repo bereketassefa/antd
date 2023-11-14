@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Modal } from "antd";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
-import image from "../../../../assets/image/iphone2.webp";
+import ProfileFeature from "../../../../assets/image/coverpic.png";
 import ProfileBannerIMG from "../../ProfileFeature/FeatureImgHolder/ProfileBannerIMG";
 
 function ProfileBaneer() {
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [chosenImage, setChosenImage] = useState(null);
 
   const handleUpdateImage = () => {
     // Perform the update image logic here
@@ -33,7 +34,7 @@ function ProfileBaneer() {
       <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
         <div className="bg-white p-2 rounded-lg">
           <img
-            src={image}
+            src={ProfileFeature}
             alt="Selected"
             className="mb-4 w-full h-48 object-cover"
           />
