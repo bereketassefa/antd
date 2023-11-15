@@ -7,14 +7,30 @@ import {
   africanCountryCapitalCity,
 } from "../../../src/data";
 import PhoneInput from "react-phone-input-2";
+import { SlCalender } from "react-icons/sl";
 import "react-phone-input-2/lib/style.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 const EditProfile = () => {
   const [companyPhoneError, setCompanyPhoneError] = useState("");
   const [salesPhoneError, setSalesPhoneError] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState({});
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const handleCalendarClick = () => {
+    setShowDatePicker(true);
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setShowDatePicker(false);
+  };
   const { myFontSize, increaseFontSize, decreaseFontSize } =
     useContext(ThemeContext);
   const [fontSize, setFontSize] = useState(16); // Initial font size of 16px
@@ -28,6 +44,7 @@ const EditProfile = () => {
     city: "",
     foundedYear: "",
     foundedMonth: "",
+    foundedDate: "",
   });
 
   // const handleSend = async () => {
@@ -119,6 +136,10 @@ const EditProfile = () => {
       newErrors.foundedMonth = " Month is required";
       isValid = false;
     }
+    if (!selectedDate) {
+      newErrors.foundedDate = "Date is required";
+      isValid = false;
+    }
 
     setErrors(newErrors);
     return isValid;
@@ -140,7 +161,7 @@ const EditProfile = () => {
               htmlFor="overview"
               className="block mb-2 text-lg font-medium text-gray-700"
             >
-              <p style={{ fontSize: 16 + myFontSize }}>Company Description</p>
+              <p style={{ fontSize: 16 + myFontSize }}>Overview </p>
             </label>
 
             <input
@@ -193,41 +214,6 @@ const EditProfile = () => {
               )}
             </div>
           </div>
-          <div className="my-2">
-            <label
-              htmlFor="salesPhone"
-              className="block mb-2 text-lg font-medium text-gray-700"
-            >
-              <p style={{ fontSize: 16 + myFontSize }}> Sales Phone Number</p>
-            </label>
-            <div className="flex w-full max-w-[700px] flex-col   mt-4">
-              <div
-                className={
-                  salesPhoneError
-                    ? "flex items-center rounded bg-white pl-2 border-2 border-red-500 max-w-[650px]  md:w-[650px]"
-                    : "flex items-center rounded bg-white pl-2 border-2 border-[#3222C6] max-w-[650px]  md:w-[650px]"
-                }
-              >
-                <PhoneInput
-                  country={"et"}
-                  enableAreaCodes={true}
-                  value={formData.salesPhone}
-                  inputProps={{
-                    className: "w-full py-3 px-12 rounded outline-none ",
-                  }}
-                  containerStyle={{ position: "relative" }}
-                  buttonStyle={{ background: "transparent", border: "none" }}
-                  dropdownStyle={{ position: "absolute", top: "100%", left: 0 }}
-                  onChange={(value) =>
-                    handleChange({ target: { name: "salesPhone", value } })
-                  }
-                />
-              </div>
-              {salesPhoneError && (
-                <p className="text-red-500 text-sm">{salesPhoneError}</p>
-              )}
-            </div>
-          </div>
 
           <div className="flex w-full max-w-[500px] flex-col   my-2">
             <label
@@ -252,8 +238,8 @@ const EditProfile = () => {
             )}
           </div>
 
-          <div className="flex px-2">
-            <div className="flex flex-col my-2 w-56">
+          <div className="flex  gap-4  justify-between items-center  max-w-[650px]  md:w-[650px]">
+            <div className=" w-80  ">
               <label
                 htmlFor="country"
                 className="block mb-2 text-lg font-medium text-gray-700"
@@ -286,124 +272,54 @@ const EditProfile = () => {
                 <p className="text-red-500 text-sm">{errors.country}</p>
               )}
             </div>
-            <div className="mt-11 w-56 ml-6">
-              <div className="">
-                <select
-                  id="city"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  className={`w-full py-3 pl-3 rounded outline-none border-2 border-[#3222C6] max-w-[650px] ${
-                    errors.city ? "border-red-500" : "border-2 border-[#3222C6]"
-                  }`}
-                >
-                  <option value="">Select City</option>
-                  {Object.values(africanCountryCapitalCity).map((country) => (
-                    <option key={country.capital} value={country.capital}>
-                      {country.capital}
-                    </option>
-                  ))}
-                </select>
-                {errors.city && (
-                  <p className="text-red-500 text-sm">{errors.city}</p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex px-2 ">
-            <div className=" w-56">
+            <div className=" w-80 ">
               <label
-                htmlFor="foundedMonth"
-                className="block mb-2   text-lg font-medium text-gray-700"
+                htmlFor="city"
+                className="block mb-2 text-lg font-medium text-gray-700"
               >
-                <p style={{ fontSize: 16 + myFontSize }}> Founded Year</p>
+                <p style={{ fontSize: 16 + myFontSize }}> City </p>
               </label>
-              <select
-                type="text"
-                id="foundedMonth"
-                name="foundedMonth"
-                value={formData.foundedMonth}
+              <input
+                id="city"
+                name="city"
+                value={formData.city}
                 onChange={handleChange}
-                className={`w-full py-3 pl-3  rounded outline-none  border-2 border-[#3222C6] max-w-[650px]   ${
-                  errors.foundedMonth
-                    ? "border-red-500"
-                    : "border-2 border-[#3222C6]"
+                placeholder="Enter here"
+                className={`w-full py-3 pl-3 rounded outline-none border-2 border-[#3222C6] max-w-[650px] ${
+                  errors.city ? "border-red-500" : "border-2 border-[#3222C6]"
                 }`}
-              >
-                <option style={{ fontSize: 16 + myFontSize }} value="">
-                  Select Month
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="Jan">
-                  January
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="Feb">
-                  February
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="mar">
-                  March
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="apr">
-                  April
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value=" may">
-                  May
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="jun ">
-                  June
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="jul">
-                  July
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="aug">
-                  August
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="sep">
-                  September
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="oct">
-                  October
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="nov">
-                  November
-                </option>
-                <option style={{ fontSize: 16 + myFontSize }} value="dec">
-                  December
-                </option>
-              </select>
-              {errors.foundedMonth && (
-                <p className="text-red-500 text-sm">{errors.foundedMonth}</p>
-              )}
-            </div>
-
-            <div className="mt-9 ml-6 w-56">
-              <select
-                type="number"
-                id="foundedYear"
-                name="foundedYear"
-                value={formData.foundedYear}
-                onChange={handleChange}
-                className={`w-full py-3 pl-3   outline-none rounded border-2 border-[#3222C6] max-w-[650px]    ${
-                  errors.foundedYear
-                    ? "border-red-500"
-                    : "border-2 border-[#3222C6]"
-                }`}
-              >
-                <option style={{ fontSize: 16 + myFontSize }} value="">
-                  Select Year
-                </option>
-                <option value="January">2020</option>
-                <option value="February">2021</option>
-                <option value="February">2022</option>
-                <option value="February">2023</option>
-                <option value="February">202</option>
-              </select>
-              {errors.foundedYear && (
-                <p className="text-red-500 text-sm">{errors.foundedYear}</p>
+              ></input>
+              {errors.city && (
+                <p className="text-red-500 text-sm">{errors.city}</p>
               )}
             </div>
           </div>
-          <div className="flex justify-center my-12">
+
+          <div className="flex px-2 font-bold mt-5 justify-between max-w-[650px] md:w-[680px]">
+            <p>Company Founded</p>
+            <div className="flex justify-center items-center gap-2">
+              <p className="text-[#A7A7A7]">Pick a date</p>
+              <p className="text font-bold">
+                {selectedDate ? selectedDate.toLocaleDateString() : ""}
+              </p>
+
+              <DatePicker
+                selected={selectedDate}
+                value={formData.foundedDate}
+                onChange={handleDateChange}
+                dateFormat="MM/dd/yyyy"
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                customInput={<SlCalender className="text-3xl" />}
+              />
+            </div>
+            {formErrors.foundedDate && (
+              <p className="text-red-500 text-sm">{formErrors.foundedDate}</p>
+            )}
+          </div>
+
+          <div className="flex justify-end my-12">
             <button
               style={{ fontSize: 16 + myFontSize }}
               type="submit"
