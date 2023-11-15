@@ -145,14 +145,13 @@ export default function NewsHolder() {
       dataLength={timeline.length}
       next={fetchData}
     hasMore={hasMores}
-  loader={<h4 className="text-center ">Loading...</h4>}
-    // loader={<div className="spinner"></div>}
+  loader={<h4 className="text-center">Loading...</h4>}
   endMessage={
     <p style={{ textAlign: 'center' }}>
-      <b>no more new data</b>
+      <b>Yay! You have seen it all</b>
     </p>
   }
-  height={730}
+  height={window.innerWidth< 660 ?'':730}
   // below props only if you need pull down functionality
   refreshFunction={fetchData}
   pullDownToRefresh
@@ -165,7 +164,6 @@ export default function NewsHolder() {
   }
 
     >
-
       {loading
         ? Array.from({ length: 5 }).map((_, index) => (
             <NewsCardSkeleton key={index} />
@@ -186,26 +184,6 @@ export default function NewsHolder() {
             />
           ))
         : null}
-
-<style jsx className="no-hover:hover">{`
-              .spinner {
-                border: 4px solid rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                border-top: 4px solid white;
-                width: 24px;
-                height: 24px;
-                z-index:100;
-                animation: spin 1s linear infinite;
-              }
-              @keyframes spin {
-                0% {
-                  transform: rotate(0deg);
-                }
-                100% {
-                  transform: rotate(360deg);
-                }
-              }
-            `}</style>
       <div ref={elementRef}></div>
       {/* <BottomNav/> */}
       </InfiniteScroll>

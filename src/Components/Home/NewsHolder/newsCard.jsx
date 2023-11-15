@@ -419,7 +419,87 @@ export default function NewsCard({
   };
   const text =
     "In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design In publishing and graphic design";
-
+    const handleLinkClick = (event) => {
+      // Change link color and route the link
+      event.target.style.color = "green"; // Change the color as needed
+      window.location.href = event.target.href;
+    };
+  
+    const handleHashClick = () => {
+      // Change color of content when # is clicked
+      document.getElementById("fullText").style.color = "blue"; // Change the color as needed
+    };
+   
+    const renderContent = () => {
+      // Regular expression to match URLs
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+    
+      // Use match to find URLs in the content
+      const matches = newContent.match(urlRegex);
+    
+      if (matches) {
+        const urlIndex = newContent.indexOf(matches[0]);
+        const textPart = newContent.substring(0, urlIndex);
+        const urlPart = matches[0];
+    
+        return (
+          <p
+            id="fullText"
+            className={`dark:text-white text-smallP md:text-midP lg:text-largeP ${
+              showText
+                ? "w-auto max-h-[none]"
+                : "  max-w-[300px] md:max-w-[450px] max-h-[45px] overflow-hidden"
+            }`}
+          >
+            <span onClick={handleHashClick}>{textPart}</span>
+            <a
+              href={urlPart}
+              target="_blank" // Opens the link in a new tab
+              rel="noopener noreferrer"
+              className="text-blue-800" // Change the color as needed
+              onClick={handleLinkClick}
+            >
+              {urlPart}
+            </a>
+          </p>
+        );
+      } else if (newContent.includes("#")) {
+        // Handle the case with #
+        const [textPart, hashPart] = newContent.split("#");
+        return (
+          <p
+            id="fullText"
+            className={`dark:text-white text-smallP md:text-midP lg:text-largeP ${
+              showText
+                ? "w-auto max-h-[none]"
+                : "  max-w-[300px] md:max-w-[450px] max-h-[45px] overflow-hidden"
+            }`}
+          >
+            <span onClick={handleHashClick}>{textPart}</span>
+            <span className="text-blue-800" onClick={handleHashClick}>
+              #{hashPart}
+            </span>
+          </p>
+        );
+      } else {
+        // Display regular content
+        return (
+          <p
+            id="fullText"
+            className={`dark:text-white text-smallP md:text-midP lg:text-largeP ${
+              showText
+                ? "w-auto max-h-[none]"
+                : "  max-w-[300px] md:max-w-[450px] max-h-[45px] overflow-hidden"
+            }`}
+          >
+            {newContent?.length > 120 && !showText
+              ? newContent.slice(0, 120) + "..."
+              : newContent}
+          </p>
+        );
+      }
+    };
+    
   return (
     <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative  ">
       {showDownloadCard && (
@@ -478,18 +558,7 @@ export default function NewsCard({
       {/* {newContent} */}
       <div className="w-full flex flex-col ">
         <div className="p-2 flex w-full ">
-          <p
-            id="fullText"
-            className={`dark:text-white text-smallP md:text-midP lg:text-largeP ${
-              showText
-                ? "w-auto max-h-[none]"
-                : "  max-w-[300px] md:max-w-[450px] max-h-[45px] overflow-hidden"
-            }`}
-          >
-            {newContent?.length > 120 && !showText
-              ? newContent.slice(0, 120) + "..."
-              : newContent}
-          </p>
+        {renderContent()}
           {!showText && newContent?.length > 120 && (
             <p
               className={`md:mt-6 text-[15px]  ${
@@ -497,7 +566,7 @@ export default function NewsCard({
               }`}
               onClick={handleToggleText}
             >
-              see more
+          ...see more
             </p>
           )}
         </div>
@@ -632,6 +701,7 @@ export default function NewsCard({
         </div>
       )}
 
+
       {showComments && (
         <CommentContainer
           LikeCount={comments?.postCount}
@@ -639,6 +709,7 @@ export default function NewsCard({
           account_id={account_id}
           postid={id}
           isOpen={showComments}
+          fetchComments={fetchComments}
         />
       )}
     </div>

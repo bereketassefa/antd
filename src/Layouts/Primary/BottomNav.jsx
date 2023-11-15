@@ -149,7 +149,7 @@ const urlRef = useRef('')
 const url='';
 
 const handleScroll = () => {
-    const currentScrollPos = Math.max(document.body.scrollTop,document.documentElement.scrollTop,window.scrollY)
+    const currentScrollPos = Math.max(window.scrollY)
     setscrollPosition(currentScrollPos)
     // console.log(currentScrollPos,"in handle");
     if(currentScrollPos > prevScrollPos){

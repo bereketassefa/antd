@@ -37,7 +37,7 @@ function LoginPage() {
               <Login />
             </div>
           </div>
-          {/* <p className="  flex justify-center text-white mt-8  text-3xl">
+          {/* <p className=" h-[300] flex justify-center text-white mt-8  text-3xl">
             YOUR NEXT BIG <br />
             OPPORTUNITY AWAITS!
           </p> */}

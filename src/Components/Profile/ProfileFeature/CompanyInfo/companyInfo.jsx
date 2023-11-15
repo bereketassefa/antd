@@ -79,8 +79,8 @@ export default function CompanyInfo({ data, Uid }) {
 
     const formData = new FormData();
     formData.append("profilePicture", selectedFile);
-    formData.append("_id", cookies?.user?._id);
-
+    formData.append("token", cookies?.user?.token);
+// console.log(cookies?.user?.token)
     try {
       const config = {
         headers: {

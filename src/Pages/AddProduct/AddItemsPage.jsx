@@ -18,6 +18,7 @@ function AddItemsPage({ handleModal }) {
   const [productPriceError, setProductPriceError] = useState("");
   const [hsnNo, setHsnNo] = useState("");
   const [cookies] = useCookies(["user"]);
+  const [hsnNoError, setHsnNoError] = useState(""); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +27,8 @@ function AddItemsPage({ handleModal }) {
       validationErrors.hsnNo = "HSN Number is required.";
     } else if (!/^\d+$/.test(hsnNo)) {
       validationErrors.hsnNo = "HSN Number must be a numeric value.";
+    } else if (hsnNo.length !== 6) {
+      validationErrors.hsnNo = "HSN number must be exactly 6 digits.";
     }
     if (productName.trim() === "") {
       validationErrors.productName = "Product Name is required.";
@@ -39,14 +42,34 @@ function AddItemsPage({ handleModal }) {
     if (productPrice.trim() === "") {
       validationErrors.productPrice = "Product Price is required.";
     }
+    if (!productImage) {
+      validationErrors.productImage = "Product Image is required.";
+    }
+    if (productFeatures.length === 0) {
+      validationErrors.productFeatures = "At least one Product Feature is required.";
+    }
+    
 
     if (Object.keys(validationErrors).length === 0) {
       handleSubmitProducts();
     } else {
       setErrors(validationErrors);
+
+      // Show a warning message for no image
+      if (validationErrors.productImage) {
+        message.warning(validationErrors.productImage);
+      }
     }
   };
-
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (feature.length > 2) {
+        setProductFeatures([...productFeatures, feature.trim()]);
+        setFeature("");
+      }
+    }
+  };
   const handleSubmitProducts = async () => {
     try {
       const Uid = cookies?.user.Uid;
@@ -93,6 +116,18 @@ function AddItemsPage({ handleModal }) {
       setFeature("");
     }
   };
+  const handleHsnNoChange = (e) => {
+    const value = e.target.value;
+
+    if (!/^\d*$/.test(value)) {
+      setErrors({ hsnNo: "HSN Number must be a numeric value." });
+    } else if (value.length !== 6) {
+      setErrors({ hsnNo: "HSN number must be exactly 6 digits." });
+    } else {
+      setErrors({});
+      setHsnNo(value);
+    }
+  };
 
   const handleRemoveFeature = (name) => {
     const updatedFeatures = productFeatures.filter((item) => item !== name);
@@ -102,6 +137,17 @@ function AddItemsPage({ handleModal }) {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     setProductImage(file);
+  };
+
+  const handleChangeProductPrice = (e) => {
+    const value = e.target.value;
+
+    if (value < 0) {
+      setProductPriceError("Product price cannot be negative.");
+    } else {
+      setProductPriceError("");
+      setProductPrice(value);
+    }
   };
 
   return (
@@ -185,6 +231,9 @@ function AddItemsPage({ handleModal }) {
               </div>
             </form>
           </div>
+          {errors.productImage && (
+          <p className="text-red-500">{errors.productImage}</p>
+        )}
         </div>
         <div className="  my-2 px-3 py-2 rounded-md border-2 border-[#A7A7A7]">
           <label
@@ -202,15 +251,13 @@ function AddItemsPage({ handleModal }) {
               className="bg-[#FFF] outline-none bg-transparent w-full"
               value={feature}
               onChange={(e) => setFeature(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleAddFeature();
-                }
-              }}
+              onKeyPress={handleKeyPress}
+              
               required
             />
 
             <div onClick={handleAddFeature}>
+              
               <IoMdAdd className="text-[#A7A7A7] w-[24px] h-[24px]  " />
             </div>
           </div>
@@ -245,7 +292,7 @@ function AddItemsPage({ handleModal }) {
                 placeholder="ETB"
                 className="dark:tex-white bg-[#FFF] outline-none bg-transparent w-full px-3 py-2"
                 value={productPrice}
-                onChange={(e) => setProductPrice(e.target.value)}
+                onChange={handleChangeProductPrice}
                 required
               />
 
@@ -277,7 +324,7 @@ function AddItemsPage({ handleModal }) {
               onChange={(e) => setHsnNo(e.target.value)}
               required
             />
-            {errors.hsnNo && <p className="text-red-500">{errors.hsnNo}</p>}
+              {errors.hsnNo && <p className="text-red-500">{errors.hsnNo}</p>}
           </div>
         </div>
 

@@ -39,7 +39,7 @@ const LoginOtp = ({ value, onChange }) => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-     
+
       const url= `${import.meta.env.VITE_OTP_VERIFY}`
       const otpString = otp.join("");
 
