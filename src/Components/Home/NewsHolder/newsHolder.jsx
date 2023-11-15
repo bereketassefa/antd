@@ -151,7 +151,7 @@ export default function NewsHolder() {
       <b>Yay! You have seen it all</b>
     </p>
   }
-  height={window.innerWidth< 660 ?'':730}
+  height={window.innerWidth< 660 ?'':'100vh'}
   // below props only if you need pull down functionality
   refreshFunction={fetchData}
   pullDownToRefresh
