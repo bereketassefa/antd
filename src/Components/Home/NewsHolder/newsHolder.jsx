@@ -3,6 +3,9 @@ import oopsno from "../../../assets/image/oops-no.png";
 import NewsCard from "./newsCard";
 import { message } from "antd";
 import axios from "axios";
+import BottomNav from "../../../Layouts/Primary/BottomNav";
+import { useScrollPosition } from "./useScrollPosition";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function NewsHolder() {
   const [loading, setLoading] = useState(true);
@@ -12,6 +15,14 @@ export default function NewsHolder() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [, forceUpdate] = useState();
+  const [hasMores, setHasMores] = useState(true)
+
+
+  // const scrollPosition = useScrollPosition()
+
+  // window.addEventListener('scroll', ()=>{
+  //   console.log(scrollPosition,"........");
+  // })
 
   useEffect(() => {
     forceUpdate({});
@@ -42,6 +53,29 @@ export default function NewsHolder() {
 
     fetchInitialData();
   }, []);
+
+  
+        const fetchData = async () => {
+          try {
+            const url = `${import.meta.env.VITE_WITH_OUT_SSE_GET_TIMELINE}`;
+            const response = await axios.get(url, { headers: headers });
+
+            const data = response.data;
+
+            setTimeline(prevTimeline => [...prevTimeline, ...data.slice(prevTimeline.length, prevTimeline.length + 10)]);
+          } catch (err) {
+            console.warn("Error fetching more data");
+            setHasMores(false)
+          } finally {
+            setLoading(false);
+          }
+        };
+
+  
+
+
+
+
 
   useEffect(() => {
     const eventSource = new EventSource(
@@ -106,7 +140,30 @@ export default function NewsHolder() {
   );
 
   return (
-    <div className="flex flex-col gap-2 w-full max-w-[550px]">
+    <div className="flex flex-col gap-2 w-full max-w-[550px] relative">
+      <InfiniteScroll 
+      dataLength={timeline.length}
+      next={fetchData}
+    hasMore={hasMores}
+  loader={<h4 className="text-center">Loading...</h4>}
+  endMessage={
+    <p style={{ textAlign: 'center' }}>
+      <b>Yay! You have seen it all</b>
+    </p>
+  }
+  height={window.innerWidth< 660 ?'':730}
+  // below props only if you need pull down functionality
+  refreshFunction={fetchData}
+  pullDownToRefresh
+  pullDownToRefreshThreshold={50}
+  pullDownToRefreshContent={
+    <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+  }
+  releaseToRefreshContent={
+    <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+  }
+
+    >
       {loading
         ? Array.from({ length: 5 }).map((_, index) => (
             <NewsCardSkeleton key={index} />
@@ -128,6 +185,8 @@ export default function NewsHolder() {
           ))
         : null}
       <div ref={elementRef}></div>
+      {/* <BottomNav/> */}
+      </InfiniteScroll>
     </div>
   );
 }

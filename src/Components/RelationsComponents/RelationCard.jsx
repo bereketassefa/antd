@@ -18,7 +18,8 @@ const RelationCard = ({ _id,profilePic,companyName, title, image }) => {
 }
 
   return (
-    <div onClick={hadleNavigateProfile} className="border-2 border-blue-700 flex items-center justify-center gap-2 w-[185px] min-h-[140px] flex-col duration-300">
+    <div onClick={hadleNavigateProfile} className="border-2 border-blue-700 flex items-center 
+    justify-center gap-2 sm:w-[185px] w-[130px] min-h-[140px] flex-col duration-300">
         <Avatar img={profilePic? profilePic:alternativeProfile }/>
 
       <h2 onClick={hadleNavigateProfile} className="font-bold text-[#000] text-center text-[17px]">

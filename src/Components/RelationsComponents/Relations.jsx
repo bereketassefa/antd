@@ -36,7 +36,8 @@ const fetchRecordsOfRelation = async() => {
   return (
     <div>
       <div className=" flex flex-col  md:flex-row items-center ">
-        <div className="lg:mt-3 sm:mt-2 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 sm:gap-2 md:gap-1 justify-items-center lg:gap-4 mb-4">
+        <div className="lg:mt-3 sm:mt-2 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-2 
+        gap-2 sm:gap-2 md:gap-1 justify-items-center lg:gap-4 mb-4 mt-4">
           {/* Debug Line */}
          
   

@@ -12,7 +12,9 @@ export default function Notification() {
   const [notifications, setNotifications] = React.useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(['User']);
 
-
+useEffect(()=>{
+window.scrollTo(0,0) // to scrool up when navigate to this page
+},[])
 //   useEffect(() => {
 //     const fetchNotifications = async () => {
 //         try {
