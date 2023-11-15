@@ -61,6 +61,7 @@ function App() {
           <Route
             path="/feed"
             element={cookies.user ? <Primary /> : <Navigate to="/" />}
+            // element={<Primary />}
           >
             <Route path="/feed" element={<PageLayout />}>
               <Route path="/feed/Relations" element={<RelationRoute />}>

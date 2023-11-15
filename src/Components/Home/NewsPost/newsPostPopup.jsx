@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Button, Divider, Modal, message } from "antd";
 import profilePlaceHolder from "../../../assets/logo/profilePlaceHolder.png";
 import Avatar from "../../../Fields/Avatar/avatar";
@@ -10,6 +10,10 @@ import { Upload } from "antd";
 import ImgCrop from "antd-img-crop";
 import axios from "axios"; // Import axios for making API requests
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
+import backarrow from "../../../assets/image/backarrow.png";
+import addPost from "../../../assets/image/addimage.png";
+import Topbar from "../../Topbar/topbar";
+import BottomNav from "../../../Layouts/Primary/BottomNav";
 
 export default function NewsPostPopup({ isOpen, handleClose }) {
   const [fileList, setFileList] = useState([]);
@@ -19,6 +23,8 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
   const [warningVisible, setWarningVisible] = useState(false);
   const [profile, setProfilePic] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const windowWidth = useRef(window.innerWidth);
+  const [showState, setShowState] = useState(true)
 
   const [theme, setTheme] = useState("light");
   const showWarningModal = () => {
@@ -51,6 +57,19 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
     imgWindow?.document.write(image.outerHTML);
   };
 
+  // const modal = Modal.info();
+
+// const closeModal = () => modal.destroy();
+
+// modal.update({
+//   title: 'Updated title',
+//   content: (
+//     <Button onClick={closeModal}>Destroy</Button>
+//   ),
+// });
+
+  
+   
   const handlePublish = async () => {
     if (!imagesSelected) {
       showWarningModal();
@@ -75,7 +94,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
       const url = `${import.meta.env.VITE_POST_NEWS}`;
       // console.log('Sending request to:',formData ,url);
       const response = await axios.post(url, formData, { headers: headers });
-      // console.log("Response received:", response);
+      console.log("Response received:", response);
       if (response.statusCode === 400) {
         message.error("File size should not exceed 5 MB");
       }
@@ -91,6 +110,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
       message.error("Error: Failed to post .");
     } finally {
       setIsLoading(false);
+      
     }
   };
 
@@ -139,7 +159,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
             OK
           </Button>,
         ]}
-      >
+        >
         <p>Please select at least one image before publishing.</p>
       </Modal>
 
@@ -148,30 +168,60 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
         open={isOpen}
         onCancel={handleClose}
         footer={[]}
-        style={{
+        // open ={showState}
+        
+        closable={false}
+        
+        // mask={false}
+        style={windowWidth.current < 640?{
+          top: '56px',
+          right:0,
+          borderRadius: 0,
+          margin:0,
+          height:'100vh',
+          
+          zIndex:0,
+          // width:'100vw',
+          overflow:'clip',
+          maxWidth:'100%',
+          boxShadow:'none' ,
+          // content: (
+          //   <Button onClick={handleCloseModal}>Destroy</Button>
+          // ),
+          
+          
+          // marginRight:0,
+          // marginLeft:0,
+
+          
+          
+
+        }:{
           top: 80,
           borderRadius: 0,
         }}
-        width={800}
+        width={windowWidth.current < 640? 1000:800}
       >
-        <div className="dark:bg-[#1b1f23] w-full md:p-4 flex flex-col gap-4 ">
-          <div className="flex gap-2 items-center">
+        {window.innerWidth < 640 ? <Topbar />:""}
+
+        <div className="dark:bg-[#1b1f23] w-full md:p-4 flex flex-col gap-4  z-1000 ">
+          <div className="sm:flex gap-2 items-center hidden">
             <Avatar img={profile ? profile : alternativeProfile} />
             <h1 className="dark:text-white text-smallP md:text-midP lg:text-largeP font-bold">
               {cookies?.user.party}
             </h1>
           </div>
-          <div className="w-full">
+          <div className="w-full mt-12">
             <textarea
-              className="dark:bg-[#1b1f23] dark:text-white  w-full border-none p-3 outline-none text-smallP md:text-midP lg:text-largeP"
-              placeholder="Write something here ..."
+              className="dark:bg-[#1b1f23] dark:text-white h-16   w-full border-none p-3 outline-none text-midP md:text-midP lg:text-largeP"
+              placeholder="Write something here  ..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
 
-          <div className=" w-full p-2 pb-0">
-            <ul className="w-full flex items-center justify-center md:justify-start gap-4">
+          <div className=" w-full p-2 pb-0 ">
+            <ul className="w-full flex items-center justify-center md:justify-start gap-4 ">
               {/* <ImgCrop
                 rotationSlider
                 modalOk={<div className="custom-ok">Ok</div>}
@@ -182,14 +232,22 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
                 fileList={fileList}
                 onChange={onChange}
                 onPreview={onPreview}
-              >
+                className= {`${windowWidth.current < 640? 'relative  flex justify-center p-8  h-[calc(100vh-46vh)] ':''} ` }>
+                  
                 {fileList.length < 5 && (
-                  <p>
+                  <p className={`${windowWidth.current < 640? " absolute bottom-6 right-6 ":''}`}>
+                    {windowWidth.current < 640? (
+                    <div className="border-2 border-gray-900 rounded-lg bg-gray-200 p-2 flex justify-center ">
+
+                    <img src={addPost} alt="+"  />
+                    </div>
+                    ):(
                     <FontAwesomeIcon
-                      className="dark:text-white text-secondary text-smallT"
+                      className="dark:text-white text-secondary text-smallT "
                       icon={faImage}
-                    />{" "}
-                    <p className="dark:text-white text-smallP">Image</p>
+                    />,
+                    <p className="dark:text-white text-smallP">Image</p>) 
+                  }
                   </p>
                 )}
               </Upload>
@@ -197,15 +255,35 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
               {/* Other upload options (video and document) */}
             </ul>
           </div>
-          <Divider className=" bg-gray-300" />
+          <Divider className=" bg-gray-300 hidden sm:block" />
           <div className="w-full flex items-center justify-center">
             <button
-              className="bg-secondary w-[113px] h-[49px] text-white text-smallP md:text-midP lg:text-largeP flex justify-center items-center no-hover"
+              className="bg-secondary w-[113px] h-[49px] text-white text-smallP md:text-midP lg:text-largeP 
+              sm:flex justify-center items-center no-hover hidden"
               onClick={handlePublish}
               disabled={isLoading} // Disable button during loading
             >
               {isLoading ? <div className="spinner"></div> : "Publish"}
             </button>
+            <button
+              className="bg-[#3222C6] w-[70px] h-[36px] text-white text-smallP md:text-midP lg:text-largeP 
+              flex justify-center items-center no-hover absolute top-8 right-8 rounded-lg sm:hidden"
+              onClick={handlePublish}
+              disabled={isLoading} // Disable button during loading
+            >
+              {isLoading ? <div className="spinner"></div> : "Publish"}
+            </button>
+
+            <button
+            className="bg-[#3222C6] w-[70px] h-[36px] text-white text-smallP md:text-midP lg:text-largeP 
+            flex justify-center items-center no-hover absolute top-8 left-8 rounded-lg hidden"
+            // onClick={()=>setShowState(false)} //here make showForm to false to close the modal
+
+            // onClick={handleClose}
+            disabled={isLoading} // Disable button during loading
+            >back</button>
+            <button className="text-4 absolute top-10 left-0 text-gray-600 font-bold 
+            flex justify-center align-middle border-0 items-center" onClick={handleClose}><img src={backarrow}/> back</button>
 
             {/* Add the following styles to create a spinner */}
             <style jsx className="no-hover:hover">{`
@@ -228,6 +306,8 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
             `}</style>
           </div>
         </div>
+        {window.innerWidth < 640 ? <BottomNav />:""}
+
       </Modal>
     </div>
   );

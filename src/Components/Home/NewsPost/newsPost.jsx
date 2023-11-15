@@ -9,6 +9,7 @@ import alternativeProfileblack from "../../../assets/image/alternativeProfile-bl
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
+import BottomNav from "../../../Layouts/Primary/BottomNav";
 export default function NewsPost() {
   const [isPosting, setIsPosting] = useState(false);
   const [profilePic, setProfilePic] = useState(null);
@@ -52,7 +53,7 @@ export default function NewsPost() {
   }, []);
   return (
     <>
-      <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards p-4 flex flex-col gap-4 max-w-[550px]  drop-shadow-xl  ">
+      <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards p-4 hidden sm:flex flex-col gap-4 max-w-[550px]  drop-shadow-xl  ">
         <div className=" flex  justify-center items-center gap-3  ">
           <div>
             <Avatar
@@ -95,6 +96,7 @@ export default function NewsPost() {
                     </li> */}
           </ul>
         </div>
+        {/* <BottomNav/> */}
       </div>
       <NewsPostPopup isOpen={isPosting} handleClose={onModalClose} />
     </>
