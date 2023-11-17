@@ -264,7 +264,7 @@ function AddItemsPage({ handleModal }) {
           <hr />
           <div className="flex gap-4 mt-3">
             {productFeatures.map((featu) => (
-              <div className=" relative bg-red-300 p-2 text-[17px] rounded-md">
+              <div className=" relative bg-blue-100 p-2 text-[17px] rounded-md">
                 {featu}
                 <div className=" " onClick={() => handleRemoveFeature(featu)}>
                   <AiFillCloseCircle className="dark:text-white absolute top-0 right-0 translate-x-2 -translate-y-1 text-red-500 text-[18px]" />

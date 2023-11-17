@@ -10,32 +10,16 @@ export default function RelationCard({id , img, companyName}) {
     function truncateCompanyName(name) {
         return name && name.length > 10 ? name.substring(0, 10) + '...' : name;
       }
-    // function getFirstLetter(str) {
-    //     if (!str) return "";
-    //     return str.charAt(0).toUpperCase();
-    // }
+  
 
     const hadleNavigateProfile = async(e)=>{
         e.preventDefault();
         navigate(`/feed/profile/${id}`)
-    
-        // try {
-        //     const response = await axios.get(`http://localhost:8013/find-my-data/${Uid}`);
-    
-        //       console.log(response.data)
-        //     // console.log(cookies.user._id)
-        //     window.location.href = `/feed/profile/${Uid}`;
-             
-        // } catch (error) {
-        //     console.log(error);
-        // }
     }
     useEffect(() => {
         const fetchAccountDataForProfile = async () => {
             try {
                 const url =`${import.meta.env.VITE_FETCH_DATA_BY_ACCOUNT_ID}/${id}`
-
-                // const url= `http://localhost:8010/account/${cookies?.user._id}`;
                 await axios.get(url)
                 .then((res)=>{
                     // console.log(res)

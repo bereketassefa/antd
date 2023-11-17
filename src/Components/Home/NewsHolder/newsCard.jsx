@@ -23,8 +23,10 @@ import { io } from "socket.io-client";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { useToast } from "../../Toast/toastContext";
 import NewSlider from "./NewSlider";
+
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiMessage } from "react-icons/bi";
 import { PiShareFill } from "react-icons/pi";
@@ -303,7 +305,7 @@ const  NewsCard = ({account_id,
       );
       const data = await response.data;
       setWhoLikedPost(data?.users);
-      // console.log(data.users);
+      console.log(data.users);
     } catch (error) {
       console.error("Failed to fetch users who liked the post:", error);
     }
@@ -702,12 +704,14 @@ const  NewsCard = ({account_id,
               </div>
               <hr className="border-[1px] border-gray-200" />
               <div className="mt-3 flex flex-col gap-8  ">
-                {LikePosts?.map((Like) => (
+                {whoLikedPost?.map((like) => (
                   <LikeCard
-                    companyName={Like.companyName}
-                    date={Like.date}
-                    image={Like.image}
-                    icon={Like.icon}
+                  key={like.user.Uid} // Adding a unique key for each card
+                  companyName={like.user.part} // Accessing 'part' from the 'user' object
+                  date={like.user.DateCreated} // Accessing 'DateCreated' from the 'user' object
+                  image={like?.user?.profilePicture ?like?.user?.profilePicture : alternativeProfile} // Accessing 'profilePicture' from the 'user' object
+                  icon={like.icon}
+                  id={like?.user?._id}
                   />
                 ))}
               </div>

@@ -44,17 +44,6 @@ export default function RecommendedRelationCard({id , img, companyName,Uid}) {
   const hadleNavigateProfile = async(e)=>{
     e.preventDefault();
     navigate(`/feed/profile/${Uid}`)
-
-    // try {
-    //     const response = await axios.get(`http://localhost:8013/find-my-data/${Uid}`);
-
-    //       console.log(response.data)
-    //     // console.log(cookies.user._id)
-    //     window.location.href = `/feed/profile/${Uid}`;
-         
-    // } catch (error) {
-    //     console.log(error);
-    // }
 }
     function getFirstLetter(str) {
         if (!str) return "";
