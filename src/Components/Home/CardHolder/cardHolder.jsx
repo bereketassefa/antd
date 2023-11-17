@@ -157,7 +157,7 @@ export default function CardHolder() {
         }
       })}
 
-      <div className=" sticky top-[110px]  ">
+      <div className=" sticky top-[110px]">
         <SociaCard />
         <div className="  w-[300px] p-4 flex flex-col gap-2  bg- bg-transparent  drop-shadow-xl ">
           <div>

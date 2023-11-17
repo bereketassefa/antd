@@ -5,8 +5,12 @@ import { faArrowsLeftRight, faBuilding, faCalendarAlt, faCode, faContactBook, fa
 import { format } from 'date-fns';
 
 export default function BasicInfo({data}) {
-    const formattedDate = data?.account[0]?.DateCreated ? format(new Date(data?.account[0]?.DateCreated), 'MMM yyyy') : "";
-
+    const formattedDate = data?.dataParty?.party[0]?.party?.CompanyFounded ? format(new Date(data?.dataParty?.party[0]?.party?.CompanyFounded), 'MMM yyyy') : "";
+// console.log(data)
+const Location =  data?.dataParty?.party[0]?.branch[0]?.address?.country
+const City =  data?.dataParty?.party[0]?.branch[0]?.address?.city
+const phone =  data?.dataParty?.party[0]?.branch[0]?.address?.phone
+const Website =  data?.dataParty?.party[0]?.party?.website
     return (
     <Collapse
       defaultActiveKey={'1'}
@@ -42,29 +46,29 @@ export default function BasicInfo({data}) {
                     <li className='flex items-center justify-between w-full'>
                         <div>
                             <h1 className='font-bold text-smallP '>Website</h1>
-                            <p className='text-primary text-smallP md:text-midP'>{}</p>
+                            <p className='text-primary text-smallP md:text-midP'>{Website}</p>
                         </div>
                         <FontAwesomeIcon icon={faGlobe}   className='text-primary text-smallT'  />
                     </li>
                     <li className='flex items-center justify-between w-full'>
                         <div>
                             <h1 className='font-bold text-smallP '>Company Phone Number</h1>
-                            <p className='text-primary text-smallP md:text-midP'>{}</p>
+                            <p className='text-primary text-smallP md:text-midP'>{phone}</p>
                         </div>
                         <FontAwesomeIcon icon={faPhone} className='text-primary text-smallT' />
                     </li>
-                    <li className='flex items-center justify-between w-full'>
+                    {/* <li className='flex items-center justify-between w-full'>
                         <div>
                             <h1 className='font-bold text-smallP '>Sales Phone Number</h1>
                             <p className='text-primary text-smallP md:text-midP'>{}</p>
                             <p className='text-primary text-smallP md:text-midP'>{}</p>
                         </div>
                         <FontAwesomeIcon icon={faPhone} className='text-primary text-smallT' />
-                    </li>
+                    </li> */}
                     <li className='flex items-center justify-between w-full'>
                         <div>
                             <h1 className='font-bold text-smallP '>Location</h1>
-                            <p>{data?.party?.branch[0]?.address?.city}</p>
+                            <p>{Location}</p>
                         </div>
                     </li>
                     <li className='flex items-center justify-between w-full'>
@@ -76,8 +80,8 @@ export default function BasicInfo({data}) {
                     </li>
                     <li className='flex items-center justify-between w-full'>
                          <div>
-                             <h1 className='font-bold text-smallP '>Relations</h1>
-                             <p>{}</p>
+                             <h1 className='font-bold text-smallP '>City</h1>
+                             <p>{City}</p>
                          </div>
                          <FontAwesomeIcon icon={faArrowsLeftRight}  className='text-primary text-smallT' />
                     </li>

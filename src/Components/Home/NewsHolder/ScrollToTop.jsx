@@ -31,10 +31,10 @@ function ScrollToTop() {
     
     <button onClick={scrollToTop}  className={`${visible? 'inline': 'hidden'} fixed w-[60px] 
     h-[60px] rounded-[50%] align-middle items-center flex justify-center right-[10%] bottom-[10%] text-[30px] z-100 hover:h-16 cursor-pointer text-[#3222C6]
-    md:right-[20%]`}>
+    ${window.innerWidth <= 1660?'right-[10%]':''} md:right-[6%] lg:right-[23%]`}>
         <FaArrowCircleUp />
     </button>
   )
 }
 
-export default ScrollToTop
+export default   ScrollToTop

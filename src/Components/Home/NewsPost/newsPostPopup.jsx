@@ -11,7 +11,9 @@ import ImgCrop from "antd-img-crop";
 import axios from "axios"; // Import axios for making API requests
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import backarrow from "../../../assets/image/backarrow.png";
-import addPost from "../../../assets/image/addimage.png";
+// import addPost from "../../../assets/image/addimage.png";
+import { RiImageAddLine } from "react-icons/ri";
+
 import Topbar from "../../Topbar/topbar";
 import BottomNav from "../../../Layouts/Primary/BottomNav";
 
@@ -253,9 +255,11 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
                       icon={faImage}
                       />
                     <p className="dark:text-white text-smallP">Image</p>
-                    <div className="border-2 border-gray-900 rounded-lg bg-gray-200 p-2 flex justify-center  absolute bottom-6 right-6  ">
+                    <div className="border-2 border-gray-900 rounded-lg bg-gray-200 p-1 flex justify-center  absolute bottom-6 right-6  ">
                       
-                    <img src={addPost} alt="+"  />
+                    {/* <img src={addPost} alt="+"  /> */}
+                    <RiImageAddLine  className="h-10 w-10"/>
+
                     </div>
                       </>
                     ):(

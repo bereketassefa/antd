@@ -11,8 +11,12 @@ import { SlCalender } from "react-icons/sl";
 import "react-phone-input-2/lib/style.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { LoadingOutlined } from '@ant-design/icons';
+import axios from "axios";
+import { message } from 'antd';
+import { useCookies } from 'react-cookie'
 const EditProfile = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(['User']);
   const [companyPhoneError, setCompanyPhoneError] = useState("");
   const [salesPhoneError, setSalesPhoneError] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -22,7 +26,8 @@ const EditProfile = () => {
   const [formErrors, setFormErrors] = useState({});
 
   const [showDatePicker, setShowDatePicker] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+const token= cookies?.user?.token
   const handleCalendarClick = () => {
     setShowDatePicker(true);
   };
@@ -30,7 +35,12 @@ const EditProfile = () => {
   const handleDateChange = (date) => {
     setSelectedDate(date);
     setShowDatePicker(false);
+    setFormData({
+      ...formData,
+      CompanyFounded: date ? date.toISOString() : "",
+    });
   };
+  
   const { myFontSize, increaseFontSize, decreaseFontSize } =
     useContext(ThemeContext);
   const [fontSize, setFontSize] = useState(16); // Initial font size of 16px
@@ -42,56 +52,88 @@ const EditProfile = () => {
     website: "",
     country: "",
     city: "",
-    foundedYear: "",
-    foundedMonth: "",
-    foundedDate: "",
+    foundedYear: "", // Add this line
+    foundedMonth: "", // Add this line
+    CompanyFounded: "", // This line already exists
   });
 
-  // const handleSend = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       "https://account.qa.addissystems.et/account/login/forgot",
-  //       {
-  //         phone: phoneNumber,
-  //       }
-  //     );
 
-  //     if (response.data) {
-  //       navigate("/OTP", { state: { phoneNumber: phoneNumber } });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error sending OTP:", error);
-  //   }
-  // };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      // Perform form submission
-      console.log(formData);
-    } else {
-      // Form validation failed
-      console.log("Form validation failed");
-    }
-  };
+      try {
+        setLoading(true);
+        // Use loading state here if needed
+        // setLoading(true);
+const url= import.meta.env.VITE_UPDATE_PROFILE
+        const response = await axios.put(
+          // Update the API endpoint as needed, assuming you have a /party/:id route
+          `${url}/${token}`, // Replace YOUR_API_BASE_URL and UID with actual values
+          {
+            Description: formData.overview,
+            phone: formData.companyPhone,
+            website: formData.website,
+            Country: formData.country,
+            City: formData.city,
+            CompanyFounded: formData.CompanyFounded, // Convert date to ISO string
+          },
+          {
+            headers: {
+              'x-auth-token':import.meta.env.VITE_PRTY_TOKEN, // Replace YOUR_AUTH_TOKEN with an actual authentication token
+            },
+          }
+        );
+        // Handle successful update
+        message.success('Profile updated successfully!');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: "" });
+        // Clear the form data
+        setFormData({
+          overview: '',
+          companyPhone: '',
+          salesPhone: '',
+          website: '',
+          country: '',
+          city: '',
+          CompanyFounded: '',
+        });
 
-    if (name === "companyPhone") {
-      setCompanyPhoneError(
-        value.trim() === "" ? "Company Phone Number is required" : ""
-      );
-    }
+        // Show success message (you might want to use Antd message here)
+      
+      } catch (error) {
+        // Handle error
+        message.error('Error updating profile. Please try again.');
+        // Show error message (you might want to use Antd message here)
+      
+      } finally {
+        // Use loading state here if needed
+        setLoading(false);
+      }
+    } 
+  
 
-    if (name === "salesPhone") {
-      setSalesPhoneError(
-        value.trim() === "" ? "Sales Phone Number is required" : ""
-      );
-    }
-  };
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+      setErrors({ ...errors, [name]: "" });
+    
+      if (name === "companyPhone") {
+        setCompanyPhoneError(value.trim() === "" ? "Company Phone Number is required" : "");
+      }
+    
+      if (name === "salesPhone") {
+        setSalesPhoneError(value.trim() === "" ? "Sales Phone Number is required" : "");
+      }
+    
+      // Add the following lines to set formData.CompanyFounded correctly
+      if (name === "foundedYear" || name === "foundedMonth") {
+        setFormData({
+          ...formData,
+          CompanyFounded: `${formData.foundedMonth} ${formData.foundedYear}`,
+        });
+      }
+    };
+    
 
   const validateForm = () => {
     let isValid = true;
@@ -137,14 +179,15 @@ const EditProfile = () => {
       isValid = false;
     }
     if (!selectedDate) {
-      newErrors.foundedDate = "Date is required";
+      newErrors.CompanyFounded = "Date is required";
       isValid = false;
     }
 
     setErrors(newErrors);
     return isValid;
   };
-  console.log("myFontSize:", myFontSize);
+  
+  
 
   return (
     <form onSubmit={handleSubmit}>
@@ -304,29 +347,36 @@ const EditProfile = () => {
               </p>
 
               <DatePicker
-                selected={selectedDate}
-                value={formData.foundedDate}
-                onChange={handleDateChange}
-                dateFormat="MM/dd/yyyy"
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                customInput={<SlCalender className="text-3xl" />}
-              />
+  selected={selectedDate}
+  onChange={handleDateChange}
+  dateFormat="MM/dd/yyyy"
+  showMonthDropdown
+  showYearDropdown
+  dropdownMode="select"
+  customInput={<SlCalender className="text-3xl" />}
+/>
+
             </div>
-            {formErrors.foundedDate && (
-              <p className="text-red-500 text-sm">{formErrors.foundedDate}</p>
+            {formErrors.CompanyFounded && (
+              <p className="text-red-500 text-sm">{formErrors.CompanyFounded}</p>
             )}
           </div>
 
           <div className="flex justify-end my-12">
-            <button
-              style={{ fontSize: 16 + myFontSize }}
-              type="submit"
-              className="px-4 py-2 text-lg  w-[100px] font-medium text-white bg-[#D71A62] rounded-md hover:bg-blue-600"
-            >
-              Save
-            </button>
+          <button
+          style={{ fontSize: 16 + myFontSize }}
+          type="submit"
+          className={`px-4 py-2 text-lg w-[100px] font-medium text-white rounded-md ${
+            loading ? 'bg-gray-500 cursor-not-allowed' : 'bg-[#D71A62] hover:bg-blue-600'
+          }`}
+          disabled={loading}
+        >
+          {loading ? (
+            <LoadingOutlined className="animate-spin mr-2" />
+          ) : (
+            'Save'
+          )}
+        </button>
           </div>
         </div>
       </div>
