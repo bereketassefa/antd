@@ -5,7 +5,8 @@ import BottomNav from "./BottomNav";
 
 export default function Primary() {
   return (
-    <div className="h-screen sm:overflow-y-scroll dark:bg-black bg-[#f3f2f0] relative w-full p-0 m-0 flex flex-col max-w-full items-center">
+    <div className="h-screen  scrollbar-hide  scroll-smooth dark:bg-black bg-white relative w-full p-0 m-0 
+    flex flex-col max-w-full items-center ">
       <div className="fixed w-full z-10 bg-green-100 ">
         <Topbar />
       </div>

@@ -21,7 +21,7 @@ function NewSlider({ image, newContent }) {
     setActiveImageIndex((prevIndex) => (prevIndex - 1 + image.length) % image.length);
   };
   return (
-    <div className="max-w-[1000px] relative flex justify-between gap-16">
+    <div className="max-w-[1000px] relative flex justify-between gap-16 ">
       <div className="relative">
         <div className="mt-4 absolute z-50 right-0 flex justify-end">
           <div

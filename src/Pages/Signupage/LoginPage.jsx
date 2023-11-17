@@ -6,6 +6,8 @@ import dico from "../../assets/image/dico.png";
 import dicor from "../../assets/image/dicor.png";
 import Heroside2 from "../../Components/SignUp/Heroside2";
 import pic from "../../assets/image/bgheroside1.png";
+// import fl from "../../assets/image/fl.png";
+import finallogo from "../../assets/image/finallogo.png";
 
 
 function LoginPage() {
@@ -22,7 +24,7 @@ function LoginPage() {
           {/* desk */}
             <div className="hidden md:flex  justify-start ">
               <div className="w-[215px] mt-4 mb">
-                <img className="hidden lg:block w-full" src={logo1} alt="" />
+                <img className="hidden lg:block w-full" src={finallogo} alt="" />
               </div>
             </div>
 

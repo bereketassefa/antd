@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { message } from "antd";
-import { useEffect, useMemo, useRef, useState } from "react";
+import React ,{ forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import alternativeProfileblack from "../../../assets/image/alternativeProfile-black.png";
@@ -34,8 +34,9 @@ import { Link } from "react-router-dom";
 import { BiSolidLike } from "react-icons/bi";
 import LikeCard from "../../../Components/Home/NewsPost/LikeCard";
 import { LikePosts } from "../../../data";
-export default function NewsCard({
-  account_id,
+
+
+const  NewsCard = ({account_id,
   myKey,
   profilePic,
   companyName,
@@ -45,7 +46,22 @@ export default function NewsCard({
   id,
   like,
   Uid,
-}) {
+})=>{
+
+  
+// export default function NewsCard({
+//   account_id,
+//   myKey,
+//   profilePic,
+//   companyName,
+//   timestamp,
+//   newContent,
+//   image,
+//   id,
+//   like,
+//   Uid,
+//   ref,
+// }) {
   const { showToast } = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const downloadCardRef = useRef(null);
@@ -441,7 +457,6 @@ export default function NewsCard({
         const urlIndex = newContent.indexOf(matches[0]);
         const textPart = newContent.substring(0, urlIndex);
         const urlPart = matches[0];
-    
         return (
           <p
             id="fullText"
@@ -486,7 +501,7 @@ export default function NewsCard({
         return (
           <p
             id="fullText"
-            className={`dark:text-white text-smallP md:text-midP lg:text-largeP ${
+            className={`dark:text-white text-smallP md:text-midP lg:text-largeP  ${
               showText
                 ? "w-auto max-h-[none]"
                 : "  max-w-[300px] md:max-w-[450px] max-h-[45px] overflow-hidden"
@@ -715,3 +730,6 @@ export default function NewsCard({
     </div>
   );
 }
+
+
+export default NewsCard;
