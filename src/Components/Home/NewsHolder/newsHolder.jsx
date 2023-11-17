@@ -6,6 +6,7 @@ import axios from "axios";
 import BottomNav from "../../../Layouts/Primary/BottomNav";
 import { useScrollPosition } from "./useScrollPosition";
 import InfiniteScroll from "react-infinite-scroll-component";
+import ScrollToTop from "./ScrollToTop";
 
 export default function NewsHolder() {
   const [loading, setLoading] = useState(true);
@@ -17,6 +18,7 @@ export default function NewsHolder() {
   const [, forceUpdate] = useState();
   const [hasMores, setHasMores] = useState(true)
 
+  
 
   // const scrollPosition = useScrollPosition()
 
@@ -138,20 +140,23 @@ export default function NewsHolder() {
       </div>
     </div>
   );
-
+  // console.log(window.screenY,"...,,,");
+  
   return (
-    <div className="flex flex-col gap-2 w-full max-w-[550px] relative">
+    <div className="flex flex-col gap-2 w-full max-w-[550px] relative scrollbar-hide ">
       <InfiniteScroll 
       dataLength={timeline.length}
       next={fetchData}
     hasMore={hasMores}
   loader={<h4 className="text-center">Loading...</h4>}
+  
   endMessage={
-    <p style={{ textAlign: 'center' }}>
+    <p style={{ textAlign: 'center', padding:'30px', width:'full' }}>
       <b>Yay! You have seen it all</b>
     </p>
   }
-  height={window.innerWidth< 660 ?'':730}
+  height={window.innerWidth< 660 ?'':''}
+  // scrollThreshold={60}
   // below props only if you need pull down functionality
   refreshFunction={fetchData}
   pullDownToRefresh
@@ -164,6 +169,9 @@ export default function NewsHolder() {
   }
 
     >
+      <>
+      <div className="" ></div>
+
       {loading
         ? Array.from({ length: 5 }).map((_, index) => (
             <NewsCardSkeleton key={index} />
@@ -181,12 +189,20 @@ export default function NewsHolder() {
               companyName={item?.account?.party}
               account_id={item?.account?._id}
               Uid={item?.uid}
+              
+
             />
           ))
         : null}
       <div ref={elementRef}></div>
       {/* <BottomNav/> */}
+      </>
       </InfiniteScroll>
+      <div className="lg:flex hidden">
+        <ScrollToTop />
+      </div>
+      
+
     </div>
   );
 }

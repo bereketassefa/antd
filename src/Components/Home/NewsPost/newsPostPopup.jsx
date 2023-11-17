@@ -11,7 +11,7 @@ import ImgCrop from "antd-img-crop";
 import axios from "axios"; // Import axios for making API requests
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import backarrow from "../../../assets/image/backarrow.png";
-// import addPost from "../../../assets/image/addimage.png";
+import addPost from "../../../assets/image/addimage.png";
 import Topbar from "../../Topbar/topbar";
 import BottomNav from "../../../Layouts/Primary/BottomNav";
 
@@ -180,11 +180,11 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
         footer={[]}
         // open ={showState}
         
-        closable={false}
+        closable={window.innerWidth< 640? false : true}
         
         // mask={false}
         style={windowWidth.current < 640?{
-          top: '56px',
+          top: 0,
           right:0,
           borderRadius: 0,
           margin:0,
@@ -212,7 +212,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
         }}
         width={windowWidth.current < 640? 1000:800}
       >
-        {window.innerWidth < 640 ? <Topbar />:""}
+        {/* {window.innerWidth < 640 ? <Topbar />:""} */}
 
         <div className="dark:bg-[#1b1f23] w-full md:p-4 flex flex-col gap-4  z-1000 ">
           <div className="sm:flex gap-2 items-center hidden">
@@ -223,7 +223,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
           </div>
           <div className="w-full mt-12">
             <textarea
-              className="dark:bg-[#1b1f23] dark:text-white h-16   w-full border-none p-3 outline-none text-midP md:text-midP lg:text-largeP"
+              className="dark:bg-[#1b1f23] dark:text-white h-32   w-full border-none p-3 outline-none text-midP md:text-midP lg:text-largeP"
               placeholder="Write something here  ..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -242,21 +242,31 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
                 fileList={fileList}
                 onChange={onChange}
                 onPreview={onPreview}
-                className= {`${windowWidth.current < 640? 'relative  flex justify-center p-8  h-[calc(100vh-46vh)] ':''} ` }>
+                className= {`${windowWidth.current < 640? 'relative  flex justify-center p-8  h-[calc(100vh-30vh)] ':''} ` }>
                   
                 {fileList.length < 5 && (
-                  <p className={`${windowWidth.current < 640? " absolute bottom-6 right-6 ":''}`}>
+                  <p className={``}>
                     {windowWidth.current < 640? (
-                    <div className="border-2 border-gray-900 rounded-lg bg-gray-200 p-2 flex justify-center ">
-
-                    {/* <img src={addPost} alt="+"  /> */}
-                    </div>
-                    ):(
+                      <>
                     <FontAwesomeIcon
                       className="dark:text-white text-secondary text-smallT "
                       icon={faImage}
-                    />,
-                    <p className="dark:text-white text-smallP">Image</p>) 
+                      />
+                    <p className="dark:text-white text-smallP">Image</p>
+                    <div className="border-2 border-gray-900 rounded-lg bg-gray-200 p-2 flex justify-center  absolute bottom-6 right-6  ">
+                      
+                    <img src={addPost} alt="+"  />
+                    </div>
+                      </>
+                    ):(
+                      <>
+                    <FontAwesomeIcon
+                      className="dark:text-white text-secondary text-smallT "
+                      icon={faImage}
+                      />
+                     <p className="dark:text-white text-smallP">Image</p>
+                      </>
+                    ) 
                   }
                   </p>
                 )}
@@ -284,16 +294,16 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
               {isLoading ? <div className="spinner"></div> : "Publish"}
             </button>
 
-            <button
+            {/* <button
             className="bg-[#3222C6] w-[70px] h-[36px] text-white text-smallP md:text-midP lg:text-largeP 
             flex justify-center items-center no-hover absolute top-8 left-8 rounded-lg hidden"
             // onClick={()=>setShowState(false)} //here make showForm to false to close the modal
 
             // onClick={handleClose}
             disabled={isLoading} // Disable button during loading
-            >back</button>
+            >back</button> */}
             <button className="text-4 absolute top-10 left-0 text-gray-600 font-bold 
-            flex justify-center align-middle border-0 items-center" onClick={handleClose}><img src={backarrow}/> back</button>
+            flex justify-center align-middle border-0 items-center sm:hidden" onClick={handleClose}><img src={backarrow}/> back</button>
 
             {/* Add the following styles to create a spinner */}
             <style jsx className="no-hover:hover">{`
@@ -316,7 +326,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
             `}</style>
           </div>
         </div>
-        {window.innerWidth < 640 ? <BottomNav />:""}
+        {/* {window.innerWidth < 640 ? <BottomNav />:""} */}
 
       </Modal>
     </div>

@@ -6,7 +6,7 @@ function Contact() {
   const [fontSize, setFontSize] = useState(16); // Initial font size of 16px
     console.log("myFontSize:", myFontSize);
   return (
-    <div className="max-w-[509px] mx-auto h-[452px] bg-[#F9F7F7] mt-5 p-8">
+    <div className="md:max-w-[509px]  mx-auto h-[452px] bg-[#F9F7F7] mt-5 p-8">
       <h1
         style={{ fontSize: 16 + myFontSize }}
         className="text-black font-bold text-[18px]"
