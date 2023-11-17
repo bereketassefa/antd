@@ -289,7 +289,7 @@ export default function NewsCard({
       );
       const data = await response.data;
       setWhoLikedPost(data?.users);
-      console.log(data.users);
+      // console.log(data.users);
     } catch (error) {
       console.error("Failed to fetch users who liked the post:", error);
     }

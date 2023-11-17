@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
+
 const SearchCard = ({
-  setShowResults,
+  
   name,
   image,
   type,
   ProUid,
   onSelect,
 }) => {
-  const navigate = useNavigate();
 
+  
+  const navigate = useNavigate();
+  const [showresult, setShowResults]=useState(false)
   const handleSelect = () => {
     // Call the onSelect function with the selected item
     const selectedItem = { name, image, type, ProUid };
