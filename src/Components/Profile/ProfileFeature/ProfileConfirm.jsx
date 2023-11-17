@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { message } from "antd";
-
+import { useCookies } from "react-cookie";
 function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
   const { id } = useParams();
   const [image, setImage] = useState(clickedImage);
   const [imageFile, setImageFile] = useState(null);
+  const [cookies] = useCookies(["User"]);
 
+  const token = cookies?.user?.token
   const handleImageUpload = (event) => {
     const newImage = event.target.files[0];
 
@@ -66,7 +68,7 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
       formData.append("image", imageFile);
 
       const response = await axios.put(
-        `${url}/${id}`,
+        `${url}/${token}`,
         formData,
         {
           headers: {

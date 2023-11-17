@@ -691,11 +691,11 @@ export default function NewsCard({
               <div className="mt-3 flex flex-col gap-8  ">
                 {whoLikedPost?.map((like) => (
                   <LikeCard
-                  key={like.user.Uid} // Adding a unique key for each card
-                  companyName={like.user.part} // Accessing 'part' from the 'user' object
-                  date={like.user.DateCreated} // Accessing 'DateCreated' from the 'user' object
+                  key={like?.user?.Uid} // Adding a unique key for each card
+                  companyName={like?.user?.part} // Accessing 'part' from the 'user' object
+                  date={like?.user?.DateCreated} // Accessing 'DateCreated' from the 'user' object
                   image={like?.user?.profilePicture ?like?.user?.profilePicture : alternativeProfile} // Accessing 'profilePicture' from the 'user' object
-                  icon={like.icon}
+                  icon={like?.icon}
                   id={like?.user?._id}
                   />
                 ))}

@@ -11,7 +11,7 @@ import ImgCrop from "antd-img-crop";
 import axios from "axios"; // Import axios for making API requests
 import alternativeProfile from "../../../assets/image/alternativeProfile.png";
 import backarrow from "../../../assets/image/backarrow.png";
-import addPost from "../../../assets/image/addimage.png";
+// import addPost from "../../../assets/image/addimage.png";
 import Topbar from "../../Topbar/topbar";
 import BottomNav from "../../../Layouts/Primary/BottomNav";
 
@@ -249,7 +249,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
                     {windowWidth.current < 640? (
                     <div className="border-2 border-gray-900 rounded-lg bg-gray-200 p-2 flex justify-center ">
 
-                    <img src={addPost} alt="+"  />
+                    {/* <img src={addPost} alt="+"  /> */}
                     </div>
                     ):(
                     <FontAwesomeIcon
