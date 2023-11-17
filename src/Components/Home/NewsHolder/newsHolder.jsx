@@ -198,7 +198,10 @@ export default function NewsHolder() {
       {/* <BottomNav/> */}
       </>
       </InfiniteScroll>
+      <div className="md:flex hidden ">
+
       <ScrollToTop />
+      </div>
 
     </div>
   );
