@@ -24,7 +24,7 @@ const Setting = () => {
   };
 
   function getSelectedValue() {
-    console.log("selected......");
+    // console.log("selected......");
     var select = document.getElementById("mySelect");
     var selectedValue = select.value;
     // alert(selectedValue);
@@ -33,12 +33,17 @@ const Setting = () => {
 
   return (
     <>
-    <div className="fixed dark:bg-[#1b1f23] p-3 mt-6 bg-white w-full flex justify-around gap-0 z-50 md:hidden">
+    <div className="fixed dark:bg-[#1b1f23] p-3 mt-6 bg-white w-full flex justify-around 
+    gap-6 z-50 md:hidden">
       {/* <p>Setting</p> */}
-  <select onClick={getSelectedValue} id="mySelect" className="ml-[-200px] ">
+      <AiFillSetting
+                  // style={{ fontSize: 16 + myFontSize }}
+                  className="dark:text-white text-[#000000] h-6 w-6 ml-[-180px]"
+                />
+  <select onClick={getSelectedValue} id="mySelect" className="ml-[-390px] ">
     {/* <div className=""> */}
 
-            <option value="/feed/settings" className="relative mt-[-100px] top-2 right-0">
+            <option value="/feed/settings" className="relative mt-[-100px] top-2 right-0 ">
               <p style={{ fontSize: 16 + myFontSize }}>General</p>
             </option>
 

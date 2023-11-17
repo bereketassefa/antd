@@ -185,7 +185,7 @@ function General() {
     <div className="dark:bg-[#1b1f23] bg-[#F9F7F7]  mt-5 mx-auto p-4">
       <Link
         to="/feed"
-        className="flex justify-start items-center gap-2 pl-2 mt-2"
+        className="flex justify-start items-center gap-2 pl-2 mt-2 hidden md:block"
       >
         <BsArrowLeft
           style={{ fontSize: 16 + myFontSize }}
