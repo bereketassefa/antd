@@ -225,7 +225,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
           </div>
           <div className="w-full mt-12">
             <textarea
-              className="dark:bg-[#1b1f23] dark:text-white h-32   w-full border-none p-3 outline-none text-midP md:text-midP lg:text-largeP"
+              className="dark:bg-[#1b1f23] dark:text-white h-[16vh]   w-full border-none p-3 outline-none text-midP md:text-midP lg:text-largeP"
               placeholder="Write something here  ..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}

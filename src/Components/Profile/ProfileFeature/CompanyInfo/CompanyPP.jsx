@@ -18,6 +18,8 @@ function CompanyPP({ profilePic, setMyModalOpen, clickedImage }) {
   const [confirmprofilemodal, setConfirmProfileModal] = useState(false);
   const { id } = useParams();
   const token = cookies?.user.token;
+
+
   const handleImageUpload = (event) => {
     setLoadingUpdate(true);
     const newImage = event.target.files[0];
@@ -55,19 +57,19 @@ function CompanyPP({ profilePic, setMyModalOpen, clickedImage }) {
 
   const handleUpload = () => {
     setConfirmProfileModal(true);
-    setMyModalOpen(false);
+    // setMyModalOpen(false);
   };
 
   return (
     <div>
       <Modal
-        visible={confirmprofilemodal}
+        open={confirmprofilemodal}
         onOk={() => setConfirmProfileModal(false)}
         onCancel={() => setConfirmProfileModal(false)}
         footer={[]}
       >
         <ProfileConfirm
-          profilePic={profilePic}
+          // profilePic={profilePic}
           setConfirmProfileModal={setConfirmProfileModal}
           clickedImage={clickedImage}
           id={id}

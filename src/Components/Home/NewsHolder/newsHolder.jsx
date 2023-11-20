@@ -148,7 +148,12 @@ export default function NewsHolder() {
       dataLength={timeline.length}
       next={fetchData}
     hasMore={hasMores}
-  loader={<h4 className="text-center">Loading...</h4>}
+  loader={<div class="flex space-x-2 justify-center align-middle">
+  <div class="w-4 h-4 bg-black rounded-full animate-bounce"></div>
+  <div class="w-4 h-4 bg-black rounded-full animate-bounce"></div>
+  <div class="w-4 h-4 bg-black rounded-full animate-bounce"></div>
+</div>
+}
   
   endMessage={
     <p style={{ textAlign: 'center', padding:'30px', width:'full' }}>
@@ -202,7 +207,25 @@ export default function NewsHolder() {
 
       <ScrollToTop />
       </div>
-
+      <style jsx className="no-hover:hover">{`
+              
+              .spinner {
+                border: 4px solid rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                border-top: 4px solid white;
+                width: 24px;
+                height: 24px;
+                animation: spin 1s linear infinite;
+              }
+              @keyframes spin {
+                0% {
+                  transform: rotate(0deg);
+                }
+                100% {
+                  transform: rotate(360deg);
+                }
+              }
+            `}</style>
     </div>
   );
 }

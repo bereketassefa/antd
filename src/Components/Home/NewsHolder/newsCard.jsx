@@ -518,7 +518,7 @@ const  NewsCard = ({account_id,
     };
     
   return (
-    <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative  ">
+    <div className="rounded-lg dark:bg-[#1b1f23] w-full bg-cards drop-shadow-xl relative mb-4  ">
       {showDownloadCard && (
         <div
           ref={downloadCardRef}

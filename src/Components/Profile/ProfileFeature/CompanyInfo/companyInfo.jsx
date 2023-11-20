@@ -21,8 +21,8 @@ import { Link } from "react-router-dom";
 
 export default function CompanyInfo({ data, Uid }) {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isModalOpen, setModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
   const [UidData, setUid] = useState(null);
   const [showCancelRequestPopup, setShowCancelRequestPopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +52,10 @@ export default function CompanyInfo({ data, Uid }) {
   const isUserIdEqual = cookies.user._id === id;
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+
+
   const handleImageChange = (e) => {
+
     const file = e.target.files[0];
     if (file) {
       setSelectedFile(file); // <-- Set the selected file here
@@ -95,7 +98,7 @@ export default function CompanyInfo({ data, Uid }) {
         message.success("Profile updated successfully");
         closeModal();
       }
-      if(response.status ===400){
+      if(response.status === 400){
         message.error('File size should not exceed 5 MB')
       }
       if(response.status === 401){
@@ -137,6 +140,9 @@ export default function CompanyInfo({ data, Uid }) {
         console.error("Error fetching data:", error);
       }
     };
+
+
+    
     const fetchAccountDataForProfile = async () => {
       try {
         if (!id) {
@@ -436,10 +442,10 @@ export default function CompanyInfo({ data, Uid }) {
 
       <div className="w-full flex flex-col gap-2 mt-[-5rem] md:mt-[-10rem] ">
         <div className="w-full flex items-end justify-between">
-          <div className="bg-white  p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end">
+          <div className="bg-white  p-0 ml-[1rem] md:ml-[3rem] mt-[2rem] md:mt-[6rem] w-[9rem] md:w-[130px] aspect-square flex justify-end relative">
             <div className="w-full flex items-center justify-center  ">
-              <img
-                className="w-full object-cover h-full flex"
+              <img 
+                className="w-full object-cover h-full flex z-10"
                 src={profilePic ? profilePic : alternativeProfile}
                 alt="Profile"
                 onClick={() => {
@@ -451,18 +457,18 @@ export default function CompanyInfo({ data, Uid }) {
               {/* {clickedImage && <img src={clickedImage} alt="Clicked Image" />} */}
             </div>
 
-            <div className="bg-white p-[3px] rounded-full absolute mt-[-0.5rem] mr-[-0.5rem]">
+            <div className="bg-white p-[3px] rounded-full absolute mt-[-0.5rem] mr-[-0.5rem] z-20">
               {data &&
                 data.account &&
                 data.account[0] &&
                 data.account[0]._id === cookies?.user?._id && (
-                  <div className="bg-secondary w-fit p-2 rounded-full flex cursor-pointer border-2 border-red-800">
+                  <div className="bg-secondary w-fit p-2 rounded-full flex cursor-pointer border-2 border-red-800 ">
                     <FontAwesomeIcon
                       icon={faPencil}
                       onClick={() =>
                         document.getElementById("profileImageInput").click()
                       }
-                      className="text-white text-midP"
+                      className="text-white text-midP "
                     />
                   </div>
                 )}
@@ -613,7 +619,7 @@ export default function CompanyInfo({ data, Uid }) {
               <img
                 src={selectedImage}
                 alt="Selected"
-                className="mb-4 w-full h-48 object-cover"
+                className="mb-4 w-full h-48 object-cover "
               />
               <div className="flex justify-end gap-4">
                 <button

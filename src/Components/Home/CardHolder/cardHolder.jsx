@@ -11,6 +11,7 @@ import googleApp from "../../../assets/image/play store -02.png";
 import Appstor from "../../../assets/image/app store-03.png";
 import SociaCard from "./Card/SociaCard";
 import { Link, NavLink } from "react-router-dom";
+import { useScrollPosition } from "../NewsHolder/useScrollPosition";
 
 export default function CardHolder() {
   const [dataSource, setDataSource] = useState([]);
@@ -22,6 +23,7 @@ export default function CardHolder() {
   const [error, setError] = useState(null);
   const [cookies] = useCookies(["User"]);
   // console.log(dataSource)
+  const [conts, setconts] = useState(false)
 
   const fetchAllData = async () => {
     try {
@@ -134,10 +136,12 @@ export default function CardHolder() {
     },
   ];
   // sticky top-[65px]
-
+  
   return (
-    <div
-      className={`dark:bg-[#1b1f23] hidden lg:flex items-start justify-center w-[300px] flex-col gap-2  `}
+    // <div id="side">
+    <div 
+      className={`dark:bg-[#1b1f23] hidden lg:flex items-start justify-center w-[300px] flex-col 
+      gap-2   top-24 mt-2 sticky`}
     >
       {cards?.map((items) => {
         // Check if items.data has data
@@ -157,9 +161,9 @@ export default function CardHolder() {
         }
       })}
 
-      <div className=" sticky top-[110px] border-2 border-yellow-600  ">
+      <div className={`sticky top-0  "}`}>
         <SociaCard />
-        <div className="  w-[300px] p-4 flex flex-col gap-2  bg- bg-transparent  drop-shadow-xl ">
+        <div className="  w-[300px] p-4 flex flex-col gap-2   bg-transparent  drop-shadow-xl ">
           <div>
             <ul className="flex  justify-evenly gap-2 text-[11px] ">
               <Link to="https://www.addissystems.et/about-us">
@@ -192,5 +196,6 @@ export default function CardHolder() {
         </div>
       </div>
     </div>
+    // </div>
   );
 }

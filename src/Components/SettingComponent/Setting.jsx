@@ -34,13 +34,13 @@ const Setting = () => {
   return (
     <>
     <div className="fixed dark:bg-[#1b1f23] p-3 mt-6 bg-white w-full flex justify-around 
-    gap-6 z-50 md:hidden">
+    gap-8 z-50 md:hidden">
       {/* <p>Setting</p> */}
       <AiFillSetting
                   // style={{ fontSize: 16 + myFontSize }}
-                  className="dark:text-white text-[#000000] h-6 w-6 ml-[-180px]"
+                  className="dark:text-white text-[#000000] h-6 w-6 ml-[-160px]"
                 />
-  <select onClick={getSelectedValue} id="mySelect" className="ml-[-390px] ">
+  <select onClick={getSelectedValue} id="mySelect" className="ml-[-360px] ">
     {/* <div className=""> */}
 
             <option value="/feed/settings" className="relative mt-[-100px] top-2 right-0 ">

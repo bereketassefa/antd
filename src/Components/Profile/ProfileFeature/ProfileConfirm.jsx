@@ -23,7 +23,7 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
   };
 
   const handleImageDelete = () => {
-    setImage(profilePic);
+    // setImage(profilePic);
     setConfirmProfileModal(false);
   };
 
@@ -97,7 +97,7 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
 
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex justify-between ">
         <p>Confirm Image</p>
       </div>
       <hr className="border-2 my-2" />

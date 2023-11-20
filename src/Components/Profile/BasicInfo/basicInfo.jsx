@@ -75,7 +75,7 @@ export default function BasicInfo({data}) {
                         <FontAwesomeIcon icon={faCalendarAlt}   className='text-primary text-smallT'/>
                     </li>
                     <li className='flex items-center justify-between w-full'>
-                         <div>
+                         <div>  
                              <h1 className='font-bold text-smallP '>Relations</h1>
                              <p>{}</p>
                          </div>
