@@ -14,7 +14,7 @@ function ProfileBaneer({clickedImage, setSelectedBannerImage, setMyModalOpen}) {
   const [chosenImage, setChosenImage] = useState(null);
   const [selectedImage, setSelectedImage] = useState(ProfileFeature);
   const [selectedFile, setSelectedFile] = useState(null);
-
+const [confirmDelete, setConfirmDelete] = useState(false)
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setIsModalOpen(false)
@@ -101,6 +101,7 @@ function ProfileBaneer({clickedImage, setSelectedBannerImage, setMyModalOpen}) {
   const handleDeleteImage = () => {
     
     // Perform the delete image logic here
+    // setConfirmDelete(true)
     setSelectedBannerImage(null)
     // setIsImgModalOpen(false)
     // setIsModalOpen(false)
@@ -145,10 +146,47 @@ function ProfileBaneer({clickedImage, setSelectedBannerImage, setMyModalOpen}) {
             </button>
             <button
               className="bg-gray-300 py-1 px-4 rounded flex justify-center items-center gap-2"
-              onClick={handleDeleteImage}
+              onClick={()=>setConfirmDelete(true)}
             >
               <RiDeleteBinLine className="text-xl" />
               Delete
+            </button>
+          </div>
+        </div>
+      </div>
+        }
+      
+        {confirmDelete &&
+      <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4  ">
+         <div className="bg-white p-2 rounded-lg flex-col justify-center gap-4 ">
+         <div className=" flex justify-end  mb-1">
+                <IoClose
+                  className="text-red-700 text-xl"
+                  onClick={closeModal}
+                />
+              </div>
+          {/* <img
+              src={clickedImage}
+            alt="Selected"
+            className="mb-4 w-full h-48 object-cover"
+          /> */}
+          <p className="">are you sure to delete your banner image ?</p>
+          <div className="flex justify-end gap-4">
+            <button
+              className="bg-blue-500 text-white py-1 px-4 rounded flex justify-center items-center gap-2"
+              onClick={handleDeleteImage}
+              // onClick={handleModalChangeClick}
+    // onClick={()=> document.getElementById("profileInput").click()}
+            >
+              {/* <MdOutlineFileUpload className="text-2xl" /> */}
+              OK
+            </button>
+            <button
+              className="bg-gray-300 py-1 px-4 rounded flex justify-center items-center gap-2"
+              onClick={()=>setConfirmDelete(false)}
+            >
+              {/* <RiDeleteBinLine className="text-xl" /> */}
+              cancle
             </button>
           </div>
         </div>

@@ -4,8 +4,8 @@ export default function Button({ text, bgColor, disabled, onClick, hover, isLoad
   return (
     <>
       <button
-        className={` md:mt-10 md:mb-7 mt-8 mb-8 rounded-lg w-full uppercase text-[20px] md:text-[20px] font-medium p-2 md:p-2 text-white duration-500 
-        ${bgColor} flex justify-center items-center`}
+        className={`mt-6 md:mt-10 lg:mt-4 lg:mb-2 mb-8 md:mb-12 rounded-lg md:rounded-[12px] w-full uppercase text-[20px] md:text-[24px]  font-medium p-2 md:p-4 lg:p-2 text-white duration-500 
+        ${bgColor} flex justify-center items-center font-semibold`}
         type="submit"
         disabled={disabled}
         onClick={onClick}

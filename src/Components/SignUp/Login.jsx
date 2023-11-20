@@ -85,7 +85,7 @@ function Login() {
   // In Button.js
 
   return (
-    <div className=" z-50 w-full  md:p-4 py-4 rounded-lg ">
+    <div className=" z-50 w-full  lg:p-4 py-4 rounded-lg ">
       <Heading Title={"Welcome to BIZFYSPOT!"} text={"Please Login to your Account"} />
       {errMsg && (
         <div className="bg-[#d71a62] text-white py-2 px-4 rounded-md shadow-md 
@@ -108,17 +108,17 @@ function Login() {
         </div>
       )}
       <form onSubmit={handleLogin}>
-        <div className="grid md:gap-3 max-w-[480]">
+        <div className="grid lg:gap-3 max-w-[480]">
           <div
-            className={` w-full border-[2px] mb-4 md:mb-0 rounded-lg md:rounded-[3px] flex items-center gap-[10px] 
-            bg-white md:bg-transparent px-4 md:px-[10px] py-2 md:py-[10px] ${
+            className={` w-full border-[2px] mb-4 md:mb-6 lg:mb-0 rounded-lg md:rounded-[10px] lg:rounded-[3px] flex items-center gap-[10px] md:gap=[16px] 
+            bg-white lg:bg-transparent px-4 md:px-6 lg:px-[10px] py-2 md:py-3 lg:py-3 ${
               emailError ? "border-red-500" : "border-[#3222c6]"
             }`}
           >
-            {!email && <AiOutlineMail className="text-[20px] md:text-[24px] text-gray-400" />}
+            {!email && <AiOutlineMail className="text-[12px] md:text-[16px] lg:text-[20px] text-gray-300 lg:mx-3" />}
 
             <input
-              className="text-[20px] md:text-[24px] outline-none w-full bg-transparent"
+              className="text-[12px] md:text-[16px] lg:text-[20px] outline-none w-full bg-transparent"
               type={showEmail ? "email" : "text"}
               placeholder="Email Address"
               name="email"
@@ -131,7 +131,8 @@ function Login() {
           {emailError && <p className="text-red-500">{emailError}</p>}
 
           <div
-            className={`border-[2px] bg-white py-2 md:px-[10px] md:py-[10px] px-4 rounded-lg md:rounded-[3px] flex items-center gap-[10px]
+            className={`w-full border-[2px] mb-2 md:mb-3 lg:mb-0 rounded-lg md:rounded-[10px] lg:rounded-[3px] flex items-center gap-[10px] md:gap=[16px] 
+            bg-white lg:bg-transparent px-4 md:px-6 lg:px-[10px] py-2 md:py-3 lg:py-3
             ${
               passwordError && !emailError
                 ? "border-red-500"
@@ -139,12 +140,12 @@ function Login() {
             }`}
           >
             <MdLockOutline
-              className={`text-[20px] md:text-[24px] ${
+              className={`text-[12px] md:text-[16px] lg:text-[20px] text-gray-300 lg:mx-3 ${
                 pass?.length > 0 ? "hidden" : "block"
-              } text-gray-400`}
+              } text-gray-300`}
             />
             <input
-              className="text-[20px] md:text-[24px] outline-none w-full"
+              className="text-[12px] md:text-[16px] lg:text-[20px] outline-none w-full bg-transparent"
               type={showPass ? "password" : "text"}
               placeholder="Password"
               name="password"
@@ -156,7 +157,7 @@ function Login() {
               onClick={() => setShowPass(!showPass)}
             >
               {showPass ? (
-                <AiFillEyeInvisible className="text-[20px] md:text-[26px] text-[#3222C6]" />
+                <AiFillEyeInvisible className="text-[20px] lg:text-[26px] text-[#3222C6]" />
               ) : (
                 <AiFillEye className="text-[20px] text-[#3222C6]" />
               )}
@@ -169,7 +170,8 @@ function Login() {
 
           <div className="flex justify-end">
             {" "}
-            <a className="text-white text-[14px] md:text-[20px] md:text-red-500 flex justify-end" href="forget-password">
+            <a className="text-white text-[14px] md:text-[22px] lg:text-[24px] lg:text-red-500 flex justify-end" 
+            href="forget-password">
               Forget Password?
             </a>
           </div>

@@ -59,6 +59,7 @@ function ProfileConfirm({ profilePic, setConfirmProfileModal, clickedImage }) {
     try {
       const url= `${import.meta.env.VITE_UPDATE_PROFILE_IMAGE}`
       if (!imageFile) {
+        message.error("No image selected")
         console.error("No image selected");
         return;
       }

@@ -34,7 +34,7 @@ const Setting = () => {
   return (
     <>
     <div className="fixed dark:bg-[#1b1f23] p-3 mt-6 bg-white w-full flex justify-around 
-    gap-8 z-50 md:hidden">
+    gap-8  md:hidden">
       {/* <p>Setting</p> */}
       <AiFillSetting
                   // style={{ fontSize: 16 + myFontSize }}

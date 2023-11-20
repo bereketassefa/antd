@@ -65,6 +65,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
 import NewsPostPopup from "../../Components/Home/NewsPost/newsPostPopup";
+import { TiMessage } from "react-icons/ti";
+
 
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
@@ -72,8 +74,8 @@ const navigations = [
   { 
     id:'1', to:'/feed', label: "Home", icon: <AiOutlineHome className="mx-auto text-[30px]" /> },
   {
-    id:'2', to:'/feed/notifications', label: "notifications",
-    icon: <MdNotificationsNone className="mx-auto text-[30px]" />,
+    id:'2', to:'/feed/messages', label: "messages",
+    icon: <TiMessage  className="mx-auto text-[30px]" />,
   },
   {
     id:'3', to:'/feed', label: "Post",

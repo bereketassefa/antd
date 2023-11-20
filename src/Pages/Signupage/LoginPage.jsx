@@ -12,30 +12,31 @@ import finallogo from "../../assets/image/finallogo.png";
 
 function LoginPage() {
   return (
-    <div className=" bg-[#3222C6] md:h-screen h-[100%] flex-col w-full relative border-box sm:overflow-clip">
-      <img className="md:hidden block absolute z-10 top-6 h-20 right-0" src={dicor} alt="" />
-      <img className="md:hidden block absolute z-10 top-0 h-16 right-0 mr-[-16px]" src={dico} alt="" />
-      <div className=" md:flex md:max-w-full   h-[100%]  sm:pt-12 sm:ml-16">
+    <div className=" bg-[#3222C6] lg:h-screen  flex-col w-full relative border-box lg:overflow-clip">
+      <img className="lg:hidden block absolute z-10 top-6 md:top-16 h-24 md:h-44 right-0" src={dicor} alt="" />
+      <img className="lg:hidden block absolute z-10 top-0 h-20 md:h-40 right-0 mr-[-16px] md:mr-[-32px]" src={dico} alt="" />
+      
+      <div className=" lg:flex lg:max-w-full  h-[100%]   lg:pt-12 lg:mx-16">
         {/* Login Box  */}
         {/* <div className=" mx-auto "> */}
-          <div className=" lg:max-w-[600px] md:max-w-[700px] md:mx:auto  md:h-4/5
-           bg-[#3222C6] mb-[-20px]  md:mb-0 sm:px-0 
-           md:bg-white  md:border-2  md:rounded-3xl ml-[6px] md:ml-0 px-0 grid grid-col-2 md:grid-none sm:mt-6">
+          <div className=" lg:w-[50%]  lg:mx-auto h-[64vh] lg:h-4/5 
+           bg-[#3222C6] mb-[-20px]  lg:mb-0 lg:px-0 
+           lg:bg-white  lg:border-2  lg:rounded-3xl mx-[3%] md:mx-[6%]  lg:ml-0 px-0 grid grid-col-2 lg:grid-none lg:mt-6">
           {/* desk */}
-            <div className="hidden md:flex  justify-start ">
-              <div className="w-[215px] mt-4 mb">
+            <div className="hidden lg:flex  justify-start lg:ml-10 ">
+              <div className="w-[215px] lg:w-[400px] mt-4 ">
                 <img className="hidden lg:block w-full" src={finallogo} alt="" />
               </div>
             </div>
 
-            <div className="md:hidden mt-8   sm:mt-12 grid-col-1  justify-start mb-24 ml-4">
-              <div className="w-[215px] relative">
+            <div className="lg:hidden mt-8 md:mt-10  lg:mt-12 grid-col-1  justify-start mb-24 md:mb-36 ml-4">
+              <div className="w-[215px] md:w-[430px] relative">
                 <img className="lg:hidden block w-[66%] h-18" src={logo} alt="" />
               </div>
-                <p className="text-gray-200 text-[12px] absolute mt-[-22px] ml-10 ">you next big opportuniy awaits </p>
+                <p className="text-gray-200 text-[12px] md:text-[26px]  absolute mt-[-22px] md:mt-[-48px] ml-10 md:ml-20">you next big opportuniy awaits </p>
             </div>
 
-            <div className="lg:max-w-[600px] md:w-[600px] w-full mt-1 md:mt-0 mx-auto  px-5 sm:px-0 ">
+            <div className="lg:w-[90%]  w-full mt-1 lg:mt-0 mx-auto  px-5 md:px-8 lg:px-0 ">
               <Login />
             </div>
           </div>
@@ -47,9 +48,9 @@ function LoginPage() {
 
         {/* Side Info Component */}
         <Heroside2 />
-        <div className="md:hidden w-full  z-[-1]  relative
-         object-cover"> 
-            <img className=" sm:hidden absolute object-cover  w-full h-fit z-[-100] opacity-[98%]" src={pic} alt="" />
+        <div className="lg:hidden w-full  z-[-1]  h-[36vh]  fixed
+         object-fit"> 
+            <img className=" lg:hidden absolute object-cover  w-full  z-[-100] opacity-[100%]" src={pic} alt="" />
         </div>
         {/* <img className="hidden lg:block w-full" src={pic} alt="" /> */}
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { AiFillMessage } from "react-icons/ai";
@@ -26,6 +26,7 @@ function ChatPage() {
   const [messages, setMessages] = useState(comments);
   const containerRef = useRef(null);
   const [file, setFile] = useState(null);
+  const [clicked, setClicked] = useState(false)
 
   const handleStartMessage = () => {
     setNewchat(true);
@@ -36,6 +37,7 @@ function ChatPage() {
     console.log("SelectedChat:", selectedChat);
     setActiveLink("selectedChat");
     setChatData(selectedChat.chatData || []);
+    setClicked(true)
   };
 
   const handleSendMessage = async () => {
@@ -141,10 +143,21 @@ function ChatPage() {
       return messageDate.format("DD/MM/YYYY");
     }
   };
+
+  // useEffect(()=>{
+
+  //   if(window.innerWidth > 660){
+  //     setClicked(true)
+  //   }else{
+  //     setClicked(false)
+
+  //   }
+  // },[window.innerWidth])
+
   return (
     <div className=" sticky top-[105px]    mt-4 ">
-      <div className=" flex  rounded-[12px]  h-[630px]  border-2  ">
-        <div className=" hidden sm:block mb-4   w-[350px] bg-[#F8F8F8]">
+      <div className=" flex  rounded-[12px]  z-[-1]  border-2  ">
+        <div className="  sm:block mb-4  w-full lg:w-[350px]  bg-[#F8F8F8] border-2  ">
           <div className="flex items-center pl-10 h-[78px]  gap-2 ">
             <AiFillMessage className="text-4xl text-[#5E5E5E]" />
             <div className="">
@@ -176,10 +189,10 @@ function ChatPage() {
             </div>
           </div>
 
-          <div className="gap-2 w-[350px] p-1 mt-8   ">
+          <div className="gap-2 w-full lg:w-[350px] p-1 mt-8   ">
             <div
               className={`flex flex-col gap-4 overflow-y-scroll h-[440px] overflow-hidden ${
-                activeLink === "selectedChat" ? "bg-[#F8F8F8]" : "bgt-[ ]"
+                activeLink === "selectedChat" ? "bg-[#F8F8F8]" : "bg-[ ]"
               }`}
             >
               {Chat.filter((item) =>
@@ -200,12 +213,12 @@ function ChatPage() {
           </div>
         </div>
 
-        <div className="  max-w-[610px] md:w-[510px]  h-[450px]   ">
+        {clicked  && <div className={`${clicked? "absolute w-full  lg:w-660px ":" hidden  w-full lg:max-w-[610px] md:w-[510px]  h-[450px]  border-2 border-yellow-800  "}`}>
           {selectedChat ? (
             newChat ? (
-              <div className=" max-w-[610px] bg-[#FFFFFF]   flex flex-col justify-between">
+              <div className=" max-w-[610px] bg-[#FFFFFF]   flex flex-col justify-between  ">
                 <div className="flex gap-2 items-center h-[78px] ml-4">
-                  <BsArrowLeftShort className=" text-4xl sm:hidden" />
+                  <BsArrowLeftShort className=" text-4xl sm:hidden" onClick={()=>setClicked(false)} />
                   <Avatar img={selectedChat.image} />
                   <div className="flex flex-col">
                     <h1 className="font-bold text-[#000] text-[17px]">
@@ -410,11 +423,13 @@ function ChatPage() {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col justify-center items-center pt-40">
+              <div className="flex flex-col justify-center items-center  bg-white h-screen align-middle mt-[-132px] lg:w-[660px] ">
+                {/* <button className="absolute top-0 left-2 px-4 py-2 bg-gray-300"  onClick={()=>setClicked(false)}>back</button> */}
+                <BsArrowLeftShort className=" text-[80px] absolute top-0 left-2 px-4 py-2 text-black " onClick={()=>setClicked(false)} />
                 <div className="sm:p-6 border-2 border-blue-900 rounded-full">
                   <img src={messagelogo} alt=""></img>
                 </div>
-                <p className="text-[15px] font-semibold my-3">
+                <p className="text-[15px] font-semibold mb-4">
                   Wanna start a new conversation?
                 </p>
                 <button
@@ -435,7 +450,7 @@ function ChatPage() {
               </p>
             </div>
           )}
-        </div>
+        </div>}
       </div>
     </div>
   );
