@@ -237,7 +237,7 @@ export default function Topbar() {
 
   return (
     <>
-      <div className="dark:bg-[#1b1f23] z-20 w-full drop-shadow-lg   bg-slate-50  border-1 border-[rgba(0, 0, 0, 0.10)] 
+      <div className="dark:bg-[#1b1f23] z-100 w-full drop-shadow-lg   bg-slate-50  border-1 border-[rgba(0, 0, 0, 0.10)] 
       p-3 flex items-center justify-center sm:sticky fixed  top-0 left-0 md:h-[95px] w-[100vw]">
         <div className="flex  w-full md:max-w-[1120px] items-center justify-center  md:gap-44 gap-14 mr-12 sm:mr-0 ">
           <div className="w-[50px] h-[45px] md:w-[208px] md:h-[33px]   flex items-center justify-center ml-[-30px] sm:ml-0">
