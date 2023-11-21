@@ -37,7 +37,12 @@ export default function CommentContainer({
     const theme = localStorage.getItem("theme");
     setIsDarkTheme(theme === "dark");
   }, []);
+
+
+
   const handleCommentSubmit = async () => {
+
+
     if (!commentText.trim()) return; // Ensure comment is not just whitespace
 
     try {

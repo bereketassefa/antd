@@ -17,6 +17,8 @@ import RplayCard from "../../CardHolder/RplayCard";
 import { IoIosSend } from "react-icons/io";
 import { BsEmojiSmile } from "react-icons/bs";
 import { format } from "timeago.js";
+
+
 export default function CommentCard({
   account_id,
   postId,
@@ -188,6 +190,7 @@ const [replies, setCommentsreplies]= useState([])
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  
   const handleDeleteComment = async () => {
     console.log("Delete comment clicked");
     setLoading(true);

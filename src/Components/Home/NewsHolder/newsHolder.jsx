@@ -56,6 +56,14 @@ export default function NewsHolder() {
     fetchInitialData();
   }, []);
 
+  const deletePostHandler =(postId)=>{
+    console.log(postId,"deleted ...")
+
+    // delete from  db
+    setTimeline((prevPost)=>{
+      return prevPost.filter((post)=>post.id != postId)
+    })
+  }
   
         const fetchData = async () => {
           try {
@@ -194,6 +202,7 @@ export default function NewsHolder() {
               companyName={item?.account?.party}
               account_id={item?.account?._id}
               Uid={item?.uid}
+              onDeletePost ={deletePostHandler}
               
 
             />
@@ -203,29 +212,11 @@ export default function NewsHolder() {
       {/* <BottomNav/> */}
       </>
       </InfiniteScroll>
-      <div className="md:flex hidden ">
-
-      <ScrollToTop />
+      <div className="lg:flex hidden">
+        <ScrollToTop />
       </div>
-      <style jsx className="no-hover:hover">{`
-              
-              .spinner {
-                border: 4px solid rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                border-top: 4px solid white;
-                width: 24px;
-                height: 24px;
-                animation: spin 1s linear infinite;
-              }
-              @keyframes spin {
-                0% {
-                  transform: rotate(0deg);
-                }
-                100% {
-                  transform: rotate(360deg);
-                }
-              }
-            `}</style>
+      
+
     </div>
   );
 }

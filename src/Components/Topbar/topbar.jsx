@@ -44,7 +44,7 @@ export default function Topbar() {
 
   const isScreenMdOrLarger = useMediaQuery({ minWidth: 768 });
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-
+  const [showresult, setShowResults]=useState(false)
   const [showMessageDrop, setShowMessageDrop] = useState(false);
   const [selectedChat, setSelectedChat] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -67,17 +67,17 @@ export default function Topbar() {
   // };
 
   const handleSearch = async () => {
-    if (searchInput.trim() === "") {
-      setSearchResults([]);
+    // if (searchInput.trim() === "") {
+    //   setSearchResults([]);
 
-      return;
+    //   return;
 
-      setSearchHistory((prevHistory) => {
-        const updatedHistory = [...prevHistory, searchInput];
-        localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
-        return updatedHistory;
-      });
-    }
+    //   setSearchHistory((prevHistory) => {
+    //     const updatedHistory = [...prevHistory, searchInput];
+    //     localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
+    //     return updatedHistory;
+    //   });
+    // }
 
     try {
       const url = "https://search.qa.addissystems.et/partially"; // Replace with your actual URL

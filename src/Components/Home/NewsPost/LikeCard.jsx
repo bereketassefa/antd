@@ -18,7 +18,7 @@ const LikeCard = ({ companyName, image, date, icon,id }) => {
         <div>
           
           <div onClick={hadleNavigateProfile} className="flex items-center gap-2">
-           <h1 className="text-black font-bold">
+           <h1 className="text-black ">
            <Link >
 {companyName}
            </Link>

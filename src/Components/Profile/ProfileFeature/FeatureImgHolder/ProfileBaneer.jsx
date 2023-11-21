@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import ProfileFeature from "../../../../assets/image/coverpic.png";
@@ -107,6 +107,7 @@ const [confirmDelete, setConfirmDelete] = useState(false)
     // setIsModalOpen(false)
     setMyModalOpen(false)
     setIsModalOpen(false)
+    message.success("banner deleted successfully")
   };
 
   return (
@@ -170,7 +171,7 @@ const [confirmDelete, setConfirmDelete] = useState(false)
             alt="Selected"
             className="mb-4 w-full h-48 object-cover"
           /> */}
-          <p className="">are you sure to delete your banner image ?</p>
+          <p className="text-[26px] text-red-600 mx-8 my-10">Are you sure to delete your banner image ?</p>
           <div className="flex justify-end gap-4">
             <button
               className="bg-blue-500 text-white py-1 px-4 rounded flex justify-center items-center gap-2"
@@ -179,7 +180,7 @@ const [confirmDelete, setConfirmDelete] = useState(false)
     // onClick={()=> document.getElementById("profileInput").click()}
             >
               {/* <MdOutlineFileUpload className="text-2xl" /> */}
-              OK
+              Delete
             </button>
             <button
               className="bg-gray-300 py-1 px-4 rounded flex justify-center items-center gap-2"

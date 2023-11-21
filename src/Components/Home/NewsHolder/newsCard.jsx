@@ -48,6 +48,7 @@ const  NewsCard = ({account_id,
   id,
   like,
   Uid,
+  onDeletePost,
 })=>{
 
   
@@ -87,6 +88,40 @@ const  NewsCard = ({account_id,
   const headers = {
     "x-auth-token": `${import.meta.env.VITE_TOKEN_TIMELINE}`,
   };
+
+
+  // console.log(id);
+  const DeletePost = async () => {
+    console.log("Delete post clicked",);
+    // setLoading(true);
+
+    try {
+      const url = `${import.meta.env.VITE_DELETE_POST_BY_ID}/${id}`;
+      console.log("API URL:", url);
+
+      const response = await axios.delete(url,{headers:headers});
+      console.log("API Response:", response);
+      if (response.status === 200) {
+        console.log("Calling postDelete with post_id:",id);
+        onDeletePost(id);
+        console.log("post deleted successfully");
+      } else {
+        console.error(
+          "Failed to delete post:",
+          response.status,
+          response.data
+        );
+      }
+    } catch (error) {
+      // setLoading(false);
+      console.error("API Error:", error);
+      console.error("Error Details:", error.response?.data || error.message);
+    } finally {
+      // setLoading(false);
+      console.log(".....in delepos")
+    }
+  };
+
   const handleCommentClick = () => {
     setShowComments(!showComments);
   };
@@ -305,7 +340,7 @@ const  NewsCard = ({account_id,
       );
       const data = await response.data;
       setWhoLikedPost(data?.users);
-      console.log(data.users);
+      // console.log(data.users);
     } catch (error) {
       console.error("Failed to fetch users who liked the post:", error);
     }
@@ -525,18 +560,20 @@ const  NewsCard = ({account_id,
           className="absolute top-0 right-0 mt-4 mr-4 bg-white p-2 rounded shadow-lg flex flex-col"
         >
           <div className="mb-2 flex flex-col">
-            <button onClick={handleDownloadImage}>
+            <div >
               {isLoading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-black"></div>
               ) : (
-                <>
-                  <FontAwesomeIcon icon={faDownload} className="gap-2" /> Save
-                  <div className="flex items-center gap-1 ml-3">
-                    {/* <RiDeleteBinLine /> Delete */}
-                  </div>
-                </>
+                <div className="flex-col ">
+                <div onClick={handleDownloadImage}>
+                  <FontAwesomeIcon  icon={faDownload} className="gap-2" /> Save
+                </div>
+                  {cookies?.user?._id == account_id ? (<div onClick={()=>DeletePost(id)} className="flex px-2 ml-[-10px] mt-3 items-center gap-1 ">
+                    <RiDeleteBinLine /> Delete
+                  </div>):(null)}
+                </div>
               )}
-            </button>
+            </div>
           </div>
         </div>
       )}
@@ -706,11 +743,11 @@ const  NewsCard = ({account_id,
               <div className="mt-3 flex flex-col gap-8  ">
                 {whoLikedPost?.map((like) => (
                   <LikeCard
-                  key={like.user.Uid} // Adding a unique key for each card
-                  companyName={like.user.part} // Accessing 'part' from the 'user' object
-                  date={like.user.DateCreated} // Accessing 'DateCreated' from the 'user' object
+                  key={like?.user?.Uid} // Adding a unique key for each card
+                  companyName={like?.user?.part} // Accessing 'part' from the 'user' object
+                  date={like?.user?.DateCreated} // Accessing 'DateCreated' from the 'user' object
                   image={like?.user?.profilePicture ?like?.user?.profilePicture : alternativeProfile} // Accessing 'profilePicture' from the 'user' object
-                  icon={like.icon}
+                  icon={like?.icon}
                   id={like?.user?._id}
                   />
                 ))}

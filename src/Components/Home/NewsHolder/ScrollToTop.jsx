@@ -17,7 +17,7 @@ function ScrollToTop() {
     }; 
 
     const scrollToTop = () =>{
-        console.log(".........");
+      
         // window.scrollTo(0,window.screenY+600)
         window.scrollTo({
           top:0,
