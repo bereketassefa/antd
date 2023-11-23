@@ -83,7 +83,7 @@ export default function NewsPostPopup({ isOpen, handleClose }) {
 
     // Append Uid and description outside of the loop
     formData.append("description", description);
-    formData.append("Uid", cookies?.user?.Uid);
+    formData.append("token", cookies?.user?.token);
 
     fileList.forEach((file) => {
       formData.append("image", file.originFileObj);

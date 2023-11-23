@@ -57,7 +57,7 @@ export default function NewsHolder() {
   }, []);
 
   const deletePostHandler =(postId)=>{
-    console.log(postId,"deleted ...")
+    // console.log(postId,"deleted ...")
 
     // delete from  db
     setTimeline((prevPost)=>{
