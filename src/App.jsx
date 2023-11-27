@@ -37,6 +37,7 @@ import ChatPage from "./Components/Chat/ChatPage";
 import OTPpage from "./Pages/Signupage/OTPpage";
 import AddItemsPage from "./Pages/AddProduct/AddItemsPage";
 import Advertisement from "./Pages/Advertisement/Advertisement";
+import Report from "./Pages/Advertisement/Report";
 // import HeroPage from "./Layouts/HeroPage";
 
 // import Message from "./Pages/Message/Message";
@@ -54,6 +55,7 @@ function App() {
           {/* Landing Route */}
 
           <Route path="/ad" element={<Advertisement />} />
+          <Route path="/report" element={<Report />} />
           <Route path="/" element={<LoginPage />} />
           <Route path="/create-password/:id" element={<CreatePssPage />} />
           <Route path="/ResetPss/:token" element={<ResetPssPage />} />
