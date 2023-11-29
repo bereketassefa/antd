@@ -59,23 +59,7 @@ function Advertisement() {
 
   return (
     <div>
-      <div className="flex flex-row space-x-4 content-center">
-        <Link to="" className="text-black font-bold">
-          Dashboard
-        </Link>
-        <Link to="" className="text-gray-400">
-          Management
-        </Link>
-        <Link to="" className="text-gray-400">
-          Report
-        </Link>
-        <Link to="" className="text-gray-400">
-          Account Setting
-        </Link>
-        <Button type="primary" danger>
-          Create Advertisement
-        </Button>
-      </div>
+      
       <div className="flex flex-row my-7">
         <PieChart chartData={chartData} />
         <PieChart chartData={chartData} />

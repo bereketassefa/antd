@@ -38,6 +38,8 @@ import OTPpage from "./Pages/Signupage/OTPpage";
 import AddItemsPage from "./Pages/AddProduct/AddItemsPage";
 import Advertisement from "./Pages/Advertisement/Advertisement";
 import Report from "./Pages/Advertisement/Report";
+import Homee from "./Pages/Advertisement/Homee";
+
 // import HeroPage from "./Layouts/HeroPage";
 
 // import Message from "./Pages/Message/Message";
@@ -54,14 +56,18 @@ function App() {
 
           {/* Landing Route */}
 
-          <Route path="/ad" element={<Advertisement />} />
-          <Route path="/report" element={<Report />} />
           <Route path="/" element={<LoginPage />} />
           <Route path="/create-password/:id" element={<CreatePssPage />} />
           <Route path="/ResetPss/:token" element={<ResetPssPage />} />
           <Route path="/forget-password" element={<ForgotPassPage />} />
           <Route path="/OTP" element={<OTPpage />} />
-
+          <Route path="/advertisement" element={<Homee />}>
+            <Route
+              path="/advertisement/Dashboard"
+              element={<Advertisement />}
+            />
+            <Route path="/advertisement/report" element={<Report />} />
+          </Route>
           <Route
             path="/feed"
             // element={cookies.user ? <Primary /> : <Navigate to="/" />}
